@@ -27,7 +27,7 @@
 
 当两个对象通过赋值符号 = 赋值时，表明这两个对象指向了内存中同一个地址，所以改变其中一个对象的内容，也就间接地改变了另一个对象的内容。有时候，我们需要从一个已经存在的对象重新拷贝一份出来，并且不">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg">
-<meta property="og:updated_time" content="2016-09-01T13:55:46.000Z">
+<meta property="og:updated_time" content="2016-09-01T22:52:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="详解Java中的对象克隆">
 <meta name="twitter:description" content="前言在 Java 语言中，我们说两个对象是否相等通常有两层含义：
@@ -248,6 +248,15 @@
 	</div>
 
 
+
+        
+            <div class="bookicon"></div>
+            <div class="article-hit">
+              <span id="busuanzi_container_page_pv">
+                Hits <span id="busuanzi_value_page_pv"></span>次</span>
+            </div>
+        
+        
         <div class="clearfix"></div>
       </div>
       
@@ -293,6 +302,7 @@
 <p>如果对象不包含引用类型成员或者数量少的话，使用 Cloneable 接口还能接受，但当对象包含多个引用类型的成员，同时这些成员又包含了引用类型的成员，那层层克隆岂不是相当繁琐，并且维护不便？所以，这里介绍一种更加方便的实现方式，使用 <code>ObjectOutputStream</code> 和 <code>ObjectOutputStream</code> 来实现对象的序列化和反序列化：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.ByteArrayInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.ByteArrayOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectOutputStream;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">BeanUtils</span> </span>&#123;</span><br><span class="line">	<span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">cloneTo</span><span class="params">(T src)</span> <span class="keyword">throws</span> RuntimeException </span>&#123;</span><br><span class="line">		ByteArrayOutputStream memoryBuffer = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">		ObjectOutputStream out = <span class="keyword">null</span>;</span><br><span class="line">		ObjectInputStream in = <span class="keyword">null</span>;</span><br><span class="line">		T dist = <span class="keyword">null</span>;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			out = <span class="keyword">new</span> ObjectOutputStream(memoryBuffer);</span><br><span class="line">			out.writeObject(src);</span><br><span class="line">			out.flush();</span><br><span class="line">			in = <span class="keyword">new</span> ObjectInputStream(<span class="keyword">new</span> ByteArrayInputStream(memoryBuffer.toByteArray()));</span><br><span class="line">			dist = (T) in.readObject();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> (out != <span class="keyword">null</span>)</span><br><span class="line">				<span class="keyword">try</span> &#123;</span><br><span class="line">					out.close();</span><br><span class="line">					out = <span class="keyword">null</span>;</span><br><span class="line">				&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">					<span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">				&#125;</span><br><span class="line">			<span class="keyword">if</span> (in != <span class="keyword">null</span>)</span><br><span class="line">				<span class="keyword">try</span> &#123;</span><br><span class="line">					in.close();</span><br><span class="line">					in = <span class="keyword">null</span>;</span><br><span class="line">				&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">					<span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">				&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> dist;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>只要要克隆的对象以及对象所包含的引用类型的成员对象所在的类实现了 <code>java.io.Serializable</code> 接口即可实现完美克隆。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">'red'</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>备注：欢迎各种形式的转载，但请注明原文链接，以及作者微信公众号！</p>
 <p>打开微信扫一扫，或者微信搜索作者微信公众号：技术鸟（NiaoTech）！</p>
