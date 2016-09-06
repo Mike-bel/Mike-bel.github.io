@@ -1776,9 +1776,6 @@ pre .css ~ * .id {
 .footer-left {
   float: left;
 }
-.footer-center {
-  float: center;
-}
 .footer-right {
   float: right;
 }
