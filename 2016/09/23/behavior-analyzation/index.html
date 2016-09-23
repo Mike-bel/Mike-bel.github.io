@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Android 一步一步分析Behavior | YiFeng&#39;s Zone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在MD系列的前几篇文章中，通过基础知识和实战案例配合讲解的形式介绍了CoordinatorLayout与AppBarLayout、Toolbar、CollapsingToolbarLayout的使用，并实现了几种MD风格下比较炫酷的交互效果。学会怎么用之后，我们再想想，为什么它们之间能够产生这样的交互行为呢？其实就是因为CoordinatorLayout.Behavior的存在，这也是本文所要讲述">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 一步一步分析Behavior">
+<meta property="og:url" content="http://yifeng.studio/2016/09/23/behavior-analyzation/index.html">
+<meta property="og:site_name" content="YiFeng's Zone">
+<meta property="og:description" content="在MD系列的前几篇文章中，通过基础知识和实战案例配合讲解的形式介绍了CoordinatorLayout与AppBarLayout、Toolbar、CollapsingToolbarLayout的使用，并实现了几种MD风格下比较炫酷的交互效果。学会怎么用之后，我们再想想，为什么它们之间能够产生这样的交互行为呢？其实就是因为CoordinatorLayout.Behavior的存在，这也是本文所要讲述">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/behavior-01.gif">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/behavior-03.gif">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/behavior-02.gif">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/behavior-removed.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/beharior-added.png">
+<meta property="og:updated_time" content="2016-09-23T14:13:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 一步一步分析Behavior">
+<meta name="twitter:description" content="在MD系列的前几篇文章中，通过基础知识和实战案例配合讲解的形式介绍了CoordinatorLayout与AppBarLayout、Toolbar、CollapsingToolbarLayout的使用，并实现了几种MD风格下比较炫酷的交互效果。学会怎么用之后，我们再想想，为什么它们之间能够产生这样的交互行为呢？其实就是因为CoordinatorLayout.Behavior的存在，这也是本文所要讲述">
+<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/behavior-01.gif">
+  
+    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+  
+  
+    
+      <link rel="icon" href="/favicon.png">
+    
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+				
+					<img lazy-src="/assets/imgSite/avatar.png" class="js-avatar">
+				
+			
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">亦枫</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">起始于Android，不止于Android</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">首页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/Hexo/" style="font-size: 20px;">Hexo</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/guolin_blog">郭霖</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/lmj623565791">鸿洋</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/singwhatiwanna">任玉刚</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.jcodecraeer.com/plus/list.php?tid=16">泡在网上的日子</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">长期拼搏在一线开发的安卓程序猿一枚，热衷于技术，沉浸于段子，微信公众号：技术鸟（微信号：NiaoTech）。If you can&#39;t fly then run, can&#39;t run then walk, can&#39;t walk then crawl, keep moving forward.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">亦枫</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img lazy-src="null/assets/imgSite/avatar.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">亦枫</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">起始于Android，不止于Android</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">首页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-behavior-analyzation" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/09/23/behavior-analyzation/" class="article-date">
+  	<time datetime="2016-09-23T14:06:32.000Z" itemprop="datePublished">2016-09-23</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android 一步一步分析Behavior
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Android/">Android</a>
+	</div>
+
+
+
+        
+            <div class="bookicon"></div>
+            <div class="article-hit">
+              <span id="busuanzi_container_page_pv">
+                    热度 <span id="busuanzi_value_page_pv"></span>℃</span>
+            </div>
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在MD系列的前几篇文章中，通过基础知识和实战案例配合讲解的形式介绍了<code>CoordinatorLayout</code>与<code>AppBarLayout</code>、<code>Toolbar</code>、<code>CollapsingToolbarLayout</code>的使用，并实现了几种MD风格下比较炫酷的交互效果。学会怎么用之后，我们再想想，为什么它们之间能够产生这样的交互行为呢？其实就是因为<code>CoordinatorLayout.Behavior</code>的存在，这也是本文所要讲述的内容。至此，Android Material Design系列的学习已进行到第八篇，大家可以点击以下链接查看之前的文章：</p>
+<a id="more"></a>
+<ul>
+<li><a href="http://www.jianshu.com/p/39a66373498c" target="_blank" rel="external">Android TabLayout 分分钟打造一个滑动标签页</a></li>
+<li><a href="http://www.jianshu.com/p/9eb3b17b0e77" target="_blank" rel="external">Android 一文告诉你到底是用Dialog，Snackbar，还是Toast</a></li>
+<li><a href="http://www.jianshu.com/p/5328b2eee827" target="_blank" rel="external">Android FloatingActionButton 重要的操作不要太多，一个就好</a></li>
+<li><a href="http://www.jianshu.com/p/ab04627cce58" target="_blank" rel="external">Android 初识AppBarLayout 和 CoordinatorLayout</a></li>
+<li><a href="http://www.jianshu.com/p/4b0f3c80ebc9" target="_blank" rel="external">Android CoordinatorLayout实战案例学习《一》</a></li>
+<li><a href="http://www.jianshu.com/p/360fd368936d" target="_blank" rel="external">Android CoordinatorLayout 实战案例学习《二》</a></li>
+<li><a href="http://www.jianshu.com/p/7caa5f4f49bd" target="_blank" rel="external">Android 详细分析AppBarLayout的五种ScrollFlags</a></li>
+</ul>
+<h1 id="关于Behavior"><a href="#关于Behavior" class="headerlink" title="关于Behavior"></a>关于Behavior</h1><p>官网对于<code>CoordinatorLayout.Behavior</code>的介绍已经将它的作用说明得很清楚了，就是用来协调<code>CoordinatorLayout</code>的Child Views之间的交互行为：</p>
+<blockquote>
+<p>Interaction behavior plugin for child views of CoordinatorLayout.</p>
+<p>A Behavior implements one or more interactions that a user can take on a child view. These interactions may include drags, swipes, flings, or any other gestures.</p>
+</blockquote>
+<p>之前学习<code>CoordinatorLayout</code>的使用案例时，用的都是系统的特定控件，比如design包中的<code>FloatingActionButton</code>、<code>AppBarLayout</code>等，而不是普通的控件，如<code>ImageButton</code>之类的，就是因为design包中的这些特定控件已经被系统默认定义了继承自<code>CoordinatorLayout.Behavior</code>的各种<code>Behavior</code>，比如<code>FloatingActionButton.Behavior</code>和<br><code>AppBarLayout.Behavior</code>。而像系统的<code>ToolBar</code>控件就没有自己的<code>Behavior</code>，所以只能将其搁置到<code>AppBarLayout</code>容器里才能产生相应的交互效果。</p>
+<p>看到这里就能清楚一点了，如果我们想实现控件之间任意的交互效果，完全可以通过自定义<code>Behavior</code>的方式达到。看到这里大家可能会有一个疑惑，就是<code>CoordinatorLayout</code>如何获取Child Views的<code>Behavior</code>的呢，为什么在布局中，有些滑动型控件定义了<code>app:layout_behavior</code>属性而系统类似<code>FloatingActionButton</code>的控件则不需要明确定义该属性呢？看完<code>CoordinatorLayout.Behavior</code>的构造函数就明白了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Default constructor for instantiating Behaviors.</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Behavior</span><span class="params">()</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Default constructor for inflating Behaviors from layout. The Behavior will have</span><br><span class="line"> * the opportunity to parse specially defined layout parameters. These parameters will</span><br><span class="line"> * appear on the child view tag.</span><br><span class="line"> *</span><br><span class="line"> * <span class="doctag">@param</span> context</span><br><span class="line"> * <span class="doctag">@param</span> attrs</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Behavior</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>CoordinatorLayout.Behavior</code>有两个构造函数，注意看第二个带参数的构造函数的注释，里面提到，在这个构造函数中，<code>Behavior</code>会解析控件的特殊布局属性，也就是通过<code>parseBehavior</code>方法获取对应的<code>Behavior</code>，从而协调Child Views之间的交互行为，可以在<code>CoordinatorLayout</code>类中查看，具体源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> Behavior <span class="title">parseBehavior</span><span class="params">(Context context, AttributeSet attrs, String name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (TextUtils.isEmpty(name)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> String fullName;</span><br><span class="line">    <span class="keyword">if</span> (name.startsWith(<span class="string">"."</span>)) &#123;</span><br><span class="line">        <span class="comment">// Relative to the app package. Prepend the app package name.</span></span><br><span class="line">        fullName = context.getPackageName() + name;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (name.indexOf(<span class="string">'.'</span>) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// Fully qualified package name.</span></span><br><span class="line">        fullName = name;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// Assume stock behavior in this package (if we have one)</span></span><br><span class="line">        fullName = !TextUtils.isEmpty(WIDGET_PACKAGE_NAME)</span><br><span class="line">                ? (WIDGET_PACKAGE_NAME + <span class="string">'.'</span> + name)</span><br><span class="line">                : name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Map&lt;String, Constructor&lt;Behavior&gt;&gt; constructors = sConstructors.get();</span><br><span class="line">        <span class="keyword">if</span> (constructors == <span class="keyword">null</span>) &#123;</span><br><span class="line">            constructors = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">            sConstructors.set(constructors);</span><br><span class="line">        &#125;</span><br><span class="line">        Constructor&lt;Behavior&gt; c = constructors.get(fullName);</span><br><span class="line">        <span class="keyword">if</span> (c == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">final</span> Class&lt;Behavior&gt; clazz = (Class&lt;Behavior&gt;) Class.forName(fullName, <span class="keyword">true</span>,</span><br><span class="line">                    context.getClassLoader());</span><br><span class="line">            c = clazz.getConstructor(CONSTRUCTOR_PARAMS);</span><br><span class="line">            c.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">            constructors.put(fullName, c);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> c.newInstance(context, attrs);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Could not inflate Behavior subclass "</span> + fullName, e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>parseBehavior</code>方法告诉我们，给Child Views设置<code>Behavior</code>有两种方式：</p>
+<ol>
+<li><p><code>app:layout_behavior</code>布局属性<br>在布局中设置，值为自定义<code>Behavior</code>类的名字字符串（包含路径），类似在<code>AndroidManifest.xml</code>中定义四大组件的名字一样，有两种写法，包含包名的全路径和以”.”开头的省略项目包名的路径。</p>
+</li>
+<li><p><code>@CoordinatorLayout.DefaultBehavior</code>类注解<br>在需要使用<code>Behavior</code>的控件源码定义中添加该注解，然后通过反射机制获取。这个方式就解决了我们前面产生的疑惑，系统的<code>AppBarLayout</code>、<code>FloatingActionButton</code>都采用了这种方式，所以无需在布局中重复设置。</p>
+</li>
+</ol>
+<p>看到这里，也告诉我们一点，在自定义<code>Behavior</code>时，一定要重写第二个带参数的构造函数，否则这个<code>Behavior</code>是不会起作用的。</p>
+<p>根据<code>CoordinatorLayout.Behavior</code>提供的方法，这里将自定义<code>Behavior</code>分为两类来讲解，一种是<code>dependent</code>机制，一种是<code>nested</code>机制，对应着不同的使用场景。</p>
+<h1 id="dependent机制"><a href="#dependent机制" class="headerlink" title="dependent机制"></a><code>dependent</code>机制</h1><p>这种机制描述的是两个Child Views之间的绑定依赖关系，设置<code>Behavior</code>属性的Child View跟随依赖对象Dependency View的大小位置改变而发生变化，对应需要实现的方法常见有两个：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Determine whether the supplied child view has another specific sibling view as a</span><br><span class="line"> * layout dependency.</span><br><span class="line"> *</span><br><span class="line"> * &lt;p&gt;This method will be called at least once in response to a layout request. If it</span><br><span class="line"> * returns true for a given child and dependency view pair, the parent CoordinatorLayout</span><br><span class="line"> * will:&lt;/p&gt;</span><br><span class="line"> * &lt;ol&gt;</span><br><span class="line"> *     &lt;li&gt;Always lay out this child after the dependent child is laid out, regardless</span><br><span class="line"> *     of child order.&lt;/li&gt;</span><br><span class="line"> *     &lt;li&gt;Call &#123;<span class="doctag">@link</span> #onDependentViewChanged&#125; when the dependency view's layout or</span><br><span class="line"> *     position changes.&lt;/li&gt;</span><br><span class="line"> * &lt;/ol&gt;</span><br><span class="line"> *</span><br><span class="line"> * <span class="doctag">@param</span> parent the parent view of the given child</span><br><span class="line"> * <span class="doctag">@param</span> child the child view to test</span><br><span class="line"> * <span class="doctag">@param</span> dependency the proposed dependency of child</span><br><span class="line"> * <span class="doctag">@return</span> true if child's layout depends on the proposed dependency's layout,</span><br><span class="line"> *         false otherwise</span><br><span class="line"> *</span><br><span class="line"> * <span class="doctag">@see</span> #onDependentViewChanged(CoordinatorLayout, android.view.View, android.view.View)</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">layoutDependsOn</span><span class="params">(CoordinatorLayout parent, V child, View dependency)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>和</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Respond to a change in a child's dependent view</span><br><span class="line"> *</span><br><span class="line"> * &lt;p&gt;This method is called whenever a dependent view changes in size or position outside</span><br><span class="line"> * of the standard layout flow. A Behavior may use this method to appropriately update</span><br><span class="line"> * the child view in response.&lt;/p&gt;</span><br><span class="line"> *</span><br><span class="line"> * &lt;p&gt;A view's dependency is determined by</span><br><span class="line"> * &#123;<span class="doctag">@link</span> #layoutDependsOn(CoordinatorLayout, android.view.View, android.view.View)&#125; or</span><br><span class="line"> * if &#123;<span class="doctag">@code</span> child&#125; has set another view as it's anchor.&lt;/p&gt;</span><br><span class="line"> *</span><br><span class="line"> * &lt;p&gt;Note that if a Behavior changes the layout of a child via this method, it should</span><br><span class="line"> * also be able to reconstruct the correct position in</span><br><span class="line"> * &#123;<span class="doctag">@link</span> #onLayoutChild(CoordinatorLayout, android.view.View, int) onLayoutChild&#125;.</span><br><span class="line"> * &lt;code&gt;onDependentViewChanged&lt;/code&gt; will not be called during normal layout since</span><br><span class="line"> * the layout of each child view will always happen in dependency order.&lt;/p&gt;</span><br><span class="line"> *</span><br><span class="line"> * &lt;p&gt;If the Behavior changes the child view's size or position, it should return true.</span><br><span class="line"> * The default implementation returns false.&lt;/p&gt;</span><br><span class="line"> *</span><br><span class="line"> * <span class="doctag">@param</span> parent the parent view of the given child</span><br><span class="line"> * <span class="doctag">@param</span> child the child view to manipulate</span><br><span class="line"> * <span class="doctag">@param</span> dependency the dependent view that changed</span><br><span class="line"> * <span class="doctag">@return</span> true if the Behavior changed the child view's size or position, false otherwise</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onDependentViewChanged</span><span class="params">(CoordinatorLayout parent, V child, View dependency)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>具体含义在注释中已经很清楚了，<code>layoutDependsOn()</code>方法用于决定是否产生依赖行为，<code>onDependentViewChanged()</code>方法在依赖的控件发生大小或者位置变化时产生回调。<code>dependent</code>机制最常见的案例就是<code>FloatingActionButton</code>和<code>SnackBar</code>的交互行为，效果如下：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/behavior-01.gif" alt="Behavior-01"></p>
+<p>系统的<code>FloatingActionButton</code>已经默认定义了一个<code>Behavior</code>来协调交互，如果不用系统的FAB控件，比如改用GitHub上的一个库<a href="https://github.com/futuresimple/android-floating-action-button" target="_blank" rel="external"><code>futuresimple/android-floating-action-button</code></a>，再通过自定义一个<code>Behavior</code>，也能很简单的实现与<code>SnackBar</code>的协调效果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yifeng.mdstudysamples;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.content.Context;</span><br><span class="line"><span class="keyword">import</span> android.support.design.widget.CoordinatorLayout;</span><br><span class="line"><span class="keyword">import</span> android.support.design.widget.Snackbar;</span><br><span class="line"><span class="keyword">import</span> android.util.AttributeSet;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Created by yifeng on 16/9/20.</span><br><span class="line"> *</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DependentFABBehavior</span> <span class="keyword">extends</span> <span class="title">CoordinatorLayout</span>.<span class="title">Behavior</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DependentFABBehavior</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context, attrs);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 判断依赖对象</span><br><span class="line">     * <span class="doctag">@param</span> parent</span><br><span class="line">     * <span class="doctag">@param</span> child</span><br><span class="line">     * <span class="doctag">@param</span> dependency</span><br><span class="line">     * <span class="doctag">@return</span></span><br><span class="line">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">layoutDependsOn</span><span class="params">(CoordinatorLayout parent, View child, View dependency)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> dependency <span class="keyword">instanceof</span> Snackbar.SnackbarLayout;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 当依赖对象发生变化时,产生回调,自定义改变child view</span><br><span class="line">     * <span class="doctag">@param</span> parent</span><br><span class="line">     * <span class="doctag">@param</span> child</span><br><span class="line">     * <span class="doctag">@param</span> dependency</span><br><span class="line">     * <span class="doctag">@return</span></span><br><span class="line">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onDependentViewChanged</span><span class="params">(CoordinatorLayout parent, View child, View dependency)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">float</span> translationY = Math.min(<span class="number">0</span>, dependency.getTranslationY() - dependency.getHeight());</span><br><span class="line">        child.setTranslationY(translationY);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>很简单的一个自定义<code>Behavior</code>处理，然后再为对应的Child View设置该属性即可。由于这里我们用的是第三方库，采用远程依赖的形式引入的，无法修改源码，所以不方便使用注解的方式为其设置<code>Behavior</code>，所以在布局中为其设置，并且使用了省略包名的方式：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">android.support.design.widget.CoordinatorLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">android.support.design.widget.AppBarLayout</span></span><br><span class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/appbar"</span></span><br><span class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">        <span class="attr">android:theme</span>=<span class="string">"@style/ThemeOverlay.AppCompat.Dark.ActionBar"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">include</span></span><br><span class="line">            <span class="attr">layout</span>=<span class="string">"@layout/include_toolbar"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">android.support.design.widget.AppBarLayout</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">com.getbase.floatingactionbutton.FloatingActionButton</span></span><br><span class="line">        <span class="attr">xmlns:fab</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/fab_add"</span></span><br><span class="line">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span><br><span class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">        <span class="attr">android:layout_margin</span>=<span class="string">"@dimen/dp_16"</span></span><br><span class="line">        <span class="attr">android:layout_gravity</span>=<span class="string">"bottom|right"</span></span><br><span class="line">        <span class="attr">android:onClick</span>=<span class="string">"onClickFab"</span></span><br><span class="line">        <span class="attr">fab:fab_icon</span>=<span class="string">"@mipmap/ic_toolbar_add"</span></span><br><span class="line">        <span class="attr">fab:fab_colorNormal</span>=<span class="string">"?attr/colorPrimary"</span></span><br><span class="line">        <span class="attr">fab:fab_colorPressed</span>=<span class="string">"?attr/colorPrimaryDark"</span></span><br><span class="line">        <span class="attr">app:layout_behavior</span>=<span class="string">".DependentFABBehavior"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">android.support.design.widget.CoordinatorLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这样，采用<code>dependent</code>机制自定义<code>Behavior</code>，与使用系统FAB按钮一样，即可与<code>SnackBar</code>控件产生如上图所示的协调交互效果。</p>
+<p>比如我们再看一下这样一个效果：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/behavior-03.gif" alt="Behavior-03"></p>
+<p>列表上下滑动式，底部评论区域随着顶部<code>Toolbar</code>的移动而移动，这里我们就可以自定义一个<code>Dependent</code>机制的<code>Behavior</code>，设置给底部视图，让其依赖于包裹<code>Toolbar</code>的<code>AppBarLayout</code>控件：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yifeng.mdstudysamples;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.content.Context;</span><br><span class="line"><span class="keyword">import</span> android.support.design.widget.AppBarLayout;</span><br><span class="line"><span class="keyword">import</span> android.support.design.widget.CoordinatorLayout;</span><br><span class="line"><span class="keyword">import</span> android.util.AttributeSet;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Created by yifeng on 16/9/23.</span><br><span class="line"> *</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomExpandBehavior</span> <span class="keyword">extends</span> <span class="title">CoordinatorLayout</span>.<span class="title">Behavior</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CustomExpandBehavior</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context, attrs);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">layoutDependsOn</span><span class="params">(CoordinatorLayout parent, View child, View dependency)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> dependency <span class="keyword">instanceof</span> AppBarLayout;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onDependentViewChanged</span><span class="params">(CoordinatorLayout parent, View child, View dependency)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> delta = dependency.getTop();</span><br><span class="line">        child.setTranslationY(-delta);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>布局内容如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">android.support.design.widget.CoordinatorLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">android.support.design.widget.AppBarLayout</span></span><br><span class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/appbar"</span></span><br><span class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">        <span class="attr">android:layout_height</span>=<span class="string">"@dimen/dp_56"</span></span><br><span class="line">        <span class="attr">android:theme</span>=<span class="string">"@style/ThemeOverlay.AppCompat.Dark.ActionBar"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">include</span></span><br><span class="line">            <span class="attr">layout</span>=<span class="string">"@layout/include_toolbar"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">android.support.design.widget.AppBarLayout</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">android.support.v7.widget.RecyclerView</span></span><br><span class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/rv_content"</span></span><br><span class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span><br><span class="line">        <span class="attr">app:layout_behavior</span>=<span class="string">"@string/appbar_scrolling_view_behavior"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">RelativeLayout</span></span><br><span class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">        <span class="attr">android:layout_height</span>=<span class="string">"@dimen/dp_56"</span></span><br><span class="line">        <span class="attr">android:layout_gravity</span>=<span class="string">"bottom"</span></span><br><span class="line">        <span class="attr">app:layout_behavior</span>=<span class="string">".CustomExpandBehavior"</span></span><br><span class="line">        <span class="attr">android:padding</span>=<span class="string">"8dp"</span></span><br><span class="line">        <span class="attr">android:background</span>=<span class="string">"@color/blue"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">Button</span></span><br><span class="line">            <span class="attr">android:id</span>=<span class="string">"@+id/btn_send"</span></span><br><span class="line">            <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span><br><span class="line">            <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span><br><span class="line">            <span class="attr">android:text</span>=<span class="string">"Send"</span></span><br><span class="line">            <span class="attr">android:layout_alignParentRight</span>=<span class="string">"true"</span></span><br><span class="line">            <span class="attr">android:background</span>=<span class="string">"@color/white"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">EditText</span></span><br><span class="line">            <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">            <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span><br><span class="line">            <span class="attr">android:layout_toLeftOf</span>=<span class="string">"@id/btn_send"</span></span><br><span class="line">            <span class="attr">android:layout_marginRight</span>=<span class="string">"4dp"</span></span><br><span class="line">            <span class="attr">android:padding</span>=<span class="string">"4dp"</span></span><br><span class="line">            <span class="attr">android:hint</span>=<span class="string">"Please input the comment"</span></span><br><span class="line">            <span class="attr">android:background</span>=<span class="string">"@color/white"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">android.support.design.widget.CoordinatorLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>注意，这里将自定义的<code>Behavior</code>设置给了底部内容的外层容器<code>RelativeLayout</code>，即可实现上述效果。</p>
+<h1 id="Nested机制"><a href="#Nested机制" class="headerlink" title="Nested机制"></a><code>Nested</code>机制</h1><p><code>Nested</code>机制要求<code>CoordinatorLayout</code>包含了一个实现了<code>NestedScrollingChild</code>接口的滚动视图控件，比如v7包中的<code>RecyclerView</code>，设置<code>Behavior</code>属性的Child View会随着这个控件的滚动而发生变化，涉及到的方法有：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">onStartNestedScroll(View child, View target, <span class="keyword">int</span> nestedScrollAxes)</span><br><span class="line"></span><br><span class="line">onNestedPreScroll(View target, <span class="keyword">int</span> dx, <span class="keyword">int</span> dy, <span class="keyword">int</span>[] consumed)</span><br><span class="line"></span><br><span class="line">onNestedPreFling(View target, <span class="keyword">float</span> velocityX, <span class="keyword">float</span> velocityY)</span><br><span class="line"></span><br><span class="line">onNestedScroll(View target, <span class="keyword">int</span> dxConsumed, <span class="keyword">int</span> dyConsumed, <span class="keyword">int</span> dxUnconsumed, <span class="keyword">int</span> dyUnconsumed)</span><br><span class="line"></span><br><span class="line">onNestedFling(View target, <span class="keyword">float</span> velocityX, <span class="keyword">float</span> velocityY, <span class="keyword">boolean</span> consumed)</span><br><span class="line"></span><br><span class="line">onStopNestedScroll(View target)</span><br></pre></td></tr></table></figure>
+<p>其中，｀onStartNestedScroll｀方法返回一个boolean类型的值，只有返回true时才能让自定义的<code>Behavior</code>接受滑动事件。同样的，举例说明一下。</p>
+<p>通过查看系统FAB控件的源码可以知道，系统FAB定义的<code>Behavior</code>能够处理两个交互，一个是与<code>SnackBar</code>的位置交互，效果如上面的图示一样，另一个就是与<code>AppBarLayout</code>的展示交互，都是使用的<code>Dependent</code>机制，效果在之前的文章 – <a href="http://www.jianshu.com/p/360fd368936d" target="_blank" rel="external">Android CoordinatorLayout 实战案例学习《二》</a> 中可以查看，也就是<code>AppBarLayout</code> 滚动到一定程度时，FAB控件的动画隐藏与展示。下面我们使用<code>Nested</code>机制自定义一个<code>Behavior</code>，实现如下与列表协调交互的效果：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/behavior-02.gif" alt="Behavior-02"></p>
+<p>为了能够使用系统FAB控件提供的隐藏与显示的动画效果，这里直接继承了系统FAB控件的<code>Behavior</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yifeng.mdstudysamples;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.content.Context;</span><br><span class="line"><span class="keyword">import</span> android.support.design.widget.CoordinatorLayout;</span><br><span class="line"><span class="keyword">import</span> android.support.design.widget.FloatingActionButton;</span><br><span class="line"><span class="keyword">import</span> android.support.v4.view.ViewCompat;</span><br><span class="line"><span class="keyword">import</span> android.util.AttributeSet;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Created by yifeng on 16/8/23.</span><br><span class="line"> *</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NestedFABBehavior</span> <span class="keyword">extends</span> <span class="title">FloatingActionButton</span>.<span class="title">Behavior</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NestedFABBehavior</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onStartNestedScroll</span><span class="params">(CoordinatorLayout coordinatorLayout, FloatingActionButton child, View directTargetChild, View target, <span class="keyword">int</span> nestedScrollAxes)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL ||</span><br><span class="line">                <span class="keyword">super</span>.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target,</span><br><span class="line">                        nestedScrollAxes);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNestedScroll</span><span class="params">(CoordinatorLayout coordinatorLayout, FloatingActionButton child, View target, <span class="keyword">int</span> dxConsumed, <span class="keyword">int</span> dyConsumed, <span class="keyword">int</span> dxUnconsumed, <span class="keyword">int</span> dyUnconsumed)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);</span><br><span class="line">        <span class="keyword">if</span> (dyConsumed &gt; <span class="number">0</span> &amp;&amp; child.getVisibility() == View.VISIBLE) &#123;</span><br><span class="line">            <span class="comment">//系统FAB控件提供的隐藏动画</span></span><br><span class="line">            child.hide();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (dyConsumed &lt; <span class="number">0</span> &amp;&amp; child.getVisibility() != View.VISIBLE) &#123;</span><br><span class="line">            <span class="comment">//系统FAB控件提供的显示动画</span></span><br><span class="line">            child.show();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在布局中添加<code>RecyclerView</code>，并为系统FAB控件设置自定义的<code>Behavior</code>，内容如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line">&lt;android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"</span><br><span class="line">    xmlns:app="http://schemas.android.com/apk/res-auto"</span><br><span class="line">    android:layout_width="match_parent"</span><br><span class="line">    android:layout_height="match_parent"&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android.support.design.widget.AppBarLayout</span><br><span class="line">        android:id="@+id/appbar"</span><br><span class="line">        android:layout_width="match_parent"</span><br><span class="line">        android:layout_height="wrap_content"</span><br><span class="line">        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"&gt;</span><br><span class="line"></span><br><span class="line">        &lt;include</span><br><span class="line">            layout="@layout/include_toolbar"/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/android.support.design.widget.AppBarLayout&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android.support.v7.widget.RecyclerView</span><br><span class="line">        android:id="@+id/rv_content"</span><br><span class="line">        android:layout_width="match_parent"</span><br><span class="line">        android:layout_height="match_parent"/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android.support.design.widget.FloatingActionButton</span><br><span class="line">        android:id="@+id/fab_add"</span><br><span class="line">        android:layout_width="wrap_content"</span><br><span class="line">        android:layout_height="wrap_content"</span><br><span class="line">        android:layout_margin="@dimen/dp_16"</span><br><span class="line">        android:src="@mipmap/ic_toolbar_add"</span><br><span class="line">        app:layout_anchor="@id/rv_content"</span><br><span class="line">        app:layout_anchorGravity="bottom|right"</span><br><span class="line">        app:backgroundTint="@color/fab_ripple"</span><br><span class="line">        app:layout_behavior="com.yifeng.mdstudysamples.NestedFABBehavior"/&gt;</span><br><span class="line"></span><br><span class="line">&lt;/android.support.design.widget.CoordinatorLayout&gt;</span><br></pre></td></tr></table></figure>
+<p>这样，即可实现系统FAB控件与列表滑动控件的交互效果。</p>
+<h1 id="string-appbar-scrolling-view-behavior"><a href="#string-appbar-scrolling-view-behavior" class="headerlink" title="@string/appbar_scrolling_view_behavior"></a>@string/appbar_scrolling_view_behavior</h1><p>这是一个系统字符串，值为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</span><br></pre></td></tr></table></figure>
+<p>在<code>CoordinatorLayout</code>容器中，通常用在<code>AppBarLayout</code>视图下面（不是里面）的内容控件中，比如上面的<code>RecyclerView</code>，如果我们不给它添加这个<code>Behavior</code>，<code>Toolbar</code>将覆盖在列表上面，出现重叠部分，如图</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/behavior-removed.png" alt="behavior-removed"></p>
+<p>添加之后，<code>RecyclerView</code>将位于<code>Toolbar</code>下面，类似在<code>RelativeLayout</code>中设置了<code>below</code>属性，如图：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/beharior-added.png" alt="beharior-added"></p>
+<h1 id="示例源码"><a href="#示例源码" class="headerlink" title="示例源码"></a>示例源码</h1><p>我在GitHub上建立了一个Repository，用来存放整个Android Material Design系列控件的学习案例，会伴随着文章逐渐更新完善，欢迎大家补充交流，Star地址：</p>
+<p><a href="https://github.com/Mike-bel/MDStudySamples" target="_blank" rel="external">https://github.com/Mike-bel/MDStudySamples</a></p>
+
+      
+    </div>
+    
+      <! -- 添加版权信息 -->
+<div class="article-footer-copyright">
+<p>本文由&nbsp;<b>亦枫</b>&nbsp;创作并首发于&nbsp;<b><a href="/index.html" target="_blank" title="亦枫">亦枫的个人博客</a></b>&nbsp;，同步授权微信公众号：技术鸟（NiaoTech）。</a></p>
+ 
+<p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
+ 
+<p>本文标题为: <b><a href="/2016/09/23/behavior-analyzation/" target="_blank" title="Android 一步一步分析Behavior">Android 一步一步分析Behavior</a></b> </p>
+ 
+<p>本文链接为：<b><a href="/2016/09/23/behavior-analyzation/" target="_blank" title="Android 一步一步分析Behavior">http://yifeng.studio/2016/09/23/behavior-analyzation/</a></b> </p>
+
+<p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
+</div>
+<! -- 添加版权信息 -->
+    
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/09/10/Hexo-search-baidutongji-highlight/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hexo 折腾记之站内搜索、百度统计、代码高亮</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="behavior-analyzation" data-title="Android 一步一步分析Behavior" data-url="http://yifeng.studio/2016/09/23/behavior-analyzation/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"yifengzone"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 亦枫
+    	</div>
+      <div class="footer-left">
+        &nbsp;&copy; 
+        <span id="busuanzi_container_site_pv">
+          本站访问量<span id="busuanzi_value_site_pv"></span>次
+        </span>
+        <span id="busuanzi_container_site_uv">
+          访客数<span id="busuanzi_value_site_uv"></span>人
+        </span>
+      </div>
+      	<div class="footer-right">
+      		Theme of <a href="https://github.com/Mike-bel/hexo-theme-yilia-optimization" target="_blank">yilia-opti</a>, by YiFeng
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: '/'
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-83125745-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script>
+	(function(){
+		document.write('<scr'+'ipt type="text/javascript" src="'+document.location.protocol+'//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">'+'</sc'+'ript>');
+	})();
+</script>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
