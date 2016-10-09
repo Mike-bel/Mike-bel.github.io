@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Android include和merge标签、ViewStub控件的使用总结 | YiFeng&#39;s Zone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="&amp;lt;inlcude&amp;gt;标签在开发Android布局时，常将一些通用的视图提取到一个单独的layout文件中，然后使用&amp;lt;include&amp;gt;标签在需要使用的其他layout布局文件中加载进来，比如App导航栏等。这样，便于对相同视图内容进行统一的控制管理，提高布局重用性。然而，使用&amp;lt;include&amp;gt;标签总有一些值得我们注意的地方。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android include和merge标签、ViewStub控件的使用总结">
+<meta property="og:url" content="http://yifeng.studio/2016/10/08/android-include-merge-viewstub/index.html">
+<meta property="og:site_name" content="YiFeng's Zone">
+<meta property="og:description" content="&amp;lt;inlcude&amp;gt;标签在开发Android布局时，常将一些通用的视图提取到一个单独的layout文件中，然后使用&amp;lt;include&amp;gt;标签在需要使用的其他layout布局文件中加载进来，比如App导航栏等。这样，便于对相同视图内容进行统一的控制管理，提高布局重用性。然而，使用&amp;lt;include&amp;gt;标签总有一些值得我们注意的地方。">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/ViewStub-Samles-01.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/ViewStub-Samles-02.png">
+<meta property="og:updated_time" content="2016-10-09T03:06:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android include和merge标签、ViewStub控件的使用总结">
+<meta name="twitter:description" content="&amp;lt;inlcude&amp;gt;标签在开发Android布局时，常将一些通用的视图提取到一个单独的layout文件中，然后使用&amp;lt;include&amp;gt;标签在需要使用的其他layout布局文件中加载进来，比如App导航栏等。这样，便于对相同视图内容进行统一的控制管理，提高布局重用性。然而，使用&amp;lt;include&amp;gt;标签总有一些值得我们注意的地方。">
+<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/ViewStub-Samles-01.png">
+  
+    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+  
+  
+    
+      <link rel="icon" href="/favicon.png">
+    
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+				
+					<img lazy-src="/assets/imgSite/avatar.png" class="js-avatar">
+				
+			
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">亦枫</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">起始于Android，不止于Android</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">首页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/guolin_blog">郭霖</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/lmj623565791">鸿洋</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/singwhatiwanna">任玉刚</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.jcodecraeer.com/plus/list.php?tid=16">泡在网上的日子</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">长期拼搏在一线开发的安卓程序猿一枚，热衷于技术，沉浸于段子，微信公众号：技术鸟（微信号：NiaoTech）。If you can&#39;t fly then run, can&#39;t run then walk, can&#39;t walk then crawl, keep moving forward.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">亦枫</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img lazy-src="null/assets/imgSite/avatar.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">亦枫</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">起始于Android，不止于Android</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">首页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-android-include-merge-viewstub" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/08/android-include-merge-viewstub/" class="article-date">
+  	<time datetime="2016-10-08T07:15:43.000Z" itemprop="datePublished">2016-10-08</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android include和merge标签、ViewStub控件的使用总结
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Android/">Android</a>
+	</div>
+
+
+
+        
+            <div class="bookicon"></div>
+            <div class="article-hit">
+              <span id="busuanzi_container_page_pv">
+                    热度 <span id="busuanzi_value_page_pv"></span>℃</span>
+            </div>
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="lt-inlcude-gt-标签"><a href="#lt-inlcude-gt-标签" class="headerlink" title="&lt;inlcude&gt;标签"></a><code>&lt;inlcude&gt;</code>标签</h1><p>在开发Android布局时，常将一些通用的视图提取到一个单独的layout文件中，然后使用<code>&lt;include&gt;</code>标签在需要使用的其他layout布局文件中加载进来，比如App导航栏等。这样，便于对相同视图内容进行统一的控制管理，提高布局重用性。然而，使用<code>&lt;include&gt;</code>标签总有一些值得我们注意的地方。</p>
+<a id="more"></a>
+<h2 id="根容器id与include-id必须相同"><a href="#根容器id与include-id必须相同" class="headerlink" title="根容器id与include id必须相同"></a>根容器id与include id必须相同</h2><p>如果我们给include所加载的layout布局的根容器设置了id属性，也在include标签中设置了id属性，同时需要在代码中获取根容器的控件对象时，一定要将这两个id设置相同的名称！否则，将获取不到根容器对象，即为null。举个例子：</p>
+<p>我们将应用中的Toolbar提取到一个include_toolbar.xml文件中，并设置了Toolbar设置了id属性：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">android.support.v7.widget.Toolbar</span></span><br><span class="line">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/tb_toolbar"</span></span><br><span class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attr">android:layout_height</span>=<span class="string">"?attr/actionBarSize"</span></span><br><span class="line">    <span class="attr">app:titleTextColor</span>=<span class="string">"@android:color/white"</span></span><br><span class="line">    <span class="attr">app:title</span>=<span class="string">""</span></span><br><span class="line">    <span class="attr">app:theme</span>=<span class="string">"@style/AppTheme"</span></span><br><span class="line">    <span class="attr">android:background</span>=<span class="string">"@color/blue"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>然后在其他布局文件activity_main.xml中使用include标签加载上述Toolbar视图，同时由于相对布局的需要而将include标签设置了相同值的id属性：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">RelativeLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 这里的id属性一定要与layout属性所加载的include_toolbar.xml布局的根容器设置相同的值！ --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">include</span></span><br><span class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/tb_toolbar"</span></span><br><span class="line">        <span class="attr">layout</span>=<span class="string">"@layout/include_toolbar"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>最后在代码文件MainActivity.java中获取Toolbar对象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">@Override</span></span><br><span class="line"> <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">     setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line"><span class="comment">//如果include布局根容器和include标签中的id设置的是不同的值，这里获取的mToolbar值将为null</span></span><br><span class="line">     Toolbar mToolbar = (Toolbar) findViewById(R.id.tb_toolbar);</span><br><span class="line">     setSupportActionBar(mToolbar);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="宽高属性与其他属性的联合使用"><a href="#宽高属性与其他属性的联合使用" class="headerlink" title="宽高属性与其他属性的联合使用"></a>宽高属性与其他属性的联合使用</h2><p>在使用include标签时，除了使用layout属性加载布局文件时，一般不需要设置其他属性了，比如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">include</span></span><br><span class="line">        <span class="attr">layout</span>=<span class="string">"@layout/include_toolbar"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>但有时为了布局的需要，仍要使用诸如<code>layout_margin</code>等除id之外的其他属性，这时就要注意，为了使这些其他属性起作用，必须同时设置include标签的宽高属性，如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">include</span></span><br><span class="line">        <span class="attr">layout</span>=<span class="string">"@layout/include_toolbar"</span></span><br><span class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">        <span class="attr">android:layout_margin</span>=<span class="string">"8dp"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="lt-merge-gt-标签"><a href="#lt-merge-gt-标签" class="headerlink" title="&lt;merge&gt;标签"></a><code>&lt;merge&gt;</code>标签</h1><p><code>&lt;merge&gt;</code>标签存在的意义是帮助<code>&lt;include&gt;</code>标签排除多余的一层ViewGroup容器，减少view hierarchy的结构，提升UI performance。<a href="https://developer.android.com/training/improving-layouts/reusing-layouts.html" target="_blank" rel="external">Developers官网</a>举了一个很好的例子，大家可以自行查看一下，总结其意思就是，在主界面中，<code>&lt;include&gt;</code>标签的parent ViewGroup与包含的layout根容器ViewGroup是相同的类型，那么则可以将包含的layout根容器ViewGroup使用<code>&lt;merge&gt;</code>标签代替，从而减少一层ViewGroup的嵌套，从而提升UI性能渲染。举个例子就是：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">merge</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- re-used views --&gt;</span></span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">merge</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>然后再在其他界面中使用<code>&lt;include&gt;</code>标签加载重用布局文件即可。</p>
+<h1 id="ViewStub控件"><a href="#ViewStub控件" class="headerlink" title="ViewStub控件"></a>ViewStub控件</h1><p>android.view.ViewStub也可以用来加载布局文件，但与include标签完全不同。ViewStub是一个不可见的View类，用于在运行时按需懒加载资源，只有在代码中调用了<code>viewStub.inflate()</code>或者<code>viewStub.setVisible(View.visible)</code>方法时才内容才变得可见。这里需要注意的一点是，当ViewStub被inflate到parent时，ViewStub就被remove掉了，即当前view hierarchy中不再存在ViewStub，而是使用对应的layout视图代替。ViewStub有几个属性和方法值得说明一下：</p>
+<ul>
+<li><p><code>android:layout</code>属性<br>加载包含的layout布局文件；</p>
+</li>
+<li><p><code>android:inflatedId</code>属性<br>重写包含的layout布局文件的根容器id；</p>
+</li>
+<li><p><code>inflate()</code>方法<br>与<code>setVisible(int)</code>方法作用类似，都可以使内容得以显示，只是<code>inflate()</code>会返回一个View对象，避免了额外使用<code>findViewById()</code>方法获取layout视图对象。</p>
+</li>
+</ul>
+<p>举个例子说明一下，按需加载的<code>viewstub_content.xml</code>内容如下（这里只是个例子，只有一个TextView，实际使用中一定是一个复杂的布局才用得上ViewStub）：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attr">android:gravity</span>=<span class="string">"center"</span></span><br><span class="line">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">TextView</span></span><br><span class="line">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span><br><span class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">        <span class="attr">android:text</span>=<span class="string">"Content"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Activity界面布局文件<code>activity_main.xml</code>内容如下，只有一个Button按钮和ViewStub控件:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">Button</span></span><br><span class="line">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span><br><span class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">        <span class="attr">android:layout_gravity</span>=<span class="string">"center_horizontal"</span></span><br><span class="line">        <span class="attr">android:text</span>=<span class="string">"Show"</span></span><br><span class="line">        <span class="attr">android:onClick</span>=<span class="string">"onClick"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">ViewStub</span></span><br><span class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/vs_viewStub"</span></span><br><span class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span><br><span class="line">        <span class="attr">android:layout</span>=<span class="string">"@layout/viewstub_content"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>对应的java代码如下，点击按钮显示ViewStub的内容：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">    View view = ((ViewStub) findViewById(R.id.vs_viewStub)).inflate();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>点击按钮，即可显示ViewStub的内容。我们用<code>Hierarchy View</code>观察一下视图层次的情况，当Activity初始化时，视图结构如下：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/ViewStub-Samles-01.png" alt="ViewStub-Samles-01"></p>
+<p>可以看到，当前view hierarchy中存在的是ViewStub而不是包含的layout布局。点击一下按钮，显示内容，再看一下：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/ViewStub-Samles-02.png" alt="ViewStub-Samles-01"></p>
+<p>ViewStub已经remove掉了，而包含的layout布局加入到当前view hierarchy中，即无法使用<code>findViewById()</code>方法获取ViewStub的引用。</p>
+<p>所以，<code>&lt;include&gt;</code>标签与ViewStub完全不是同一个概念，ViewStub自带懒加载特性，可以理解为一个轻量级的View，自身占用资源较小，在UI初始化时所对应的layout布局视图不占用系统资源，从而可以加快当前界面的渲染过程，相比使用普通的<code>view.setVisible(int)</code>方法，性能体验提高不少，而<code>&lt;include&gt;</code>标签则只是用于提高布局的重用性，使用场景大有不同。</p>
+
+      
+    </div>
+    
+      <! -- 添加版权信息 -->
+<div class="article-footer-copyright">
+<p>本文由&nbsp;<b>亦枫</b>&nbsp;创作并首发于&nbsp;<b><a href="/index.html" target="_blank" title="亦枫">亦枫的个人博客</a></b>&nbsp;，同步授权微信公众号：技术鸟（NiaoTech）。</a></p>
+ 
+<p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
+ 
+<p>本文标题为: <b><a href="/2016/10/08/android-include-merge-viewstub/" target="_blank" title="Android include和merge标签、ViewStub控件的使用总结">Android include和merge标签、ViewStub控件的使用总结</a></b> </p>
+ 
+<p>本文链接为：<b><a href="/2016/10/08/android-include-merge-viewstub/" target="_blank" title="Android include和merge标签、ViewStub控件的使用总结">http://yifeng.studio/2016/10/08/android-include-merge-viewstub/</a></b> </p>
+
+<p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
+</div>
+<! -- 添加版权信息 -->
+    
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/09/23/behavior-analyzation/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android 一步一步分析CoordinatorLayout.Behavior</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="android-include-merge-viewstub" data-title="Android include和merge标签、ViewStub控件的使用总结" data-url="http://yifeng.studio/2016/10/08/android-include-merge-viewstub/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"yifengzone"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 亦枫
+    	</div>
+      <div class="footer-left">
+        &nbsp;&copy; 
+        <span id="busuanzi_container_site_pv">
+          本站访问量<span id="busuanzi_value_site_pv"></span>次
+        </span>
+        <span id="busuanzi_container_site_uv">
+          访客数<span id="busuanzi_value_site_uv"></span>人
+        </span>
+      </div>
+      	<div class="footer-right">
+      		Theme of <a href="https://github.com/Mike-bel/hexo-theme-yilia-optimization" target="_blank">yilia-opti</a>, by YiFeng
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: '/'
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-83125745-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script>
+	(function(){
+		document.write('<scr'+'ipt type="text/javascript" src="'+document.location.protocol+'//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">'+'</sc'+'ript>');
+	})();
+</script>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

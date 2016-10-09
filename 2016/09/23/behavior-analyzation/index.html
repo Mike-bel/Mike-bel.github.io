@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Android 一步一步分析Behavior | YiFeng&#39;s Zone</title>
+  <title>Android 一步一步分析CoordinatorLayout.Behavior | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="在MD系列的前几篇文章中，通过基础知识和实战案例配合讲解的形式介绍了CoordinatorLayout与AppBarLayout、Toolbar、CollapsingToolbarLayout的使用，并实现了几种MD风格下比较炫酷的交互效果。学会怎么用之后，我们再想想，为什么它们之间能够产生这样的交互行为呢？其实就是因为CoordinatorLayout.Behavior的存在，这也是本文所要讲述">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android 一步一步分析Behavior">
+<meta property="og:title" content="Android 一步一步分析CoordinatorLayout.Behavior">
 <meta property="og:url" content="http://yifeng.studio/2016/09/23/behavior-analyzation/index.html">
 <meta property="og:site_name" content="YiFeng's Zone">
 <meta property="og:description" content="在MD系列的前几篇文章中，通过基础知识和实战案例配合讲解的形式介绍了CoordinatorLayout与AppBarLayout、Toolbar、CollapsingToolbarLayout的使用，并实现了几种MD风格下比较炫酷的交互效果。学会怎么用之后，我们再想想，为什么它们之间能够产生这样的交互行为呢？其实就是因为CoordinatorLayout.Behavior的存在，这也是本文所要讲述">
@@ -17,9 +17,9 @@
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/behavior-02.gif">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/behavior-removed.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/beharior-added.png">
-<meta property="og:updated_time" content="2016-09-23T14:58:37.000Z">
+<meta property="og:updated_time" content="2016-09-26T05:29:25.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android 一步一步分析Behavior">
+<meta name="twitter:title" content="Android 一步一步分析CoordinatorLayout.Behavior">
 <meta name="twitter:description" content="在MD系列的前几篇文章中，通过基础知识和实战案例配合讲解的形式介绍了CoordinatorLayout与AppBarLayout、Toolbar、CollapsingToolbarLayout的使用，并实现了几种MD风格下比较炫酷的交互效果。学会怎么用之后，我们再想想，为什么它们之间能够产生这样的交互行为呢？其实就是因为CoordinatorLayout.Behavior的存在，这也是本文所要讲述">
 <meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/behavior-01.gif">
   
@@ -124,7 +124,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/Hexo/" style="font-size: 20px;">Hexo</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a>
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a>
 					</div>
 				</section>
 				
@@ -217,7 +217,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Android 一步一步分析Behavior
+      Android 一步一步分析CoordinatorLayout.Behavior
     </h1>
   
 
@@ -331,9 +331,9 @@
  
 <p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
  
-<p>本文标题为: <b><a href="/2016/09/23/behavior-analyzation/" target="_blank" title="Android 一步一步分析Behavior">Android 一步一步分析Behavior</a></b> </p>
+<p>本文标题为: <b><a href="/2016/09/23/behavior-analyzation/" target="_blank" title="Android 一步一步分析CoordinatorLayout.Behavior">Android 一步一步分析CoordinatorLayout.Behavior</a></b> </p>
  
-<p>本文链接为：<b><a href="/2016/09/23/behavior-analyzation/" target="_blank" title="Android 一步一步分析Behavior">http://yifeng.studio/2016/09/23/behavior-analyzation/</a></b> </p>
+<p>本文链接为：<b><a href="/2016/09/23/behavior-analyzation/" target="_blank" title="Android 一步一步分析CoordinatorLayout.Behavior">http://yifeng.studio/2016/09/23/behavior-analyzation/</a></b> </p>
 
 <p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
 </div>
@@ -344,6 +344,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2016/10/08/android-include-merge-viewstub/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Android include和merge标签、ViewStub控件的使用总结
+        
+      </div>
+    </a>
   
   
     <a href="/2016/09/10/Hexo-search-baidutongji-highlight/" id="article-nav-older" class="article-nav-link-wrap">
@@ -382,7 +391,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="behavior-analyzation" data-title="Android 一步一步分析Behavior" data-url="http://yifeng.studio/2016/09/23/behavior-analyzation/"></div>
+	<div class="ds-thread" data-thread-key="behavior-analyzation" data-title="Android 一步一步分析CoordinatorLayout.Behavior" data-url="http://yifeng.studio/2016/09/23/behavior-analyzation/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
