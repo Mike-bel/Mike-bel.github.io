@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>android-cardview | YiFeng&#39;s Zone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Material design中有一种很个性的设计概念：卡片式设计（Cards），这种设计与传统的List Item有所区别，Cards包含更多的内容元素和拥有自己的UI特征，关于Cards的设计规范可以参考官网介绍：
+https://material.google.com/components/cards.html#
+为了更好地实现这种 Cards UI 的设计，Google在v7包中引进了一种">
+<meta property="og:type" content="article">
+<meta property="og:title" content="android-cardview">
+<meta property="og:url" content="http://yifeng.studio/2016/10/18/android-cardview/index.html">
+<meta property="og:site_name" content="YiFeng's Zone">
+<meta property="og:description" content="Material design中有一种很个性的设计概念：卡片式设计（Cards），这种设计与传统的List Item有所区别，Cards包含更多的内容元素和拥有自己的UI特征，关于Cards的设计规范可以参考官网介绍：
+https://material.google.com/components/cards.html#
+为了更好地实现这种 Cards UI 的设计，Google在v7包中引进了一种">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-01.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-02.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-03.gif">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-04.gif">
+<meta property="og:updated_time" content="2016-10-18T08:20:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="android-cardview">
+<meta name="twitter:description" content="Material design中有一种很个性的设计概念：卡片式设计（Cards），这种设计与传统的List Item有所区别，Cards包含更多的内容元素和拥有自己的UI特征，关于Cards的设计规范可以参考官网介绍：
+https://material.google.com/components/cards.html#
+为了更好地实现这种 Cards UI 的设计，Google在v7包中引进了一种">
+<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-01.png">
+  
+    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+  
+  
+    
+      <link rel="icon" href="/favicon.png">
+    
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+				
+					<img lazy-src="/assets/imgSite/avatar.png" class="js-avatar">
+				
+			
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">亦枫</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">起始于Android，不止于Android</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">首页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/guolin_blog">郭霖</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/lmj623565791">鸿洋</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/singwhatiwanna">任玉刚</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.jcodecraeer.com/plus/list.php?tid=16">泡在网上的日子</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">长期拼搏在一线开发的安卓程序猿一枚，热衷于技术，沉浸于段子，微信公众号：技术鸟（微信号：NiaoTech）。If you can&#39;t fly then run, can&#39;t run then walk, can&#39;t walk then crawl, keep moving forward.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">亦枫</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img lazy-src="null/assets/imgSite/avatar.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">亦枫</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">起始于Android，不止于Android</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">首页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-android-cardview" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/18/android-cardview/" class="article-date">
+  	<time datetime="2016-10-18T08:18:16.000Z" itemprop="datePublished">2016-10-18</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      android-cardview
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Android/">Android</a>
+	</div>
+
+
+
+        
+            <div class="bookicon"></div>
+            <div class="article-hit">
+              <span id="busuanzi_container_page_pv">
+                    热度 <span id="busuanzi_value_page_pv"></span>℃</span>
+            </div>
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Material design中有一种很个性的设计概念：卡片式设计（Cards），这种设计与传统的List Item有所区别，Cards包含更多的内容元素和拥有自己的UI特征，关于Cards的设计规范可以参考官网介绍：</p>
+<p><a href="https://material.google.com/components/cards.html#" target="_blank" rel="external">https://material.google.com/components/cards.html#</a></p>
+<p>为了更好地实现这种 Cards UI 的设计，Google在v7包中引进了一种全新的控件：<a href="https://developer.android.com/reference/android/support/v7/widget/CardView.html#" target="_blank" rel="external">CardVew</a>，本文将从开发的角度介绍CardView的一些常见使用细节。</p>
+<a id="more"></a>
+<p>Google用一句话介绍了CardView：一个带圆角和阴影背景的FrameLayout。CardView在Android Lollipop（API 21）及以上版本的系统中适配较好，本文我们以一个具体的例子来学习CardView的基本使用和注意事项，效果图如下：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-01.png" alt="CardView-samples-01.png"></p>
+<p>上图展示的是一个list列表，列表中的item使用了卡片式设计，主要利用CardView控件实现，为了精简文章内容，这里我们将item布局中的核心代码罗列出来，加以分析：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">    <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span></span><br><span class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">android.support.v7.widget.CardView</span></span><br><span class="line">        <span class="attr">tools:targetApi</span>=<span class="string">"lollipop"</span></span><br><span class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">        <span class="attr">android:stateListAnimator</span>=<span class="string">"@drawable/lift_on_touch"</span></span><br><span class="line">        <span class="attr">android:layout_marginLeft</span>=<span class="string">"@dimen/dp_8"</span></span><br><span class="line">        <span class="attr">android:layout_marginRight</span>=<span class="string">"@dimen/dp_8"</span></span><br><span class="line">        <span class="attr">android:layout_marginBottom</span>=<span class="string">"@dimen/dp_8"</span></span><br><span class="line">        <span class="attr">android:clickable</span>=<span class="string">"true"</span></span><br><span class="line">        <span class="attr">android:foreground</span>=<span class="string">"?android:attr/selectableItemBackground"</span></span><br><span class="line">        <span class="attr">app:cardCornerRadius</span>=<span class="string">"@dimen/dp_4"</span></span><br><span class="line">        <span class="attr">app:cardUseCompatPadding</span>=<span class="string">"true"</span></span><br><span class="line">        <span class="attr">app:cardPreventCornerOverlap</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">RelativeLayout</span></span><br><span class="line">            <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">&lt;!-- image、text等其他内容 --&gt;</span></span><br><span class="line">            ......</span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">android.support.v7.widget.CardView</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>可以看出，核心部分在于CardView的属性使用，下面我们针对几个特殊的属性逐一分析，深化了解。</p>
+<h1 id="排版技巧"><a href="#排版技巧" class="headerlink" title="排版技巧"></a>排版技巧</h1><hr>
+<p>前面我们说过，CardView从本质上属于FrameLayout，而CardView通常包含了较多的内容元素，为了更方便的排版布局各个元素，一般借助于其他基本布局容器，比如这里我们使用了一个<code>RelativeLayout</code>作为CardView的唯一Child。</p>
+<h1 id="阴影Padding"><a href="#阴影Padding" class="headerlink" title="阴影Padding"></a>阴影Padding</h1><hr>
+<p>在Android Lollipop之前的系统，CardView会自动添加一些额外的padding空间来绘制阴影部分，这也导致了以Lollipop为分界线的不同系统上CardView的尺寸大小不同。为了解决这个问题，有两种方法：第一种，使用不同API版本的dimension资源适配（也就是借助values和values-21文件夹中不同的dimens.xml文件）；第二种，就是使用<code>setUseCompatPadding</code>属性，设置为true（默认值为false），让CardView在不同系统中使用相同的padding值。</p>
+<h1 id="圆角覆盖"><a href="#圆角覆盖" class="headerlink" title="圆角覆盖"></a>圆角覆盖</h1><hr>
+<p>这也是一个解决系统兼容的问题。在pre-Lollipop平台（API 21版本之前）上，CardView不会裁剪内容元素以满足圆角需求，而是使用添加padding的替代方案，从而使内容元素不会覆盖CardView的圆角。而控制这个行为的属性就是cardPreventCornerOverlap，默认值为true。在本例中我们设置了该属性为false。这里我们看一下，在pre-Lollipop平台中，不同cardPreventCornerOverlap值的效果对比图（左false，右true）：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-02.png" alt="CardView-samples-02.png"></p>
+<p>显然，默认值下自动添加padding的方式不可取，所以需要设置该属性值为false。需要注意的一点是，该属性的设置在Lollipop及以上版本的系统中没有任何影响，除非cardUseCompatPadding的值为true。</p>
+<h1 id="Ripple效果"><a href="#Ripple效果" class="headerlink" title="Ripple效果"></a>Ripple效果</h1><hr>
+<p>Cards一般都是可点击的，为此我们使用了foreground属性并使用系统的selectableItemBackground值，同时设置clickable为true（如果在java代码中使用了cardView.setOnClickListener，就可以不用写clickable属性了），从而达到在Lollipop及以上版本系统中实现点击时的涟漪效果（Ripple），如图：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-03.gif" alt="CardView-samples-03.gif"></p>
+<p>在pre-Lollipop版本中，则是一个普通的点击变暗的效果，这里就不截图展示了，如果想改变老版本的点击效果，也可以通过版本兼容的方式自行修改。</p>
+<h1 id="lift-on-touch"><a href="#lift-on-touch" class="headerlink" title="lift-on-touch"></a>lift-on-touch</h1><hr>
+<p>根据官网<a href="https://material.google.com/motion/material-motion.html#" target="_blank" rel="external">Material motion</a>部分对交互动作规范的指导，Cards、Button等视图应该有一个触摸抬起（lift-on-touch）的交互效果，也就是在三维立体空间上的Z轴发生位移，从而产生一个阴影加深的效果，与Ripple效果共同使用，官网给了一个很好的示例图：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-04.gif" alt="CardView-samples-04.gif"></p>
+<p>在实现这个效果也很简单，可以在<code>res/drawable</code>目录下建立一个<code>lift_on_touch.xml</code>文件，内容如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="comment">&lt;!-- animate the translationZ property of a view when pressed --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">selector</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span></span><br><span class="line">        <span class="attr">android:state_enabled</span>=<span class="string">"true"</span></span><br><span class="line">        <span class="attr">android:state_pressed</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">set</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">objectAnimator</span></span><br><span class="line">                <span class="attr">android:duration</span>=<span class="string">"@android:integer/config_shortAnimTime"</span></span><br><span class="line">                <span class="attr">android:propertyName</span>=<span class="string">"translationZ"</span></span><br><span class="line">                <span class="attr">android:valueTo</span>=<span class="string">"6dp"</span></span><br><span class="line">                <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">set</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">objectAnimator</span></span><br><span class="line">                <span class="attr">android:duration</span>=<span class="string">"@android:integer/config_shortAnimTime"</span></span><br><span class="line">                <span class="attr">android:propertyName</span>=<span class="string">"translationZ"</span></span><br><span class="line">                <span class="attr">android:valueTo</span>=<span class="string">"0"</span></span><br><span class="line">                <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">selector</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>即通过属性动画动态改变translationZ值，沿着Z轴，从0dp到6dp变化。这里的6dp值也是有出处的，参考<a href="https://github.com/google/iosched/blob/master/android/src/main/res/values/dimens.xml#L122" target="_blank" rel="external">e Google I/O 2014 app</a>和<a href="https://developer.android.com/training/material/shadows-clipping.html#Elevation" target="_blank" rel="external">Assign Elevation to Your Views</a>。然后将其赋值给<code>android:stateListAnimator</code>属性即可。由于<code>stateListAnimator</code>属性只适用于Lollipop及以上版本，为了取消xml中的警告，可以指定<code>tools:targetApi=&quot;lollipop&quot;</code>。</p>
+<p>关于这个功能，需要补充说明一点。这里的<code>lift_on_touch.xml</code>，严格意义上来讲，属于anim资源，同时适用于API 21及以上版本，所以通常可以定义在<code>res/anim-v21</code>目录下，然后使用<code>@anim/lift_on_touch</code>赋值给<code>stateListAnimator</code>属性，而不是例子中的<code>@drawable/lift_on_touch</code>方法。但是<code>res/anim-v21</code>目录下的<code>lift_on_touch.xml</code>会产生一个错误提示：</p>
+<blockquote>
+<p><selector> XML file should be in either “animator” or “drawable”,not “anim”</selector></p>
+</blockquote>
+<p>虽然这个不影响编译运行，但是有个错误提示终究碍眼，所以例子中我选择放在了<code>res/drawable</code>目录下，大家可以自行斟酌。</p>
+<p>关于对lift-on-touch效果的理解，YouToBe网站有个视频解说，感兴趣的话可以参看看，地址如下：</p>
+<p><a href="https://www.youtube.com/watch?v=YaG_ljfzeUw" target="_blank" rel="external">DesignBytes: Paper and Ink: The Materials that Matter</a></p>
+<p>最后，附上本文案例的GitHub地址：</p>
+<p><a href="https://github.com/Mike-bel/MDStudySamples" target="_blank" rel="external">https://github.com/Mike-bel/MDStudySamples</a></p>
+
+      
+    </div>
+    
+      <! -- 添加版权信息 -->
+<div class="article-footer-copyright">
+<p>本文由&nbsp;<b>亦枫</b>&nbsp;创作并首发于&nbsp;<b><a href="/index.html" target="_blank" title="亦枫">亦枫的个人博客</a></b>&nbsp;，同步授权微信公众号：技术鸟（NiaoTech）。</a></p>
+ 
+<p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
+ 
+<p>本文标题为: <b><a href="/2016/10/18/android-cardview/" target="_blank" title="android-cardview">android-cardview</a></b> </p>
+ 
+<p>本文链接为：<b><a href="/2016/10/18/android-cardview/" target="_blank" title="android-cardview">http://yifeng.studio/2016/10/18/android-cardview/</a></b> </p>
+
+<p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
+</div>
+<! -- 添加版权信息 -->
+    
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/10/13/android-tools-attributes/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android Tools Attributes，让布局设计所见即所得</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="android-cardview" data-title="android-cardview" data-url="http://yifeng.studio/2016/10/18/android-cardview/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"yifengzone"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 亦枫
+    	</div>
+      <div class="footer-left">
+        &nbsp;&copy; 
+        <span id="busuanzi_container_site_pv">
+          本站访问量<span id="busuanzi_value_site_pv"></span>次
+        </span>
+        <span id="busuanzi_container_site_uv">
+          访客数<span id="busuanzi_value_site_uv"></span>人
+        </span>
+      </div>
+      	<div class="footer-right">
+      		Theme of <a href="https://github.com/Mike-bel/hexo-theme-yilia-optimization" target="_blank">yilia-opti</a>, by YiFeng
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: '/'
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-83125745-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script>
+	(function(){
+		document.write('<scr'+'ipt type="text/javascript" src="'+document.location.protocol+'//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">'+'</sc'+'ript>');
+	})();
+</script>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
