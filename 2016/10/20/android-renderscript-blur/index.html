@@ -15,7 +15,8 @@
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/RenderScript-Blur-Before.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/RenderScript-Blur-After.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/daimajia-AndroidViewHover.gif">
-<meta property="og:updated_time" content="2016-10-20T06:43:15.000Z">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/BlurTestAndroid.jpg">
+<meta property="og:updated_time" content="2016-10-24T13:00:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android RenderScript 简单高效实现图片的高斯模糊效果">
 <meta name="twitter:description" content="高斯模糊（Gaussian blur）和毛玻璃效果（亦称磨砂效果），近两年在移动端的UI设计上越来越流行，特别是iOS手机上出现的较多，iOS系统也提供了相应的API帮助开发人员分分钟实现这两个效果。而Android系统则经历了一个漫长的探索过程，对图片的处理，从Java算法到NDK方式实现等，各种摸索层出不穷。">
@@ -115,6 +116,8 @@
 					        
 								<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
 					        
+								<a class="rss" target="_blank" href="#" title="rss">rss</a>
+					        
 						</div>
 					</nav>
 				</section>
@@ -192,6 +195,8 @@
 			        
 						<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
 			        
+						<a class="rss" target="_blank" href="#" title="rss">rss</a>
+			        
 				</div>
 			</nav>
 		</header>				
@@ -255,9 +260,9 @@
 <p>通过设置模糊半径（radius）的大小来控制图片的清晰度，简短的几行代码轻松实现图片的高斯模糊处理，我们看一下radius等于最大值25时的图片模糊效果：</p>
 <p>原图效果：<br><img src="http://ocq7gtgqu.bkt.clouddn.com/RenderScript-Blur-Before.png" alt="RenderScript-Blur-Before"></p>
 <p>高斯模糊：<br><img src="http://ocq7gtgqu.bkt.clouddn.com/RenderScript-Blur-After.png" alt="RenderScript-Blur-After"></p>
-<p>注意：ScriptIntrinsicBlur的相关方法只支持API 17及以上版本的系统，为了兼容旧版本，Google供了support.v8包，在使用RenderScript和Intrinsics类时，引入v8包中的相关类即可：</p>
+<p>注意：ScriptIntrinsicBlur的相关方法只支持API 17及以上版本的系统，为了兼容旧版本，Google 提供了<code>android.support.v8.renderscript</code>兼容包，使用时引入该兼容包包下的相关类即可：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.support.v8.renderscript.Allocation;</span><br><span class="line"><span class="keyword">import</span> android.support.v8.renderscript.Element;</span><br><span class="line"><span class="keyword">import</span> android.support.v8.renderscript.RenderScript;</span><br><span class="line"><span class="keyword">import</span> android.support.v8.renderscript.ScriptIntrinsicBlur;</span><br></pre></td></tr></table></figure>
-<p>同时，在<code>app/build.gradle</code>文件的<code>defaultConfig</code>配置中，添加如下两行内容即可：</p>
+<p>注意：<code>android.support.v8.renderscript</code>兼容包的使用不需要在<code>app/build.gradle</code>文件中额外添加依赖，而是在<code>defaultConfig</code>配置中添加如下两行代码：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">defaultConfig &#123;</span><br><span class="line">	......</span><br><span class="line">	renderscriptTargetApi 19</span><br><span class="line">	renderscriptSupportModeEnabled  true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在设计上巧妙地运用高斯模糊往往能达到出乎意料的体验效果，比如大神<a href="https://github.com/daimajia" target="_blank" rel="external">daimajia</a>就利用RenderScript和<a href="https://github.com/JakeWharton/NineOldAndroids" target="_blank" rel="external">NineOldAndroids</a>做了一个比较有创意的UI交互，开源库为：<a href="https://github.com/daimajia/AndroidViewHover" target="_blank" rel="external">AndroidViewHover</a>，效果如下，感兴趣的同学可以一探究竟：</p>
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/daimajia-AndroidViewHover.gif" alt="daimajia-AndroidViewHover.gif"></p>
@@ -268,6 +273,8 @@
 <li><a href="https://github.com/wasabeef/Blurry" target="_blank" rel="external">wasabeef/Blurry</a></li>
 <li><a href="https://github.com/kikoso/android-stackblur" target="_blank" rel="external">kikoso/android-stackblur</a></li>
 </ul>
+<p>当然，不同类库实现的方式、采取的算法和耗费的时间各有差异，开源项目<a href="https://github.com/patrickfav/BlurTestAndroid" target="_blank" rel="external">BlurTestAndroid</a>对这些类库做了一个统计和比较，选择不同尺寸的图片和不同大小的模糊半径，以图表的形式直观地展示各种类库的模糊处理效率：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/BlurTestAndroid.jpg" alt="BlurTestAndroid.jpg"></p>
 
       
     </div>
