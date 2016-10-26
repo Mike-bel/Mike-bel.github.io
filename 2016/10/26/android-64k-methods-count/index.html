@@ -17,7 +17,7 @@
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/methodscount-samples-03.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/apk-method-count-samples.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/Android-Studio-APK-Analyzer-Samples.png">
-<meta property="og:updated_time" content="2016-10-26T09:28:35.000Z">
+<meta property="og:updated_time" content="2016-10-26T12:21:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 突破64K方法数的限制">
 <meta name="twitter:description" content="随着安卓平台的不断发展与壮大，市场上大而全的应用比比皆是，产品需求的变更累积和UI交互的极致追求，除了 resources 文件的俱增，在 Android Project 中依赖的 Library 和 自己写的 Java 代码也会越来越多。这些变化，除了会导致打包出的 APK 文件越来越大之外，当项目中java代码包含的方法数（method count）超出一个峰值时，编译过程中就会出现如下错误：">
@@ -260,7 +260,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Conversion to Dalvik format failed:</span><br><span class="line">Unable to execute dex: method ID not in [<span class="number">0</span>, <span class="number">0xffff</span>]: <span class="number">65536</span></span><br></pre></td></tr></table></figure>
 <p>较新版本的编译系统中，错误内容如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">trouble writing output:</span><br><span class="line">Too many field references: <span class="number">131000</span>; max is <span class="number">65536</span>.</span><br><span class="line">You may <span class="keyword">try</span> using --multi-dex option.</span><br></pre></td></tr></table></figure>
-<p>尽管在不同版本的编译系统中显示的错误内容不尽相同，但都提到了一个具体的数字：65536，也就是本文要讲到的核心内容，Android 64K Method Counts Limit 的峰值。</p>
+<p>尽管在不同版本的编译系统中显示的错误内容不尽相同，但都提到了一个具体的数字：65536，也就是本文要讲到的核心内容，Android 64K Method Counts Limit 的峰值。详细信息，参考官网用户指南：<a href="https://developer.android.com/studio/build/multidex.html" target="_blank" rel="external">Configure Apps with Over 64K Methods</a></p>
 <h1 id="Android-64K-Method-Counts-Limit"><a href="#Android-64K-Method-Counts-Limit" class="headerlink" title="Android 64K Method Counts Limit"></a>Android 64K Method Counts Limit</h1><hr>
 <p>Android Project 经过编译打包，其中的Java代码（包括Library）转化为DEX格式的字节码文件，这是Android 5.0之前的Dalvik虚拟机决定的（5.0之后改为ART虚拟机），并且采用short类型引用DEX文件中的method，这也为method数量的峰值大小埋下了隐患。short类型能够表示的最大值是65536，也就说单个DEX文件中最多只有65536个method能够得到引用，如果代码执行了超出部分的method引用，自然会报错，如methodNotFound等。1K等于1024，65536刚好是64K，为了便于称呼和使用，就将这个限制统称为64K方法数的引用限制。</p>
 <p>为了解决64K方法数限制的问题，我们可以在项目中使用multidex配置，当项目中的方法数（包括：Android framework，library和我们自己写的代码）超过64K时，编译系统会自动编译出多个DEX文件。</p>
