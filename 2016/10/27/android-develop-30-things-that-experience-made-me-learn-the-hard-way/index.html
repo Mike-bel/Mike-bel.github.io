@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>［译］开发安卓Apps，我所努力学习到的三十多条宝贵经验 | YiFeng&#39;s Zone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="网上阅读时猎取到的一篇外国工程师的文章，作者César Ferreira结合自己在安卓领域的摸爬滚打经历总结了三十多条宝贵经验，非常值得参考学习，故翻译记录于此，并作了一些补充说明，帮助阅读理解。译文原文：
+Building Android Apps — 30 things that experience made me learn the hard way">
+<meta property="og:type" content="article">
+<meta property="og:title" content="［译］开发安卓Apps，我所努力学习到的三十多条宝贵经验">
+<meta property="og:url" content="http://yifeng.studio/2016/10/27/android-develop-30-things-that-experience-made-me-learn-the-hard-way/index.html">
+<meta property="og:site_name" content="YiFeng's Zone">
+<meta property="og:description" content="网上阅读时猎取到的一篇外国工程师的文章，作者César Ferreira结合自己在安卓领域的摸爬滚打经历总结了三十多条宝贵经验，非常值得参考学习，故翻译记录于此，并作了一些补充说明，帮助阅读理解。译文原文：
+Building Android Apps — 30 things that experience made me learn the hard way">
+<meta property="og:updated_time" content="2016-10-27T13:07:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="［译］开发安卓Apps，我所努力学习到的三十多条宝贵经验">
+<meta name="twitter:description" content="网上阅读时猎取到的一篇外国工程师的文章，作者César Ferreira结合自己在安卓领域的摸爬滚打经历总结了三十多条宝贵经验，非常值得参考学习，故翻译记录于此，并作了一些补充说明，帮助阅读理解。译文原文：
+Building Android Apps — 30 things that experience made me learn the hard way">
+  
+    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+  
+  
+    
+      <link rel="icon" href="/favicon.png">
+    
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+				
+					<img lazy-src="/assets/imgSite/avatar.png" class="js-avatar">
+				
+			
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">亦枫</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">起始于Android，不止于Android</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">首页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+					        
+								<a class="mail" target="_blank" href="mailto:fengleegg@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/guolin_blog">郭霖</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/lmj623565791">鸿洋</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/singwhatiwanna">任玉刚</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.jcodecraeer.com/plus/list.php?tid=16">泡在网上的日子</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">长期拼搏在一线开发的安卓程序猿一枚，热衷于技术，沉浸于段子，微信公众号：技术鸟（微信号：NiaoTech）。If you can&#39;t fly then run, can&#39;t run then walk, can&#39;t walk then crawl, keep moving forward.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">亦枫</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img lazy-src="null/assets/imgSite/avatar.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">亦枫</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">起始于Android，不止于Android</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">首页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+			        
+						<a class="mail" target="_blank" href="mailto:fengleegg@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-android-develop-30-things-that-experience-made-me-learn-the-hard-way" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/27/android-develop-30-things-that-experience-made-me-learn-the-hard-way/" class="article-date">
+  	<time datetime="2016-10-27T13:01:42.000Z" itemprop="datePublished">2016-10-27</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ［译］开发安卓Apps，我所努力学习到的三十多条宝贵经验
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Android/">Android</a>
+	</div>
+
+
+
+        
+            <div class="bookicon"></div>
+            <div class="article-hit">
+              <span id="busuanzi_container_page_pv">
+                    热度 <span id="busuanzi_value_page_pv"></span>℃</span>
+            </div>
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>网上阅读时猎取到的一篇外国工程师的文章，作者<a href="https://medium.com/@cesarmcferreira?source=post_header_lockup" target="_blank" rel="external">César Ferreira</a>结合自己在安卓领域的摸爬滚打经历总结了三十多条宝贵经验，非常值得参考学习，故翻译记录于此，并作了一些补充说明，帮助阅读理解。译文原文：</p>
+<p><a href="https://medium.com/@cesarmcferreira/building-android-apps-30-things-that-experience-made-me-learn-the-hard-way-313680430bf9#.5exr8zumk" target="_blank" rel="external">Building Android Apps — 30 things that experience made me learn the hard way</a></p>
+</blockquote>
+<a id="more"></a>
+<p>学习领域有两种人，一种是自身刻苦钻研一步一步摸索的人，一种是采取捷径获取别人经验的人。下面是我一路学到的东西，和你分享：</p>
+<ol>
+<li><p>添加使用第三方类库前，请再三思考，真的很重要；（未来一些未知的错误也许就发生在这些类库中，关于第三方类库的选择，参考文章：<a href="http://stormzhang.com/android/2016/05/08/how-to-choose-open-source-project/" target="_blank" rel="external">stormzhang－如何正确使用开源项目？</a>）</p>
+</li>
+<li><p>用户看不到的地方，就不要去画它；（避免过度绘制，参考文章：<a href="http://riggaroo.co.za/optimizing-layouts-in-android-reducing-overdraw/" target="_blank" rel="external">Optimizing Layouts in Android – Reducing Overdraw</a>）</p>
+</li>
+<li><p>除非真的需要，否则不要使用数据库；</p>
+</li>
+<li><p>应用中65K的方法数很快就能达到，我的意思是真的很快！不过<a href="https://medium.com/@rotxed/dex-skys-the-limit-no-65k-methods-is-28e6cb40cf71" target="_blank" rel="external">multidexing</a>也许能帮到你；（最近刚总结过一篇：<a href="http://yifeng.studio/2016/10/26/android-64k-methods-count/">Android 突破64K方法数的限制</a>）</p>
+</li>
+<li><p><a href="https://github.com/ReactiveX/RxJava" target="_blank" rel="external">RxJava</a>绝对是<code>AsyncTasks</code>等绝大多数类最好的替代品；（参考文章：<a href="https://medium.com/swlh/party-tricks-with-rxjava-rxandroid-retrolambda-1b06ed7cd29c#.ctr2m3fpn" target="_blank" rel="external">Party tricks with RxJava, RxAndroid &amp; Retrolambda</a>）</p>
+</li>
+<li><p><a href="http://square.github.io/retrofit/" target="_blank" rel="external">Retrofit</a>是最优秀的网络框架；（没有之一）</p>
+</li>
+<li><p>使用<a href="https://medium.com/android-news/retrolambda-on-android-191cc8151f85" target="_blank" rel="external">Retrolambda</a>缩减你的代码；</p>
+</li>
+<li><p>感受<code>RxJava</code>与<code>Retrofit</code>和<code>Retrolambda</code>一起使用的魅力；（参考文章：参考文章：<a href="https://medium.com/swlh/party-tricks-with-rxjava-rxandroid-retrolambda-1b06ed7cd29c#.ctr2m3fpn" target="_blank" rel="external">Party tricks with RxJava, RxAndroid &amp; Retrolambda</a>）</p>
+</li>
+<li><p>我使用<a href="https://github.com/greenrobot/EventBus" target="_blank" rel="external">EventBus</a>，它很强大，但我不会过度使用，因为它会使代码库会变得很杂乱无章；</p>
+</li>
+<li><p>根据应用功能分包，而不是所属类别；（项目目录结构划分，参考文章：<a href="https://medium.com/@cesarmcferreira/package-by-features-not-layers-2d076df1964d#.em996bn3v" target="_blank" rel="external">Package by features, not layers</a>）</p>
+</li>
+<li><p>移除Application线程里的一切代码；（避免拖慢应用的初始化和启动速度）</p>
+</li>
+<li><p>使用<a href="http://developer.android.com/tools/help/layoutopt.html" target="_blank" rel="external">lint</a>优化布局，以便你能一眼识别出冗余的视图并移除；</p>
+</li>
+<li><p>如果你使用<code>gralde</code>，想尽一切办法加快编译速度；（参考文章：<a href="https://medium.com/@cesarmcferreira/speeding-up-gradle-builds-619c442113cb#.1d2hhi8hu" target="_blank" rel="external">How I save 5h/week on Gradle builds</a>）</p>
+</li>
+<li><p>使用<a href="https://medium.com/the-engineering-team/speeding-up-gradle-builds-619c442113cb" target="_blank" rel="external">Profile report</a>查看编译时间到底是在什么地方耗费的；</p>
+</li>
+<li><p>尽量使用众所周知的成熟架构体系；（参考文章：<a href="http://fernandocejas.com/2015/07/18/architecting-android-the-evolution/" target="_blank" rel="external">Architecting Android…The evolution</a>）</p>
+</li>
+<li><p>测试消耗时间，但是一旦你掌握了测试的窍门就会发现，它比没有经过测试的代码更快更稳妥；（参考地址：<a href="http://stackoverflow.com/questions/67299/is-unit-testing-worth-the-effort/67500#67500" target="_blank" rel="external">http://stackoverflow.com/questions/67299/is-unit-testing-worth-the-effort/67500#67500</a></p>
+</li>
+<li><p>使用<code>依赖注入</code>使你的应用更加模块化，并且更容易测试；（参考文章：<a href="http://fernandocejas.com/2015/04/11/tasting-dagger-2-on-android/" target="_blank" rel="external">Tasting Dagger 2 on Android</a>）</p>
+</li>
+<li><p>关注<a href="http://fragmentedpodcast.com/" target="_blank" rel="external">Fragmened Podcast</a>对你大有帮助；（Fragmented，一个专属安卓开发者的播客网站）</p>
+</li>
+<li><p>永远不要使用私人邮箱作为安卓市场的发布者账号；（主要是Google Play，案例参考：<a href="https://www.reddit.com/r/Android/comments/2hywu9/google_play_only_one_strike_is_needed_to_ruin_you/" target="_blank" rel="external">https://www.reddit.com/r/Android/comments/2hywu9/google_play_only_one_strike_is_needed_to_ruin_you/</a>）</p>
+</li>
+<li><p>坚持使用合适的输入类型；（针对输入框，参考链接：<a href="https://developer.android.com/training/keyboard-input/style.html" target="_blank" rel="external">Specifying the Input Method Type</a>）</p>
+</li>
+<li><p>学会借助分析学寻找通用模式和孤立问题；（设计模式，封装等）</p>
+</li>
+<li><p>保持学习最新开源类库，并借助<a href="https://github.com/cesarferreira/dryrun" target="_blank" rel="external">dryrun </a>工具测试开源类库；（<a href="https://android-arsenal.com/" target="_blank" rel="external">Android Arsenal
+</a>，一个搜索整合Android开源类库的网站）</p>
+</li>
+<li><p>Service服务应该做它们需要做的事情，并且尽可能快地终止；</p>
+</li>
+<li><p>使用 <a href="http://developer.android.com/reference/android/accounts/AccountManager.html" target="_blank" rel="external">Account Manager</a> 提示用户名和邮箱地址；</p>
+</li>
+<li><p>使用CI(持续集成)编译构建测试版和发布版应用；</p>
+</li>
+<li><p>不要运行你自己的<code>CI server</code>，防止SSL攻击而造成的磁盘空间、安全问题、服务更新都需要维持server，这是一件耗费时间的任务。使用<code>circleci</code>、<code>travis</code> 和 <code>shippable</code>，相比而言，性价比更高，更可靠；</p>
+</li>
+<li><p>使用 <a href="https://github.com/Triple-T/gradle-play-publisher" target="_blank" rel="external">gradle-play-publisher</a> 自动部署上传Apk文件等信息到应用商店；</p>
+</li>
+<li><p>如果一个library比较大，而你只是用到其中的一小部分功能，那么你就应该寻找一个更小的替代品；（比如可以借助<a href="http://developer.android.com/tools/help/proguard.html" target="_blank" rel="external">proguard</a>工具）</p>
+</li>
+<li><p>不要大量使用超出你实际需要的依赖库。特别是当这些依赖库不是经常在变时，我们就要考虑到，这些类库从头编译（CI Builds就是一个很好的例子）或者检查之前编译好的独立类库是否需要更新所花费的时间相比简单地加载jar或者aar这样的二进制文件，高达四倍之多；</p>
+</li>
+<li><p>开始考虑使用SVG代替PNG格式的图片；（参考地址：<a href="http://developer.android.com/tools/help/vector-asset-studio.html" target="_blank" rel="external">Add Multi-Density Vector Graphics</a>）</p>
+</li>
+<li><p>封装抽象化library的使用，这样当你需要使用新的library替代旧library时就会变得很容易；</p>
+</li>
+<li><p>监听网络连接变化和连接类型（Wifi状态下数据更新更频繁？）；</p>
+</li>
+<li><p>监听电源和电池电量变化（充电时数据更新更频繁？电池电量不足时暂停更新？）；</p>
+</li>
+<li><p>展现给用户的UI就像一个笑话，如果你不得不解释一下的话，它就不是一个好笑话；</p>
+</li>
+<li><p>性能测试很重要：Coding实现慢，但要正确，然后验证优化，这不会影响任何测试内容。</p>
+</li>
+</ol>
+
+      
+    </div>
+    
+      <! -- 添加版权信息 -->
+<div class="article-footer-copyright">
+<p>本文由&nbsp;<b>亦枫</b>&nbsp;创作并首发于&nbsp;<b><a href="/index.html" target="_blank" title="亦枫">亦枫的个人博客</a></b>&nbsp;，同步授权微信公众号：技术鸟（NiaoTech）。</a></p>
+ 
+<p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
+ 
+<p>本文标题为: <b><a href="/2016/10/27/android-develop-30-things-that-experience-made-me-learn-the-hard-way/" target="_blank" title="［译］开发安卓Apps，我所努力学习到的三十多条宝贵经验">［译］开发安卓Apps，我所努力学习到的三十多条宝贵经验</a></b> </p>
+ 
+<p>本文链接为：<b><a href="/2016/10/27/android-develop-30-things-that-experience-made-me-learn-the-hard-way/" target="_blank" title="［译］开发安卓Apps，我所努力学习到的三十多条宝贵经验">http://yifeng.studio/2016/10/27/android-develop-30-things-that-experience-made-me-learn-the-hard-way/</a></b> </p>
+
+<p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
+</div>
+<! -- 添加版权信息 -->
+    
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/10/26/android-64k-methods-count/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android 突破64K方法数的限制</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="android-develop-30-things-that-experience-made-me-learn-the-hard-way" data-title="［译］开发安卓Apps，我所努力学习到的三十多条宝贵经验" data-url="http://yifeng.studio/2016/10/27/android-develop-30-things-that-experience-made-me-learn-the-hard-way/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"yifengzone"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 亦枫
+    	</div>
+      <div class="footer-left">
+        &nbsp;&copy; 
+        <span id="busuanzi_container_site_pv">
+          本站访问量<span id="busuanzi_value_site_pv"></span>次
+        </span>
+        <span id="busuanzi_container_site_uv">
+          访客数<span id="busuanzi_value_site_uv"></span>人
+        </span>
+      </div>
+      	<div class="footer-right">
+      		Theme of <a href="https://github.com/Mike-bel/hexo-theme-yilia-optimization" target="_blank">yilia-opti</a>, by YiFeng
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: '/'
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-83125745-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script>
+	(function(){
+		document.write('<scr'+'ipt type="text/javascript" src="'+document.location.protocol+'//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">'+'</sc'+'ript>');
+	})();
+</script>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
