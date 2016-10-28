@@ -6,18 +6,18 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>［译］开发安卓Apps，我所努力学习到的三十多条宝贵经验 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="网上阅读时猎取到的一篇外国工程师的文章，作者César Ferreira结合自己在安卓领域的摸爬滚打经历总结了三十多条宝贵经验，非常值得参考学习，故翻译记录于此，并作了一些补充说明，帮助阅读理解。译文原文：
+  <meta name="description" content="网上阅读时猎取到的一篇外国工程师的文章，作者 César Ferreira 结合自己在安卓领域的摸爬滚打经历总结了三十多条宝贵经验，非常值得参考学习，故翻译记录于此，并作了一些补充说明，帮助阅读理解。译文原文：
 Building Android Apps — 30 things that experience made me learn the hard way">
 <meta property="og:type" content="article">
 <meta property="og:title" content="［译］开发安卓Apps，我所努力学习到的三十多条宝贵经验">
 <meta property="og:url" content="http://yifeng.studio/2016/10/27/android-develop-30-things-that-experience-made-me-learn-the-hard-way/index.html">
 <meta property="og:site_name" content="YiFeng's Zone">
-<meta property="og:description" content="网上阅读时猎取到的一篇外国工程师的文章，作者César Ferreira结合自己在安卓领域的摸爬滚打经历总结了三十多条宝贵经验，非常值得参考学习，故翻译记录于此，并作了一些补充说明，帮助阅读理解。译文原文：
+<meta property="og:description" content="网上阅读时猎取到的一篇外国工程师的文章，作者 César Ferreira 结合自己在安卓领域的摸爬滚打经历总结了三十多条宝贵经验，非常值得参考学习，故翻译记录于此，并作了一些补充说明，帮助阅读理解。译文原文：
 Building Android Apps — 30 things that experience made me learn the hard way">
-<meta property="og:updated_time" content="2016-10-27T13:07:55.000Z">
+<meta property="og:updated_time" content="2016-10-28T01:51:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="［译］开发安卓Apps，我所努力学习到的三十多条宝贵经验">
-<meta name="twitter:description" content="网上阅读时猎取到的一篇外国工程师的文章，作者César Ferreira结合自己在安卓领域的摸爬滚打经历总结了三十多条宝贵经验，非常值得参考学习，故翻译记录于此，并作了一些补充说明，帮助阅读理解。译文原文：
+<meta name="twitter:description" content="网上阅读时猎取到的一篇外国工程师的文章，作者 César Ferreira 结合自己在安卓领域的摸爬滚打经历总结了三十多条宝贵经验，非常值得参考学习，故翻译记录于此，并作了一些补充说明，帮助阅读理解。译文原文：
 Building Android Apps — 30 things that experience made me learn the hard way">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
@@ -252,7 +252,7 @@ Building Android Apps — 30 things that experience made me learn the hard w
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>网上阅读时猎取到的一篇外国工程师的文章，作者<a href="https://medium.com/@cesarmcferreira?source=post_header_lockup" target="_blank" rel="external">César Ferreira</a>结合自己在安卓领域的摸爬滚打经历总结了三十多条宝贵经验，非常值得参考学习，故翻译记录于此，并作了一些补充说明，帮助阅读理解。译文原文：</p>
+<p>网上阅读时猎取到的一篇外国工程师的文章，作者 <a href="https://medium.com/@cesarmcferreira?source=post_header_lockup" target="_blank" rel="external">César Ferreira</a> 结合自己在安卓领域的摸爬滚打经历总结了三十多条宝贵经验，非常值得参考学习，故翻译记录于此，并作了一些补充说明，帮助阅读理解。译文原文：</p>
 <p><a href="https://medium.com/@cesarmcferreira/building-android-apps-30-things-that-experience-made-me-learn-the-hard-way-313680430bf9#.5exr8zumk" target="_blank" rel="external">Building Android Apps — 30 things that experience made me learn the hard way</a></p>
 </blockquote>
 <a id="more"></a>
@@ -264,35 +264,35 @@ Building Android Apps — 30 things that experience made me learn the hard w
 </li>
 <li><p>除非真的需要，否则不要使用数据库；</p>
 </li>
-<li><p>应用中65K的方法数很快就能达到，我的意思是真的很快！不过<a href="https://medium.com/@rotxed/dex-skys-the-limit-no-65k-methods-is-28e6cb40cf71" target="_blank" rel="external">multidexing</a>也许能帮到你；（最近刚总结过一篇：<a href="http://yifeng.studio/2016/10/26/android-64k-methods-count/">Android 突破64K方法数的限制</a>）</p>
+<li><p>应用中65K的方法数很快就能达到，我的意思是真的很快！不过 <a href="https://medium.com/@rotxed/dex-skys-the-limit-no-65k-methods-is-28e6cb40cf71" target="_blank" rel="external">multidexing</a> 也许能帮到你；（最近刚总结过一篇：<a href="http://yifeng.studio/2016/10/26/android-64k-methods-count/">Android 突破64K方法数的限制</a>）</p>
 </li>
-<li><p><a href="https://github.com/ReactiveX/RxJava" target="_blank" rel="external">RxJava</a>绝对是<code>AsyncTasks</code>等绝大多数类最好的替代品；（参考文章：<a href="https://medium.com/swlh/party-tricks-with-rxjava-rxandroid-retrolambda-1b06ed7cd29c#.ctr2m3fpn" target="_blank" rel="external">Party tricks with RxJava, RxAndroid &amp; Retrolambda</a>）</p>
+<li><p><a href="https://github.com/ReactiveX/RxJava" target="_blank" rel="external">RxJava</a> 绝对是<code>AsyncTasks</code>等绝大多数类最好的替代品；（参考文章：<a href="https://medium.com/swlh/party-tricks-with-rxjava-rxandroid-retrolambda-1b06ed7cd29c#.ctr2m3fpn" target="_blank" rel="external">Party tricks with RxJava, RxAndroid &amp; Retrolambda</a>）</p>
 </li>
-<li><p><a href="http://square.github.io/retrofit/" target="_blank" rel="external">Retrofit</a>是最优秀的网络框架；（没有之一）</p>
+<li><p><a href="http://square.github.io/retrofit/" target="_blank" rel="external">Retrofit</a> 是最优秀的网络框架；（没有之一）</p>
 </li>
-<li><p>使用<a href="https://medium.com/android-news/retrolambda-on-android-191cc8151f85" target="_blank" rel="external">Retrolambda</a>缩减你的代码；</p>
+<li><p>使用 <a href="https://medium.com/android-news/retrolambda-on-android-191cc8151f85" target="_blank" rel="external">Retrolambda</a> 缩减你的代码；</p>
 </li>
 <li><p>感受<code>RxJava</code>与<code>Retrofit</code>和<code>Retrolambda</code>一起使用的魅力；（参考文章：参考文章：<a href="https://medium.com/swlh/party-tricks-with-rxjava-rxandroid-retrolambda-1b06ed7cd29c#.ctr2m3fpn" target="_blank" rel="external">Party tricks with RxJava, RxAndroid &amp; Retrolambda</a>）</p>
 </li>
-<li><p>我使用<a href="https://github.com/greenrobot/EventBus" target="_blank" rel="external">EventBus</a>，它很强大，但我不会过度使用，因为它会使代码库会变得很杂乱无章；</p>
+<li><p>我使用 <a href="https://github.com/greenrobot/EventBus" target="_blank" rel="external">EventBus</a> ，它很强大，但我不会过度使用，因为它会使代码库会变得很杂乱无章；</p>
 </li>
 <li><p>根据应用功能分包，而不是所属类别；（项目目录结构划分，参考文章：<a href="https://medium.com/@cesarmcferreira/package-by-features-not-layers-2d076df1964d#.em996bn3v" target="_blank" rel="external">Package by features, not layers</a>）</p>
 </li>
-<li><p>移除Application线程里的一切代码；（避免拖慢应用的初始化和启动速度）</p>
+<li><p>移除 Application 线程里的一切代码；（避免拖慢应用的初始化和启动速度）</p>
 </li>
-<li><p>使用<a href="http://developer.android.com/tools/help/layoutopt.html" target="_blank" rel="external">lint</a>优化布局，以便你能一眼识别出冗余的视图并移除；</p>
+<li><p>使用 <a href="http://developer.android.com/tools/help/layoutopt.html" target="_blank" rel="external">lint</a> 优化布局，以便你能一眼识别出冗余的视图并移除；</p>
 </li>
 <li><p>如果你使用<code>gralde</code>，想尽一切办法加快编译速度；（参考文章：<a href="https://medium.com/@cesarmcferreira/speeding-up-gradle-builds-619c442113cb#.1d2hhi8hu" target="_blank" rel="external">How I save 5h/week on Gradle builds</a>）</p>
 </li>
-<li><p>使用<a href="https://medium.com/the-engineering-team/speeding-up-gradle-builds-619c442113cb" target="_blank" rel="external">Profile report</a>查看编译时间到底是在什么地方耗费的；</p>
+<li><p>使用 <a href="https://medium.com/the-engineering-team/speeding-up-gradle-builds-619c442113cb" target="_blank" rel="external">Profile report</a> 查看编译时间到底是在什么地方耗费的；</p>
 </li>
 <li><p>尽量使用众所周知的成熟架构体系；（参考文章：<a href="http://fernandocejas.com/2015/07/18/architecting-android-the-evolution/" target="_blank" rel="external">Architecting Android…The evolution</a>）</p>
 </li>
-<li><p>测试消耗时间，但是一旦你掌握了测试的窍门就会发现，它比没有经过测试的代码更快更稳妥；（参考地址：<a href="http://stackoverflow.com/questions/67299/is-unit-testing-worth-the-effort/67500#67500" target="_blank" rel="external">http://stackoverflow.com/questions/67299/is-unit-testing-worth-the-effort/67500#67500</a></p>
+<li><p>测试消耗时间，但是一旦你掌握了测试的窍门就会发现，它比没有经过测试的代码更快更稳妥；（参考地址：<a href="http://stackoverflow.com/questions/67299/is-unit-testing-worth-the-effort/67500#67500" target="_blank" rel="external">http://stackoverflow.com/questions/67299/is-unit-testing-worth-the-effort/67500#67500</a>)</p>
 </li>
 <li><p>使用<code>依赖注入</code>使你的应用更加模块化，并且更容易测试；（参考文章：<a href="http://fernandocejas.com/2015/04/11/tasting-dagger-2-on-android/" target="_blank" rel="external">Tasting Dagger 2 on Android</a>）</p>
 </li>
-<li><p>关注<a href="http://fragmentedpodcast.com/" target="_blank" rel="external">Fragmened Podcast</a>对你大有帮助；（Fragmented，一个专属安卓开发者的播客网站）</p>
+<li><p>关注 <a href="http://fragmentedpodcast.com/" target="_blank" rel="external">Fragmened Podcast</a> 对你大有帮助；（Fragmented，一个专属安卓开发者的播客网站）</p>
 </li>
 <li><p>永远不要使用私人邮箱作为安卓市场的发布者账号；（主要是Google Play，案例参考：<a href="https://www.reddit.com/r/Android/comments/2hywu9/google_play_only_one_strike_is_needed_to_ruin_you/" target="_blank" rel="external">https://www.reddit.com/r/Android/comments/2hywu9/google_play_only_one_strike_is_needed_to_ruin_you/</a>）</p>
 </li>
@@ -300,7 +300,7 @@ Building Android Apps — 30 things that experience made me learn the hard w
 </li>
 <li><p>学会借助分析学寻找通用模式和孤立问题；（设计模式，封装等）</p>
 </li>
-<li><p>保持学习最新开源类库，并借助<a href="https://github.com/cesarferreira/dryrun" target="_blank" rel="external">dryrun </a>工具测试开源类库；（<a href="https://android-arsenal.com/" target="_blank" rel="external">Android Arsenal
+<li><p>保持学习最新开源类库，并借助 <a href="https://github.com/cesarferreira/dryrun" target="_blank" rel="external">dryrun </a> 工具测试开源类库；（<a href="https://android-arsenal.com/" target="_blank" rel="external">Android Arsenal
 </a>，一个搜索整合Android开源类库的网站）</p>
 </li>
 <li><p>Service服务应该做它们需要做的事情，并且尽可能快地终止；</p>
@@ -309,17 +309,17 @@ Building Android Apps — 30 things that experience made me learn the hard w
 </li>
 <li><p>使用CI(持续集成)编译构建测试版和发布版应用；</p>
 </li>
-<li><p>不要运行你自己的<code>CI server</code>，防止SSL攻击而造成的磁盘空间、安全问题、服务更新都需要维持server，这是一件耗费时间的任务。使用<code>circleci</code>、<code>travis</code> 和 <code>shippable</code>，相比而言，性价比更高，更可靠；</p>
+<li><p>不要运行你自己的 <code>CI server</code>，防止 SSL 攻击而造成的磁盘空间、安全问题、服务更新都需要维持 server ，这是一件耗费时间的任务。使用<code>circleci</code>、<code>travis</code> 和 <code>shippable</code>，相比而言，性价比更高，更可靠；</p>
 </li>
 <li><p>使用 <a href="https://github.com/Triple-T/gradle-play-publisher" target="_blank" rel="external">gradle-play-publisher</a> 自动部署上传Apk文件等信息到应用商店；</p>
 </li>
-<li><p>如果一个library比较大，而你只是用到其中的一小部分功能，那么你就应该寻找一个更小的替代品；（比如可以借助<a href="http://developer.android.com/tools/help/proguard.html" target="_blank" rel="external">proguard</a>工具）</p>
+<li><p>如果一个library比较大，而你只是用到其中的一小部分功能，那么你就应该寻找一个更小的替代品；（比如可以借助 <a href="http://developer.android.com/tools/help/proguard.html" target="_blank" rel="external">proguard</a> 工具）</p>
 </li>
-<li><p>不要大量使用超出你实际需要的依赖库。特别是当这些依赖库不是经常在变时，我们就要考虑到，这些类库从头编译（CI Builds就是一个很好的例子）或者检查之前编译好的独立类库是否需要更新所花费的时间相比简单地加载jar或者aar这样的二进制文件，高达四倍之多；</p>
+<li><p>不要大量使用超出你实际需要的依赖库。特别是当这些依赖库不是经常在变时，我们就要考虑到，这些类库从头编译（ <code>CI Builds</code> 就是一个很好的例子）或者检查之前编译好的独立类库是否需要更新所花费的时间相比简单地加载jar或者aar这样的二进制文件，高达四倍之多；</p>
 </li>
-<li><p>开始考虑使用SVG代替PNG格式的图片；（参考地址：<a href="http://developer.android.com/tools/help/vector-asset-studio.html" target="_blank" rel="external">Add Multi-Density Vector Graphics</a>）</p>
+<li><p>开始考虑使用 SVG 代替 PNG 格式的图片；（参考地址：<a href="http://developer.android.com/tools/help/vector-asset-studio.html" target="_blank" rel="external">Add Multi-Density Vector Graphics</a>）</p>
 </li>
-<li><p>封装抽象化library的使用，这样当你需要使用新的library替代旧library时就会变得很容易；</p>
+<li><p>封装抽象化 library 的使用，这样当你需要使用新的 library 替代旧 library 时就会变得很容易；</p>
 </li>
 <li><p>监听网络连接变化和连接类型（Wifi状态下数据更新更频繁？）；</p>
 </li>
@@ -327,7 +327,7 @@ Building Android Apps — 30 things that experience made me learn the hard w
 </li>
 <li><p>展现给用户的UI就像一个笑话，如果你不得不解释一下的话，它就不是一个好笑话；</p>
 </li>
-<li><p>性能测试很重要：Coding实现慢，但要正确，然后验证优化，这不会影响任何测试内容。</p>
+<li><p>性能测试很重要：Coding 实现慢，但要正确，然后验证优化，这不会影响任何测试内容。</p>
 </li>
 </ol>
 
