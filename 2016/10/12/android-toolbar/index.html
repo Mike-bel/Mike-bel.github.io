@@ -17,7 +17,8 @@
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/toolbar-sample-04.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/toolbar-sample-05.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/toolbar-sample-06.png">
-<meta property="og:updated_time" content="2016-10-12T03:27:31.000Z">
+<meta property="og:image" content="https://github.com/alexstyl/Material-SearchTransition/blob/art/transition-to-search.gif?raw=true">
+<meta property="og:updated_time" content="2016-11-01T06:06:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Toolbar，你想知道的都在这里了">
 <meta name="twitter:description" content="Android 3.0之后，Google引入了ActionBar，想统一安卓应用的导航栏样式。但由于ActionBar难以定制，很大程度上限制了开发人员，比如标题文字大小、间距等不易实现个性化，很多开发者放弃了ActionBar的使用，而是使用普通的ViewGroup来封装自己的App Bar，或者使用JakeWharton大神的ActionBarSherlock库。">
@@ -304,6 +305,9 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getSupportActionBar().setDisplayShowTitleEnabled(<span class="keyword">false</span>);</span><br></pre></td></tr></table></figure>
 <p>效果如下：</p>
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/toolbar-sample-06.png" alt="toolbar-sample-06.png"></p>
+<h1 id="搜索功能"><a href="#搜索功能" class="headerlink" title="搜索功能"></a>搜索功能</h1><hr>
+<p>系统提供了<code>search dialog</code>和<code>search widget</code>两种方式给Toolbar添加搜索功能，实现方式可参考 API 指南：<a href="https://developer.android.com/guide/topics/search/index.html" target="_blank" rel="external">Creating a Search Interface</a>。但系统提供的搜索功能略显僵硬，既无法引起用户的搜索欲望，也无法满足多数的产品设计需求，适用性不强，所以这里不作过多介绍。相反，使用自定义的搜索功能并为之添加适当的转场过度动画，效果立竿见影，参考开源项目：<a href="https://github.com/alexstyl/Material-SearchTransition" target="_blank" rel="external">Material-SearchTransition</a>，对应博文介绍：<a href="https://medium.com/@alexstyl/https-medium-com-alexstyl-animating-the-toolbar-7a8f1aab39dd#.qwkqkbyb2" target="_blank" rel="external">Exposing the Searchbar</a>，效果如下：</p>
+<p><img src="https://github.com/alexstyl/Material-SearchTransition/blob/art/transition-to-search.gif?raw=true" alt="transition-to-search.gif"></p>
 <h1 id="Fragment中使用"><a href="#Fragment中使用" class="headerlink" title="Fragment中使用"></a>Fragment中使用</h1><hr>
 <p>有时候需要在Fragment中使用Toolbar，比如Activity中不同的Tab显示不同的Fragment，同时每个Tab的Toolbar标题、Menu均不相同，这时在Activity中使用同一个Toolbar就相当不方便了。我们可以在每个Fragment的布局中添加各自的Toolbar，然后在Fragment中单独控制。</p>
 <p>与Activity中使用Toolbar有所不同。替换ActionBar时，需要给<code>setSupportActionBar</code>方法添加作用对象：</p>
