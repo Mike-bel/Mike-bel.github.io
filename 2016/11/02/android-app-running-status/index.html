@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Android 判断应用前后台运行状态和获取当前 Activity 实例 | YiFeng&#39;s Zone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="判断应用是否处于运行状态，如果处于运行状态是在前台运行还是在后台运行，以及如何获取应用当前展示的 Activity 实例（Activity 堆栈中的Top Activity），是 Android 开发人员经常遇到的问题，特别是在后台运行的 service 中单凭一个 context 对象处理这些，常见应用场景如消息推送：当推送通知到达客户端时是否需要展示通知栏消息，当用户点击通知栏消息时，如何启动">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 判断应用前后台运行状态和获取当前 Activity 实例">
+<meta property="og:url" content="http://yifeng.studio/2016/11/02/android-app-running-status/index.html">
+<meta property="og:site_name" content="YiFeng's Zone">
+<meta property="og:description" content="判断应用是否处于运行状态，如果处于运行状态是在前台运行还是在后台运行，以及如何获取应用当前展示的 Activity 实例（Activity 堆栈中的Top Activity），是 Android 开发人员经常遇到的问题，特别是在后台运行的 service 中单凭一个 context 对象处理这些，常见应用场景如消息推送：当推送通知到达客户端时是否需要展示通知栏消息，当用户点击通知栏消息时，如何启动">
+<meta property="og:updated_time" content="2016-11-02T04:14:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 判断应用前后台运行状态和获取当前 Activity 实例">
+<meta name="twitter:description" content="判断应用是否处于运行状态，如果处于运行状态是在前台运行还是在后台运行，以及如何获取应用当前展示的 Activity 实例（Activity 堆栈中的Top Activity），是 Android 开发人员经常遇到的问题，特别是在后台运行的 service 中单凭一个 context 对象处理这些，常见应用场景如消息推送：当推送通知到达客户端时是否需要展示通知栏消息，当用户点击通知栏消息时，如何启动">
+  
+    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+  
+  
+    
+      <link rel="icon" href="/favicon.png">
+    
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+				
+					<img lazy-src="/assets/imgSite/avatar.png" class="js-avatar">
+				
+			
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">亦枫</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">起始于Android，不止于Android</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">首页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+					        
+								<a class="mail" target="_blank" href="mailto:fengleegg@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/guolin_blog">郭霖</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/lmj623565791">鸿洋</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/singwhatiwanna">任玉刚</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.jcodecraeer.com/plus/list.php?tid=16">泡在网上的日子</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">长期拼搏在一线开发的安卓程序猿一枚，热衷于技术，沉浸于段子，微信公众号：技术鸟（微信号：NiaoTech）。If you can&#39;t fly then run, can&#39;t run then walk, can&#39;t walk then crawl, keep moving forward.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">亦枫</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img lazy-src="null/assets/imgSite/avatar.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">亦枫</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">起始于Android，不止于Android</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">首页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+			        
+						<a class="mail" target="_blank" href="mailto:fengleegg@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-android-app-running-status" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/11/02/android-app-running-status/" class="article-date">
+  	<time datetime="2016-11-02T03:10:47.000Z" itemprop="datePublished">2016-11-02</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android 判断应用前后台运行状态和获取当前 Activity 实例
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Android/">Android</a>
+	</div>
+
+
+
+        
+            <div class="bookicon"></div>
+            <div class="article-hit">
+              <span id="busuanzi_container_page_pv">
+                    热度 <span id="busuanzi_value_page_pv"></span>℃</span>
+            </div>
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>判断应用是否处于运行状态，如果处于运行状态是在前台运行还是在后台运行，以及如何获取应用当前展示的 Activity 实例（Activity 堆栈中的Top Activity），是 Android 开发人员经常遇到的问题，特别是在后台运行的 service 中单凭一个 context 对象处理这些，常见应用场景如消息推送：当推送通知到达客户端时是否需要展示通知栏消息，当用户点击通知栏消息时，如何启动应用，如何触发对应 Activity 的跳转等。</p>
+<a id="more"></a>
+<p>Android 5.0（Lollipop，API 21）之前，我们可以通过<code>ActivityManager</code>提供的<code>getRunningTasks</code>方法获取当前设备所有处于运行状态的应用信息，从而判断自己的应用的运行状态，包括topActivity信息，如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ComponentName <span class="title">getTopActivity</span><span class="params">(Context context)</span></span>&#123;</span><br><span class="line">	ActivityManager activityManager = (ActivityManager) context.getSystemService(Service.ACTIVITY_SERVICE);</span><br><span class="line">	List&lt;ActivityManager.RunningTaskInfo&gt; runningTaskInfoList = activityManager.getRunningTasks(Integer.MAX_VALUE);</span><br><span class="line">	<span class="keyword">for</span> (ActivityManager.RunningTaskInfo taskInfo : runningTaskInfoList) &#123;</span><br><span class="line">		<span class="keyword">if</span> (taskInfo.topActivity.getPackageName().equals(context.getPackageName()))&#123;</span><br><span class="line">			<span class="keyword">return</span> taskInfo.topActivity;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然而，Google 为了提升 Android 系统的安全性，从 5.0 开始，废弃了<code>getRunningTasks</code>方法，不再为开发人员提供类似的服务，仅可作为开发时的调试和展示，源代码中明确写有注释信息：</p>
+<blockquote>
+<p>Note: this method is only intended for debugging and presenting task management user interfaces.  This should never be used for core logic in an application, such as deciding between different behaviors based on the information found here.  Such uses are <em>not</em> supported, and will likely break in the future.  For example, if multiple applications can be actively running at the same time, assumptions made about the meaning of the data here for purposes of control flow will be incorrect.</p>
+</blockquote>
+<p>机智如你，此刻肯定和我一样，想到了尚未被标注<code>Deprecated</code>的<code>getRunningAppProcesses</code>方法，获取处于“运行状态”的应用进程信息。结合包名和<code>importance</code>属性值的联合判断，即可判定应用是否处于前台运行状态：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isAppRunningForeground</span><span class="params">(Context context)</span></span>&#123;</span><br><span class="line">    ActivityManager activityManager = (ActivityManager) context.getSystemService(Service.ACTIVITY_SERVICE);</span><br><span class="line">    List&lt;ActivityManager.RunningAppProcessInfo&gt; runningAppProcessInfoList = activityManager.getRunningAppProcesses();</span><br><span class="line">    <span class="keyword">if</span> (runningAppProcessInfoList==<span class="keyword">null</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (ActivityManager.RunningAppProcessInfo processInfo : runningAppProcessInfoList) &#123;</span><br><span class="line">        <span class="keyword">if</span> (processInfo.processName.equals(context.getPackageName())</span><br><span class="line">                &amp;&amp; processInfo.importance==ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：一定要添加<code>processInfo.importance==ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND</code> 这句判断，区分<code>process</code>与<code>task</code>的区别。实际上，此处后台服务在运行，<code>processInfo.processName.equals(context.getPackageName())</code>一定为true。</p>
+</blockquote>
+<p>不幸的是，如同<code>getRunningTasks</code>方法，<code>getRunningAppProcesses</code>方法在源码中一样被注明，该方法仅用于调试和展示性工作：</p>
+<blockquote>
+<p>Note: this method is only intended for debugging or building a user-facing process management UI.</p>
+</blockquote>
+<p>既然系统API出于安全的考虑，已经无法获取应用的前后台状态，只能另辟蹊径了。比如利用 Activity 的生命周期变化，自定义一个全局变量来保存应用的状态，然后将当前 Activity 的实例对象保存在全局变量中。</p>
+<p>很多人喜欢将这个全局变量放置在自定义的 Application 类中，并且采用强引用的方式定义，这种做法不仅会给 Application 带来压力（增加应用的启动初始化时间等），还会造成内存泄漏。这里推荐一篇有关 Java 中的四种引用方式的文章：<a href="http://blog.csdn.net/mazhimazh/article/details/19752475" target="_blank" rel="external">Java 7之基础 - 强引用、弱引用、软引用、虚引用</a></p>
+<p>基于这些考虑，我们可以使用饿汉式单例模式保存 Activity 的实例，如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomActivityManager</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> AppActivityManager customActivityManager = <span class="keyword">new</span> CustomActivityManager();</span><br><span class="line">    <span class="keyword">private</span> WeakReference&lt;Activity&gt; topActivity;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">CustomActivityManager</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> CustomActivityManager <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> customActivityManager;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Activity <span class="title">getTopActivity</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (topActivity!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> topActivity.get();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTopActivity</span><span class="params">(Activity topActivity)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.topActivity = <span class="keyword">new</span> WeakReference&lt;&gt;(topActivity);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在 Activity 的生命周期函数中赋值修改这个状态值。有两种方式，第一种，在自定义的 BaseActivity 中重写 Activity 的 <code>onResume()</code> 和 <code>onStop()</code>，然后其他所有 Activity 均继承自这个 BaseActivity；第二种，借助 API 14 版本引入的<code>ActivityLifecycleCallbacks</code>类，在 Application 中注册使用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomApplication</span> <span class="keyword">extends</span> <span class="title">Application</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate();</span><br><span class="line">        registerActivityLifecycleCallbacks(<span class="keyword">new</span> ActivityLifecycleCallbacks() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityCreated</span><span class="params">(Activity activity, Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityStarted</span><span class="params">(Activity activity)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityResumed</span><span class="params">(Activity activity)</span> </span>&#123;</span><br><span class="line">                CustomActivityManager.getInstance().setTopActivity(activity);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityPaused</span><span class="params">(Activity activity)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityStopped</span><span class="params">(Activity activity)</span> </span>&#123;</span><br><span class="line">                CustomActivityManager.getInstance().setTopActivity(<span class="keyword">null</span>);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivitySaveInstanceState</span><span class="params">(Activity activity, Bundle outState)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityDestroyed</span><span class="params">(Activity activity)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：再次强调，<code>ActivityLifecycleCallbacks</code> 类是有版本限制的，如果你的应用需要兼容到 API 14版本以下，就不能采取这种方式。</p>
+</blockquote>
+<p>有了这个保存 Activity 状态的全局变量，就可以在后台服务中判断应用的运行状态，进行其它操作。比如，当消息推送的场景，当用户点击通知栏消息时，打开应用：如果应用处于关闭状态，重新启动；如果处于后台运行状态，打开应用并显示当前 Activity 即可。参考代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">launchApp</span><span class="params">(Context context)</span></span>&#123;</span><br><span class="line">	Intent intent;</span><br><span class="line">	<span class="keyword">if</span> (CsjActivityManager.getInstance().getTopActivity()!=<span class="keyword">null</span>)&#123;</span><br><span class="line">		intent = <span class="keyword">new</span> Intent();</span><br><span class="line">		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK </span><br><span class="line">				| Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		intent = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());</span><br><span class="line">		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</span><br><span class="line">	&#125;</span><br><span class="line">	context.startActivity(intent);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上便是有关 Android 开发获取应用的前后台运行状态的一些见解，感谢 <a href="http://droidyue.com/blog/2016/02/21/thinking-of-getting-the-current-activity-in-android/" target="_blank" rel="external">技术小黑屋</a> 提供的 Activity 状态保存方式。也许这些还不是最好的解决方案，欢迎大家踊跃留言，提出自己的见解，重在交流。最后，再分享一项黑科技，通过访问 <code>/proc</code> 文件的方式获取应用信息，无需任何权限，只是在 <code>Android Nougat</code> 上不起作用，有兴趣的朋友可以了解以下，地址如下：</p>
+<p><a href="https://github.com/jaredrummler/AndroidProcesses" target="_blank" rel="external">https://github.com/jaredrummler/AndroidProcesses</a></p>
+
+      
+    </div>
+    
+      <! -- 添加版权信息 -->
+<div class="article-footer-copyright">
+<p>本文由&nbsp;<b>亦枫</b>&nbsp;创作并首发于&nbsp;<b><a href="/index.html" target="_blank" title="亦枫">亦枫的个人博客</a></b>&nbsp;，同步授权微信公众号：技术鸟（NiaoTech）。</a></p>
+ 
+<p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
+ 
+<p>本文标题为: <b><a href="/2016/11/02/android-app-running-status/" target="_blank" title="Android 判断应用前后台运行状态和获取当前 Activity 实例">Android 判断应用前后台运行状态和获取当前 Activity 实例</a></b> </p>
+ 
+<p>本文链接为：<b><a href="/2016/11/02/android-app-running-status/" target="_blank" title="Android 判断应用前后台运行状态和获取当前 Activity 实例">http://yifeng.studio/2016/11/02/android-app-running-status/</a></b> </p>
+
+<p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
+</div>
+<! -- 添加版权信息 -->
+    
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/10/27/android-develop-30-things-that-experience-made-me-learn-the-hard-way/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">［译］开发安卓Apps，我所努力学习到的三十多条宝贵经验</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="android-app-running-status" data-title="Android 判断应用前后台运行状态和获取当前 Activity 实例" data-url="http://yifeng.studio/2016/11/02/android-app-running-status/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"yifengzone"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 亦枫
+    	</div>
+      <div class="footer-left">
+        &nbsp;&copy; 
+        <span id="busuanzi_container_site_pv">
+          本站访问量<span id="busuanzi_value_site_pv"></span>次
+        </span>
+        <span id="busuanzi_container_site_uv">
+          访客数<span id="busuanzi_value_site_uv"></span>人
+        </span>
+      </div>
+      	<div class="footer-right">
+      		Theme of <a href="https://github.com/Mike-bel/hexo-theme-yilia-optimization" target="_blank">yilia-opti</a>, by YiFeng
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: '/'
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-83125745-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script>
+	(function(){
+		document.write('<scr'+'ipt type="text/javascript" src="'+document.location.protocol+'//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">'+'</sc'+'ript>');
+	})();
+</script>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
