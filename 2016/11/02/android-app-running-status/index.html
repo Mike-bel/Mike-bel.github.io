@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://yifeng.studio/2016/11/02/android-app-running-status/index.html">
 <meta property="og:site_name" content="YiFeng's Zone">
 <meta property="og:description" content="判断应用是否处于运行状态，如果处于运行状态是在前台运行还是在后台运行，以及如何获取应用当前展示的 Activity 实例（Activity 堆栈中的Top Activity），是 Android 开发人员经常遇到的问题，特别是在后台运行的 service 中单凭一个 context 对象处理这些，常见应用场景如消息推送：当推送通知到达客户端时是否需要展示通知栏消息，当用户点击通知栏消息时，如何启动">
-<meta property="og:updated_time" content="2016-11-02T04:16:59.000Z">
+<meta property="og:updated_time" content="2016-11-03T02:56:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 判断应用前后台运行状态并获取当前 Activity 实例">
 <meta name="twitter:description" content="判断应用是否处于运行状态，如果处于运行状态是在前台运行还是在后台运行，以及如何获取应用当前展示的 Activity 实例（Activity 堆栈中的Top Activity），是 Android 开发人员经常遇到的问题，特别是在后台运行的 service 中单凭一个 context 对象处理这些，常见应用场景如消息推送：当推送通知到达客户端时是否需要展示通知栏消息，当用户点击通知栏消息时，如何启动">
@@ -261,7 +261,7 @@
 <blockquote>
 <p>注意：一定要添加<code>processInfo.importance==ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND</code> 这句判断，区分<code>process</code>与<code>task</code>的区别。实际上，此处后台服务在运行，<code>processInfo.processName.equals(context.getPackageName())</code>一定为true。</p>
 </blockquote>
-<p>不幸的是，如同<code>getRunningTasks</code>方法，<code>getRunningAppProcesses</code>方法在源码中一样被注明，该方法仅用于调试和展示性工作：</p>
+<p>不幸的是，如同<code>getRunningTasks</code>方法，<code>getRunningAppProcesses</code>方法在源码中一样被注明，该方法仅用于调试和展示性工作（实际上，在 5.0 之后，系统已经对其作了限制，使用该方法仅可获取自己的应用进程信息）：</p>
 <blockquote>
 <p>Note: this method is only intended for debugging or building a user-facing process management UI.</p>
 </blockquote>
@@ -276,8 +276,14 @@
 </blockquote>
 <p>有了这个保存 Activity 状态的全局变量，就可以在后台服务中判断应用的运行状态，进行其它操作。比如，当消息推送的场景，当用户点击通知栏消息时，打开应用：如果应用处于关闭状态，重新启动；如果处于后台运行状态，打开应用并显示当前 Activity 即可。参考代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">launchApp</span><span class="params">(Context context)</span></span>&#123;</span><br><span class="line">	Intent intent;</span><br><span class="line">	<span class="keyword">if</span> (CsjActivityManager.getInstance().getTopActivity()!=<span class="keyword">null</span>)&#123;</span><br><span class="line">		intent = <span class="keyword">new</span> Intent();</span><br><span class="line">		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK </span><br><span class="line">				| Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		intent = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());</span><br><span class="line">		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</span><br><span class="line">	&#125;</span><br><span class="line">	context.startActivity(intent);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>以上便是有关 Android 开发获取应用的前后台运行状态的一些见解，感谢 <a href="http://droidyue.com/blog/2016/02/21/thinking-of-getting-the-current-activity-in-android/" target="_blank" rel="external">技术小黑屋</a> 提供的 Activity 状态保存方式。也许这些还不是最好的解决方案，欢迎大家踊跃留言，提出自己的见解，重在交流。最后，再分享一项黑科技，通过访问 <code>/proc</code> 文件的方式获取应用信息，无需任何权限，只是在 <code>Android Nougat</code> 上不起作用，有兴趣的朋友可以了解以下，地址如下：</p>
+<p>以上便是有关 Android 开发获取应用的前后台运行状态的一些见解，感谢 <a href="http://droidyue.com/blog/2016/02/21/thinking-of-getting-the-current-activity-in-android/" target="_blank" rel="external">技术小黑屋</a> 提供的 Activity 状态保存方式。也许这些还不是最好的解决方案，欢迎大家踊跃留言，提出自己的见解，重在交流。</p>
+<p>最后，再补充两点：借助<code>UsageStatsManager</code>和“Android 无障碍辅助功能”也能实现判断应用的前后台运行状态，只是需要用户手动授权；另外还有 GitHub 上有大牛分享了一项黑科技，通过访问 <code>/proc</code> 文件的方式获取应用信息，无需任何权限，只是在 <code>Android Nougat</code> 上不起作用，有兴趣的朋友可以了解以下，地址如下：</p>
 <p><a href="https://github.com/jaredrummler/AndroidProcesses" target="_blank" rel="external">https://github.com/jaredrummler/AndroidProcesses</a></p>
+<p>关于上述所有这些方式的使用，GitHub 上也有一个开源项目，作了一些总结性说明，可供参考：</p>
+<p><a href="https://github.com/wenmingvs/AndroidProcess" target="_blank" rel="external">https://github.com/wenmingvs/AndroidProcess</a></p>
+<blockquote>
+<p>注意：文中所述方案，均只考虑单进程应用。对于多进程，由于多进程的内存独立性特点，需另行分析。</p>
+</blockquote>
 
       
     </div>
