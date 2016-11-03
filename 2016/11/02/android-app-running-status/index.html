@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://yifeng.studio/2016/11/02/android-app-running-status/index.html">
 <meta property="og:site_name" content="YiFeng's Zone">
 <meta property="og:description" content="判断应用是否处于运行状态，如果处于运行状态是在前台运行还是在后台运行，以及如何获取应用当前展示的 Activity 实例（Activity 堆栈中的Top Activity），是 Android 开发人员经常遇到的问题，特别是在后台运行的 service 中单凭一个 context 对象处理这些，常见应用场景如消息推送：当推送通知到达客户端时是否需要展示通知栏消息，当用户点击通知栏消息时，如何启动">
-<meta property="og:updated_time" content="2016-11-03T02:56:14.000Z">
+<meta property="og:updated_time" content="2016-11-03T03:02:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 判断应用前后台运行状态并获取当前 Activity 实例">
 <meta name="twitter:description" content="判断应用是否处于运行状态，如果处于运行状态是在前台运行还是在后台运行，以及如何获取应用当前展示的 Activity 实例（Activity 堆栈中的Top Activity），是 Android 开发人员经常遇到的问题，特别是在后台运行的 service 中单凭一个 context 对象处理这些，常见应用场景如消息推送：当推送通知到达客户端时是否需要展示通知栏消息，当用户点击通知栏消息时，如何启动">
@@ -282,7 +282,7 @@
 <p>关于上述所有这些方式的使用，GitHub 上也有一个开源项目，作了一些总结性说明，可供参考：</p>
 <p><a href="https://github.com/wenmingvs/AndroidProcess" target="_blank" rel="external">https://github.com/wenmingvs/AndroidProcess</a></p>
 <blockquote>
-<p>注意：文中所述方案，均只考虑单进程应用。对于多进程，由于多进程的内存独立性特点，需另行分析。</p>
+<p>备注：文中所述方案，均只考虑单进程应用。对于多进程，由于其内存独立性的特点，判断起来更加复杂。</p>
 </blockquote>
 
       
