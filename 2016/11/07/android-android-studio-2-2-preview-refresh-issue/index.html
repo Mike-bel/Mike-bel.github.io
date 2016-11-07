@@ -4,18 +4,23 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>categories | YiFeng&#39;s Zone</title>
+  <title>Android 如何在 Android Studio 2.2 版本实现 refresh 操作？ | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="http://yifeng.studio/categories/index.html">
+  <meta name="description" content="Android Studio 2.2 版本的 Layout Editor 发生了很大变化，Design 和 Preview 窗口的结构和样式做了很多改进，功能区介绍可以参考官方网站：Build a UI with Layout Editor。本文记录一个有关 refresh 操作的问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 如何在 Android Studio 2.2 版本实现 refresh 操作？">
+<meta property="og:url" content="http://yifeng.studio/2016/11/07/android-android-studio-2-2-preview-refresh-issue/index.html">
 <meta property="og:site_name" content="YiFeng's Zone">
-<meta property="og:description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
-<meta property="og:updated_time" content="2016-04-14T09:00:09.000Z">
+<meta property="og:description" content="Android Studio 2.2 版本的 Layout Editor 发生了很大变化，Design 和 Preview 窗口的结构和样式做了很多改进，功能区介绍可以参考官方网站：Build a UI with Layout Editor。本文记录一个有关 refresh 操作的问题。">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/preview_samples_01.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/preview_samples_02.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/preview_samples_03.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/preview_samples_04.png">
+<meta property="og:updated_time" content="2016-11-07T07:34:37.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="categories">
-<meta name="twitter:description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
+<meta name="twitter:title" content="Android 如何在 Android Studio 2.2 版本实现 refresh 操作？">
+<meta name="twitter:description" content="Android Studio 2.2 版本的 Layout Editor 发生了很大变化，Design 和 Preview 窗口的结构和样式做了很多改进，功能区介绍可以参考官方网站：Build a UI with Layout Editor。本文记录一个有关 refresh 操作的问题。">
+<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/preview_samples_01.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -198,11 +203,11 @@
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-android-android-studio-2-2-preview-refresh-issue" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/categories/index.html" class="article-date">
-  	<time datetime="2016-04-14T08:59:21.000Z" itemprop="datePublished">2016-04-14</time>
+      <a href="/2016/11/07/android-android-studio-2-2-preview-refresh-issue/" class="article-date">
+  	<time datetime="2016-11-07T07:22:21.000Z" itemprop="datePublished">2016-11-07</time>
 </a>
     </div>
   
@@ -215,7 +220,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      categories
+      Android 如何在 Android Studio 2.2 版本实现 refresh 操作？
     </h1>
   
 
@@ -223,7 +228,15 @@
       
       <div class="article-info article-info-post">
         
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android-Studio/">Android Studio</a></li></ul>
+	</div>
+
         
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Android/">Android</a>
+	</div>
+
 
 
         
@@ -240,7 +253,21 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>Android Studio 2.2 版本的 Layout Editor 发生了很大变化，Design 和 Preview 窗口的结构和样式做了很多改进，功能区介绍可以参考官方网站：<a href="https://developer.android.com/studio/write/layout-editor.html" target="_blank" rel="external">Build a UI with Layout Editor</a>。本文记录一个有关 refresh 操作的问题。</p>
+<a id="more"></a>
+<p>还记得在 Android Studio 2.2 版本之前的 refresh 按钮吗？有时候修改资源文件后，并不能在 preview 窗口中即时生效，使用这个刷新按钮即可解决这个问题。但在这次改版中，这个刷新按钮被 Google 去掉了：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/preview_samples_01.png" alt="preview_samples_01.png"></p>
+<p>如图，左图是 Android Studio 2.2 版本的布局预览图，没有 refresh 按钮；右图是 Android Studio 2.1 版本的布局预览图，拥有 refresh 按钮。</p>
+<p>既然被去除掉了，那应该是新版 Android Studio 实现了自动刷新实时显示视图的功能了吧。然而事实不尽如此。举个开发中很常见的例子：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/preview_samples_02.png" alt="preview_samples_02.png"></p>
+<p>如图，布局中用到了一个图片资源 <code>ic_lock.png</code>。现在需求改变了，这个图标要替换成另一个图片。正常做法就是拿到 UI 给到的图标，重命名为相同的名字，然后复制到对应的 <code>drawable</code> 或者 <code>mipmap</code> 文件下，覆盖即可。然而你会发现，在 Design 和 Preview 窗口中显示的还是之前的图标！这时，重新打开布局文件，或者使用 Rebuild Project 命令重新编译都不能解决这个问题，甚至有时候重启 Android Studio 也不起任何作用。这也许是新版 Android Studio 的一个 BUG 吧。</p>
+<p>经过一番搜索，在 <code>stack overflow</code> 上找到一种解决方案，欣喜若狂。做法很简单，在布局的 Text 窗口中将引用的资源名称故意写错，比如这里的 <code>@mipmap/ic_lock</code>，将其写成 <code>@mipmap/ic_lock1</code>，这样 <code>Desgin</code> 和 <code>Prefrew</code> 窗口就会报错，如图：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/preview_samples_03.png" alt="preview_samples_03.png"></p>
+<p>注意在右下角的提示信息中有个 Tip 内容，点击 <code>refresh</code> 按钮（清理缓存），然后再将图片的引用名称修改回来，预览图中就会显示正确的新图标：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/preview_samples_04.png" alt="preview_samples_03.png"></p>
+<p>当然，这只是一种临时解决方案，希望下个版本的 Android Studio 能够修复这个问题吧。感谢万能的 <code>stack overflow</code> 帮我解决了这个问题：</p>
+<p><a href="http://stackoverflow.com/questions/39786229/how-to-refresh-preview-on-android-studio-2-2" target="_blank" rel="external">How to refresh preview on Android Studio 2.2?</a></p>
+
       
     </div>
     
@@ -250,9 +277,9 @@
  
 <p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
  
-<p>本文标题为: <b><a href="/categories/index.html" target="_blank" title="categories">categories</a></b> </p>
+<p>本文标题为: <b><a href="/2016/11/07/android-android-studio-2-2-preview-refresh-issue/" target="_blank" title="Android 如何在 Android Studio 2.2 版本实现 refresh 操作？">Android 如何在 Android Studio 2.2 版本实现 refresh 操作？</a></b> </p>
  
-<p>本文链接为：<b><a href="/categories/index.html" target="_blank" title="categories">http://yifeng.studio/categories/index.html</a></b> </p>
+<p>本文链接为：<b><a href="/2016/11/07/android-android-studio-2-2-preview-refresh-issue/" target="_blank" title="Android 如何在 Android Studio 2.2 版本实现 refresh 操作？">http://yifeng.studio/2016/11/07/android-android-studio-2-2-preview-refresh-issue/</a></b> </p>
 
 <p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
 </div>
@@ -262,6 +289,16 @@
   </div>
   
     
+<nav id="article-nav">
+  
+  
+    <a href="/2016/11/06/android-office-document-viewer/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android 阅读 Office 文档，所有你能想到的解决方案都在这啦</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
   
 </article>
 
@@ -291,7 +328,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="undefined" data-title="categories" data-url="http://yifeng.studio/categories/index.html"></div>
+	<div class="ds-thread" data-thread-key="android-android-studio-2-2-preview-refresh-issue" data-title="Android 如何在 Android Studio 2.2 版本实现 refresh 操作？" data-url="http://yifeng.studio/2016/11/07/android-android-studio-2-2-preview-refresh-issue/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -344,7 +381,7 @@
 		mathjax: true,
 		animate: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
