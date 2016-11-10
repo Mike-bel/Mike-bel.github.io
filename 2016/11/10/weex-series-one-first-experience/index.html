@@ -4,21 +4,22 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Mac OS X 系统的环境变量配置 | YiFeng&#39;s Zone</title>
+  <title>weex-series-one-first-experience | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在 Windows 系统下配置环境变量较为简单，全程都在图形化界面中完成，而在 Mac OS X 系统下相对来说就复杂很多，全程依赖于终端工具，需要使用到各种 Linux 命令。本文以 Android SDK 中的 adb 工具为例，详细描述一下如何在 Mac 系统中配置环境变量。">
+  <meta name="description" content="Weex 是阿里巴巴 于今年6月份开源的一种跨平台手机应用开发解决方案，只需要一次开发，即可部署在手机 HTML5、Android、iOS 三大平台上。可以采取部分或者全部集成的方式嵌入到原生 Android 和 iOS 应用当中，并且达到 Native App 的体验效果。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mac OS X 系统的环境变量配置">
-<meta property="og:url" content="http://yifeng.studio/2016/11/08/mac-environment-variables-configration/index.html">
+<meta property="og:title" content="weex-series-one-first-experience">
+<meta property="og:url" content="http://yifeng.studio/2016/11/10/weex-series-one-first-experience/index.html">
 <meta property="og:site_name" content="YiFeng's Zone">
-<meta property="og:description" content="在 Windows 系统下配置环境变量较为简单，全程都在图形化界面中完成，而在 Mac OS X 系统下相对来说就复杂很多，全程依赖于终端工具，需要使用到各种 Linux 命令。本文以 Android SDK 中的 adb 工具为例，详细描述一下如何在 Mac 系统中配置环境变量。">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/mac-path-samples-01.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/mac-path-samples-02.png">
-<meta property="og:updated_time" content="2016-11-08T11:58:22.000Z">
+<meta property="og:description" content="Weex 是阿里巴巴 于今年6月份开源的一种跨平台手机应用开发解决方案，只需要一次开发，即可部署在手机 HTML5、Android、iOS 三大平台上。可以采取部分或者全部集成的方式嵌入到原生 Android 和 iOS 应用当中，并且达到 Native App 的体验效果。">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/weex-samples-01.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/weex-samples-03.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/Android-Studio-APK-Analyzer-Samples.png">
+<meta property="og:updated_time" content="2016-11-10T08:19:47.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Mac OS X 系统的环境变量配置">
-<meta name="twitter:description" content="在 Windows 系统下配置环境变量较为简单，全程都在图形化界面中完成，而在 Mac OS X 系统下相对来说就复杂很多，全程依赖于终端工具，需要使用到各种 Linux 命令。本文以 Android SDK 中的 adb 工具为例，详细描述一下如何在 Mac 系统中配置环境变量。">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/mac-path-samples-01.png">
+<meta name="twitter:title" content="weex-series-one-first-experience">
+<meta name="twitter:description" content="Weex 是阿里巴巴 于今年6月份开源的一种跨平台手机应用开发解决方案，只需要一次开发，即可部署在手机 HTML5、Android、iOS 三大平台上。可以采取部分或者全部集成的方式嵌入到原生 Android 和 iOS 应用当中，并且达到 Native App 的体验效果。">
+<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/weex-samples-01.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -201,11 +202,11 @@
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-mac-environment-variables-configration" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-weex-series-one-first-experience" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/11/08/mac-environment-variables-configration/" class="article-date">
-  	<time datetime="2016-11-08T11:02:09.000Z" itemprop="datePublished">2016-11-08</time>
+      <a href="/2016/11/10/weex-series-one-first-experience/" class="article-date">
+  	<time datetime="2016-11-10T08:18:46.000Z" itemprop="datePublished">2016-11-10</time>
 </a>
     </div>
   
@@ -218,7 +219,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Mac OS X 系统的环境变量配置
+      weex-series-one-first-experience
     </h1>
   
 
@@ -251,34 +252,39 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在 Windows 系统下配置环境变量较为简单，全程都在图形化界面中完成，而在 Mac OS X 系统下相对来说就复杂很多，全程依赖于终端工具，需要使用到各种 Linux 命令。本文以 Android SDK 中的 adb 工具为例，详细描述一下如何在 Mac 系统中配置环境变量。</p>
+        <p>Weex 是阿里巴巴 于今年6月份开源的一种跨平台手机应用开发解决方案，只需要一次开发，即可部署在手机 HTML5、Android、iOS 三大平台上。可以采取部分或者全部集成的方式嵌入到原生 Android 和 iOS 应用当中，并且达到 Native App 的体验效果。</p>
 <a id="more"></a>
-<h1 id="shell-类型"><a href="#shell-类型" class="headerlink" title="shell 类型"></a>shell 类型</h1><p>在开始配置之前，简单介绍一下 shell 程序的类型。打开终端工具（terminal），输入命令：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$SHELL</span></span><br></pre></td></tr></table></figure>
-<p>回车执行，即可显示当前 Mac 系统的 Shell 程序类型。Mac OS X 10.3 之前，默认为 csh 或者 tcsh，即 C Shell；Mac OS X 10.3 之后，默认为 bash，即 Bourne Again Shell（ sh 的增强版）。当然，现在绝大多部分的 Mac 设备系统都在 OS X 10.3 之后。所以，本文描述的也是 bash 类型下环境变量的配置。</p>
-<h1 id="Mac-环境变量存放位置"><a href="#Mac-环境变量存放位置" class="headerlink" title="Mac 环境变量存放位置"></a>Mac 环境变量存放位置</h1><p>Mac 系统的环境变量有三种地方可供存放，系统按照如下顺序依次加载：</p>
-<ol>
-<li><p>/etc/profile</p>
+<p>Weex 可谓是站在 RN（React Native）的肩膀上借鉴了很多跨平台应用的开发经验，但却又与 RN 不同，在各自 DSL（领域特定语言）上，相比基于 <a href="https://facebook.github.io/react/" target="_blank" rel="external">React</a>框架的 RN ，基于 <a href="https://vuejs.org.cn/" target="_blank" rel="external">vue.js</a> 框架的 Weex ，在编程语言上更接近于常见的 Web 开发方式。更多细节区别，可参考「大头鬼」总结的一篇文章：<a href="https://zhuanlan.zhihu.com/p/21677103" target="_blank" rel="external">Weex &amp; RecatNative 对比</a>。</p>
+<h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><p>Weex 是使用 <code>Node.js</code> 开发构建的，所以需要我们的电脑上安装有 <a href="https://nodejs.org/en/download/" target="_blank" rel="external">Node.js</a>。然后在终端上运行如下命令，即可安装 <a href="https://www.npmjs.com/package/weex-toolkit" target="_blank" rel="external">Weex Toolkit</a>：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g weex-toolkit</span><br></pre></td></tr></table></figure>
+<p>安装结束后，可使用 <code>weex --verison</code> 检验安装结果并查看 weex 版本。也可以使用 <code>weex --help</code> 查看 weex 命令的所有用法。</p>
+<h1 id="初次体验"><a href="#初次体验" class="headerlink" title="初次体验"></a>初次体验</h1><p>新建一个文本文件（位置随意），命名为 hello.we （.we 是 weex 源代码的文件格式），并将如下内容复制到该文件中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;container&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;cell&quot;&gt;</span><br><span class="line">        &lt;image class=&quot;thumb&quot; src=&quot;http://t.cn/RGE3AJt&quot;&gt;&lt;/image&gt;</span><br><span class="line">        &lt;text class=&quot;title&quot;&gt;Hello Weex&lt;/text&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">  .cell &#123; margin-top: 10; margin-left: 10; flex-direction: row; &#125;</span><br><span class="line">  .thumb &#123; width: 200; height: 200; &#125;</span><br><span class="line">  .title &#123; text-align: center; flex: 1; color: grey; font-size: 50; &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<p>打开终端工具，cd 到 hello.we 所在的目录下，执行如下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">weex hello.we</span><br></pre></td></tr></table></figure>
+<p>此时，电脑上的默认浏览器会打开一个窗口展示运行结果，如图：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/weex-samples-01.png" alt="Hello Weex On PC"></p>
+<p>也可以在手机端预览，需要手机下载安装 <a href="http://alibaba.github.io/weex/download.html" target="_blank" rel="external">Weex Playground App</a>，并与 PC 保持在同一个局域网内。退出上面的服务（ Mac 下使用 <code>Ctrl + C</code> 快捷键组合），运行命令：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">weex hello.we --qr</span><br></pre></td></tr></table></figure>
+<p>终端中会显示一个二维码，打开手机上的 ｀Playground｀ 应用，点击右上角的扫描按钮，扫描这个二维码，即可展示 hello.we 的运行结果，如图：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/weex-samples-03.png" alt="Hello Weex On Mobile"></p>
+<p>此时在 hello.we 文件中的任何修改，保存之后都会立即反映在手机端的显示上，无需重新编译。</p>
+<h1 id="语法高亮"><a href="#语法高亮" class="headerlink" title="语法高亮"></a>语法高亮</h1><p>由于 weex 源代码的文件格式为 <code>.we</code> 格式，默认在文本编辑器中不支持语法高亮，代码看起来很不舒服。不过可以使用 <code>vue.js</code> 的语法高亮来支持 <code>.we</code> 文件的编辑，分别参考 <a href="https://github.com/posva/vim-vue" target="_blank" rel="external">for vim</a>、<a href="https://github.com/vuejs/vue-syntax-highlight" target="_blank" rel="external">for Sublime</a>、<a href="https://atom.io/packages/language-vue-component" target="_blank" rel="external">for ATOM</a>。这里额外介绍 <code>Sublime</code> 的另外一种处理方式。</p>
+<p>第一步，制作 Weex 语法高亮脚本：打开 Sublime Text，依次点击 Tools -&gt; Developer -&gt; New Syntax，打开 gist 链接 <a href="https://gist.github.com/Mike-bel/5e4d2a61ac486d344c001f7007779e84" target="_blank" rel="external">Plain we.sublime-syntax</a>，复制内容到 Sublime 新建的语法文件中，并保存，文件名为 <code>Plain we.sublime-syntax</code> 。</p>
+<p>第二步，开启 weex 语法高亮支持：依次点击 View -&gt; Syntax，选中 We Component 即可。支持 Weex 文件语法高亮的 Sublime Text 编辑器截图如下，整个看上去清爽多了：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/Android-Studio-APK-Analyzer-Samples.png" alt="Sublime Syntax Highlight For Weex"></p>
+<h1 id="学习资源"><a href="#学习资源" class="headerlink" title="学习资源"></a>学习资源</h1><p>Weex 毕竟开源不久，除了公开的内测，目前还没有大面积推广开来，不过已经在阿里系诸如手淘、天猫、虾米音乐等应用中逐步使用。由于被外界误解为阿里的又一个KPI项目（后续不再维护），相对 RN，外界使用相对较少。不过，随着时间的推移、阿里技术团队的完善和社会技术圈儿的认可，Weex 不失为 RN 之外 跨平台的有一种出色的解决方案。</p>
+<p>当然，现阶段除了官方文档，网上相关资料零零碎碎，学习起来可能会经历各种各样的困难。这里整理一些可供参考的资源，罗列如下：</p>
+<ul>
+<li><p><a href="https://github.com/alibaba/weex" target="_blank" rel="external">Weex On GitHub</a></p>
 </li>
-<li><p>/etc/bashrc</p>
+<li><p>Weex Doc <a href="https://alibaba.github.io/weex/doc/" target="_blank" rel="external">英文版</a> &amp; <a href="https://esmeetu.gitbooks.io/weex/content/" target="_blank" rel="external">中文版</a></p>
 </li>
-<li><p>~/.bash_profile</p>
+<li><p><a href="http://weex.help/" target="_blank" rel="external">Weex 交流社区</a></p>
 </li>
-</ol>
-<p>前两个配置属于系统级别的，所有用户均可使用；第三个配置属于用户级别的，仅供当前用户读写。建议将个人用户所需要的环境变量配置于第三个当中。</p>
-<blockquote>
-<p>注意：默认情况下，<code>~/.bash_profile</code> 文件是不存在的，可以通过 <code>nano</code> 编辑器（系统自带）创建修改。</p>
-</blockquote>
-<h1 id="添加环境变量"><a href="#添加环境变量" class="headerlink" title="添加环境变量"></a>添加环境变量</h1><p>第一步，打开终端，执行 <code>nano ~/.bash_profile</code> 命令，创建并编辑配置文件，添加 path 路径，如图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/mac-path-samples-01.png" alt="mac-path-samples-01.png"></p>
-<p>注意：图中 <code>/Users/xianfeng/Develop/SDK/platform-tools</code> 是我当前笔记本中 <code>adb</code> 工具的路径，使用时记得替换成自己的实际对应路径。如果添加多个环境变量，需要使用冒号”:”分割开来，格式如下：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=path1:path2:<span class="variable">$&#123;PATH&#125;</span></span><br></pre></td></tr></table></figure>
-<p>记得在末尾添加 <code>${PATH}</code>，表示支持系统环境变量。一定要严格按照这个格式写，否则不仅用户环境变量不能使用，还会导致系统环境变量出现问题。</p>
-<p>第二步，按下 <code>Ctrl+O</code>（字母O），终端会提示是否保存修改以及保存的文件名，回车确认即可（取消按 <code>Ctrl+C</code>）。然后使用 <code>Ctrl+X</code> 快捷键组合退出编辑。</p>
-<p>这样，用户环境变量就添加好了。使用 <code>ls -a</code> 命令便可以看到新建的 <code>.bash_profile</code> 配置文件（在 Finder 中默认处于隐藏状态）。需要注意的是，此处新添加的环境变量并不能马上使用，可以使用 <code>source</code> 命令使之立刻生效（通过重启电脑也能实现），执行如下命令即可：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> .bash_profile</span><br></pre></td></tr></table></figure>
-<p>然后，就可以正常使用了，比如执行 <code>adb devices</code> 查看已连接的设备列表，再也不用四处 <code>cd</code> 啦。补充一点，通过 <code>echo $PATH</code> 命令可以查看当前用户所能使用的环境变量，如：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/mac-path-samples-02.png" alt="mac-path-samples-02.png"></p>
+<li><p><a href="https://github.com/weexteam" target="_blank" rel="external">Weex Team On GitHub</a></p>
+</li>
+</ul>
 
       
     </div>
@@ -289,9 +295,9 @@
  
 <p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
  
-<p>本文标题为: <b><a href="/2016/11/08/mac-environment-variables-configration/" target="_blank" title="Mac OS X 系统的环境变量配置">Mac OS X 系统的环境变量配置</a></b> </p>
+<p>本文标题为: <b><a href="/2016/11/10/weex-series-one-first-experience/" target="_blank" title="weex-series-one-first-experience">weex-series-one-first-experience</a></b> </p>
  
-<p>本文链接为：<b><a href="/2016/11/08/mac-environment-variables-configration/" target="_blank" title="Mac OS X 系统的环境变量配置">http://yifeng.studio/2016/11/08/mac-environment-variables-configration/</a></b> </p>
+<p>本文链接为：<b><a href="/2016/11/10/weex-series-one-first-experience/" target="_blank" title="weex-series-one-first-experience">http://yifeng.studio/2016/11/10/weex-series-one-first-experience/</a></b> </p>
 
 <p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
 </div>
@@ -303,18 +309,9 @@
     
 <nav id="article-nav">
   
-    <a href="/2016/11/10/weex-series-one-first-experience/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          weex-series-one-first-experience
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/11/07/android-android-studio-2-2-preview-refresh-issue/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Android 如何在 Android Studio 2.2 版本实现 refresh 操作？</div>
+    <a href="/2016/11/08/mac-environment-variables-configration/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Mac OS X 系统的环境变量配置</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -349,7 +346,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="mac-environment-variables-configration" data-title="Mac OS X 系统的环境变量配置" data-url="http://yifeng.studio/2016/11/08/mac-environment-variables-configration/"></div>
+	<div class="ds-thread" data-thread-key="weex-series-one-first-experience" data-title="weex-series-one-first-experience" data-url="http://yifeng.studio/2016/11/10/weex-series-one-first-experience/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
