@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Weex 探索系列（二）Android 集成 | YiFeng&#39;s Zone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在 Weex 探索系列（一）初识和环境搭建 一文中，我们初步了解了 Weex 的来龙去脉，包括环境搭建和一些学习资源。这篇文章，来看看如何在 Android 工程中集成 Weex 和 一些基本使用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Weex 探索系列（二）Android 集成">
+<meta property="og:url" content="http://yifeng.studio/2016/11/11/weex-series-two-android-integration/index.html">
+<meta property="og:site_name" content="YiFeng's Zone">
+<meta property="og:description" content="在 Weex 探索系列（一）初识和环境搭建 一文中，我们初步了解了 Weex 的来龙去脉，包括环境搭建和一些学习资源。这篇文章，来看看如何在 Android 工程中集成 Weex 和 一些基本使用。">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/weex-samples-05.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/weex-samples-06.gif">
+<meta property="og:updated_time" content="2016-11-12T14:31:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Weex 探索系列（二）Android 集成">
+<meta name="twitter:description" content="在 Weex 探索系列（一）初识和环境搭建 一文中，我们初步了解了 Weex 的来龙去脉，包括环境搭建和一些学习资源。这篇文章，来看看如何在 Android 工程中集成 Weex 和 一些基本使用。">
+<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/weex-samples-05.png">
+  
+    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+  
+  
+    
+      <link rel="icon" href="/favicon.png">
+    
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+				
+					<img lazy-src="/assets/imgSite/avatar.png" class="js-avatar">
+				
+			
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">亦枫</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">起始于Android，不止于Android</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">首页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+					        
+								<a class="mail" target="_blank" href="mailto:fengleegg@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 10px;">Android Studio</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Weex/" style="font-size: 15px;">Weex</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/guolin_blog">郭霖</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/lmj623565791">鸿洋</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/singwhatiwanna">任玉刚</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.jcodecraeer.com/plus/list.php?tid=16">泡在网上的日子</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">长期拼搏在一线开发的安卓程序猿一枚，热衷于技术，沉浸于段子，微信公众号：技术鸟（微信号：NiaoTech）。If you can&#39;t fly then run, can&#39;t run then walk, can&#39;t walk then crawl, keep moving forward.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">亦枫</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img lazy-src="null/assets/imgSite/avatar.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">亦枫</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">起始于Android，不止于Android</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">首页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+			        
+						<a class="mail" target="_blank" href="mailto:fengleegg@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-weex-series-two-android-integration" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/11/11/weex-series-two-android-integration/" class="article-date">
+  	<time datetime="2016-11-11T08:47:01.000Z" itemprop="datePublished">2016-11-11</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Weex 探索系列（二）Android 集成
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Weex/">Weex</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Weex/">Weex</a>
+	</div>
+
+
+
+        
+            <div class="bookicon"></div>
+            <div class="article-hit">
+              <span id="busuanzi_container_page_pv">
+                    热度 <span id="busuanzi_value_page_pv"></span>℃</span>
+            </div>
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在 <a href="">Weex 探索系列（一）初识和环境搭建</a> 一文中，我们初步了解了 Weex 的来龙去脉，包括环境搭建和一些学习资源。这篇文章，来看看如何在 Android 工程中集成 Weex 和 一些基本使用。</p>
+<a id="more"></a>
+<h1 id="Weex-依赖"><a href="#Weex-依赖" class="headerlink" title="Weex 依赖"></a>Weex 依赖</h1><hr>
+<p>Android 工程集成 Weex SDK 的方式与普通 SDK 的接入一样，目前有两种方式可供选择：Gradle 远程依赖 和 Library 源码依赖。</p>
+<p>在开始依赖之前，有两个限制条件需要我们知道一下。第一点，CPU 架构：Weex 要求目标安卓设备 CPU 采用的是 ARM 架构，不支持 X86 架构的处理器（备注：目前市场上的安卓手机比较多的还是采用 ARM 体系的晓龙 CPU）。第二点，API 版本：支持 API 14 及更高版本，所以在集成之前，记得先检查一下你的 Android 工程中 <code>minSdkVersion</code> 值的大小。</p>
+<h2 id="Gradle-远程依赖"><a href="#Gradle-远程依赖" class="headerlink" title="Gradle 远程依赖"></a>Gradle 远程依赖</h2><p>打开 <code>app/build.gradle</code> 文件，在 <code>dependencies</code> 配置项中添加相关依赖包：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">compile</span> <span class="string">'com.android.support:recyclerview-v7:23.1.1'</span></span><br><span class="line"><span class="keyword">compile</span> <span class="string">'com.android.support:support-v4:23.1.1'</span></span><br><span class="line"><span class="keyword">compile</span> <span class="string">'com.android.support:appcompat-v7:23.1.1'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">compile</span> <span class="string">'com.alibaba:fastjson:1.1.46.android'</span></span><br><span class="line"><span class="keyword">compile</span> <span class="string">'com.taobao.android:weex_sdk:0.5.1@aar'</span></span><br><span class="line"><span class="keyword">compile</span> <span class="string">'com.github.bumptech.glide:glide:3.7.0'</span></span><br></pre></td></tr></table></figure>
+<p>说明：由于 Weex 采用映射 Android 系统原生控件达到 Native App 的体验，所以需要前面三个基本的 Android SDK 的依赖。fastjson 是 Weex 实现 JSON 数据解析要用的库，weex_sdk 是 Android 项目使用 Weex 功能而嵌入的工具。关于版本号，我这里使用的不是各自依赖项的最新版本，而是 Weex SDK 所要用到的最小兼容版本，实际使用过程中只能比列举的版本号更大。最后一个是图片加载库，Weex SDK 自身含有 Http 请求功能，而没有图片下载显示功能，需要安卓开发人员自己实现，所以这里我用了 Glide 开源项目，你也可以 <code>Fresco</code>、<code>Picasso</code>等其他实现方式。</p>
+<h2 id="Library-源码依赖"><a href="#Library-源码依赖" class="headerlink" title="Library 源码依赖"></a>Library 源码依赖</h2><p>使用这种依赖方式的弊端在于无法通过 Gradle 实现依赖库的自动更新。从 <a href="https://github.com/alibaba/weex" target="_blank" rel="external">GitHub</a> 网站下载 Weex SDK，当然如果电脑上安装有 Git 工具的话，也可以直接克隆：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/alibaba/weex</span><br></pre></td></tr></table></figure>
+<p>打开自己的安卓工程，依次点击 File -&gt; New -&gt; Import Module… ，选择 Weex SDK (路径：weex_dev/android/sdk)。然后在 <code>app/build.gradle</code> 文件中添加 Library 依赖：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">compile</span> <span class="keyword">project</span>(<span class="string">':weex_sdk'</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="初始化和配置"><a href="#初始化和配置" class="headerlink" title="初始化和配置"></a>初始化和配置</h1><hr>
+<p>在自定义的 Application 类中初始化 Weex SDK：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span> <span class="keyword">extends</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate();</span><br><span class="line"></span><br><span class="line">        InitConfig.Builder builder = <span class="keyword">new</span> InitConfig.Builder();</span><br><span class="line">        builder.setImgAdapter(<span class="keyword">new</span> ImageAdapter());</span><br><span class="line">        </span><br><span class="line">        InitConfig config = builder.build();</span><br><span class="line">        WXSDKEngine.initialize(<span class="keyword">this</span>, config);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Week SDK 的初始化需要一些配置，其中 <code>setImgAdapter()</code> 用于设置网络图片的加载和显示。Weex 的核心在于 UI 渲染，完成 JS 中的内容与 Native Widget 的显示映射，渲染之外的事情由开发人员自己完成。好在 Weex 提供了一套默认的 Http 请求适配器，即 <code>DefaultWXHttpAdapter</code> ，我们也可以通过 <code>setHttpAdapter()</code> 方法设置自己的请求方式。但是对于图片加载，Weex 没有提供默认方式，需要自己实现，比如这里的 <code>ImageAdapter</code> 类，我用 Glide 实现了图片的下载与显示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ImageAdapter</span> <span class="keyword">implements</span> <span class="title">IWXImgLoaderAdapter</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setImage</span><span class="params">(String url, ImageView view, WXImageQuality quality, WXImageStrategy strategy)</span> </span>&#123;</span><br><span class="line">        Glide.with(WXEnvironment.getApplication()).load(url).into(view);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果没有设置图片适配器的话，应用也不会崩溃，只是图片不会显示而已。另外，不要忘了在 Manifest.xml 文件中添加自定义的 Application 类和网络请求的权限。</p>
+<h1 id="基本调用"><a href="#基本调用" class="headerlink" title="基本调用"></a>基本调用</h1><hr>
+<p>还记得上篇文章中，我们说过，每个 <code>.we</code> 格式的 Weex 源文件使用 Weex Toolkit 工具编译过后都会产生一个 <code>.js</code> 格式的对应文件吗？这里就要用到了。我们将上篇文章中编译得到的 <code>hello.js</code> 复制到 Android 工程 <code>app/src/main/assets</code> 文件夹下，如果没有该文件夹，新建一个即可。</p>
+<p>Weex SDK 在 Android 应用中只是负责将 js 内容渲染出来，在取到 js 文件内容后，会返回一个 View 对象交由 Android 工程自己处理，比如提供给 Activity 供其设置内容视图，显示在手机屏幕上。</p>
+<p>新建一个 Actiivty 类，创建一个 WXSDKInstance 实例，设置渲染监听器，并加载 assets 本地文件夹中的 <code>hello.js</code> 文件，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> <span class="keyword">implements</span> <span class="title">IWXRenderListener</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> WXSDKInstance mWXSDKInstance;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line"></span><br><span class="line">        mWXSDKInstance = <span class="keyword">new</span> WXSDKInstance(<span class="keyword">this</span>);</span><br><span class="line">        mWXSDKInstance.registerRenderListener(<span class="keyword">this</span>);</span><br><span class="line">        mWXSDKInstance.render(getLocalClassName(), WXFileUtils.loadFileContent(<span class="string">"hello.js"</span>, <span class="keyword">this</span>),</span><br><span class="line">                <span class="keyword">null</span>, <span class="keyword">null</span>, -<span class="number">1</span>, -<span class="number">1</span>, WXRenderStrategy.APPEND_ASYNC);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onViewCreated</span><span class="params">(WXSDKInstance instance, View view)</span> </span>&#123;</span><br><span class="line">        setContentView(view);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRenderSuccess</span><span class="params">(WXSDKInstance instance, <span class="keyword">int</span> width, <span class="keyword">int</span> height)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRefreshSuccess</span><span class="params">(WXSDKInstance instance, <span class="keyword">int</span> width, <span class="keyword">int</span> height)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onException</span><span class="params">(WXSDKInstance instance, String errCode, String msg)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onResume();</span><br><span class="line">        <span class="keyword">if</span>(mWXSDKInstance!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            mWXSDKInstance.onActivityResume();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onPause</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onPause();</span><br><span class="line">        <span class="keyword">if</span>(mWXSDKInstance!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            mWXSDKInstance.onActivityPause();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onStop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onStop();</span><br><span class="line">        <span class="keyword">if</span>(mWXSDKInstance!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            mWXSDKInstance.onActivityStop();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onDestroy();</span><br><span class="line">        <span class="keyword">if</span>(mWXSDKInstance!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            mWXSDKInstance.onActivityDestroy();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到，<code>IWXRenderListener</code> 监听器里包含有渲染成功、失败、异常、刷新等回调函数，渲染成功后返回一个 View 对象，供 Activity 使用。这里我没有用到 layout 布局文件，直接将这个 View 对象设置为 Activity 的内容来显示。当然，也可以使用 layout 布局文件，采用 layout 和 js 视图内容混合显示的方式来设置整个 Activity 界面，使用 <code>addView()</code> 方法将这个 View 对象添加到 layout 的外层容器中即可。</p>
+<p><code>render()</code>渲染函数的参数可以可以参考源码介绍，其中 width 和 height 表示 View 的大小，可设置为 -1，表示全屏。编译运行，手机显示效果如图：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/weex-samples-05.png" alt=""></p>
+<p>这里是本地 js 文件的加载，如果 js 文件放置在远程服务器上，可以使用下面的方法加载（url 参数为远程 js 的地址）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mWXSDKInstance.renderByUrl(getLocalClassName(), url, <span class="keyword">null</span>, <span class="keyword">null</span>, -<span class="number">1</span>, -<span class="number">1</span>, WXRenderStrategy.APPEND_ASYNC);</span><br></pre></td></tr></table></figure>
+<h1 id="语法和组件"><a href="#语法和组件" class="headerlink" title="语法和组件"></a>语法和组件</h1><hr>
+<p>Weex 有着固定的编程语法，目前也提供了诸如 image、list、input 等常见的 UI 组件，官方文档有很详细的介绍。另外，Weex 团队也提供了一套完整的 Android Demo，可供参考学习：<a href="https://github.com/alibaba/weex/tree/dev/android" target="_blank" rel="external">playground</a>，部分效果图如下：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/weex-samples-06.gif" alt="playground.gif"></p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><hr>
+<ul>
+<li><p><a href="https://esmeetu.gitbooks.io/weex/content/advanced/integrate-to-android.html" target="_blank" rel="external">https://esmeetu.gitbooks.io/weex/content/advanced/integrate-to-android.html</a></p>
+</li>
+<li><p><a href="https://yq.aliyun.com/articles/58743" target="_blank" rel="external">https://yq.aliyun.com/articles/58743</a></p>
+</li>
+</ul>
+
+      
+    </div>
+    
+      <! -- 添加版权信息 -->
+<div class="article-footer-copyright">
+<p>本文由&nbsp;<b>亦枫</b>&nbsp;创作并首发于&nbsp;<b><a href="/index.html" target="_blank" title="亦枫">亦枫的个人博客</a></b>&nbsp;，同步授权微信公众号：技术鸟（NiaoTech）。</a></p>
+ 
+<p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
+ 
+<p>本文标题为: <b><a href="/2016/11/11/weex-series-two-android-integration/" target="_blank" title="Weex 探索系列（二）Android 集成">Weex 探索系列（二）Android 集成</a></b> </p>
+ 
+<p>本文链接为：<b><a href="/2016/11/11/weex-series-two-android-integration/" target="_blank" title="Weex 探索系列（二）Android 集成">http://yifeng.studio/2016/11/11/weex-series-two-android-integration/</a></b> </p>
+
+<p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
+</div>
+<! -- 添加版权信息 -->
+    
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/11/10/weex-series-one-first-experience/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Weex 探索系列（一）初识和环境搭建</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="weex-series-two-android-integration" data-title="Weex 探索系列（二）Android 集成" data-url="http://yifeng.studio/2016/11/11/weex-series-two-android-integration/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"yifengzone"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 亦枫
+    	</div>
+      <div class="footer-left">
+        &nbsp;&copy; 
+        <span id="busuanzi_container_site_pv">
+          本站访问量<span id="busuanzi_value_site_pv"></span>次
+        </span>
+        <span id="busuanzi_container_site_uv">
+          访客数<span id="busuanzi_value_site_uv"></span>人
+        </span>
+      </div>
+      	<div class="footer-right">
+      		Theme of <a href="https://github.com/Mike-bel/hexo-theme-yilia-optimization" target="_blank">yilia-opti</a>, by YiFeng
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: '/'
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-83125745-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script>
+	(function(){
+		document.write('<scr'+'ipt type="text/javascript" src="'+document.location.protocol+'//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">'+'</sc'+'ript>');
+	})();
+</script>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
