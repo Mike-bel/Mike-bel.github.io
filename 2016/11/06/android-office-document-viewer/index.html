@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://yifeng.studio/2016/11/06/android-office-document-viewer/index.html">
 <meta property="og:site_name" content="YiFeng's Zone">
 <meta property="og:description" content="前几天看见 asce1885 总结的一篇有关 Android 平台上浏览 PDF 文件的文章，列出了多种实现方式以及它们的优缺点，较为详细。刚好，不久前，个人经手的一个项目中也涉及到了 Office 文档（常见如 PDF、EXCEL、WORD、PPT等）在线阅读的功能，并为之做了一番了解，故写下此文，在该文章的基础上，做一些个人的补充完善，供后续再次使用时能有所翻看。">
-<meta property="og:updated_time" content="2016-11-06T05:58:15.000Z">
+<meta property="og:updated_time" content="2016-11-14T07:23:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 阅读 Office 文档，所有你能想到的解决方案都在这啦">
 <meta name="twitter:description" content="前几天看见 asce1885 总结的一篇有关 Android 平台上浏览 PDF 文件的文章，列出了多种实现方式以及它们的优缺点，较为详细。刚好，不久前，个人经手的一个项目中也涉及到了 Office 文档（常见如 PDF、EXCEL、WORD、PPT等）在线阅读的功能，并为之做了一番了解，故写下此文，在该文章的基础上，做一些个人的补充完善，供后续再次使用时能有所翻看。">
@@ -258,6 +258,8 @@
 <h2 id="Office-Web-365"><a href="#Office-Web-365" class="headerlink" title="Office Web 365"></a>Office Web 365</h2><p>第三方公司提供的一种 Office 文档在线预览的功能，能够实现 Microsoft、Adobe、WPS 文档的移动端和PC端在线网页访问。使用简单，类似 Google Doc 访问方式，一个固定格式的链接，轻松实现：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//ow365.cn/?i=您的网站ID&amp;furl=文档地址</span></span><br></pre></td></tr></table></figure>
 <p>地址：<a href="http://www.officeweb365.com/" target="_blank" rel="external">http://www.officeweb365.com/</a><br>优点：功能强大，使用简单。<br>缺点：付费使用（可免费受限使用，如访问次数、广告显示等）。</p>
+<h2 id="永中云转换"><a href="#永中云转换" class="headerlink" title="永中云转换"></a>永中云转换</h2><p>和上面的「 Office Web 365 」提供的服务一样，重点在于免费，并且没有弹窗遮盖等形式的广告，目前处于公测阶段，不过官方已经表态，将来也不会收费，只是对于超大访问量将采取适度收费。</p>
+<p>地址：<a href="http://www.yozodcs.com/index.html" target="_blank" rel="external">http://www.yozodcs.com/index.html</a><br>优点：免费使用。<br>缺点：稳定性有待验证。</p>
 <h1 id="打开本地应用"><a href="#打开本地应用" class="headerlink" title="打开本地应用"></a>打开本地应用</h1><p>如果移动设备中安装有能够打开 Office 文档的本地应用，也可以借助它们打开所要操作的文档，当然前提是必须先将远程文档下载到设备的本地存储空间中：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_VIEW);</span><br><span class="line">intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</span><br><span class="line"><span class="comment">//officeFile：本地文档；type：文档MIMEType类型，可以使用文件格式后缀</span></span><br><span class="line">intent.setDataAndType(Uri.fromFile(officeFile), type);</span><br><span class="line"><span class="keyword">if</span> (intent.resolveActivity(getPackageManager())!=<span class="keyword">null</span>)&#123;</span><br><span class="line">  startActivity(intent);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>优点：可读可写。<br>缺点：需要先行下载，同时设备中存在能够打开文档的本地应用，并且阅读时会离开当前应用。</p>
