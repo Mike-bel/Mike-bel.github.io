@@ -15,7 +15,7 @@
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/weex-samples-01.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/weex-samples-03.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/weex-samples-04.png">
-<meta property="og:updated_time" content="2016-11-16T08:23:23.000Z">
+<meta property="og:updated_time" content="2016-11-22T02:11:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Weex 探索系列（一）初识和环境搭建">
 <meta name="twitter:description" content="Weex 是阿里巴巴 于今年6月份开源的一种跨平台手机应用开发解决方案，只需要一次开发，即可部署在手机 HTML5、Android、iOS 三大平台上。可以采取部分或者全部集成的方式嵌入到原生 Android 和 iOS 应用当中，并且达到 Native App 的体验效果。">
@@ -255,7 +255,7 @@
         <p>Weex 是阿里巴巴 于今年6月份开源的一种跨平台手机应用开发解决方案，只需要一次开发，即可部署在手机 HTML5、Android、iOS 三大平台上。可以采取部分或者全部集成的方式嵌入到原生 Android 和 iOS 应用当中，并且达到 Native App 的体验效果。</p>
 <a id="more"></a>
 <p>Weex 可谓是站在 RN（React Native）的肩膀上借鉴了很多跨平台应用的开发经验，但却又与 RN 不同，在各自 DSL（领域特定语言）上，相比基于 <a href="https://facebook.github.io/react/" target="_blank" rel="external">React</a> 框架的 RN ，基于 <a href="https://vuejs.org.cn/" target="_blank" rel="external">vue.js</a> 框架的 Weex ，在编程语言上更接近于常见的 Web 开发方式。更多细节区别，可参考「大头鬼」总结的一篇文章：<a href="https://zhuanlan.zhihu.com/p/21677103" target="_blank" rel="external">Weex &amp; RecatNative 对比</a>。</p>
-<h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><p>Weex 是使用 <code>Node.js</code> 开发构建的，所以需要我们的电脑上安装有 <a href="https://nodejs.org/en/download/" target="_blank" rel="external">Node.js</a>。然后在终端上运行如下命令，即可安装 <a href="https://www.npmjs.com/package/weex-toolkit" target="_blank" rel="external">Weex Toolkit</a>：</p>
+<h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><p>Weex 是使用 <code>Node.js</code> 开发构建的，所以需要我们的电脑上安装有 <a href="https://nodejs.org/en/download/" target="_blank" rel="external">Node.js</a>。然后在终端上运行如下命令，即可安装 <a href="https://www.npmjs.com/package/weex-toolkit" target="_blank" rel="external">Weex Toolkit</a> ：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g weex-toolkit</span><br></pre></td></tr></table></figure>
 <p>安装结束后，可使用 <code>weex --verison</code> 检验安装结果并查看 weex 版本。也可以使用 <code>weex --help</code> 查看 weex 命令的所有用法。</p>
 <h1 id="初次体验"><a href="#初次体验" class="headerlink" title="初次体验"></a>初次体验</h1><p>新建一个文本文件（位置随意），命名为 hello.we （.we 是 weex 源代码的文件格式），并将如下内容复制到该文件中：</p>
@@ -265,12 +265,12 @@
 <p>编译结束后，电脑上的默认浏览器会打开一个窗口展示运行结果，如图：</p>
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/weex-samples-01.png" alt="Hello Weex On PC"></p>
 <p>同时在当前目录下生成一个 <code>weex_temp</code> 文件夹，里面是 H5 显示所需要的一些源文件。其中，与 hello.we 文件对应的有一个 hello.js，这种 与 <code>.we</code> 文件一一对应的 <code>.js</code> 的文件也是 Android 和 iOS 工程集成 Weex 时所要用到的文件，我们后续写到 Android 集成时再讲具体怎么用。</p>
-<p>除了 PC 浏览器，当然还可以在手机端实现实时预览。前提是需要手机下载安装 <a href="http://alibaba.github.io/weex/download.html" target="_blank" rel="external">Weex Playground App</a>，并与 PC 保持在同一个局域网内。退出上面的服务（ Mac 下使用 <code>Ctrl + C</code> 快捷键组合），运行命令：</p>
+<p>除了 PC 浏览器，当然还可以在手机端实现实时预览。前提是需要手机下载安装 <a href="http://alibaba.github.io/weex/download.html" target="_blank" rel="external">Weex Playground App</a> ，并与 PC 保持在同一个局域网内。退出上面的服务（ Mac 下使用 <code>Ctrl + C</code> 快捷键组合），运行命令：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">weex hello.we --qr</span><br></pre></td></tr></table></figure>
 <p>终端中会显示一个二维码，打开手机上的 <code>Playground</code> 应用，点击右上角的扫描按钮，扫描这个二维码，即可展示 hello.we 的运行结果，如图：</p>
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/weex-samples-03.png" alt="Hello Weex On Mobile"></p>
 <p>此时在 hello.we 文件中的任何修改，保存之后都会立即反映在手机端的显示上，无需重新编译。</p>
-<h1 id="语法高亮"><a href="#语法高亮" class="headerlink" title="语法高亮"></a>语法高亮</h1><p>由于 weex 源代码的文件格式为 <code>.we</code> 格式，默认在文本编辑器中不支持语法高亮，代码看起来很不舒服。不过可以使用 <code>vue.js</code> 的语法高亮来支持 <code>.we</code> 文件的编辑，分别参考 <a href="https://github.com/posva/vim-vue" target="_blank" rel="external">for vim</a>、<a href="https://github.com/vuejs/vue-syntax-highlight" target="_blank" rel="external">for Sublime</a>、<a href="https://atom.io/packages/language-vue-component" target="_blank" rel="external">for ATOM</a>。这里额外介绍 <code>Sublime</code> 的另外一种处理方式。</p>
+<h1 id="语法高亮"><a href="#语法高亮" class="headerlink" title="语法高亮"></a>语法高亮</h1><p>由于 weex 源代码的文件格式为 <code>.we</code> 格式，默认在文本编辑器中不支持语法高亮，代码看起来很不舒服。不过可以使用 <code>vue.js</code> 的语法高亮来支持 <code>.we</code> 文件的编辑，分别参考 <a href="https://github.com/posva/vim-vue" target="_blank" rel="external">for vim</a>、<a href="https://github.com/vuejs/vue-syntax-highlight" target="_blank" rel="external">for Sublime</a>、<a href="https://atom.io/packages/language-vue-component" target="_blank" rel="external">for ATOM</a> 。这里额外介绍 <code>Sublime</code> 的另外一种处理方式。</p>
 <p>第一步，制作 Weex 语法高亮脚本：打开 Sublime Text，依次点击 Tools -&gt; Developer -&gt; New Syntax，新建一个语法文件，打开 gist 链接 <a href="https://gist.github.com/Mike-bel/5e4d2a61ac486d344c001f7007779e84" target="_blank" rel="external">Plain we.sublime-syntax</a>，复制内容到刚才新建的语法文件中，并保存，文件名和扩展名为 <code>Plain we.sublime-syntax</code> 。</p>
 <p>第二步，开启 weex 语法高亮支持：依次点击 View -&gt; Syntax，选中 We Component 即可。支持 Weex 文件语法高亮的 Sublime Text 编辑器截图如下，整个看上去清爽多了：</p>
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/weex-samples-04.png" alt="Sublime Syntax Highlight For Weex"></p>
