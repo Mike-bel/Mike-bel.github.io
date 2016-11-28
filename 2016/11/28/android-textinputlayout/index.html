@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Android TextInputLayout，打造 Material Design 风格的文本输入框 | YiFeng&#39;s Zone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Android Material Design 对 EditText 输入框的交互设计定义了一个规范，详细设计细节可以参考官网介绍：Components/Text fields (需要 翻墙 )。android.support.design 包中恰好提供了一个实现这些设计细节的新控件：TextInputLayout，本文就来细细分析一下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android TextInputLayout，打造 Material Design 风格的文本输入框">
+<meta property="og:url" content="http://yifeng.studio/2016/11/28/android-textinputlayout/index.html">
+<meta property="og:site_name" content="YiFeng's Zone">
+<meta property="og:description" content="Android Material Design 对 EditText 输入框的交互设计定义了一个规范，详细设计细节可以参考官网介绍：Components/Text fields (需要 翻墙 )。android.support.design 包中恰好提供了一个实现这些设计细节的新控件：TextInputLayout，本文就来细细分析一下。">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1480317099.gif">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1480316436.gif">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1480314489.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1480314503.png">
+<meta property="og:updated_time" content="2016-11-28T07:46:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android TextInputLayout，打造 Material Design 风格的文本输入框">
+<meta name="twitter:description" content="Android Material Design 对 EditText 输入框的交互设计定义了一个规范，详细设计细节可以参考官网介绍：Components/Text fields (需要 翻墙 )。android.support.design 包中恰好提供了一个实现这些设计细节的新控件：TextInputLayout，本文就来细细分析一下。">
+<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1480317099.gif">
+  
+    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+  
+  
+    
+      <link rel="icon" href="/favicon.png">
+    
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+				
+					<img lazy-src="/assets/imgSite/avatar.png" class="js-avatar">
+				
+			
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">亦枫</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">翻墙推荐：http://buytizi.com/?r=225bb619613ec09e</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">首页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+					        
+								<a class="mail" target="_blank" href="mailto:fengleegg@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 10px;">Android Studio</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Weex/" style="font-size: 15px;">Weex</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/guolin_blog">郭霖</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/lmj623565791">鸿洋</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/singwhatiwanna">任玉刚</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.jcodecraeer.com/plus/list.php?tid=16">泡在网上的日子</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">长期拼搏在一线开发的安卓程序猿一枚，热衷于技术，沉浸于段子，微信公众号：技术鸟（微信号：NiaoTech）。If you can&#39;t fly then run, can&#39;t run then walk, can&#39;t walk then crawl, keep moving forward.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">亦枫</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img lazy-src="null/assets/imgSite/avatar.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">亦枫</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">翻墙推荐：http://buytizi.com/?r=225bb619613ec09e</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">首页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+			        
+						<a class="mail" target="_blank" href="mailto:fengleegg@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-android-textinputlayout" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/11/28/android-textinputlayout/" class="article-date">
+  	<time datetime="2016-11-28T07:24:42.000Z" itemprop="datePublished">2016-11-28</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android TextInputLayout，打造 Material Design 风格的文本输入框
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Android/">Android</a>
+	</div>
+
+
+
+        
+            <div class="bookicon"></div>
+            <div class="article-hit">
+              <span id="busuanzi_container_page_pv">
+                    热度 <span id="busuanzi_value_page_pv"></span>℃</span>
+            </div>
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Android Material Design 对 EditText 输入框的交互设计定义了一个规范，详细设计细节可以参考官网介绍：<a href="https://material.google.com/components/text-fields.html#" target="_blank" rel="external">Components/Text fields</a> (需要 <a href="http://buytizi.com/?r=225bb619613ec09e" target="_blank" rel="external">翻墙</a> )。android.support.design 包中恰好提供了一个实现这些设计细节的新控件：TextInputLayout，本文就来细细分析一下。</p>
+<a id="more"></a>
+<h1 id="TextInputLayout"><a href="#TextInputLayout" class="headerlink" title="TextInputLayout"></a>TextInputLayout</h1><hr>
+<p>LinearLayout 的子类，专用于包裹 EditText 的一个 ViewGroup ，基本用法如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">android.support.design.widget.TextInputLayout</span></span><br><span class="line">         <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">         <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">     <span class="tag">&lt;<span class="name">android.support.design.widget.TextInputEditText</span></span><br><span class="line">             <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">             <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">             <span class="attr">android:hint</span>=<span class="string">"@string/form_username"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="tag">&lt;/<span class="name">android.support.design.widget.TextInputLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>相比传统单独使用 EditText 的做法，新增的容器 <code>TextInputLayout</code> 拥有的一些独特属性能够实现如下功能：</p>
+<ol>
+<li><p><strong>hint 提示</strong>：输入框获取焦点时，EditText 通过 hint 属性设置的字符串内容将浮动显示在输入框左上方。用户进行输入操作时依旧能够看到提示信息。</p>
+</li>
+<li><p><strong>error 提示</strong>：通常用户输入的内容需要经过验证，可以使用 <code>TextInputLayout</code> 类提供的 <code>setErrorEnabled(boolean)</code> 和 <code>setError(CharSequence)</code> 方法控制输入框左下方错误信息的显示与隐藏。</p>
+</li>
+<li><p><strong>character counter</strong>：通过 <code>counterEnabled</code> 和 <code>counterMaxLength</code> 属性可以统计输入内容的字数，并显示在输入框右下角。</p>
+</li>
+<li><p><strong>Password visibility toggling</strong>：当输入框内容为密码类信息时，可以通过 <code>passwordToggleEnabled</code> 属性或者 <code>setPasswordVisibilityToggleEnabled(boolean)</code> 方法在输入框右侧 drawableRight 的位置显示一个切换按钮，控制输入内容的显示与隐藏。</p>
+</li>
+</ol>
+<p>这里我写了一个测试 Demo，layout 文件内容如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attr">android:focusableInTouchMode</span>=<span class="string">"true"</span></span><br><span class="line">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">include</span></span><br><span class="line">        <span class="attr">layout</span>=<span class="string">"@layout/include_toolbar"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">android.support.design.widget.TextInputLayout</span></span><br><span class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/til_mobile"</span></span><br><span class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">        <span class="attr">android:layout_marginTop</span>=<span class="string">"@dimen/dp_16"</span></span><br><span class="line">        <span class="attr">android:layout_marginLeft</span>=<span class="string">"@dimen/dp_16"</span></span><br><span class="line">        <span class="attr">android:layout_marginRight</span>=<span class="string">"@dimen/dp_16"</span></span><br><span class="line">        <span class="attr">app:counterEnabled</span>=<span class="string">"true"</span></span><br><span class="line">        <span class="attr">app:counterMaxLength</span>=<span class="string">"11"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">android.support.design.widget.TextInputEditText</span></span><br><span class="line">            <span class="attr">android:id</span>=<span class="string">"@+id/et_mobile"</span></span><br><span class="line">            <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">            <span class="attr">android:drawableLeft</span>=<span class="string">"@mipmap/ic_mobile"</span></span><br><span class="line">            <span class="attr">android:drawableStart</span>=<span class="string">"@mipmap/ic_mobile"</span></span><br><span class="line">            <span class="attr">android:drawablePadding</span>=<span class="string">"@dimen/dp_4"</span></span><br><span class="line">            <span class="attr">android:gravity</span>=<span class="string">"center_vertical"</span></span><br><span class="line">            <span class="attr">android:inputType</span>=<span class="string">"number"</span></span><br><span class="line">            <span class="attr">android:hint</span>=<span class="string">"请输入手机号"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">android.support.design.widget.TextInputLayout</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">android.support.design.widget.TextInputLayout</span></span><br><span class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/til_password"</span></span><br><span class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">        <span class="attr">android:layout_marginRight</span>=<span class="string">"@dimen/dp_16"</span></span><br><span class="line">        <span class="attr">android:layout_marginLeft</span>=<span class="string">"@dimen/dp_16"</span></span><br><span class="line">        <span class="attr">app:passwordToggleEnabled</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">android.support.design.widget.TextInputEditText</span></span><br><span class="line">            <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">            <span class="attr">android:drawableLeft</span>=<span class="string">"@mipmap/ic_password"</span></span><br><span class="line">            <span class="attr">android:drawableStart</span>=<span class="string">"@mipmap/ic_password"</span></span><br><span class="line">            <span class="attr">android:drawablePadding</span>=<span class="string">"@dimen/dp_4"</span></span><br><span class="line">            <span class="attr">android:gravity</span>=<span class="string">"center_vertical"</span></span><br><span class="line">            <span class="attr">android:hint</span>=<span class="string">"请输入密码"</span></span><br><span class="line">            <span class="attr">android:inputType</span>=<span class="string">"textPassword"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">android.support.design.widget.TextInputLayout</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">Button</span></span><br><span class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">        <span class="attr">android:layout_margin</span>=<span class="string">"@dimen/dp_16"</span></span><br><span class="line">        <span class="attr">android:onClick</span>=<span class="string">"onClickLogin"</span></span><br><span class="line">        <span class="attr">android:text</span>=<span class="string">"登录"</span></span><br><span class="line">        <span class="attr">android:textColor</span>=<span class="string">"@color/white"</span></span><br><span class="line">        <span class="attr">android:textSize</span>=<span class="string">"@dimen/sp_16"</span></span><br><span class="line">        <span class="attr">android:background</span>=<span class="string">"@color/blue"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>效果如图：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1480317099.gif" alt=""></p>
+<p>前面提到的 TextInputLayout 的四个功能在 Demo 中均有所体现。再补充几个值得注意的地方：</p>
+<ol>
+<li><p>浮动 hint 、error 提示、字数提示和 EditText 的背景样式默认使用主题 style 中的 <code>colorAccent</code> 属性定义的颜色；</p>
+</li>
+<li><p>使用 <code>TextInputLayout</code> 时，设置 EditText 的 drawable 图标时需要同时使用相对值 (start／end) 和 绝对值 (left／right)，否则 drawable 存在显示兼容问题。</p>
+</li>
+<li><p>控制密码显示状态的切换按钮的图标默认呈黑色眼睛状，TextInputLayout 提供了一些属性供开发人员自由设置其颜色与形状。比如「Nick Butcher」大神在他的项目 <a href="https://github.com/nickbutcher/plaid" target="_blank" rel="external">plaid</a> 中利用 path 给图标做出了一个很炫酷的切换动画效果，再加上文字和小黑点的切换效果，简直完美，如下图所示 (图片源自 <a href="https://twitter.com/crafty/status/766305675030953984" target="_blank" rel="external">Twitter</a>)：</p>
+</li>
+</ol>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1480316436.gif" alt=""></p>
+<p>具体代码实现过程，可以直接参考：<a href="https://github.com/nickbutcher/plaid/commit/68cc1feac7073ef8e38d1fd809bc22001bd53158" target="_blank" rel="external">Plaid - Animated DN password visibility toggle</a>。</p>
+<h1 id="TextInputEditText"><a href="#TextInputEditText" class="headerlink" title="TextInputEditText"></a>TextInputEditText</h1><hr>
+<p>默认情况下，当设备处于横屏时，点击 EditText 输入框，会弹出一个新的输入界面并显示软键盘，即 「extract mode」(全屏模式)，而不是在当前界面弹出软键盘。如果单独使用 EditText，进入「extract mode」并且在用户还没输入任何内容时，hint 信息会显示在输入框中。但是 EditText 和 TextInputLayout 一起使用时，hint 信息则不会显示。而 TextInputEditText 的出现刚好解决了这个问题。</p>
+<p>TextInputEditText 是 AppCompatEditText (继承自 EditText) 的子类，源码很简单，只是重写 onCreateInputConnection 方法，做了一个 hint 信息的传递，就是为了在「extract mode」中显示 hint 信息：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> InputConnection <span class="title">onCreateInputConnection</span><span class="params">(EditorInfo outAttrs)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> InputConnection ic = <span class="keyword">super</span>.onCreateInputConnection(outAttrs);</span><br><span class="line">    <span class="keyword">if</span> (ic != <span class="keyword">null</span> &amp;&amp; outAttrs.hintText == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">// If we don't have a hint and our parent is a TextInputLayout, use it's hint for the</span></span><br><span class="line">        <span class="comment">// EditorInfo. This allows us to display a hint in 'extract mode'.</span></span><br><span class="line">        <span class="keyword">final</span> ViewParent parent = getParent();</span><br><span class="line">        <span class="keyword">if</span> (parent <span class="keyword">instanceof</span> TextInputLayout) &#123;</span><br><span class="line">            outAttrs.hintText = ((TextInputLayout) parent).getHint();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ic;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用时，只需要将 TextInputLayout 中的 EditText 替换成 TextInputEditText 控件即可，属性和 EditText 一样，没有什么其他特殊用法，我们看一下效果图。</p>
+<p>TextInputLayout 与 EditText：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1480314489.png" alt=""></p>
+<p>TextInputLayout 与 TextInputEditText：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1480314503.png" alt=""></p>
+<p>备注：如果不想使用 EditText 的「extract mode」，添加 <code>android:imeOptions=&quot;flagNoExtractUi&quot;</code> 属性即可。</p>
+<blockquote>
+<p>特殊说明：经测试发现，在目前最新版本 25.0.0 的 design 包中，TextInputLayout 与 TextInputEditText 的组合使用不能实现「extract mode」显示 hint 功能，而在旧版本中能够实现，比如 24.1.1 版本。目测这是新版 Design 包的一个 Bug，期待下个版本的修复吧。</p>
+</blockquote>
+<p>最后，附上「Android Material Design」系列文章的 Demo 地址：<a href="https://github.com/Mike-bel/MDStudySamples" target="_blank" rel="external">MDStudySamples</a>，欢迎 Star。</p>
+
+      
+    </div>
+    
+      <! -- 添加版权信息 -->
+<div class="article-footer-copyright">
+<p>本文由&nbsp;<b>亦枫</b>&nbsp;创作并首发于&nbsp;<b><a href="/index.html" target="_blank" title="亦枫">亦枫的个人博客</a></b>&nbsp;，同步授权微信公众号：技术鸟（NiaoTech）。</a></p>
+ 
+<p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
+ 
+<p>本文标题为: <b><a href="/2016/11/28/android-textinputlayout/" target="_blank" title="Android TextInputLayout，打造 Material Design 风格的文本输入框">Android TextInputLayout，打造 Material Design 风格的文本输入框</a></b> </p>
+ 
+<p>本文链接为：<b><a href="/2016/11/28/android-textinputlayout/" target="_blank" title="Android TextInputLayout，打造 Material Design 风格的文本输入框">http://yifeng.studio/2016/11/28/android-textinputlayout/</a></b> </p>
+
+<p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
+</div>
+<! -- 添加版权信息 -->
+    
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/11/15/android-optimize-for-cold-start/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android 你应该知道的的应用冷启动过程分析和优化方案</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="android-textinputlayout" data-title="Android TextInputLayout，打造 Material Design 风格的文本输入框" data-url="http://yifeng.studio/2016/11/28/android-textinputlayout/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"yifengzone"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 亦枫
+    	</div>
+      <div class="footer-left">
+        &nbsp;&copy; 
+        <span id="busuanzi_container_site_pv">
+          本站访问量<span id="busuanzi_value_site_pv"></span>次
+        </span>
+        <span id="busuanzi_container_site_uv">
+          访客数<span id="busuanzi_value_site_uv"></span>人
+        </span>
+      </div>
+      	<div class="footer-right">
+      		Theme of <a href="https://github.com/Mike-bel/hexo-theme-yilia-optimization" target="_blank">yilia-opti</a>, by YiFeng
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: '/'
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-83125745-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script>
+	(function(){
+		document.write('<scr'+'ipt type="text/javascript" src="'+document.location.protocol+'//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">'+'</sc'+'ript>');
+	})();
+</script>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
