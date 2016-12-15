@@ -6,23 +6,17 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>Android Fragment 的使用，一些你不可不知的注意事项 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Fragment，俗称碎片，自 Android 3.0 开始被引进并大量使用。然而就是这样耳熟能详的一个东西，在开发中我们还是会遇见各种各样的问题，层出不穷。所以，是时候总结一波了。
-Fragment 简介
-作为 Activity 界面的一部分，Fragment 的存在必须依附于 Activity，并且与 Activity 一样，拥有自己的生命周期，同时处理用户的交互动作。同一个 Activity">
+  <meta name="description" content="Fragment，俗称碎片，自 Android 3.0 开始被引进并大量使用。然而就是这样耳熟能详的一个东西，在开发中我们还是会遇见各种各样的问题，层出不穷。所以，是时候总结一波了。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android Fragment 的使用，一些你不可不知的注意事项">
 <meta property="og:url" content="http://yifeng.studio/2016/12/15/android-fragment-attentions/index.html">
 <meta property="og:site_name" content="YiFeng's Zone">
-<meta property="og:description" content="Fragment，俗称碎片，自 Android 3.0 开始被引进并大量使用。然而就是这样耳熟能详的一个东西，在开发中我们还是会遇见各种各样的问题，层出不穷。所以，是时候总结一波了。
-Fragment 简介
-作为 Activity 界面的一部分，Fragment 的存在必须依附于 Activity，并且与 Activity 一样，拥有自己的生命周期，同时处理用户的交互动作。同一个 Activity">
+<meta property="og:description" content="Fragment，俗称碎片，自 Android 3.0 开始被引进并大量使用。然而就是这样耳熟能详的一个东西，在开发中我们还是会遇见各种各样的问题，层出不穷。所以，是时候总结一波了。">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1481785884.jpg">
-<meta property="og:updated_time" content="2016-12-15T07:13:28.000Z">
+<meta property="og:updated_time" content="2016-12-15T07:14:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Fragment 的使用，一些你不可不知的注意事项">
-<meta name="twitter:description" content="Fragment，俗称碎片，自 Android 3.0 开始被引进并大量使用。然而就是这样耳熟能详的一个东西，在开发中我们还是会遇见各种各样的问题，层出不穷。所以，是时候总结一波了。
-Fragment 简介
-作为 Activity 界面的一部分，Fragment 的存在必须依附于 Activity，并且与 Activity 一样，拥有自己的生命周期，同时处理用户的交互动作。同一个 Activity">
+<meta name="twitter:description" content="Fragment，俗称碎片，自 Android 3.0 开始被引进并大量使用。然而就是这样耳熟能详的一个东西，在开发中我们还是会遇见各种各样的问题，层出不穷。所以，是时候总结一波了。">
 <meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1481785884.jpg">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
@@ -257,6 +251,7 @@ Fragment 简介
     <div class="article-entry" itemprop="articleBody">
       
         <p>Fragment，俗称碎片，自 Android 3.0 开始被引进并大量使用。然而就是这样耳熟能详的一个东西，在开发中我们还是会遇见各种各样的问题，层出不穷。所以，是时候总结一波了。</p>
+<a id="more"></a>
 <h1 id="Fragment-简介"><a href="#Fragment-简介" class="headerlink" title="Fragment 简介"></a>Fragment 简介</h1><hr>
 <p>作为 Activity 界面的一部分，Fragment 的存在必须依附于 Activity，并且与 Activity 一样，拥有自己的生命周期，同时处理用户的交互动作。同一个 Activity 可以有一个或多个 Fragment 作为界面内容，并且可以动态添加、删除 Fragment，灵活控制 UI 内容，也可以用来解决部分屏幕适配问题。</p>
 <p>另外，support v4 包中也提供了 Fragment，兼容 Android 3.0 之前的系统（当然，现在 3.0 之前的系统在市场上已经很少见了，可以不予考虑），使用兼容包需要注意两点：</p>
