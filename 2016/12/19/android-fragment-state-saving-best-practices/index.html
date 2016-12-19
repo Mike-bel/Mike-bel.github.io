@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Android Activity 和 Fragment 状态保存与恢复的最佳实践 | YiFeng&#39;s Zone</title>
+  <title>［译］Android Activity 和 Fragment 状态保存与恢复的最佳实践 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="译者亦枫注：对于 Activity、Fragment 和 View 是如何保存与恢复状态的问题，相信很多开发人员都处于一知半解的状态。最近刚好在总结 Fragment 的使用注意事项，无意中从网上看到国外的一篇好文，对这个问题做了一个全面的解析。加之使用可视化的动画效果，使我们理解起来更加轻松。拜读过后，豁然开朗，同时不得不感慨，国外作者对于知识通透的理解能力和写作清晰的表达能力。然后，然后就一">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android Activity 和 Fragment 状态保存与恢复的最佳实践">
+<meta property="og:title" content="［译］Android Activity 和 Fragment 状态保存与恢复的最佳实践">
 <meta property="og:url" content="http://yifeng.studio/2016/12/19/android-fragment-state-saving-best-practices/index.html">
 <meta property="og:site_name" content="YiFeng's Zone">
 <meta property="og:description" content="译者亦枫注：对于 Activity、Fragment 和 View 是如何保存与恢复状态的问题，相信很多开发人员都处于一知半解的状态。最近刚好在总结 Fragment 的使用注意事项，无意中从网上看到国外的一篇好文，对这个问题做了一个全面的解析。加之使用可视化的动画效果，使我们理解起来更加轻松。拜读过后，豁然开朗，同时不得不感慨，国外作者对于知识通透的理解能力和写作清晰的表达能力。然后，然后就一">
@@ -18,9 +18,9 @@
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482117927.gif">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482125196.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482125827.gif">
-<meta property="og:updated_time" content="2016-12-19T07:51:52.000Z">
+<meta property="og:updated_time" content="2016-12-19T08:09:08.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android Activity 和 Fragment 状态保存与恢复的最佳实践">
+<meta name="twitter:title" content="［译］Android Activity 和 Fragment 状态保存与恢复的最佳实践">
 <meta name="twitter:description" content="译者亦枫注：对于 Activity、Fragment 和 View 是如何保存与恢复状态的问题，相信很多开发人员都处于一知半解的状态。最近刚好在总结 Fragment 的使用注意事项，无意中从网上看到国外的一篇好文，对这个问题做了一个全面的解析。加之使用可视化的动画效果，使我们理解起来更加轻松。拜读过后，豁然开朗，同时不得不感慨，国外作者对于知识通透的理解能力和写作清晰的表达能力。然后，然后就一">
 <meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482116816.gif">
   
@@ -222,7 +222,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Android Activity 和 Fragment 状态保存与恢复的最佳实践
+      ［译］Android Activity 和 Fragment 状态保存与恢复的最佳实践
     </h1>
   
 
@@ -320,9 +320,9 @@
  
 <p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
  
-<p>本文标题为: <b><a href="/2016/12/19/android-fragment-state-saving-best-practices/" target="_blank" title="Android Activity 和 Fragment 状态保存与恢复的最佳实践">Android Activity 和 Fragment 状态保存与恢复的最佳实践</a></b> </p>
+<p>本文标题为: <b><a href="/2016/12/19/android-fragment-state-saving-best-practices/" target="_blank" title="［译］Android Activity 和 Fragment 状态保存与恢复的最佳实践">［译］Android Activity 和 Fragment 状态保存与恢复的最佳实践</a></b> </p>
  
-<p>本文链接为：<b><a href="/2016/12/19/android-fragment-state-saving-best-practices/" target="_blank" title="Android Activity 和 Fragment 状态保存与恢复的最佳实践">http://yifeng.studio/2016/12/19/android-fragment-state-saving-best-practices/</a></b> </p>
+<p>本文链接为：<b><a href="/2016/12/19/android-fragment-state-saving-best-practices/" target="_blank" title="［译］Android Activity 和 Fragment 状态保存与恢复的最佳实践">http://yifeng.studio/2016/12/19/android-fragment-state-saving-best-practices/</a></b> </p>
 
 <p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
 </div>
@@ -371,7 +371,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="android-fragment-state-saving-best-practices" data-title="Android Activity 和 Fragment 状态保存与恢复的最佳实践" data-url="http://yifeng.studio/2016/12/19/android-fragment-state-saving-best-practices/"></div>
+	<div class="ds-thread" data-thread-key="android-fragment-state-saving-best-practices" data-title="［译］Android Activity 和 Fragment 状态保存与恢复的最佳实践" data-url="http://yifeng.studio/2016/12/19/android-fragment-state-saving-best-practices/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
