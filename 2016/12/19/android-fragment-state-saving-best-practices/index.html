@@ -12,17 +12,17 @@
 <meta property="og:url" content="http://yifeng.studio/2016/12/19/android-fragment-state-saving-best-practices/index.html">
 <meta property="og:site_name" content="YiFeng's Zone">
 <meta property="og:description" content="译者亦枫注：对于 Activity、Fragment 和 View 是如何保存与恢复状态的问题，相信很多开发人员都处于一知半解的状态。最近刚好在总结 Fragment 的使用注意事项，无意中从网上看到国外的一篇好文，对这个问题做了一个全面的解析。加之使用可视化的动画效果，使我们理解起来更加轻松。拜读过后，豁然开朗，同时不得不感慨，国外作者对于知识通透的理解能力和写作清晰的表达能力。然后，然后就一">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482116816.jpg">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482116893.jpg">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482117923.jpg">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482117927.jpg">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482125196.jpg">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482125827.jpg">
-<meta property="og:updated_time" content="2016-12-19T07:47:22.000Z">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482116816.gif">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482116893.gif">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482117923.gif">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482117927.gif">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482125196.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482125827.gif">
+<meta property="og:updated_time" content="2016-12-19T07:51:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Activity 和 Fragment 状态保存与恢复的最佳实践">
 <meta name="twitter:description" content="译者亦枫注：对于 Activity、Fragment 和 View 是如何保存与恢复状态的问题，相信很多开发人员都处于一知半解的状态。最近刚好在总结 Fragment 的使用注意事项，无意中从网上看到国外的一篇好文，对这个问题做了一个全面的解析。加之使用可视化的动画效果，使我们理解起来更加轻松。拜读过后，豁然开朗，同时不得不感慨，国外作者对于知识通透的理解能力和写作清晰的表达能力。然后，然后就一">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482116816.jpg">
+<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482116816.gif">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -268,8 +268,8 @@
 <h1 id="理解-Activity-状态保存和恢复时发生了什么"><a href="#理解-Activity-状态保存和恢复时发生了什么" class="headerlink" title="理解 Activity 状态保存和恢复时发生了什么"></a>理解 Activity 状态保存和恢复时发生了什么</h1><hr>
 <p>当 Activity 的 <code>onSaveInstanceState</code> 方法被调用时，Activity 会自动收集 View Hierachy（视图层次）中每一个 View 的状态。请注意，只有内部实现了 View 类状态保存和恢复方法的控件才能被收集状态数据。一旦 <code>onRestoreInstanceState</code> 方法被调用，Activity 将这些收集的数据回传给 View Hierachy 中的 View，而这种回传时数据与 View 一一对应关系的依据就是 View 提供之前保存数据时的相同 id，通常在布局中通过 <code>android:id</code> 属性定义的。</p>
 <p>让我们通过通过可视化动画效果看一下：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1482116816.jpg" alt="Activity State Saving"></p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1482116893.jpg" alt="Activity State Restoring"></p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1482116816.gif" alt="Activity State Saving"></p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1482116893.gif" alt="Activity State Restoring"></p>
 <p>这就是为什么输入在 EditText 中的文本内容在 Activity 已经被销毁同时我们不用做任何事情的情况下依然能够保存的原因。这没什么不可思议的。这些 View 的状态会自动被收集和恢复回来。</p>
 <p>同时这也是为什么那些没有定义 <code>android:id</code> 属性的 View 不能恢复状态的原因。</p>
 <p>虽然这些 View 的状态可以被自动保存，但是 Activity 成员变量却不行。他们将随着 Activity 一起被销毁。你不得不通过 <code>onSaveInstanceState</code> 和 <code>onRestoreInstanceState</code> 方法手动保存和恢复这些成员变量。</p>
@@ -277,15 +277,15 @@
 <p>这就是恢复 Activity Instance 状态和 View 状态你所需要做的事情。</p>
 <h1 id="Fragment-状态保存和恢复时发生了什么"><a href="#Fragment-状态保存和恢复时发生了什么" class="headerlink" title="Fragment 状态保存和恢复时发生了什么"></a>Fragment 状态保存和恢复时发生了什么</h1><hr>
 <p>假设 Fragment 被系统销毁，就会像 Activity 那样发生所有事情：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1482117923.jpg" alt="Fragment State Saving"></p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1482117927.jpg" alt="Fragment State Restoring"></p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1482117923.gif" alt="Fragment State Saving"></p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1482117927.gif" alt="Fragment State Restoring"></p>
 <p>也意味着每一个成员变量也被销毁。你不得不通过 <code>onSaveInstanceState</code> 和 <code>onRestoreInstanceState</code> 方法分别手动保存和恢复这些成员变量。但请注意，Fragment 类里面没有 <code>onRestoreInstanceState</code> 方法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// These variable are destroyed along with Activity</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> someVarA;</span><br><span class="line">    <span class="keyword">private</span> String someVarB;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSaveInstanceState</span><span class="params">(Bundle outState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onSaveInstanceState(outState);</span><br><span class="line">        outState.putInt(<span class="string">"someVarA"</span>, someVarA);</span><br><span class="line">        outState.putString(<span class="string">"someVarB"</span>, someVarB);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityCreated</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onActivityCreated(savedInstanceState);</span><br><span class="line">        someVarA = savedInstanceState.getInt(<span class="string">"someVarA"</span>);</span><br><span class="line">        someVarB = savedInstanceState.getString(<span class="string">"someVarB"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>对于 Fragment，我认为你需要知道一些与 Activity 不同的地方。<strong>一旦 Fragment 从回退栈（BackStack）中返回时，View 将会被销毁和重建。</strong></p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1482125196.jpg" alt=""></p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1482125196.png" alt=""></p>
 <p><strong>这种情况属于，Fragment 没有被销毁，但 Fragment 的 View 被销毁。</strong>因此，没有发生 Instance 状态保存。那么那些通过 Fragment 生命周期重新创建的 View 发生了什么呢？</p>
 <p>不是问题。Android 是这么设计的。在这种情况下，View 状态保存和恢复在 Fragment 内部被调用。因此，每一个内部实现 View 类保存和恢复方法的 View，例如 <code>EditText</code> 或者 <code>TextView</code>，只要设置了 <code>android:freezeText=&quot;true&quot;</code>，都将被自动保存和恢复状态。数据和 View 的对应呈现关系和上面一样。</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1482125827.jpg" alt="Fragment From BackStack"></p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1482125827.gif" alt="Fragment From BackStack"></p>
 <p>需要注意的是在这种情况下只有 View 被销毁和重建。Fragment 实例仍然在那儿，包括实例里的成员变量。所以你不需要对成员变量做任何事情。不需要额外添加任何代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// These variable still persist in this case</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> someVarA;</span><br><span class="line">    <span class="keyword">private</span> String someVarB;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>你可能已经注意到，如果 Fragment 中使用到的每一个 View 内部都实现了 View 类恢复和保存的方法，在这种情况下你就不需要做任何事情，因为 View 状态会自动恢复并且 Fragment 中的成员变量也仍然存在。</p>
