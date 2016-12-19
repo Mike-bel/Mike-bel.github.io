@@ -18,7 +18,7 @@
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482117927.gif">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482125196.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482125827.gif">
-<meta property="og:updated_time" content="2016-12-19T08:09:08.000Z">
+<meta property="og:updated_time" content="2016-12-19T08:13:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="［译］Android Activity 和 Fragment 状态保存与恢复的最佳实践">
 <meta name="twitter:description" content="译者亦枫注：对于 Activity、Fragment 和 View 是如何保存与恢复状态的问题，相信很多开发人员都处于一知半解的状态。最近刚好在总结 Fragment 的使用注意事项，无意中从网上看到国外的一篇好文，对这个问题做了一个全面的解析。加之使用可视化的动画效果，使我们理解起来更加轻松。拜读过后，豁然开朗，同时不得不感慨，国外作者对于知识通透的理解能力和写作清晰的表达能力。然后，然后就一">
@@ -267,7 +267,7 @@
 <p>出于这个原因，<strong>我决定从现在开始废弃 <code>StatedFragment</code></strong>。同时为了对这个错误的出现表示歉意，我写下这篇博文，向你们展示如何用 Android 的设计方式保存和恢复 Fragment 状态的最佳实践。</p>
 <h1 id="理解-Activity-状态保存和恢复时发生了什么"><a href="#理解-Activity-状态保存和恢复时发生了什么" class="headerlink" title="理解 Activity 状态保存和恢复时发生了什么"></a>理解 Activity 状态保存和恢复时发生了什么</h1><hr>
 <p>当 Activity 的 <code>onSaveInstanceState</code> 方法被调用时，Activity 会自动收集 View Hierachy（视图层次）中每一个 View 的状态。请注意，只有内部实现了 View 类状态保存和恢复方法的控件才能被收集状态数据。一旦 <code>onRestoreInstanceState</code> 方法被调用，Activity 将这些收集的数据回传给 View Hierachy 中的 View，而这种回传时数据与 View 一一对应关系的依据就是 View 提供之前保存数据时的相同 id，通常在布局中通过 <code>android:id</code> 属性定义的。</p>
-<p>让我们通过通过可视化动画效果看一下：</p>
+<p>让我们通过可视化动画效果看一下：</p>
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/1482116816.gif" alt="Activity State Saving"></p>
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/1482116893.gif" alt="Activity State Restoring"></p>
 <p>这就是为什么输入在 EditText 中的文本内容在 Activity 已经被销毁同时我们不用做任何事情的情况下依然能够保存的原因。这没什么不可思议的。这些 View 的状态会自动被收集和恢复回来。</p>
