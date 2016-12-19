@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Android Activity 和 Fragment 状态保存与恢复的最佳实践 | YiFeng&#39;s Zone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="译者亦枫注：对于 Activity、Fragment 和 View 是如何保存与恢复状态的问题，相信很多开发人员都处于一知半解的状态。最近刚好在总结 Fragment 的使用注意事项，无意中从网上看到国外的一篇好文，对这个问题做了一个全面的解析。加之使用可视化的动画效果，使我们理解起来更加轻松。拜读过后，豁然开朗，同时不得不感慨，国外作者对于知识通透的理解能力和写作清晰的表达能力。然后，然后就一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Activity 和 Fragment 状态保存与恢复的最佳实践">
+<meta property="og:url" content="http://yifeng.studio/2016/12/19/android-fragment-state-saving-best-practices/index.html">
+<meta property="og:site_name" content="YiFeng's Zone">
+<meta property="og:description" content="译者亦枫注：对于 Activity、Fragment 和 View 是如何保存与恢复状态的问题，相信很多开发人员都处于一知半解的状态。最近刚好在总结 Fragment 的使用注意事项，无意中从网上看到国外的一篇好文，对这个问题做了一个全面的解析。加之使用可视化的动画效果，使我们理解起来更加轻松。拜读过后，豁然开朗，同时不得不感慨，国外作者对于知识通透的理解能力和写作清晰的表达能力。然后，然后就一">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482116816.jpg">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482116893.jpg">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482117923.jpg">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482117927.jpg">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482125196.jpg">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482125827.jpg">
+<meta property="og:updated_time" content="2016-12-19T07:47:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android Activity 和 Fragment 状态保存与恢复的最佳实践">
+<meta name="twitter:description" content="译者亦枫注：对于 Activity、Fragment 和 View 是如何保存与恢复状态的问题，相信很多开发人员都处于一知半解的状态。最近刚好在总结 Fragment 的使用注意事项，无意中从网上看到国外的一篇好文，对这个问题做了一个全面的解析。加之使用可视化的动画效果，使我们理解起来更加轻松。拜读过后，豁然开朗，同时不得不感慨，国外作者对于知识通透的理解能力和写作清晰的表达能力。然后，然后就一">
+<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482116816.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+  
+  
+    
+      <link rel="icon" href="/favicon.png">
+    
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+				
+					<img lazy-src="/assets/imgSite/avatar.png" class="js-avatar">
+				
+			
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">亦枫</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">翻墙推荐：http://buytizi.com/?r=225bb619613ec09e</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">首页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+					        
+								<a class="mail" target="_blank" href="mailto:fengleegg@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 10px;">Android Studio</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Weex/" style="font-size: 15px;">Weex</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/guolin_blog">郭霖</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/lmj623565791">鸿洋</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/singwhatiwanna">任玉刚</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.jcodecraeer.com/plus/list.php?tid=16">泡在网上的日子</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">长期拼搏在一线开发的安卓程序猿一枚，热衷于技术，沉浸于段子，微信公众号：技术鸟（微信号：NiaoTech）。If you can&#39;t fly then run, can&#39;t run then walk, can&#39;t walk then crawl, keep moving forward.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">亦枫</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img lazy-src="null/assets/imgSite/avatar.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">亦枫</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">翻墙推荐：http://buytizi.com/?r=225bb619613ec09e</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">首页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+			        
+						<a class="mail" target="_blank" href="mailto:fengleegg@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-android-fragment-state-saving-best-practices" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/12/19/android-fragment-state-saving-best-practices/" class="article-date">
+  	<time datetime="2016-12-19T06:54:00.000Z" itemprop="datePublished">2016-12-19</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android Activity 和 Fragment 状态保存与恢复的最佳实践
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Android/">Android</a>
+	</div>
+
+
+
+        
+            <div class="bookicon"></div>
+            <div class="article-hit">
+              <span id="busuanzi_container_page_pv">
+                    热度 <span id="busuanzi_value_page_pv"></span>℃</span>
+            </div>
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p><strong>译者亦枫注：</strong>对于 Activity、Fragment 和 View 是如何保存与恢复状态的问题，相信很多开发人员都处于一知半解的状态。最近刚好在总结 <a href="http://yifeng.studio/2016/12/15/android-fragment-attentions/">Fragment 的使用注意事项</a>，无意中从网上看到国外的一篇好文，对这个问题做了一个全面的解析。加之使用可视化的动画效果，使我们理解起来更加轻松。拜读过后，豁然开朗，同时不得不感慨，国外作者对于知识通透的理解能力和写作清晰的表达能力。然后，然后就一定要翻译过来，加以学习并保存记录之。</p>
+<p><strong>原文：</strong><a href="https://inthecheesefactory.com/blog/fragment-state-saving-best-practices/en" target="_blank" rel="external">The Real Best Practices to Save/Restore Activity’s and Fragment’s state. (StatedFragment is now deprecated)</a></p>
+<p><strong>作者：</strong>「nuuneoi」，一名拥有六年安卓应用程序开发经验和超过十二年手机端应用开发行业经验的全栈工程师。</p>
+</blockquote>
+<a id="more"></a>
+<p>几个月前我发表了一篇有关 Fragment 状态保存和恢复的文章：<a href="https://inthecheesefactory.com/blog/best-approach-to-keep-android-fragment-state/en" target="_blank" rel="external">可能是目前为止保存和恢复 Fragment 状态的最佳方式</a>（亦枫注：该文章已被删除，但 GitHub 上依然保有代码实现，可参考 <a href="https://github.com/nuuneoi/StatedFragment" target="_blank" rel="external">StatedFragment</a>。另外，我发现中外作者在标题设定上怎么套路都是一致的 ^_^）。这篇文章收到了来自世界各地安卓开发人员的较有价值的反馈。非常感谢你们 =)</p>
+<p>无论如何，<code>StatedFragment</code> 打破了常规设计模式，以一种不同的方式实现，就像 Android 设计 Fragment 之初就假定能够让安卓开发人员更容易理解 Fragment 的状态保存和恢复，如同 Activity 的做法一样（View 状态与 Instance 状态同时变迁）。所以我做了一个实验，开发出 <code>StatedFragment</code> 并看看到底能发展成怎样。是否更容易理解？这种模式是否更加利于开发？</p>
+<p><strong>此刻，经历了两个月的实践，我想我已经得到了结果。尽管 <code>StatedFragment</code> 理解起来稍微容易一些，但还是遇到了一个大问题。<code>StatedFragment</code> 打破了 Android View 架构的设计模式，所以我想这会导致一个长久的负面问题。事实上，我已经开始感觉到我的代码有些怪怪的了……</strong></p>
+<p>出于这个原因，<strong>我决定从现在开始废弃 <code>StatedFragment</code></strong>。同时为了对这个错误的出现表示歉意，我写下这篇博文，向你们展示如何用 Android 的设计方式保存和恢复 Fragment 状态的最佳实践。</p>
+<h1 id="理解-Activity-状态保存和恢复时发生了什么"><a href="#理解-Activity-状态保存和恢复时发生了什么" class="headerlink" title="理解 Activity 状态保存和恢复时发生了什么"></a>理解 Activity 状态保存和恢复时发生了什么</h1><hr>
+<p>当 Activity 的 <code>onSaveInstanceState</code> 方法被调用时，Activity 会自动收集 View Hierachy（视图层次）中每一个 View 的状态。请注意，只有内部实现了 View 类状态保存和恢复方法的控件才能被收集状态数据。一旦 <code>onRestoreInstanceState</code> 方法被调用，Activity 将这些收集的数据回传给 View Hierachy 中的 View，而这种回传时数据与 View 一一对应关系的依据就是 View 提供之前保存数据时的相同 id，通常在布局中通过 <code>android:id</code> 属性定义的。</p>
+<p>让我们通过通过可视化动画效果看一下：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1482116816.jpg" alt="Activity State Saving"></p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1482116893.jpg" alt="Activity State Restoring"></p>
+<p>这就是为什么输入在 EditText 中的文本内容在 Activity 已经被销毁同时我们不用做任何事情的情况下依然能够保存的原因。这没什么不可思议的。这些 View 的状态会自动被收集和恢复回来。</p>
+<p>同时这也是为什么那些没有定义 <code>android:id</code> 属性的 View 不能恢复状态的原因。</p>
+<p>虽然这些 View 的状态可以被自动保存，但是 Activity 成员变量却不行。他们将随着 Activity 一起被销毁。你不得不通过 <code>onSaveInstanceState</code> 和 <code>onRestoreInstanceState</code> 方法手动保存和恢复这些成员变量。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// These variable are destroyed along with Activity</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> someVarA;</span><br><span class="line">    <span class="keyword">private</span> String someVarB;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSaveInstanceState</span><span class="params">(Bundle outState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onSaveInstanceState(outState);</span><br><span class="line">        outState.putInt(<span class="string">"someVarA"</span>, someVarA);</span><br><span class="line">        outState.putString(<span class="string">"someVarB"</span>, someVarB);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onRestoreInstanceState</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onRestoreInstanceState(savedInstanceState);</span><br><span class="line">        someVarA = savedInstanceState.getInt(<span class="string">"someVarA"</span>);</span><br><span class="line">        someVarB = savedInstanceState.getString(<span class="string">"someVarB"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这就是恢复 Activity Instance 状态和 View 状态你所需要做的事情。</p>
+<h1 id="Fragment-状态保存和恢复时发生了什么"><a href="#Fragment-状态保存和恢复时发生了什么" class="headerlink" title="Fragment 状态保存和恢复时发生了什么"></a>Fragment 状态保存和恢复时发生了什么</h1><hr>
+<p>假设 Fragment 被系统销毁，就会像 Activity 那样发生所有事情：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1482117923.jpg" alt="Fragment State Saving"></p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1482117927.jpg" alt="Fragment State Restoring"></p>
+<p>也意味着每一个成员变量也被销毁。你不得不通过 <code>onSaveInstanceState</code> 和 <code>onRestoreInstanceState</code> 方法分别手动保存和恢复这些成员变量。但请注意，Fragment 类里面没有 <code>onRestoreInstanceState</code> 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// These variable are destroyed along with Activity</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> someVarA;</span><br><span class="line">    <span class="keyword">private</span> String someVarB;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSaveInstanceState</span><span class="params">(Bundle outState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onSaveInstanceState(outState);</span><br><span class="line">        outState.putInt(<span class="string">"someVarA"</span>, someVarA);</span><br><span class="line">        outState.putString(<span class="string">"someVarB"</span>, someVarB);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityCreated</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onActivityCreated(savedInstanceState);</span><br><span class="line">        someVarA = savedInstanceState.getInt(<span class="string">"someVarA"</span>);</span><br><span class="line">        someVarB = savedInstanceState.getString(<span class="string">"someVarB"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于 Fragment，我认为你需要知道一些与 Activity 不同的地方。<strong>一旦 Fragment 从回退栈（BackStack）中返回时，View 将会被销毁和重建。</strong></p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1482125196.jpg" alt=""></p>
+<p><strong>这种情况属于，Fragment 没有被销毁，但 Fragment 的 View 被销毁。</strong>因此，没有发生 Instance 状态保存。那么那些通过 Fragment 生命周期重新创建的 View 发生了什么呢？</p>
+<p>不是问题。Android 是这么设计的。在这种情况下，View 状态保存和恢复在 Fragment 内部被调用。因此，每一个内部实现 View 类保存和恢复方法的 View，例如 <code>EditText</code> 或者 <code>TextView</code>，只要设置了 <code>android:freezeText=&quot;true&quot;</code>，都将被自动保存和恢复状态。数据和 View 的对应呈现关系和上面一样。</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1482125827.jpg" alt="Fragment From BackStack"></p>
+<p>需要注意的是在这种情况下只有 View 被销毁和重建。Fragment 实例仍然在那儿，包括实例里的成员变量。所以你不需要对成员变量做任何事情。不需要额外添加任何代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// These variable still persist in this case</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> someVarA;</span><br><span class="line">    <span class="keyword">private</span> String someVarB;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你可能已经注意到，如果 Fragment 中使用到的每一个 View 内部都实现了 View 类恢复和保存的方法，在这种情况下你就不需要做任何事情，因为 View 状态会自动恢复并且 Fragment 中的成员变量也仍然存在。</p>
+<p>所以，有关 Fragment 状态保存和恢复最佳实践的第一个条件是…</p>
+<h1 id="你项目中用到的每一个-View-内部必须实现状态保存和恢复方法"><a href="#你项目中用到的每一个-View-内部必须实现状态保存和恢复方法" class="headerlink" title="你项目中用到的每一个 View 内部必须实现状态保存和恢复方法"></a>你项目中用到的每一个 View 内部必须实现状态保存和恢复方法</h1><hr>
+<p>Android 提供了一个通过 <code>onSaveInstanceState</code> 和 <code>onRestoreInstanceState</code>方法用于 View 内部保存和恢复状态的机制。开发人员在自定义 View 时实现这两个方法即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomView</span> <span class="keyword">extends</span> <span class="title">View</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Parcelable <span class="title">onSaveInstanceState</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Bundle bundle = <span class="keyword">new</span> Bundle();</span><br><span class="line">        <span class="comment">// Save current View's state here</span></span><br><span class="line">        <span class="keyword">return</span> bundle;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRestoreInstanceState</span><span class="params">(Parcelable state)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onRestoreInstanceState(state);</span><br><span class="line">        <span class="comment">// Restore View's state here</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>基本上每一个单独的标准的 View 控件，如 <code>EditText</code>、<code>TextView</code>、<code>Checkbox</code> 等，都在内部实现了这些事情。而你所需要做的就是开启这个功能，比如你必须设置<code>TextView</code> 的 <code>android:freezeText</code> 属性值为 true 来使用这个功能。</p>
+<p>但是如果是来自网上的第三方库里面的自定义 View 呢？我不得不说他们中的很多都没有实现这部分代码而导致我们在实际使用过程中出现很大的问题。</p>
+<p><strong>如果你决定使用第三方自定义 View，你必须保证这些 View 内部已经实现 View 状态保存和恢复，否则你必须创建一个子类继承自这些 View 并且自己实现 <code>onSaveInstanceState</code> 和 <code>onRestoreInstanceState</code> 方法。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Assumes that SomeSmartButton is a 3rd Party view that</span></span><br><span class="line"><span class="comment">// View State Saving/Restoring are not implemented internally</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SomeBetterSmartButton</span> <span class="keyword">extends</span> <span class="title">SomeSmartButton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Parcelable <span class="title">onSaveInstanceState</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Bundle bundle = <span class="keyword">new</span> Bundle();</span><br><span class="line">        <span class="comment">// Save current View's state here</span></span><br><span class="line">        <span class="keyword">return</span> bundle;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRestoreInstanceState</span><span class="params">(Parcelable state)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onRestoreInstanceState(state);</span><br><span class="line">        <span class="comment">// Restore View's state here</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然如果你创建了自己的自定义 View 或者自定义 ViewGroup ，不要忘了也要实现这两个方法。一定要记住项目中用到的每一种类型的 View 都要实现这部分代码。</p>
+<p>同时也不要忘记分配 <code>android:id</code> 属性给 Layout 布局中你需要支持状态保存和恢复的每一个 View，否则这些 View 根本不会支持恢复状态。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">EditText</span></span><br><span class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/editText1"</span></span><br><span class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">EditText</span></span><br><span class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/editText2"</span></span><br><span class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">CheckBox</span></span><br><span class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/cbAgree"</span></span><br><span class="line">    <span class="attr">android:text</span>=<span class="string">"I agree"</span></span><br><span class="line">    <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span><br><span class="line">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>到这里我们只进行到一半！</p>
+<h1 id="明确区分-Fragment-状态和-View-状态"><a href="#明确区分-Fragment-状态和-View-状态" class="headerlink" title="明确区分 Fragment 状态和 View 状态"></a>明确区分 Fragment 状态和 View 状态</h1><hr>
+<p>为了使你的代码变得更加清晰和易于维护，你必须将 Fragment 状态和 View 状态区分开来。对于任何属于 View 的属性，在 View 内部实现状态保存和恢复。而对于那些属于 Fragment 的属性，就在 Fragment 内部实现即可。举个例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String dataGotFromServer;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSaveInstanceState</span><span class="params">(Bundle outState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onSaveInstanceState(outState);</span><br><span class="line">        outState.putString(<span class="string">"dataGotFromServer"</span>, dataGotFromServer);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityCreated</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onActivityCreated(savedInstanceState);</span><br><span class="line">        dataGotFromServer = savedInstanceState.getString(<span class="string">"dataGotFromServer"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>我再重复一遍，不要在 Fragment 的 <code>onSaveInstanceState</code> 方法中保存 View 状态，反之亦然。</strong></p>
+<h1 id="StatedFragment"><a href="#StatedFragment" class="headerlink" title="StatedFragment"></a>StatedFragment</h1><hr>
+<p>请按上面提及的方式保存和恢复 Activity、Fragment 和 View 的状态。现在让我将 <code>StatedFragment</code> 标记废除。</p>
+<p>然而 <code>StatedFragment</code> 在嵌套 Fragment 中获取 <code>onActivityResult</code> 的功能使用起来仍然不错。为了避免将来产生疑惑，我决定从 v0.10.0 版本开始将这个功能单独拆分到一个新的命名为 <code>NestedActivityResultFragment</code> 的类中。</p>
+<p>有关它的更多信息都在网址 <a href="https://github.com/nuuneoi/StatedFragment" target="_blank" rel="external">https://github.com/nuuneoi/StatedFragment</a>，请随时自由查阅。</p>
+<p>希望这篇博文中的可视化动画能够帮助你清晰地理解 Activity 、Fragment 和 View 恢复状态的方式。另外对于之前文章造成的困惑表示歉意。&gt;_&lt;</p>
+
+      
+    </div>
+    
+      <! -- 添加版权信息 -->
+<div class="article-footer-copyright">
+<p>本文由&nbsp;<b>亦枫</b>&nbsp;创作并首发于&nbsp;<b><a href="/index.html" target="_blank" title="亦枫">亦枫的个人博客</a></b>&nbsp;，同步授权微信公众号：技术鸟（NiaoTech）。</a></p>
+ 
+<p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
+ 
+<p>本文标题为: <b><a href="/2016/12/19/android-fragment-state-saving-best-practices/" target="_blank" title="Android Activity 和 Fragment 状态保存与恢复的最佳实践">Android Activity 和 Fragment 状态保存与恢复的最佳实践</a></b> </p>
+ 
+<p>本文链接为：<b><a href="/2016/12/19/android-fragment-state-saving-best-practices/" target="_blank" title="Android Activity 和 Fragment 状态保存与恢复的最佳实践">http://yifeng.studio/2016/12/19/android-fragment-state-saving-best-practices/</a></b> </p>
+
+<p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
+</div>
+<! -- 添加版权信息 -->
+    
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/12/16/genymotion-attentions/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">记录安卓模拟器 Genymotion 使用过程中遇到的一些问题</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="android-fragment-state-saving-best-practices" data-title="Android Activity 和 Fragment 状态保存与恢复的最佳实践" data-url="http://yifeng.studio/2016/12/19/android-fragment-state-saving-best-practices/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"yifengzone"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 亦枫
+    	</div>
+      <div class="footer-left">
+        &nbsp;&copy; 
+        <span id="busuanzi_container_site_pv">
+          本站访问量<span id="busuanzi_value_site_pv"></span>次
+        </span>
+        <span id="busuanzi_container_site_uv">
+          访客数<span id="busuanzi_value_site_uv"></span>人
+        </span>
+      </div>
+      	<div class="footer-right">
+      		Theme of <a href="https://github.com/Mike-bel/hexo-theme-yilia-optimization" target="_blank">yilia-opti</a>, by YiFeng
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: '/'
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-83125745-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script>
+	(function(){
+		document.write('<scr'+'ipt type="text/javascript" src="'+document.location.protocol+'//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">'+'</sc'+'ript>');
+	})();
+</script>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
