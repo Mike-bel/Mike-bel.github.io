@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Android 利用 &lt;activity-alias&gt; 动态改变 App 桌面图标 | YiFeng&#39;s Zone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近看到「医生」写的一篇文章：上次发版我就改了一行代码！，真是脑洞大开，没想到安卓应用的桌面图标还能动态改变，涨知识了，接触安卓开发以来还是第一次知道这玩意儿，顿感无地自容。于是细细读来，着手实践，对其中涉及到的知识点对着官方文档了解一番，总结记录于此。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 利用 <activity-alias> 动态改变 App 桌面图标">
+<meta property="og:url" content="http://yifeng.studio/2016/12/30/android-change-app-launcher-icon-dynamically/index.html">
+<meta property="og:site_name" content="YiFeng's Zone">
+<meta property="og:description" content="最近看到「医生」写的一篇文章：上次发版我就改了一行代码！，真是脑洞大开，没想到安卓应用的桌面图标还能动态改变，涨知识了，接触安卓开发以来还是第一次知道这玩意儿，顿感无地自容。于是细细读来，着手实践，对其中涉及到的知识点对着官方文档了解一番，总结记录于此。">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/148306026.gif">
+<meta property="og:updated_time" content="2016-12-30T06:52:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 利用 <activity-alias> 动态改变 App 桌面图标">
+<meta name="twitter:description" content="最近看到「医生」写的一篇文章：上次发版我就改了一行代码！，真是脑洞大开，没想到安卓应用的桌面图标还能动态改变，涨知识了，接触安卓开发以来还是第一次知道这玩意儿，顿感无地自容。于是细细读来，着手实践，对其中涉及到的知识点对着官方文档了解一番，总结记录于此。">
+<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/148306026.gif">
+  
+    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+  
+  
+    
+      <link rel="icon" href="/favicon.png">
+    
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+				
+					<img lazy-src="/assets/imgSite/avatar.png" class="js-avatar">
+				
+			
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">亦枫</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">翻墙推荐：http://buytizi.com/?r=225bb619613ec09e</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">首页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+					        
+								<a class="mail" target="_blank" href="mailto:fengleegg@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 10px;">Android Studio</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Weex/" style="font-size: 15px;">Weex</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/guolin_blog">郭霖</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/lmj623565791">鸿洋</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/singwhatiwanna">任玉刚</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.jcodecraeer.com/plus/list.php?tid=16">泡在网上的日子</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">长期拼搏在一线开发的安卓程序猿一枚，热衷于技术，沉浸于段子，微信公众号：技术鸟（微信号：NiaoTech）。If you can&#39;t fly then run, can&#39;t run then walk, can&#39;t walk then crawl, keep moving forward.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">亦枫</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img lazy-src="null/assets/imgSite/avatar.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">亦枫</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">翻墙推荐：http://buytizi.com/?r=225bb619613ec09e</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">首页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+			        
+						<a class="mail" target="_blank" href="mailto:fengleegg@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-android-change-app-launcher-icon-dynamically" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/12/30/android-change-app-launcher-icon-dynamically/" class="article-date">
+  	<time datetime="2016-12-30T06:26:14.000Z" itemprop="datePublished">2016-12-30</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android 利用 &lt;activity-alias&gt; 动态改变 App 桌面图标
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Android/">Android</a>
+	</div>
+
+
+
+        
+            <div class="bookicon"></div>
+            <div class="article-hit">
+              <span id="busuanzi_container_page_pv">
+                    热度 <span id="busuanzi_value_page_pv"></span>℃</span>
+            </div>
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近看到「医生」写的一篇文章：<a href="http://blog.csdn.net/eclipsexys/article/details/53791818" target="_blank" rel="external">上次发版我就改了一行代码！</a>，真是脑洞大开，没想到安卓应用的桌面图标还能动态改变，涨知识了，接触安卓开发以来还是第一次知道这玩意儿，顿感无地自容。于是细细读来，着手实践，对其中涉及到的知识点对着官方文档了解一番，总结记录于此。</p>
+<a id="more"></a>
+<h1 id="案例分析-amp-需求来源"><a href="#案例分析-amp-需求来源" class="headerlink" title="案例分析 &amp; 需求来源"></a>案例分析 &amp; 需求来源</h1><hr>
+<p>每逢双十一购物节，你会发现手淘 App 的桌面图标会发生改变，当然应用里面的主题色调也会改变，变得非常喜庆，营造出一种节日的氛围，用户体验极好。既然存在这样的产品运营方式，那么如何从技术上实现呢？修改应用主题色调在这里就不谈了，常见的效果有黑白主题切换、主题包下载等，关于对应开发实现方式的讲解，网上相关资料很多。这里聊聊如何修改桌面图标，毕竟这个点涉及到的知识还是很少见的。</p>
+<p>其实很简单，利用 AndroidManifest.xml 文件中的 <code>&lt;activity-alias&gt;</code> 标签即可实现。</p>
+<h1 id="lt-activity-alias-gt-介绍"><a href="#lt-activity-alias-gt-介绍" class="headerlink" title="&lt;activity-alias&gt; 介绍"></a><code>&lt;activity-alias&gt;</code> 介绍</h1><hr>
+<p>大家知道，对于 Activity 组件，使用时需要在 Manifest 文件中通过 <activity> 标签注册 name、theme、intent-filter 等相关属性信息，然后通过 Intent 操作便可以启动对应 Activity。殊不知，我们还能通过 <code>&lt;activity-alias&gt;</code> 标签为每个 Activity 注册一个“别名”，通过这个别名也能启动对应的目标 Activity。我们来看一下这个“别名”能够设置哪些属性：</activity></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity-alias</span> <span class="attr">android:enabled</span>=<span class="string">[</span>"<span class="attr">true</span>" | "<span class="attr">false</span>"]</span><br><span class="line">                <span class="attr">android:exported</span>=<span class="string">[</span>"<span class="attr">true</span>" | "<span class="attr">false</span>"]</span><br><span class="line">                <span class="attr">android:icon</span>=<span class="string">"drawable resource"</span></span><br><span class="line">                <span class="attr">android:label</span>=<span class="string">"string resource"</span></span><br><span class="line">                <span class="attr">android:name</span>=<span class="string">"string"</span></span><br><span class="line">                <span class="attr">android:permission</span>=<span class="string">"string"</span></span><br><span class="line">                <span class="attr">android:targetActivity</span>=<span class="string">"string"</span> &gt;</span></span><br><span class="line">    . . .</span><br><span class="line"><span class="tag">&lt;/<span class="name">activity-alias</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>可以看出，大部分属性与 <code>&lt;Activity&gt;</code> 标签的属性一致，简单分析一下：</p>
+<ul>
+<li><p><strong>android:enabled</strong> 属性，布尔类型，是否开启别名设置，默认值为 true；</p>
+</li>
+<li><p><strong>android:exported</strong> 属性，布尔类型，是否支持其他应用通过这个别名访问目标 Activity，默认值为 true；</p>
+</li>
+<li><p><strong>android:icon</strong> 和 <strong>label</strong> 属性：类似 <code>&lt;activity&gt;</code> 标签，表示目标 Activity 的显示图标和标签；</p>
+</li>
+<li><p><strong>android:name</strong> 属性：Activity 别名，在 <code>&lt;activity&gt;</code> 标签中， name 属性必须与对应 Activity 文件的名字保持一致，而这里的别名可任意设置，保证唯一性即可；</p>
+</li>
+<li><p><strong>android:permission</strong> 属性：权限设置，对别名的使用加以限制，详细属性值参考开发者官网对 <a href="https://developer.android.com/guide/topics/manifest/manifest-intro.html#perms" target="_blank" rel="external">权限部分</a> 的说明；</p>
+</li>
+<li><p><strong>android:targetActivity</strong> 属性：指定别名能够启动的目标 Activity，注意，属性值一定要对应到 <code>&lt;activity&gt;</code> 标签中的 name 属性，并且该 <code>&lt;activity&gt;</code> 标签一定要位于 <code>&lt;activity-alias&gt;</code> 标签前面；</p>
+</li>
+</ul>
+<h1 id="实战演练"><a href="#实战演练" class="headerlink" title="实战演练"></a>实战演练</h1><hr>
+<p>了解完 <code>&lt;activity-alias&gt;</code> 的基本知识之后，就知道动态修改桌面图标和应用名称是怎么做到的了。其实就是给整个应用的入口 Activity 添加一个 <code>&lt;activity-alias&gt;</code> 标签，并设置预先设计好的替代桌面图标和应用名称，并配置相同的 <code>&lt;intent-filter&gt;</code> 属性，动态启动即可。</p>
+<p>举例说明一下，Manafest 文件关键代码如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">application</span></span><br><span class="line">    <span class="attr">android:allowBackup</span>=<span class="string">"true"</span></span><br><span class="line">    <span class="attr">android:icon</span>=<span class="string">"@mipmap/ic_launcher"</span></span><br><span class="line">    <span class="attr">android:label</span>=<span class="string">"Samples"</span></span><br><span class="line">    <span class="attr">android:supportsRtl</span>=<span class="string">"true"</span></span><br><span class="line">    <span class="attr">android:name</span>=<span class="string">".MyApplication"</span></span><br><span class="line">    <span class="attr">android:theme</span>=<span class="string">"@style/AppTheme"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">".MainActivity"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.MAIN"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.LAUNCHER"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">activity-alias</span></span><br><span class="line">        <span class="attr">android:name</span>=<span class="string">".MainAliasActivity"</span></span><br><span class="line">        <span class="attr">android:targetActivity</span>=<span class="string">".MainActivity"</span></span><br><span class="line">        <span class="attr">android:label</span>=<span class="string">"Samples Alias"</span></span><br><span class="line">        <span class="attr">android:icon</span>=<span class="string">"@mipmap/ic_launcher_alias"</span></span><br><span class="line">        <span class="attr">android:enabled</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.MAIN"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.LAUNCHER"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">activity-alias</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>注意看，在别名设置中添加了 <code>&lt;intent-filter&gt;</code> 标签，与 targetActivity 的设置一致：</p>
+<ul>
+<li><code>android.intent.action.MAIN</code> 表示这个别名设置是整个应用的入口，应用启动时第一个创建的就是这个 Activity；</li>
+<li></li>
+<li><code>android.intent.category.LAUNCHER</code> 表示这个别名设置将出现在桌面 Launcher 应用上；</li>
+</ul>
+<p>至于其他属性，<code>&lt;activity&gt;</code> 标签中也有相应设置，只是通常我们在 <code>&lt;application&gt;</code> 标签中统一设置而已，然后<code>&lt;activity&gt;</code> 标签默认继承<code>&lt;application&gt;</code> 标签中的设置。上述代码还有一点需要注意的是，<code>android:enabled</code> 属性设为 false，否则运行时将会在桌面上出现两个相同功能但不同显示的应用图标和名称。</p>
+<p>然后在 Activity 中动态切换，通过 PackageManager 对象提供的 <code>setComponentEnabledSetting()</code> 方法关闭当前 Component 组件，并启动别名对应的  Component 组件即可，参考代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClickOne</span><span class="params">(View v)</span></span>&#123;</span><br><span class="line">    PackageManager pm = getPackageManager();</span><br><span class="line">    pm.setComponentEnabledSetting(getComponentName(),</span><br><span class="line">            PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);</span><br><span class="line">    pm.setComponentEnabledSetting(<span class="keyword">new</span> ComponentName(<span class="keyword">this</span>, <span class="string">"com.yifeng.samples.AliasName"</span>),</span><br><span class="line">            PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>效果如图：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/148306026.gif" alt=""></p>
+<p>注意，修改之后，需要稍等片刻才能看到变化。如果想在修改完成之后立即看到变化，只能通过 Intent 重启 Launcher 应用。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_MAIN);</span><br><span class="line">intent.addCategory(Intent.CATEGORY_HOME);</span><br><span class="line">intent.addCategory(Intent.CATEGORY_DEFAULT);</span><br><span class="line">List&lt;ResolveInfo&gt; resolves = pm.queryIntentActivities(intent, <span class="number">0</span>);</span><br><span class="line"><span class="keyword">for</span> (ResolveInfo res : resolves) &#123;</span><br><span class="line">    <span class="keyword">if</span> (res.activityInfo != <span class="keyword">null</span>) &#123;</span><br><span class="line">        ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);</span><br><span class="line">        am.killBackgroundProcesses(res.activityInfo.packageName);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后不要忘了在 Manifest 文件中添加权限：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.KILL_BACKGROUND_PROCESSES"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>通过这些设置，基本上就能实现动态修改应用的桌面图标和名称。通常，可以提前将新的图标放置在应用中，待到特定时间段通过服务器端的消息推送等行为灵活触发 App 修改 Launcher 上显示的图标和名称，这样就不必为了改个图标单独迭代一个新版本。值得注意的是，从产品角度上讲，一般不会为了短期的一个活动修改应用名称，而是只修改桌面图标，并且新的桌面图标也只是在原有的基础样式上动动手脚，起到锦上添花的作用，万不可改得面貌全非，否则会让用户产生误解，那就得不偿失了。</p>
+<h1 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h1><hr>
+<p>第一个，以上这种设置只能修改 Launcher 上的应用图标和名称，属于应用级别（application level）的，无法达到系统级别（OS level）的修改，比如改完之后，使用 menu 物理键打开 multi-task 窗口，或者打开设置查看应用列表，你会发现，对应应用的图标和名称还是显示之前默认的那些。不过，对于普通用户来说，主要还是在于桌面 Launcher 上的显示，毕竟这里才是最直观也是最常用到的地方。</p>
+<p>第二个，这里我们将新的桌面图标提前放置在应用资源文件中，然后通过在 <code>&lt;activity-alias&gt;</code> 标签中指定对应引用即可，有没有一种方式能够在 Java 代码中设置 Icon 属性呢？如果可以的话，那就更加完美了，将图标文件放置在服务器，使用起来岂不是更加灵活？一番努力之后，还是没能找到对应解决方案，如果你们有知道的话，请留言告知，或者关注我的微信公众号(搜索：NiaoTech)，与我交流，谢谢。</p>
+<h1 id="可供拓展"><a href="#可供拓展" class="headerlink" title="可供拓展"></a>可供拓展</h1><hr>
+<p>你有没有发现，其实利用 <code>&lt;activity-alias&gt;</code> 标签也能实现给 App 添加桌面快捷方式的功能，实现步骤和上面所讲的内容大同小异。不过官方给了另外一种实现，可以参考官网相关介绍：<a href="https://developer.android.com/guide/topics/ui/shortcuts.html" target="_blank" rel="external">App Shortcuts</a>。</p>
+
+      
+    </div>
+    
+      <! -- 添加版权信息 -->
+<div class="article-footer-copyright">
+<p>本文由&nbsp;<b>亦枫</b>&nbsp;创作并首发于&nbsp;<b><a href="/index.html" target="_blank" title="亦枫">亦枫的个人博客</a></b>&nbsp;，同步授权微信公众号：技术鸟（NiaoTech）。</a></p>
+ 
+<p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
+ 
+<p>本文标题为: <b><a href="/2016/12/30/android-change-app-launcher-icon-dynamically/" target="_blank" title="Android 利用 &lt;activity-alias&gt; 动态改变 App 桌面图标">Android 利用 &lt;activity-alias&gt; 动态改变 App 桌面图标</a></b> </p>
+ 
+<p>本文链接为：<b><a href="/2016/12/30/android-change-app-launcher-icon-dynamically/" target="_blank" title="Android 利用 &lt;activity-alias&gt; 动态改变 App 桌面图标">http://yifeng.studio/2016/12/30/android-change-app-launcher-icon-dynamically/</a></b> </p>
+
+<p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
+</div>
+<! -- 添加版权信息 -->
+    
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/12/23/android-fragment-and-viewpager-attentions/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android Fragment＋ViewPager 组合，一些你不可不知的注意事项</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="android-change-app-launcher-icon-dynamically" data-title="Android 利用 &lt;activity-alias&gt; 动态改变 App 桌面图标" data-url="http://yifeng.studio/2016/12/30/android-change-app-launcher-icon-dynamically/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"yifengzone"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 亦枫
+    	</div>
+      <div class="footer-left">
+        &nbsp;&copy; 
+        <span id="busuanzi_container_site_pv">
+          本站访问量<span id="busuanzi_value_site_pv"></span>次
+        </span>
+        <span id="busuanzi_container_site_uv">
+          访客数<span id="busuanzi_value_site_uv"></span>人
+        </span>
+      </div>
+      	<div class="footer-right">
+      		Theme of <a href="https://github.com/Mike-bel/hexo-theme-yilia-optimization" target="_blank">yilia-opti</a>, by YiFeng
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: '/'
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-83125745-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script>
+	(function(){
+		document.write('<scr'+'ipt type="text/javascript" src="'+document.location.protocol+'//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">'+'</sc'+'ript>');
+	})();
+</script>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
