@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="YiFeng's Zone">
 <meta property="og:description" content="最近看到「医生」写的一篇文章：上次发版我就改了一行代码！，真是脑洞大开，没想到安卓应用的桌面图标还能动态改变，涨知识了，接触安卓开发以来还是第一次知道这玩意儿，顿感无地自容。于是细细读来，着手实践，对其中涉及到的知识点对着官方文档了解一番，总结记录于此。">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1483060262.gif">
-<meta property="og:updated_time" content="2016-12-30T06:57:51.000Z">
+<meta property="og:updated_time" content="2017-01-14T10:24:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 利用 <activity-alias> 动态改变 App 桌面图标">
 <meta name="twitter:description" content="最近看到「医生」写的一篇文章：上次发版我就改了一行代码！，真是脑洞大开，没想到安卓应用的桌面图标还能动态改变，涨知识了，接触安卓开发以来还是第一次知道这玩意儿，顿感无地自容。于是细细读来，着手实践，对其中涉及到的知识点对着官方文档了解一番，总结记录于此。">
@@ -275,7 +275,7 @@
 </ul>
 <h1 id="实战演练"><a href="#实战演练" class="headerlink" title="实战演练"></a>实战演练</h1><hr>
 <p>了解完 <code>&lt;activity-alias&gt;</code> 的基本知识之后，就知道动态修改桌面图标和应用名称是怎么做到的了。其实就是给整个应用的入口 Activity 添加一个 <code>&lt;activity-alias&gt;</code> 标签，并设置预先设计好的替代桌面图标和应用名称，并配置相同的 <code>&lt;intent-filter&gt;</code> 属性，动态启动即可。</p>
-<p>举例说明一下，Manafest 文件关键代码如下：</p>
+<p>举例说明一下，Manifest 文件关键代码如下：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">application</span></span><br><span class="line">    <span class="attr">android:allowBackup</span>=<span class="string">"true"</span></span><br><span class="line">    <span class="attr">android:icon</span>=<span class="string">"@mipmap/ic_launcher"</span></span><br><span class="line">    <span class="attr">android:label</span>=<span class="string">"Samples"</span></span><br><span class="line">    <span class="attr">android:supportsRtl</span>=<span class="string">"true"</span></span><br><span class="line">    <span class="attr">android:name</span>=<span class="string">".MyApplication"</span></span><br><span class="line">    <span class="attr">android:theme</span>=<span class="string">"@style/AppTheme"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">".MainActivity"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.MAIN"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.LAUNCHER"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">activity-alias</span></span><br><span class="line">        <span class="attr">android:name</span>=<span class="string">".MainAliasActivity"</span></span><br><span class="line">        <span class="attr">android:targetActivity</span>=<span class="string">".MainActivity"</span></span><br><span class="line">        <span class="attr">android:label</span>=<span class="string">"Samples Alias"</span></span><br><span class="line">        <span class="attr">android:icon</span>=<span class="string">"@mipmap/ic_launcher_alias"</span></span><br><span class="line">        <span class="attr">android:enabled</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.MAIN"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.LAUNCHER"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">activity-alias</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>注意看，在别名设置中添加了 <code>&lt;intent-filter&gt;</code> 标签，与 targetActivity 的设置一致：</p>
 <ul>
@@ -321,6 +321,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2017/02/19/android-statusbar/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Android 状态栏操作，你想知道的都在这里了
+        
+      </div>
+    </a>
   
   
     <a href="/2016/12/23/android-fragment-and-viewpager-attentions/" id="article-nav-older" class="article-nav-link-wrap">
@@ -384,7 +393,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2016 亦枫
+    		&copy; 2017 亦枫
     	</div>
       <div class="footer-left">
         &nbsp;&copy; 
