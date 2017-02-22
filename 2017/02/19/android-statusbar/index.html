@@ -20,7 +20,9 @@
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1487482273.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1487498016.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1487499262.png">
-<meta property="og:updated_time" content="2017-02-19T11:48:21.000Z">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1487568556.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1487568547.png">
+<meta property="og:updated_time" content="2017-02-22T14:06:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 状态栏操作，你想知道的都在这里了">
 <meta name="twitter:description" content="一直以来，iOS 设备上状态栏背景色和图标文字颜色的灵活可变性始终受到设计人员的青睐，有意地恰当地融入到 App 的各种界面设计当中，更好地提升用户体验。
@@ -317,6 +319,13 @@
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/1487499262.png" alt=""></p>
 <p>由于 Fragment 是无法像 Activity 那样在 AndroidManifest.xml 中单独设置主题样式的，所以这里可以这样做：宿主 Activity 还是使用透明样式，以满足图片延伸的 Fragment 页面效果，其他使用 Toolbar 的 Fragment，在其 Layout 布局文件顶部单独定义一个 View，让其延伸至状态栏，然后在代码中根据不同版本系统设置其高度，4.4 版本以下设置该 View 高度为0，4.4 及以上版本设置为设备状态栏高度，通过代码获取状态高度的方式如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 获取状态栏高度</span><br><span class="line"> * <span class="doctag">@param</span> activity</span><br><span class="line"> * <span class="doctag">@return</span></span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getStatusBarHeight</span><span class="params">(Activity activity)</span></span>&#123;</span><br><span class="line">    Rect rect = <span class="keyword">new</span> Rect();</span><br><span class="line">    activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);</span><br><span class="line">    <span class="keyword">return</span> rect.top==<span class="number">0</span> ? <span class="number">60</span> : rect.top;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后再补充一点，大家知道，长按 Toolbar 中 Menu Item 时会显示一个 Toast 提示，内容来自 Item 定义时对应的 title 属性，通常显示如图所示：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1487568556.png" alt=""></p>
+<p>但是，如果你误将 <code>fitsSystemWindows</code> 属性设置在了 style 样式文件中，比如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"BaseTheme"</span> <span class="attr">parent</span>=<span class="string">"Theme.AppCompat.Light.NoActionBar"</span>&gt;</span><span class="xml"></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:fitsSystemWindows"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>将会导致下图效果：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1487568547.png" alt=""></p>
+<p>可见，Menu Options Item 长按时弹出的 Toast 样式没了内容间距，显然很丑。所以，记得讲该属性设置在正确的布局文件中，不要设置成全局的。</p>
 <h1 id="相关拓展"><a href="#相关拓展" class="headerlink" title="相关拓展"></a>相关拓展</h1><hr>
 <p>以上便是有关 Android 4.4 开始的状态栏背景色相关知识，可以看出 4.4 、5.0 、6.0 版本作为三个分水岭，根据需要做好相关适配工作即可。还有一种通过 <code>setSystemUiVisibility()</code> 方法设置状态栏的方式，还能实现状态栏的显示与隐藏交互效果，具体可参考这篇文章：</p>
 <ul>
