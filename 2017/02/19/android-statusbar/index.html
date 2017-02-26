@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1487499262.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1487568556.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1487568547.png">
-<meta property="og:updated_time" content="2017-02-22T14:06:12.000Z">
+<meta property="og:updated_time" content="2017-02-22T14:11:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 状态栏操作，你想知道的都在这里了">
 <meta name="twitter:description" content="一直以来，iOS 设备上状态栏背景色和图标文字颜色的灵活可变性始终受到设计人员的青睐，有意地恰当地融入到 App 的各种界面设计当中，更好地提升用户体验。
@@ -325,7 +325,7 @@
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"BaseTheme"</span> <span class="attr">parent</span>=<span class="string">"Theme.AppCompat.Light.NoActionBar"</span>&gt;</span><span class="xml"></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:fitsSystemWindows"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>将会导致下图效果：</p>
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/1487568547.png" alt=""></p>
-<p>可见，Menu Options Item 长按时弹出的 Toast 样式没了内容间距，显然很丑。所以，记得讲该属性设置在正确的布局文件中，不要设置成全局的。</p>
+<p>可见，Menu Options Item 长按时弹出的 Toast 样式没了内容间距，显然很丑。所以，记得将该属性设置在正确的布局文件中，不要设置成全局的。</p>
 <h1 id="相关拓展"><a href="#相关拓展" class="headerlink" title="相关拓展"></a>相关拓展</h1><hr>
 <p>以上便是有关 Android 4.4 开始的状态栏背景色相关知识，可以看出 4.4 、5.0 、6.0 版本作为三个分水岭，根据需要做好相关适配工作即可。还有一种通过 <code>setSystemUiVisibility()</code> 方法设置状态栏的方式，还能实现状态栏的显示与隐藏交互效果，具体可参考这篇文章：</p>
 <ul>
@@ -362,6 +362,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2017/02/26/android-meizu-huawei-not-log/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          记录华为、魅族手机无法打印 Log 日志的问题
+        
+      </div>
+    </a>
   
   
     <a href="/2016/12/30/android-change-app-launcher-icon-dynamically/" id="article-nav-older" class="article-nav-link-wrap">

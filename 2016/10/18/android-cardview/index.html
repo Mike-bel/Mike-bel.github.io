@@ -20,7 +20,7 @@ https://material.google.com/components/cards.html#
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-02.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-03.gif">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-04.gif">
-<meta property="og:updated_time" content="2016-10-18T12:19:35.000Z">
+<meta property="og:updated_time" content="2017-02-23T02:57:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 使用CardView轻松实现卡片式设计">
 <meta name="twitter:description" content="Material design中有一种很个性的设计概念：卡片式设计（Cards），这种设计与传统的List Item有所区别，Cards包含更多的内容元素和拥有自己的UI特征，关于Cards的设计规范可以参考官网介绍：
@@ -271,7 +271,7 @@ https://material.google.com/components/cards.html#
 <h1 id="排版技巧"><a href="#排版技巧" class="headerlink" title="排版技巧"></a>排版技巧</h1><hr>
 <p>前面我们说过，CardView从本质上属于FrameLayout，而CardView通常包含了较多的内容元素，为了方便地排版布局中的各个元素，一般借助于其他基本布局容器，比如这里我们使用了一个<code>RelativeLayout</code>作为CardView的唯一Child。</p>
 <h1 id="阴影Padding"><a href="#阴影Padding" class="headerlink" title="阴影Padding"></a>阴影Padding</h1><hr>
-<p>在Android Lollipop之前的系统，CardView会自动添加一些额外的padding空间来绘制阴影部分，这也导致了以Lollipop为分界线的不同系统上CardView的尺寸大小不同。为了解决这个问题，有两种方法：第一种，使用不同API版本的dimension资源适配（也就是借助values和values-21文件夹中不同的dimens.xml文件）；第二种，就是使用<code>setUseCompatPadding</code>属性，设置为true（默认值为false），让CardView在不同系统中使用相同的padding值。</p>
+<p>在Android Lollipop之前的系统，CardView会自动添加一些额外的padding空间来绘制阴影部分，这也导致了以Lollipop为分界线的不同系统上CardView的尺寸大小不同。为了解决这个问题，有两种方法：第一种，使用不同API版本的dimension资源适配（也就是借助values和values-21文件夹中不同的dimens.xml文件）；第二种，就是使用<code>cardUseCompatPadding</code>属性，设置为true（默认值为false），让CardView在不同系统中使用相同的padding值。</p>
 <h1 id="圆角覆盖"><a href="#圆角覆盖" class="headerlink" title="圆角覆盖"></a>圆角覆盖</h1><hr>
 <p>这也是一个解决系统兼容的问题。在pre-Lollipop平台（API 21版本之前）上，CardView不会裁剪内容元素以满足圆角需求，而是使用添加padding的替代方案，从而使内容元素不会覆盖CardView的圆角。而控制这个行为的属性就是cardPreventCornerOverlap，默认值为true。在本例中我们设置了该属性为false。这里我们看一下，在pre-Lollipop平台中，不同cardPreventCornerOverlap值的效果对比图（左false，右true）：</p>
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-02.png" alt="CardView-samples-02.png"></p>

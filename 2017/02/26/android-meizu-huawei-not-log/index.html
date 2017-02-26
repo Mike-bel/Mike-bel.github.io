@@ -4,17 +4,21 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Category: Android | YiFeng&#39;s Zone</title>
+  <title>记录华为、魅族手机无法打印 Log 日志的问题 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="YiFeng's Zone">
-<meta property="og:url" content="http://yifeng.studio/categories/Android/page/3/index.html">
+  <meta name="description" content="最近使用魅族真机测试 App 时，发现 LogCat 不显示项目工程中通过 Log.d() 和 Log.v() 打印的 debug 和 verbose 级别的日志，甚是奇怪，通过 debug 模式断点调试也没看出有什么问题，无奈之下，Google 一番，终于找到了答案。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记录华为、魅族手机无法打印 Log 日志的问题">
+<meta property="og:url" content="http://yifeng.studio/2017/02/26/android-meizu-huawei-not-log/index.html">
 <meta property="og:site_name" content="YiFeng's Zone">
-<meta property="og:description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
+<meta property="og:description" content="最近使用魅族真机测试 App 时，发现 LogCat 不显示项目工程中通过 Log.d() 和 Log.v() 打印的 debug 和 verbose 级别的日志，甚是奇怪，通过 debug 模式断点调试也没看出有什么问题，无奈之下，Google 一番，终于找到了答案。">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1488082327.jpg">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1488083092.png">
+<meta property="og:updated_time" content="2017-02-26T05:01:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="YiFeng's Zone">
-<meta name="twitter:description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
+<meta name="twitter:title" content="记录华为、魅族手机无法打印 Log 日志的问题">
+<meta name="twitter:description" content="最近使用魅族真机测试 App 时，发现 LogCat 不显示项目工程中通过 Log.d() 和 Log.v() 打印的 debug 和 verbose 级别的日志，甚是奇怪，通过 debug 模式断点调试也没看出有什么问题，无奈之下，Google 一番，终于找到了答案。">
+<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1488082327.jpg">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -197,131 +201,147 @@
 	</div>
 </nav>
 
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-android-meizu-huawei-not-log" class="article article-type-post" itemscope itemprop="blogPost">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/10/08/android-include-merge-viewstub/" class="archive-article-date">
-  	<time datetime="2016-10-08T07:15:43.000Z" itemprop="datePublished">Oct 8</time>
+    <div class="article-meta">
+      <a href="/2017/02/26/android-meizu-huawei-not-log/" class="article-date">
+  	<time datetime="2017-02-26T04:51:28.000Z" itemprop="datePublished">2017-02-26</time>
 </a>
-        </div>
-    	 
+    </div>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/08/android-include-merge-viewstub/">Android include和merge标签、ViewStub控件的使用总结</a>
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      记录华为、魅族手机无法打印 Log 日志的问题
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+      </header>
+      
+      <div class="article-info article-info-post">
+        
 	<div class="article-tag tagcloud">
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
 	</div>
 
-          
+        
 	<div class="article-category tagcloud">
 	<a class="article-category-link" href="/categories/Android/">Android</a>
 	</div>
 
 
-        </div>
+
+        
+            <div class="bookicon"></div>
+            <div class="article-hit">
+              <span id="busuanzi_container_page_pv">
+                    热度 <span id="busuanzi_value_page_pv"></span>℃</span>
+            </div>
+        
+
         <div class="clearfix"></div>
-    </header>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近使用魅族真机测试 App 时，发现 LogCat 不显示项目工程中通过 <code>Log.d()</code> 和 <code>Log.v()</code> 打印的 debug 和 verbose 级别的日志，甚是奇怪，通过 debug 模式断点调试也没看出有什么问题，无奈之下，Google 一番，终于找到了答案。</p>
+<a id="more"></a>
+<p>原来国内的部分厂商定制的手机对于应用中的 Log 日志默认做了打印限制，需要手动设置才能打印出特殊级别的日志。目前发现有魅族和华为手机存在这样的问题，并且设置方式有所不同，遂纪录一下，以免后续再遇到这样的问题又要四处查阅。</p>
+<h1 id="MEIZU"><a href="#MEIZU" class="headerlink" title="MEIZU"></a>MEIZU</h1><hr>
+<p>实测 MEIZU PRO 6 ：打开【设置】中的【开发者选项】，页面底部找到【性能优化】，打开【高级日志输出】，勾选【全部允许】即可：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1488082327.jpg" alt=""></p>
+<p>可能其他部分魅族手机中不称为【高级日志输出】，而是【禁止D及以下级别LOG的输出】，道理一样，设为不可用即可。</p>
+<h1 id="HUAWEI"><a href="#HUAWEI" class="headerlink" title="HUAWEI"></a>HUAWEI</h1><hr>
+<p>华为手机设置方式较为特殊，不是在【开发者选项】中，而是打开拨号界面的拨号盘，输入<code>*#*#2846579#*#*</code>，系统会自动打开【工程菜单】界面，依次打开【后台设置】 -&gt; 【LOG设置】，勾选【AP日志】即可：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1488083092.png" alt=""></p>
+<p>至于其他厂商的手机有没有类似的问题，暂且不知，但至少知道不是程序的问题，权当记录。不得不感概，对于 Android 程序员，面对各种厂商，各种 ROM，开发中总会遇到各种各样奇奇怪怪的问题，也真是难为了我们，好在我们善于纪录，懂得分享。</p>
+
+      
+    </div>
+    
+      <! -- 添加版权信息 -->
+<div class="article-footer-copyright">
+<p>本文由&nbsp;<b>亦枫</b>&nbsp;创作并首发于&nbsp;<b><a href="/index.html" target="_blank" title="亦枫">亦枫的个人博客</a></b>&nbsp;，同步授权微信公众号：技术鸟（NiaoTech）。</a></p>
+ 
+<p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
+ 
+<p>本文标题为: <b><a href="/2017/02/26/android-meizu-huawei-not-log/" target="_blank" title="记录华为、魅族手机无法打印 Log 日志的问题">记录华为、魅族手机无法打印 Log 日志的问题</a></b> </p>
+ 
+<p>本文链接为：<b><a href="/2017/02/26/android-meizu-huawei-not-log/" target="_blank" title="记录华为、魅族手机无法打印 Log 日志的问题">http://yifeng.studio/2017/02/26/android-meizu-huawei-not-log/</a></b> </p>
+
+<p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
+</div>
+<! -- 添加版权信息 -->
+    
+    
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/02/19/android-statusbar/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android 状态栏操作，你想知道的都在这里了</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/09/23/behavior-analyzation/" class="archive-article-date">
-  	<time datetime="2016-09-23T14:06:32.000Z" itemprop="datePublished">Sep 23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/09/23/behavior-analyzation/">Android 一步一步分析CoordinatorLayout.Behavior</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
 	</div>
-
-          
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Android/">Android</a>
-	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/09/06/apk-environment-separate/" class="archive-article-date">
-  	<time datetime="2016-09-06T14:02:40.000Z" itemprop="datePublished">Sep 6</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/09/06/apk-environment-separate/">Android 利用Gradle实现app的环境分离</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gradle/">Gradle</a></li></ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Android/">Android</a>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/categories/Android/page/2/">&laquo; Prev</a><a class="page-number" href="/categories/Android/">1</a><a class="page-number" href="/categories/Android/page/2/">2</a><span class="page-number current">3</span>
-    </nav>
-  
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="android-meizu-huawei-not-log" data-title="记录华为、魅族手机无法打印 Log 日志的问题" data-url="http://yifeng.studio/2017/02/26/android-meizu-huawei-not-log/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"yifengzone"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
 
 </div>
       <footer id="footer">
@@ -356,10 +376,10 @@
 		mathjax: true,
 		animate: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: false,
 		root: '/'
 	}
