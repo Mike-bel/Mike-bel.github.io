@@ -4,20 +4,20 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>这两个实用的布局技巧，作为 Android 开发的你，不能错过 | YiFeng&#39;s Zone</title>
+  <title>Android 日常开发中，两个非常实用的布局技巧 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Android 布局容器、常用控件和属性，相信每个开发者都能倒背如流，开发排版 layout 时也能适当取舍。但是，本文中介绍的这两个常见的设计场景，其特殊的实现技巧可能你真的不曾用过。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="这两个实用的布局技巧，作为 Android 开发的你，不能错过">
+<meta property="og:title" content="Android 日常开发中，两个非常实用的布局技巧">
 <meta property="og:url" content="http://yifeng.studio/2017/03/08/android-several-layout-skills/index.html">
 <meta property="og:site_name" content="YiFeng's Zone">
 <meta property="og:description" content="Android 布局容器、常用控件和属性，相信每个开发者都能倒背如流，开发排版 layout 时也能适当取舍。但是，本文中介绍的这两个常见的设计场景，其特殊的实现技巧可能你真的不曾用过。">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1488928454.jpg">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1488931003.jpg">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1488981181.jpg">
-<meta property="og:updated_time" content="2017-03-08T14:23:22.000Z">
+<meta property="og:updated_time" content="2017-03-08T23:07:10.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="这两个实用的布局技巧，作为 Android 开发的你，不能错过">
+<meta name="twitter:title" content="Android 日常开发中，两个非常实用的布局技巧">
 <meta name="twitter:description" content="Android 布局容器、常用控件和属性，相信每个开发者都能倒背如流，开发排版 layout 时也能适当取舍。但是，本文中介绍的这两个常见的设计场景，其特殊的实现技巧可能你真的不曾用过。">
 <meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1488928454.jpg">
   
@@ -219,7 +219,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      这两个实用的布局技巧，作为 Android 开发的你，不能错过
+      Android 日常开发中，两个非常实用的布局技巧
     </h1>
   
 
@@ -228,7 +228,7 @@
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android-Studio/">Android Studio</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
 	</div>
 
         
@@ -257,10 +257,9 @@
 <h1 id="RelativeLayout-水平居中等分"><a href="#RelativeLayout-水平居中等分" class="headerlink" title="RelativeLayout 水平居中等分"></a>RelativeLayout 水平居中等分</h1><hr>
 <p>设计场景：</p>
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/1488928454.jpg" alt=""></p>
-<p>看到这样的效果，可能你会不假思索地选择 <code>LinearLayout</code> 容器，同时分配 children 的 weight 属性。不错，这样实现确实很简单。但是，通常界面上还有其他元素，父容器一般使用的是 <code>RelativeLayout</code> ，如果再选择使用一层 <code>LinearLayout</code> 包裹这两个 Button 的话，无疑会额外增加视图层次（View Hierarchy），增加性能渲染压力。其实，大可不必这样做，<code>RelativeLayout</code> 也能让两个 children 水平居中等分宽度。</p>
+<p>看到这样的效果，可能你会不假思索地选择 <code>LinearLayout</code> 容器，同时分配 children 的 weight 属性。不错，这样实现确实很简单。但是，通常界面上还有其他元素，父容器一般使用的是 <code>RelativeLayout</code> ，如果再选择使用一层 <code>LinearLayout</code> 包裹这两个 Button 的话，无疑会额外增加视图层次（View Hierarchy），加大性能渲染压力。其实，大可不必这样做，<code>RelativeLayout</code> 也能让两个 children 水平居中等分宽度。</p>
 <p>实现方式如下：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">RelativeLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attr">android:layout_width</span>=<span class="string">"fill_parent"</span></span><br><span class="line">    <span class="attr">android:layout_height</span>=<span class="string">"fill_parent"</span> &gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">Button</span></span><br><span class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/world"</span></span><br><span class="line">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span><br><span class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">        <span class="attr">android:layout_alignParentRight</span>=<span class="string">"true"</span></span><br><span class="line">        <span class="attr">android:layout_alignTop</span>=<span class="string">"@+id/hello"</span></span><br><span class="line">        <span class="attr">android:layout_toRightOf</span>=<span class="string">"@+id/view"</span></span><br><span class="line">        <span class="attr">android:text</span>=<span class="string">"First"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">View</span></span><br><span class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/view"</span></span><br><span class="line">        <span class="attr">android:layout_width</span>=<span class="string">"0dp"</span></span><br><span class="line">        <span class="attr">android:layout_height</span>=<span class="string">"1dp"</span></span><br><span class="line">        <span class="attr">android:layout_centerHorizontal</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">Button</span></span><br><span class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/hello"</span></span><br><span class="line">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span><br><span class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">        <span class="attr">android:layout_alignParentLeft</span>=<span class="string">"true"</span></span><br><span class="line">        <span class="attr">android:layout_toLeftOf</span>=<span class="string">"@+id/view"</span></span><br><span class="line">        <span class="attr">android:text</span>=<span class="string">"Second"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>不信的话，不妨复制上述代码到项目中一试哦。</p>
 <h1 id="ScrollView-内容适配技巧"><a href="#ScrollView-内容适配技巧" class="headerlink" title="ScrollView 内容适配技巧"></a>ScrollView 内容适配技巧</h1><hr>
 <p>设计场景：</p>
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/1488931003.jpg" alt=""></p>
@@ -281,9 +280,9 @@
  
 <p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
  
-<p>本文标题为: <b><a href="/2017/03/08/android-several-layout-skills/" target="_blank" title="这两个实用的布局技巧，作为 Android 开发的你，不能错过">这两个实用的布局技巧，作为 Android 开发的你，不能错过</a></b> </p>
+<p>本文标题为: <b><a href="/2017/03/08/android-several-layout-skills/" target="_blank" title="Android 日常开发中，两个非常实用的布局技巧">Android 日常开发中，两个非常实用的布局技巧</a></b> </p>
  
-<p>本文链接为：<b><a href="/2017/03/08/android-several-layout-skills/" target="_blank" title="这两个实用的布局技巧，作为 Android 开发的你，不能错过">http://yifeng.studio/2017/03/08/android-several-layout-skills/</a></b> </p>
+<p>本文链接为：<b><a href="/2017/03/08/android-several-layout-skills/" target="_blank" title="Android 日常开发中，两个非常实用的布局技巧">http://yifeng.studio/2017/03/08/android-several-layout-skills/</a></b> </p>
 
 <p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
 </div>
@@ -332,7 +331,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="android-several-layout-skills" data-title="这两个实用的布局技巧，作为 Android 开发的你，不能错过" data-url="http://yifeng.studio/2017/03/08/android-several-layout-skills/"></div>
+	<div class="ds-thread" data-thread-key="android-several-layout-skills" data-title="Android 日常开发中，两个非常实用的布局技巧" data-url="http://yifeng.studio/2017/03/08/android-several-layout-skills/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
