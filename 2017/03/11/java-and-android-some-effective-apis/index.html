@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Android 系统中，大幅提供工作效率的 API 汇总（持续更新中...） | YiFeng&#39;s Zone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言
+“条条大路通罗马。”工作中，实现某个需求的方式往往不是唯一的，这些不同实现方式不仅表现在代码质量上，还影响着我们的工作效率。就像，在 Android 系统中，总有那么一些鲜为人知的 API 能够减少我们很多零碎的工作量。于是，就想凭着一些经验，整理一些常用的，找个地方归纳总结，也供日后翻阅。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 系统中，大幅提供工作效率的 API 汇总（持续更新中...）">
+<meta property="og:url" content="http://yifeng.studio/2017/03/11/java-and-android-some-effective-apis/index.html">
+<meta property="og:site_name" content="YiFeng's Zone">
+<meta property="og:description" content="前言
+“条条大路通罗马。”工作中，实现某个需求的方式往往不是唯一的，这些不同实现方式不仅表现在代码质量上，还影响着我们的工作效率。就像，在 Android 系统中，总有那么一些鲜为人知的 API 能够减少我们很多零碎的工作量。于是，就想凭着一些经验，整理一些常用的，找个地方归纳总结，也供日后翻阅。">
+<meta property="og:updated_time" content="2017-03-11T13:31:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 系统中，大幅提供工作效率的 API 汇总（持续更新中...）">
+<meta name="twitter:description" content="前言
+“条条大路通罗马。”工作中，实现某个需求的方式往往不是唯一的，这些不同实现方式不仅表现在代码质量上，还影响着我们的工作效率。就像，在 Android 系统中，总有那么一些鲜为人知的 API 能够减少我们很多零碎的工作量。于是，就想凭着一些经验，整理一些常用的，找个地方归纳总结，也供日后翻阅。">
+  
+    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+  
+  
+    
+      <link rel="icon" href="/favicon.png">
+    
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+				
+					<img lazy-src="/assets/imgSite/avatar.png" class="js-avatar">
+				
+			
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">亦枫</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">翻墙推荐：http://buytizi.com/?r=225bb619613ec09e</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">首页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+					        
+								<a class="mail" target="_blank" href="mailto:fengleegg@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 16.67px;">Android Studio</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/Hexo/" style="font-size: 13.33px;">Hexo</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Weex/" style="font-size: 13.33px;">Weex</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/guolin_blog">郭霖</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/lmj623565791">鸿洋</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/singwhatiwanna">任玉刚</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.jcodecraeer.com/plus/list.php?tid=16">泡在网上的日子</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">长期拼搏在一线开发的安卓程序猿一枚，热衷于技术，沉浸于段子，微信公众号：技术鸟（微信号：NiaoTech）。If you can&#39;t fly then run, can&#39;t run then walk, can&#39;t walk then crawl, keep moving forward.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">亦枫</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img lazy-src="null/assets/imgSite/avatar.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">亦枫</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">翻墙推荐：http://buytizi.com/?r=225bb619613ec09e</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">首页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+			        
+						<a class="mail" target="_blank" href="mailto:fengleegg@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-java-and-android-some-effective-apis" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/03/11/java-and-android-some-effective-apis/" class="article-date">
+  	<time datetime="2017-03-11T10:32:40.000Z" itemprop="datePublished">2017-03-11</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android 系统中，大幅提供工作效率的 API 汇总（持续更新中...）
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Android/">Android</a>
+	</div>
+
+
+
+        
+            <div class="bookicon"></div>
+            <div class="article-hit">
+              <span id="busuanzi_container_page_pv">
+                    热度 <span id="busuanzi_value_page_pv"></span>℃</span>
+            </div>
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><hr>
+<p>“条条大路通罗马。”工作中，实现某个需求的方式往往不是唯一的，这些不同实现方式不仅表现在代码质量上，还影响着我们的工作效率。就像，在 Android 系统中，总有那么一些鲜为人知的 API 能够减少我们很多零碎的工作量。于是，就想凭着一些经验，整理一些常用的，找个地方归纳总结，也供日后翻阅。</p>
+<a id="more"></a>
+<h1 id="getResources-getIdentifier-String-name-String-defType-String-defPackage"><a href="#getResources-getIdentifier-String-name-String-defType-String-defPackage" class="headerlink" title="getResources().getIdentifier(String name, String defType, String defPackage)"></a>getResources().getIdentifier(String name, String defType, String defPackage)</h1><hr>
+<p>根据资源名称获取资源 id。正常情况下，我们会在代码中直接根据资源ID获取资源，比如:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getResources().getDrawable(R.drawable.ic_launcher);</span><br></pre></td></tr></table></figure>
+<p>但有时候，资源并不是固定的，需要根据使用情况从多个同类资源中动态选择，比如根据服务器传递给客户端的接口数据动态设置，怎么办呢？设置一个硬编码的映射关系数组？太繁琐！不妨用上这个方法。</p>
+<p>一个完整的资源名为<code>package:type/entry</code>，对应该方法的三个参数：资源名称、资源类型、应用包名。举几个例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">imageView.setImageResource(getResources().getIdentifier(<span class="string">"ic_launcher"</span>, <span class="string">"drawable"</span>, getPackageName()));</span><br><span class="line"></span><br><span class="line">radioGroup.check(getResources().getIdentifier(<span class="string">"rb_indicator_"</span> + position, <span class="string">"id"</span>, getPackageName()));</span><br></pre></td></tr></table></figure>
+<p>实际使用过程中，第一个参数 name，也就是资源名称，根据需要动态设置，这就需要多个资源在命名时保持一定的规范格式。另外，需要注意的是，直接通过 id 获取资源比通过名字的方式效率更高，所以，如果没有这般特殊需求的话，不提倡使用这个方法获取资源。</p>
+<h1 id="TextUtils-isEmpty-CharSequence-str"><a href="#TextUtils-isEmpty-CharSequence-str" class="headerlink" title="TextUtils.isEmpty(CharSequence str)"></a>TextUtils.isEmpty(CharSequence str)</h1><hr>
+<p>使用频率超高的字符串判空方法，返回一个 boolean 值，内部实现的判断条件为：<code>str == null || str.length() == 0</code>。备受开发人员喜爱的一个 if 字符串判断，系统已经帮我们封装过。</p>
+<h1 id="Html-fromHtml"><a href="#Html-fromHtml" class="headerlink" title="Html.fromHtml()"></a>Html.fromHtml()</h1><hr>
+<p>解析 Html 格式的富文本内容，并返回一个带样式的字符串，供 TextView 等控件显示。可以解决一些含超链接、图文混排等格式的富文本内容的显示问题。</p>
+<h1 id="DateUtils-formatDateTime"><a href="#DateUtils-formatDateTime" class="headerlink" title="DateUtils.formatDateTime()"></a>DateUtils.formatDateTime()</h1><hr>
+<p>利用 Android SDK 提供的这个日期工具类可以将 long 类型的毫秒级时间数据格式化成特定显示格式的字符串。通常我们使用 Java SDK 中的 <code>SimpleDateFormat</code> 格式化日期数据，比如 <code>new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm&quot;).format()</code>，<code>DateUtils</code> 的作用就是替我们封装了这个过程。格式化结果与当前设备的本地语言环境有关。这里列举几个常用 format 格式（中文环境下）：</p>
+<ul>
+<li>FORMAT_SHOW_DATE：3月3日</li>
+<li>FORMAT_SHOW_TIME：10:37</li>
+<li>FORMAT_SHOW_WEEKDAY：星期五</li>
+<li>FORMAT_SHOW_YEAR：2017年3月3日</li>
+<li>FORMAT_NUMERIC_DATE：3/3</li>
+<li>FORMAT_NO_MONTH_DAY：三月</li>
+</ul>
+<h1 id="Formatter-formatFileSize-Context-context-long-sizeBytes"><a href="#Formatter-formatFileSize-Context-context-long-sizeBytes" class="headerlink" title="Formatter.formatFileSize(Context context, long sizeBytes)"></a>Formatter.formatFileSize(Context context, long sizeBytes)</h1><hr>
+<p>格式化文件大小，将字节数据格式化为 B、KB、M 等单位的相应数据。context 参数用于判断返回结果的字符串顺序，right-to-left 还是 left-to-right 形式的。这个工具类免去我们自己转化计算的过程，非常方便，特别适用于应用内文件下载的类似场景。</p>
+<h1 id="TypedValue-applyDimension-int-unit-float-value-DisplayMetrics-metrics"><a href="#TypedValue-applyDimension-int-unit-float-value-DisplayMetrics-metrics" class="headerlink" title="TypedValue.applyDimension(int unit, float value, DisplayMetrics metrics)"></a>TypedValue.applyDimension(int unit, float value, DisplayMetrics metrics)</h1><hr>
+<p>将指定单位的尺寸数据按照当前设备屏幕信息转化为相应的像素值。其中，TypedValue 为第一个参数提供了常用的单位值，比如：</p>
+<ul>
+<li>COMPLEX_UNIT_PX</li>
+<li>COMPLEX_UNIT_DIP</li>
+<li>COMPLEX_UNIT_PT</li>
+<li>COMPLEX_UNIT_SP</li>
+</ul>
+<p>源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">float</span> <span class="title">applyDimension</span><span class="params">(<span class="keyword">int</span> unit, <span class="keyword">float</span> value, DisplayMetrics metrics)</span></span>&#123;</span><br><span class="line">	<span class="keyword">switch</span> (unit) &#123;</span><br><span class="line">	<span class="keyword">case</span> COMPLEX_UNIT_PX:</span><br><span class="line">		<span class="keyword">return</span> value;</span><br><span class="line">	<span class="keyword">case</span> COMPLEX_UNIT_DIP:</span><br><span class="line">		<span class="keyword">return</span> value * metrics.density;</span><br><span class="line">	<span class="keyword">case</span> COMPLEX_UNIT_SP:</span><br><span class="line">		<span class="keyword">return</span> value * metrics.scaledDensity;</span><br><span class="line">	<span class="keyword">case</span> COMPLEX_UNIT_PT:</span><br><span class="line">		<span class="keyword">return</span> value * metrics.xdpi * (<span class="number">1.0f</span>/<span class="number">72</span>);</span><br><span class="line">	<span class="keyword">case</span> COMPLEX_UNIT_IN:</span><br><span class="line">		<span class="keyword">return</span> value * metrics.xdpi;</span><br><span class="line">    <span class="keyword">case</span> COMPLEX_UNIT_MM:</span><br><span class="line">        <span class="keyword">return</span> value * metrics.xdpi * (<span class="number">1.0f</span>/<span class="number">25.4f</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其实在实际使用过程中，像素值都是 int 整数类型，而该方法返回的是 float 类型，如果直接强制转换的话，会自动舍去小数部分。所以，如果不用该方法的话，通常我们会这么转换：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">convertDipToPx</span><span class="params">(Context context, <span class="keyword">int</span> dip)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">float</span> scale = context.getResources().getDisplayMetrics().density;</span><br><span class="line">    <span class="comment">// 0.5f 用于向上取整</span></span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">int</span>) (dip * scale + <span class="number">0.5f</span> * (dip &gt;= <span class="number">0</span> ? <span class="number">1</span> : -<span class="number">1</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Space"><a href="#Space" class="headerlink" title="Space"></a>Space</h1><hr>
+<p>官方注释如下：</p>
+<blockquote>
+<p>Space is a lightweight View subclass that may be used to create gaps between components in general purpose layouts.</p>
+</blockquote>
+<p>Space 是一个用于创建视图之间空隙的轻量级 View。在 onDraw() 方法中不执行任何绘制，所以 <code>android:background</code> 属性对他来说不起作用。通常我们使用 View 创建视图间的空隙，在不考虑背景色的情况下，Space 其实效率更高。注意，由于是 API 14 引入的控件，如果需要向前兼容的话，需要使用到 support v4 包。</p>
+<h1 id="view-performClick"><a href="#view-performClick" class="headerlink" title="view.performClick()"></a>view.performClick()</h1><hr>
+<p>自动调用 View 点击事件。通常按钮等控件只有在用户点击时才能触发其点击事件，该方法可以由某些特殊条件触发模拟用户点击行为。类似的还有 <code>performLongClick()</code> 方法。</p>
+<h1 id="Log-getStackTraceString-Throwable-tr"><a href="#Log-getStackTraceString-Throwable-tr" class="headerlink" title="Log.getStackTraceString(Throwable tr)"></a>Log.getStackTraceString(Throwable tr)</h1><hr>
+<p><code>Log</code> 类提供的一个公共静态方法，与常见的 <code>Log.i()</code> 等方法打印日志到 logcat 控制台不同的是，该方法从 Throwable 对象中获取错误信息，并以字符串的形式返回。当你需要做错误信息的数据持久化，比如保存至本地存储卡中或者上传至服务器时，利用这个方法就非常方便。</p>
+<h1 id="Linkify-addLinks"><a href="#Linkify-addLinks" class="headerlink" title="Linkify.addLinks()"></a>Linkify.addLinks()</h1><hr>
+<p>我们知道对于 TextView 文本控件中的内容，通过 <code>android:autoLink</code> 属性可以为其添加诸如 web、phone 等固定模版的超链接点击事件。但毕竟系统模版有限，而利用 <code>Linkify.addLinks()</code> 方法可以添加一些应用内自定义模版，比如新浪微博中的 “@XXX” 格式的超链接跳转等，都可以通过自定义正则表达式来匹配处理。</p>
+<h1 id="getWindow-addFlags-WindowManager-LayoutParams-FLAG-SECURE"><a href="#getWindow-addFlags-WindowManager-LayoutParams-FLAG-SECURE" class="headerlink" title="getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE)"></a>getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE)</h1><hr>
+<p>设置安全窗口，禁用系统截屏。防止 App 中的一些界面被截屏，并显示在其他设备中造成信息泄漏。（常见手机设备系统截屏操作方式为：同时按下电源键和音量键。）</p>
+<p>比如支付宝 App 的“向商家付款”的包含付款二维码的界面。（补充说明一点，微信付款界面不是这么做的，采用的是在 onResume() 生命周期方法中实时刷新付款二维码，与支付宝在安全方法采取的手段不同。）</p>
+<h1 id="拦截-Back-键，使-App-进入后台而不是关闭"><a href="#拦截-Back-键，使-App-进入后台而不是关闭" class="headerlink" title="拦截 Back 键，使 App 进入后台而不是关闭"></a>拦截 Back 键，使 App 进入后台而不是关闭</h1><hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void onBackPressed() &#123;</span><br><span class="line">  Intent launcherIntent = new Intent(Intent.ACTION_MAIN);</span><br><span class="line">  launcherIntent.addCategory(Intent.CATEGORY_HOME);</span><br><span class="line">  startActivity(launcherIntent);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 Back 键返回桌面，但不关闭当前应用，而是使之进入后台，就像按下 Home 键一样。</p>
+<p>这个技巧厉害了。通常为了防止出现用户误按 Back 键退出 App 的情况，我们会在应用首页的 Activity 中监听返回键操作，使用 Toast 弱提示甚至 Dialog 强提示的方式给到用户一个再次确认的操作，但无法阻止用户通过返回键逐步关闭应用。</p>
+<p>然而，如果用这个方法拦截 App 最后一个 Activity（常见为首页界面），既没有阻碍用户操作（回到桌面），又没有关闭掉我们的应用（后台运行中），间接提高 App 的存活时间，真乃暗度陈仓。并且据我实验，微信、支付宝、微博等 App 都是这么做的，大家不妨一试。</p>
+<h1 id="ThumbnailUtils"><a href="#ThumbnailUtils" class="headerlink" title="ThumbnailUtils"></a>ThumbnailUtils</h1><hr>
+<p>缩略图工具类，可以根据本地视频文件源、Bitmap 对象生成缩略图，常用的公共静态方法为：</p>
+<ul>
+<li>createVideoThumbnail(String filePath, int kind)</li>
+<li>extractThumbnail(Bitmap source, int width, int height)</li>
+</ul>
+<h1 id="bitmap-extractAlpha"><a href="#bitmap-extractAlpha" class="headerlink" title="bitmap.extractAlpha()"></a>bitmap.extractAlpha()</h1><hr>
+<p>从源 bitmap 中根据 alpha 获取一个新的 bitmap 对象。比较绕口，通常 App 中的 Icon 多数是纯色透明像素背景组成，利用这个方法可以对该图的非透明区域着色，有多种使用场景，常见如 Button 的 pressed 状态，View 的阴影状态等。举个例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Bitmap <span class="title">getDropShadow</span><span class="params">(ImageView iv, Bitmap src, <span class="keyword">float</span> radius, <span class="keyword">int</span> color)</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">final</span> Paint paint = <span class="keyword">new</span> Paint(Paint.ANTI_ALIAS_FLAG);</span><br><span class="line">    paint.setColor(color);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> width = src.getWidth(), height = src.getHeight();</span><br><span class="line">    <span class="keyword">final</span> Bitmap dest = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);</span><br><span class="line">    <span class="keyword">final</span> Canvas canvas = <span class="keyword">new</span> Canvas(dest);</span><br><span class="line">    <span class="keyword">final</span> Bitmap alpha = src.extractAlpha();</span><br><span class="line">    canvas.drawBitmap(alpha, <span class="number">0</span>, <span class="number">0</span>, paint);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">final</span> BlurMaskFilter filter = <span class="keyword">new</span> BlurMaskFilter(radius, BlurMaskFilter.Blur.OUTER);</span><br><span class="line">    paint.setMaskFilter(filter);</span><br><span class="line">    canvas.drawBitmap(alpha, <span class="number">0</span>, <span class="number">0</span>, paint);</span><br><span class="line">    iv.setImageBitmap(dest);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> dest;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="ArgbEvaluator"><a href="#ArgbEvaluator" class="headerlink" title="ArgbEvaluator"></a>ArgbEvaluator</h1><hr>
+<p>系统提供的一个 TypeEvaluator ，我们只需要提供两个起始颜色值和一个分值，系统会通过特定的算法计算得出一个新的颜色中间值。利用这个类，我们至少可以做两件事情。</p>
+<p>第一，用于属性动画中。由于其实现了 <code>TypeEvaluator</code> 接口，可以用来做自定义属性动画的求值器，改变 View 的显示状态。比如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> colorStart = ContextCompat.getColor(<span class="keyword">this</span>, R.color.black);</span><br><span class="line"><span class="keyword">int</span> colorEnd = ContextCompat.getColor(<span class="keyword">this</span>, R.color.green);</span><br><span class="line">ValueAnimator valueAnimator = ValueAnimator</span><br><span class="line">	.ofObject(<span class="keyword">new</span> ArgbEvaluator(), colorStart, colorEnd)</span><br><span class="line">	.setDuration(<span class="number">3000</span>);</span><br><span class="line">valueAnimator.addUpdateListener(<span class="keyword">new</span> AnimatorUpdateListener() &#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationUpdate</span><span class="params">(ValueAnimator animation)</span> </span>&#123;</span><br><span class="line">		textView.setTextColor((Integer) animation.getAnimatedValue());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br><span class="line">valueAnimator.start();</span><br></pre></td></tr></table></figure>
+<p>第二，利用该类提供的颜色求值算法，配合 <code>ViewPager</code> 提供的滑动偏离值使用。这种场景常见于使用 <code>ViewPager</code> 实现的引导页，其背景色随着滑动距离动态改变；使用 <code>ViewPager</code> 实现的 Tab 样式菜单页面，Tab 中文本内容随着滑动距离动态改变字体颜色（可以参考安卓版微信）。这两种使用都使得 <code>ViewPager</code> 页面切换过渡得很自然，体验极佳。如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">viewPager.addOnPageChangeListener(<span class="keyword">new</span> OnPageChangeListener() &#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPageScrolled</span><span class="params">(<span class="keyword">int</span> position, <span class="keyword">float</span> positionOffset, <span class="keyword">int</span> positionOffsetPixels)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">new</span> ArgbEvaluator().evaluate(positionOffset, startColor, endColor);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPageSelected</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPageScrollStateChanged</span><span class="params">(<span class="keyword">int</span> state)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>另外，关于颜色差值的计算，Google Sample 里有另一种算法，可参考 <a href="https://developer.android.com/samples/SlidingTabsColors/src/com.example.android.common/view/SlidingTabStrip.html?hl=zh-cn" target="_blank" rel="external">SlidingTabStrip.java</a> 文件源码，核心方法内容如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"><span class="comment">/**</span><br><span class="line">* Blend &#123;<span class="doctag">@code</span> color1&#125; and &#123;<span class="doctag">@code</span> color2&#125; using the given ratio.</span><br><span class="line">*</span><br><span class="line">* <span class="doctag">@param</span> ratio of which to blend. 1.0 will return &#123;<span class="doctag">@code</span> color1&#125;, 0.5 will give an even blend,</span><br><span class="line">*              0.0 will return &#123;<span class="doctag">@code</span> color2&#125;.</span><br><span class="line">*/</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">blendColors</span><span class="params">(<span class="keyword">int</span> color1, <span class="keyword">int</span> color2, <span class="keyword">float</span> ratio)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">final</span> <span class="keyword">float</span> inverseRation = <span class="number">1f</span> - ratio;</span><br><span class="line">	<span class="keyword">float</span> r = (Color.red(color1) * ratio) + (Color.red(color2) * inverseRation);</span><br><span class="line">	<span class="keyword">float</span> g = (Color.green(color1) * ratio) + (Color.green(color2) * inverseRation);</span><br><span class="line">	<span class="keyword">float</span> b = (Color.blue(color1) * ratio) + (Color.blue(color2) * inverseRation);</span><br><span class="line">	<span class="keyword">return</span> Color.rgb((<span class="keyword">int</span>) r, (<span class="keyword">int</span>) g, (<span class="keyword">int</span>) b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="android-weightSum"><a href="#android-weightSum" class="headerlink" title="android:weightSum"></a>android:weightSum</h1><hr>
+<p> 用于 <code>LinearLayout</code> 中，用于设置 Children weight 的总比重。在 <code>LinearLayout</code> 的 children 中，我们经常会使用 <code>android:layout_weight</code> 按比例分配容器布局的空间，但有时候不一定会分完。以往，有些朋友可能会使用一个空 <view> 放在最后来达到末尾占位效果。如果你知道这个属性的话，就能少写一些代码。</view></p>
+<h1 id="android-descendantFocusability"><a href="#android-descendantFocusability" class="headerlink" title="android:descendantFocusability"></a>android:descendantFocusability</h1><hr>
+<p>用于 ViewGroup 中，解决作为 Parent 的 ViewGroup 与 Children View 之间的焦点占用问题。最最常见的使用场景就是 list item 中含有一些点击效果的控件，比如 Button、CheckBox 等，相信大家都遇到过。取值有三种，含义就不用再多说了：</p>
+<ul>
+<li>afterDescendants</li>
+<li>beforeDescendants</li>
+<li>blocksDescendants</li>
+</ul>
+<h1 id="android-duplicateParentState"><a href="#android-duplicateParentState" class="headerlink" title="android:duplicateParentState"></a>android:duplicateParentState</h1><hr>
+<p>是否将 View 自身的 drawable state 交给直接 parent ViewGroup 控制，值为 boolean 类型。比如有一个 item 布局，item 中有一个 button，如果点击 item layout 时，需要 button 呈现对应的点击效果，就可以在 button 中用到这个属性。不过，从设计的角度来讲，这种场景还是比较少见的。知道有这个属性就好，不推荐这种交互设计。</p>
+<h1 id="android-fillViewport"><a href="#android-fillViewport" class="headerlink" title="android:fillViewport"></a>android:fillViewport</h1><hr>
+<p>ScrollView 的一个属性，用于设置内容部分是否填满屏幕，主要针对内容不足以填满屏幕的情况。这里推荐一个使用技巧，参考我之前写的文章：<a href="http://yifeng.studio/2017/03/08/android-several-layout-skills/">Android 日常开发中，两个非常实用的布局技巧</a>。</p>
+<h1 id="android-adjustViewBounds"><a href="#android-adjustViewBounds" class="headerlink" title="android:adjustViewBounds"></a>android:adjustViewBounds</h1><hr>
+<p>使用 ImageView 时，你可能会用 <code>android:scaleType</code> 属性设置图片缩放方式。殊不知，<code>android:adjustViewBounds</code> 属性也能起到类似的效果。但要注意的是，后者需要至少指定 ImageView 宽高中的一个属性，或者 maxHeight 之类的，然后另一个属性随之适配。这个属性用在列表中较为合适，比如 App 中的活动列表页面，图片宽度设置为 match_parent，然后高度设为 wrap_content 使其自适应，这样便能保证从服务获取的高分辨率图片在不同的屏幕中不被拉伸变形。（备注：最好在项目资源文件中放置一个与网络图片相同尺寸的默认图，起到 placeholder 作用，避免图片显示前高度为 0 的较差体验。）</p>
+<h1 id="持续更新中…"><a href="#持续更新中…" class="headerlink" title="持续更新中…"></a>持续更新中…</h1><hr>
+<p>本文先记这么多吧，日积月累，后续持续更新中，敬请关注…（当然，你有什么高效而又少见的 API，欢迎一起分享交流哦~）</p>
+
+      
+    </div>
+    
+      <! -- 添加版权信息 -->
+<div class="article-footer-copyright">
+<p>本文由&nbsp;<b>亦枫</b>&nbsp;创作并首发于&nbsp;<b><a href="/index.html" target="_blank" title="亦枫">亦枫的个人博客</a></b>&nbsp;，同步推送微信公众号：安卓笔记侠（NiaoTech）。</a></p>
+ 
+<p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
+ 
+<p>本文标题为: <b><a href="/2017/03/11/java-and-android-some-effective-apis/" target="_blank" title="Android 系统中，大幅提供工作效率的 API 汇总（持续更新中...）">Android 系统中，大幅提供工作效率的 API 汇总（持续更新中...）</a></b> </p>
+ 
+<p>本文链接为：<b><a href="/2017/03/11/java-and-android-some-effective-apis/" target="_blank" title="Android 系统中，大幅提供工作效率的 API 汇总（持续更新中...）">http://yifeng.studio/2017/03/11/java-and-android-some-effective-apis/</a></b> </p>
+
+<p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
+</div>
+<! -- 添加版权信息 -->
+    
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/03/08/android-several-layout-skills/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android 日常开发中，两个非常实用的布局技巧</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="java-and-android-some-effective-apis" data-title="Android 系统中，大幅提供工作效率的 API 汇总（持续更新中...）" data-url="http://yifeng.studio/2017/03/11/java-and-android-some-effective-apis/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"yifengzone"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 亦枫
+    	</div>
+      <div class="footer-left">
+        &nbsp;&copy; 
+        <span id="busuanzi_container_site_pv">
+          本站访问量<span id="busuanzi_value_site_pv"></span>次
+        </span>
+        <span id="busuanzi_container_site_uv">
+          访客数<span id="busuanzi_value_site_uv"></span>人
+        </span>
+      </div>
+      	<div class="footer-right">
+      		Theme of <a href="https://github.com/Mike-bel/hexo-theme-yilia-optimization" target="_blank">yilia-opti</a>, by YiFeng
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: '/'
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-83125745-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script>
+	(function(){
+		document.write('<scr'+'ipt type="text/javascript" src="'+document.location.protocol+'//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">'+'</sc'+'ript>');
+	})();
+</script>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
