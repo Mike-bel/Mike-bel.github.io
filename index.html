@@ -229,142 +229,9 @@
 <p>Java 作为 Android 的基础编程语言，每一次迭代也是备受安卓开发人员的关注。这不，Oracle 公司在今年即将发布 Java 9 正式版，一些新的特性和改进很是值得期待。</p>
 <p>周末时间，拜读了国外的一个 Java 大牛写的有关 Java SE 9 的新功能介绍，简明扼要，示例得当。于是，一时兴起，以拙劣的英语水平磕磕绊绊翻译至此，供大家了解一番。</p>
 <p>作者：「Rambabu Posa」，一个具有 11 年丰富开发经验的技术牛人。</p>
-<p>英文出处：<a href="http://www.journaldev.com/13121/java-9-features-with-examples" target="_blank" rel="external">Java 9 Features with Examples</a></p>
+<p>英文出处：<a href="http://www.journaldev.com/13121/java-9-features-with-examples">Java 9 Features with Examples</a></p>
 </blockquote>
 <p>Oracle 公司即将在 2017 年 3 月底正式发布 Java SE 9。在这篇文章，我将使用一些示例简明扼要地阐述 Java 9 的新特性。当然，也是时候去了解一下。</p>
-<h1 id="1-Java-9-PEPK（JShell）"><a href="#1-Java-9-PEPK（JShell）" class="headerlink" title="1. Java 9 PEPK（JShell）"></a>1. Java 9 PEPK（JShell）</h1><hr>
-<p>Oracle 公司（Java Library 开发者）新引进一个代表 Java Shell 的称之为 “jshell” 或者 REPL（Read Evaluate Print Loop）的新工具。该工具可以被用来执行和测试任何 Java 中的结构，如 class，interface，enum，object，statements 等。使用非常简单。</p>
-<p>JDK 9 EA（Early Access）下载地址：<a href="https://jdk9.java.net/download/" target="_blank" rel="external">https://jdk9.java.net/download/</a></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">G:\&gt;jshell</span><br><span class="line">|  Welcome to JShell -- Version 9-ea</span><br><span class="line">|  For an introduction <span class="built_in">type</span>: /<span class="built_in">help</span> intro</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">jshell&gt; int a = 10</span><br><span class="line">a ==&gt; 10</span><br><span class="line"></span><br><span class="line">jshell&gt; System.out.println(<span class="string">"a value = "</span> + a )</span><br><span class="line">a value = 10</span><br></pre></td></tr></table></figure>
-<p>有关 REPL 工具的更多信息，可访问 <a href="http://www.journaldev.com/9879/java9-install-and-repl-jshell-tutorial" target="_blank" rel="external">Java 9 REPL Basics (Part-1)</a> 和 <a href="http://www.journaldev.com/12938/javase9-repl-jshell-examples-part2" target="_blank" rel="external">Java 9 REPL Features (Part-2)</a>.</p>
-<h1 id="2-不可变集合类的工厂方法"><a href="#2-不可变集合类的工厂方法" class="headerlink" title="2. 不可变集合类的工厂方法"></a>2. 不可变集合类的工厂方法</h1><hr>
-<p>Oracle 公司引入一些方便使用的工厂方法，用于创建不可变集合 List，Set，Map 和 Map.Entry 对象。这些高效实用的方法可用来创建空或者非空集合对象。</p>
-<p>在 Java SE 8 和更早版本中，我们常用类似 unmodifiableXXX 的集合类方法创建不可变集合对象。举个例子，比如我们想创建一个不可变的 List 对象，可能使用到 <code>Collections.unmodifiableList</code> 方法。</p>
-<p>然而，这些 <code>Collections.unmodifiableXXX</code> 方法显得非常冗长乏味。为了克服这些缺陷，Oracle 公司给 List、Set 和 Map 接口分别添加了两个更加实用的方法。</p>
-<p>List 和 Set 接口使用 <code>of()</code> 方法创建一个空或者非空的不可变 List 或 Set 对象，如：</p>
-<p><strong>空 List 示例</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List immutableList = List.of();</span><br></pre></td></tr></table></figure>
-<p><strong>非空 List 示例</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List immutableList = List.of(<span class="string">"one"</span>,<span class="string">"two"</span>,<span class="string">"three"</span>);</span><br></pre></td></tr></table></figure>
-<p>Map 分别有两个方法用于创建不可变 Map 对象和不可变 Map.Entry 对象：<code>of()</code> 和 <code>ofEntries()</code>。</p>
-<p><strong>空 Map 示例</strong></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jshell&gt; Map emptyImmutableMap = Map.of()</span><br><span class="line">emptyImmutableMap ==&gt; &#123;&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>非空 Map 示例</strong></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jshell&gt; Map nonemptyImmutableMap = Map.of(1, <span class="string">"one"</span>, 2, <span class="string">"two"</span>, 3, <span class="string">"three"</span>)</span><br><span class="line">nonemptyImmutableMap ==&gt; &#123;2=two, 3=three, 1=one&#125;</span><br></pre></td></tr></table></figure>
-<p>更多有关这些实用方法的信息，可以通过这些链接查询：</p>
-<ul>
-<li><a href="http://www.journaldev.com/12942/javase9-factory-methods-immutable-list" target="_blank" rel="external">Java 9 Factory Methods for Immutable List</a></li>
-<li><a href="http://www.journaldev.com/12984/javase9-factories-for-immutable-set" target="_blank" rel="external">Java 9 Factory Methods for Immutable Set</a></li>
-<li><a href="http://www.journaldev.com/13057/javase9-factory-methods-immutable-map" target="_blank" rel="external">Java 9 Factory Methods for Immutable Map and Map.Entry</a></li>
-</ul>
-<h1 id="3-接口中的私有方法"><a href="#3-接口中的私有方法" class="headerlink" title="3. 接口中的私有方法"></a>3. 接口中的私有方法</h1><hr>
-<p>在 Java 8 中，我们可以在接口中使用默认或者静态方法提供一些实现方式，但是不能创建私有方法。</p>
-<p>为了避免冗余代码和提高重用性，Oracle 公司准备在 Java SE 9 接口中引入私有方法。也就是说从 Java SE 9 开始，我们也能够在接口类中使用 ‘private’ 关键字写私有化方法和私有化静态方法。</p>
-<p>接口中的私有方法与 class 类中的私有方法在写法上并无差异，如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Card</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> Long <span class="title">createCardID</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">// Method implementation goes here.</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">displayCardDetails</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">// Method implementation goes here.</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>有关接口私有方法新特性的更多信息，可访问我的初体验之：<a href="http://www.journaldev.com/12850/java9-private-methods-in-interface" target="_blank" rel="external">Java 9 Private methods in Interface</a>。</p>
-<h1 id="4-Java-9-Module-System"><a href="#4-Java-9-Module-System" class="headerlink" title="4. Java 9 Module System"></a>4. Java 9 Module System</h1><hr>
-<p>Java 9 新特性中最大的一个变化就是 Module System。Oracle 公司将引入如下特性作为 <strong>Jigsaw Project</strong> 的一部分：</p>
-<ul>
-<li>Modular JDK</li>
-<li>Modular Java Source Code</li>
-<li>Modular Run-time Images</li>
-<li>Encapsulate Java Internal APIs</li>
-<li>Java Platform Module System</li>
-</ul>
-<p>Java SE 9 版本之前，我们使用 Monolithic Jars 来开发基于 Java 语言的应用程序。这种体系架构有许多局限性和缺点。为了避免这些缺陷，Java SE 9 迎来了 Module System。</p>
-<p>JDK 9 包含有 92 个 modules（当然也可能在最终发布版中有所变化）。我们可以使用 JDK Modules，也能创建我们自己的 modules，如：</p>
-<p><strong>简单 Module 示例</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> com.foo.bar &#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>这里我们使用 <code>module</code> 关键字创建了一个简单的 module。每个 module 都有一个名字，对应代码和其它一些资源。</p>
-<p>想了解更多有关这个新体系架构和亲自动手体验的话，可以参考这里我的体验之：</p>
-<ul>
-<li>Java 9 Module System Basics</li>
-<li>Java 9 Module System Examples</li>
-</ul>
-<h1 id="5-Process-API-Improvements"><a href="#5-Process-API-Improvements" class="headerlink" title="5. Process API Improvements"></a>5. Process API Improvements</h1><hr>
-<p>Java SE 9 迎来一些 Process API 的改进，通过添加一些新的类和方法来优化系统级进程的管控。</p>
-<p>Process API 中的两个新接口：</p>
-<ul>
-<li>java.lang.ProcessHandle</li>
-<li>java.lang.ProcessHandle.Info</li>
-</ul>
-<p><strong>Process API 示例</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ProcessHandle currentProcess = ProcessHandle.current();</span><br><span class="line">System.out.println(<span class="string">"Current Process Id: = "</span> + currentProcess.getPid());</span><br></pre></td></tr></table></figure>
-<p>想了解更多新 API 的信息，可以通过参考我的初体验之：Java SE 9: Process API Improvements。</p>
-<h1 id="6-Try-With-Resources-Improvement"><a href="#6-Try-With-Resources-Improvement" class="headerlink" title="6. Try With Resources Improvement"></a>6. Try With Resources Improvement</h1><hr>
-<p>我们知道，Java SE 7 引入了一个新的异常处理结构：<code>Try-With-Resources</code>，来自动管理资源。这个新的声明结构主要目的是实现“Automatic Better Resource Management”（“自动资源管理”）。</p>
-<p>Java SE 9 将对这个声明作出一些改进来避免一些冗长写法，同时提高可读性。</p>
-<p><strong>Java SE 7 示例</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">testARM_Before_Java9</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line"> BufferedReader reader1 = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(<span class="string">"journaldev.txt"</span>));</span><br><span class="line"> <span class="keyword">try</span> (BufferedReader reader2 = reader1) &#123;</span><br><span class="line">   System.out.println(reader2.readLine());</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>Java SE 9 示例</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">testARM_Java9</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line"> BufferedReader reader1 = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(<span class="string">"journaldev.txt"</span>));</span><br><span class="line"> <span class="keyword">try</span> (reader1) &#123;</span><br><span class="line">   System.out.println(reader1.readLine());</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>有关这个特性的更多信息，可以参考我的初体验之：<a href="http://www.journaldev.com/12940/javase9-try-with-resources-improvements" target="_blank" rel="external">Java 9 Try-With-Resources Improvements</a></p>
-<h1 id="7-CompletableFuture-API-Improvements"><a href="#7-CompletableFuture-API-Improvements" class="headerlink" title="7. CompletableFuture API Improvements"></a>7. CompletableFuture API Improvements</h1><hr>
-<p>在 Java SE 9 中，Oracle 公司将改进 CompletableFuture API 来解决一些 Java SE 8 中出现的问题。这些被添加的 API 将用来支持一些延时和超时操作，实用方法和更好的子类化。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Executor exe = CompletableFuture.delayedExecutor(<span class="number">50L</span>, TimeUnit.SECONDS);</span><br></pre></td></tr></table></figure>
-<p>这里的 delayedExecutor() 是静态实用方法，用来返回一个在指定延时时间提交任务到默认执行器的新 Executor 对象。</p>
-<p>有关这个特性的更多信息，请访问我的初体验之：Java SE 9: CompletableFuture API Improvements。</p>
-<h1 id="8-Reactive-Streams"><a href="#8-Reactive-Streams" class="headerlink" title="8. Reactive Streams"></a>8. Reactive Streams</h1><hr>
-<p>现在，Reactive Programming 由于其便利性在应用程序开发中变得非常流行。Scala、Play、Akka 等框架已经集成 Reactive Streams 并且受益良多。Oracle 公司也在 Java SE 9 中引入了一个新的 Reactive Streams API。</p>
-<p>Java SE 9 Reactive Streams API 是一个发布订阅型框架，使我们能够非常简单地使用 Java 语言就能实现异步的、可拓展的和并行的应用。</p>
-<p>Java SE 9 引进下面这些 API 来在基于 Java 语言的应用中开发 Reactive Streams：</p>
-<ul>
-<li>java.util.concurrent.Flow</li>
-<li>java.util.concurrent.Flow.Publisher</li>
-<li>java.util.concurrent.Flow.Subscriber</li>
-<li>java.util.concurrent.Flow.Processor</li>
-</ul>
-<p>如果你想了解这个新 API 的更多信息，可以参考我的初体验之：Introduction to Reactive Programming and Java SE 9: Reactive Streams。</p>
-<h1 id="9-Diamond-Operator-for-Anonymous-Inner-Class"><a href="#9-Diamond-Operator-for-Anonymous-Inner-Class" class="headerlink" title="9. Diamond Operator for Anonymous Inner Class"></a>9. Diamond Operator for Anonymous Inner Class</h1><hr>
-<p>我们知道，Java SE 7 引入了一个新的特性：Diamond Operator，来避免冗长代码和提升可读性。然而在 Java SE 8 中，Oracle 公司发现在 Diamond 操作器和匿名内部类的使用中存在一些局限性，后来修复了这些问题并准备将其作为 Java 9 的一部分发布出去。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List <span class="title">getEmployee</span><span class="params">(String empid)</span></span>&#123;</span><br><span class="line">	<span class="comment">// Code to get Employee details from Data Store</span></span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> List(emp)&#123; &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="10-Optional-Class-Improvements"><a href="#10-Optional-Class-Improvements" class="headerlink" title="10. Optional Class Improvements"></a>10. Optional Class Improvements</h1><hr>
-<p>在 Java SE 9 中，Oracle 公司添加了一些新的实用方法到 <code>java.util.Optional</code> 类里面。这里我将使用一些简单的示例来描述其中的一个：stream 方法。</p>
-<p>如果一个值出现在给定 Optional 对象中，stream() 方法可以返回包含该值的一个顺序 Stream 对象。否则，将返回一个空 Stream。</p>
-<p><code>stream()</code> 方法已经被添加，并用来在 Optional 对象中使用，如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;Optional&gt; emp = getEmployee(id)</span><br><span class="line">Stream empStream = emp.flatMap(Optional::stream)</span><br></pre></td></tr></table></figure>
-<p>这里的 <code>Optional.stream()</code> 方法被用来转化 Employee 可选流对象 到 Employee 流中，如此我们便可以在后续代码中使用这个结果。</p>
-<p>理解这个特性的更多信息，可参考我的初体验过程：<a href="http://www.journaldev.com/13108/javase9-optional-class-improvements" target="_blank" rel="external">Java SE 9: Optional Class Improvements</a>。</p>
-<h1 id="11-Stream-API-Improvements"><a href="#11-Stream-API-Improvements" class="headerlink" title="11. Stream API Improvements"></a>11. Stream API Improvements</h1><hr>
-<p>在 Java SE 9 中，Oracle 公司添加了四个非常有用的新方法到 <code>java.util.Stream</code> 接口里面。正如 Stream 作为一个接口类，所有这些新的实现方法都是默认方法。其中有两个方法非常重要：dropWhile 和 takeWhile。</p>
-<p>如果你熟悉 Scala 语言或者其它函数编程语言的话，你一定知道这些方法。他们在写一些功能样式代码时非常有用。这里我们一起讨论一下 takeWhile 实用方法。</p>
-<p>这个 <code>takeWhile()</code> 方法使用一个断言作为参数，返回给定 Stream 的子集直到断言语句第一次返回 false。如果第一个值不满足断言条件，将返回一个空的 Stream。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">jshell&gt; Stream.of(1,2,3,4,5,6,7,8,9,10).takeWhile(i -&gt; i &lt; 5 )</span><br><span class="line">                 .forEach(System.out::println);</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
-<p>更多有关 takeWhile、dropWhile 和其它新方法的信息，可以参考我的初体验过程之：<a href="http://www.journaldev.com/13204/javase9-stream-api-improvements" target="_blank" rel="external">Java SE 9: Stream API Improvements</a>。</p>
-<h1 id="12-Enhanced-Deprecated-annotation"><a href="#12-Enhanced-Deprecated-annotation" class="headerlink" title="12. Enhanced @Deprecated annotation"></a>12. Enhanced @Deprecated annotation</h1><hr>
-<p>在 Java SE 8 和更早版本上，@Deprecated 注解只是一个没有任何方法的标记类接口。它的作用是标记一个 Java API，可以是 calss，field，method，interface，constructor 等。</p>
-<p>在 Java SE 9 中，Oracle 公司强化了 @Deprecated 注解，来提供更多有关废弃 API 的介绍信息，同时也提供一个工具来分析项目中的废弃 API 的静态使用情况。Oracle 公司添加了两个方法到 Deprecated 接口中来提供服务：<strong>forRemoval</strong> 和 <strong>since</strong>。</p>
-<h1 id="13-HTTP-2-Client"><a href="#13-HTTP-2-Client" class="headerlink" title="13. HTTP 2 Client"></a>13. HTTP 2 Client</h1><hr>
-<p>在 Java SE 9 中，Oracle 公司将发布新的 HTTP 2 Client API 来支持 HTTP/2 协议和 WebSocket 特性。现有的 HTTP Client API 存在很多问题（如支持 HTTP/1.1 协议但是不支持 HTTP/2 协议和 WebSocket，仅仅作用在 Blocking 模式中，并存在大量性能问题），他们正在被使用新的 HTTP 客户端的 HttpURLConnection API 所替代。</p>
-<p>Oracle 公司准备在 “java.net.http” 包下引入新的 HTTP 2 Client API。它将同时支持 HTTP/1.1 和 HTTP/2 协议，也同时支持同步（Blocking Mode）和异步模式，支持 WebSocket API 使用中的异步模式。</p>
-<p>我们可以在这里查看这个新 API 信息：<a href="http://download.java.net/java/jdk9/docs/api/java/net/http/package-summary.html" target="_blank" rel="external">http://download.java.net/java/jdk9/docs/api/java/net/http/package-summary.html</a>。</p>
-<p><strong>HTTP 2 Client 示例</strong></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">jshell&gt; import java.net.http.*</span><br><span class="line"></span><br><span class="line">jshell&gt; import static java.net.http.HttpRequest.*</span><br><span class="line"></span><br><span class="line">jshell&gt; import static java.net.http.HttpResponse.*</span><br><span class="line"></span><br><span class="line">jshell&gt; URI uri = new URI(<span class="string">"http://rams4java.blogspot.co.uk/2016/05/java-news.html"</span>)</span><br><span class="line">uri ==&gt; http://rams4java.blogspot.co.uk/2016/05/java-news.html</span><br><span class="line"></span><br><span class="line">jshell&gt; HttpResponse response = HttpRequest.create(uri).body(noBody()).GET().response()</span><br><span class="line">response ==&gt; java.net.http.HttpResponseImpl@79efed2d</span><br><span class="line"></span><br><span class="line">jshell&gt; System.out.println(<span class="string">"Response was "</span> + response.body(asString()))</span><br></pre></td></tr></table></figure>
-<p>可以通过我的初体验之：<strong>Java SE 9: HTTP 2 Client</strong>，理解 HTTP/2 协议和 WebSocket，以及使用一些有用的示例对比新 API 的优势和旧 OLD API 的缺陷。</p>
-<h1 id="14-Мulti-Resolution-Image-API"><a href="#14-Мulti-Resolution-Image-API" class="headerlink" title="14. Мulti-Resolution Image API"></a>14. Мulti-Resolution Image API</h1><hr>
-<p>在 Java SE 9 中，Oracle 公司将引入一个新的 Мulti-Resolution Image API。这个 API 中比较重要的接口是 <code>MultiResolutionImage</code>，在 <code>java.awt.image</code> 包下可获取到。</p>
-<p><code>MultiResolutionImage</code> 封装不同高度和宽度图片（不同解决方案）到一个集合中，并允许我们按需查询使用。</p>
-<p>想理解这个 API 的更多信息，可参考我的初体验之：<strong>Java SE 9: Мulti-Resolution Image API</strong>。</p>
-<h1 id="15-Miscellaneous-Java-9-Features"><a href="#15-Miscellaneous-Java-9-Features" class="headerlink" title="15. Miscellaneous Java 9 Features"></a>15. Miscellaneous Java 9 Features</h1><hr>
-<p>在这个部分，我将列出 Java SE 9 新特性中其它一些内容。当然，这并不是这些内容就不重要。使用一些示例去理解他们也是非常重要并且很实用的。</p>
-<p>截至目前，我并没有获取到这些特性的足够多信息。这就是为什么我将他们简单列举至此的原因。我也会一个一个去获取信息并采用一些示例来说明这个部分列举的特性内容。并且会在晚些写成一个独立的体验部分。</p>
-<ul>
-<li>GC (Garbage Collector) Improvements</li>
-<li>Stack-Walking API</li>
-<li>Filter Incoming Serialization Data</li>
-<li>Deprecate the Applet API</li>
-<li>Indify String Concatenation</li>
-<li>Enhanced Method Handles</li>
-<li>Java Platform Logging API and Service</li>
-<li>Compact Strings</li>
-<li>Parser API for Nashorn</li>
-<li>Javadoc Search</li>
-<li>HTML5 Javadoc</li>
-</ul>
-<p>后面我将逐个搜集这些 java 9 中的特性，并使用足够的描述性文字和示例代码予以解释。</p>
-<p>至此，上述就是 java 9 中所有新引进的特性，一些简介和示例代码。</p>
-
       
     </div>
     
@@ -382,6 +249,10 @@
 	</div>
 
 
+      
+        <p class="article-more-link">
+          <a  href="/2017/03/12/translation-java-9-features-with-examples/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
