@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="YiFeng's Zone">
 <meta property="og:description" content="前言
 “条条大路通罗马。”工作中，实现某个需求的方式往往不是唯一的，这些不同实现方式不仅表现在代码质量上，还影响着我们的工作效率。就像，在 Android 系统中，总有那么一些鲜为人知的 API 能够减少我们很多零碎的工作量。于是，就想凭着一些经验，整理一些常用的，找个地方归纳总结，也供日后翻阅。">
-<meta property="og:updated_time" content="2017-03-11T14:28:38.000Z">
+<meta property="og:updated_time" content="2017-03-14T13:32:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 系统中，那些能大幅提高工作效率的 API 汇总（持续更新中...）">
 <meta name="twitter:description" content="前言
@@ -304,11 +304,15 @@
 <h1 id="getWindow-addFlags-WindowManager-LayoutParams-FLAG-SECURE"><a href="#getWindow-addFlags-WindowManager-LayoutParams-FLAG-SECURE" class="headerlink" title="getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE)"></a>getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE)</h1><hr>
 <p>设置安全窗口，禁用系统截屏。防止 App 中的一些界面被截屏，并显示在其他设备中造成信息泄漏。（常见手机设备系统截屏操作方式为：同时按下电源键和音量键。）</p>
 <p>比如支付宝 App 的“向商家付款”的包含付款二维码的界面。（补充说明一点，微信付款界面不是这么做的，采用的是在 onResume() 生命周期方法中实时刷新付款二维码，与支付宝在安全方法采取的手段不同。）</p>
-<h1 id="拦截-Back-键，使-App-进入后台而不是关闭"><a href="#拦截-Back-键，使-App-进入后台而不是关闭" class="headerlink" title="拦截 Back 键，使 App 进入后台而不是关闭"></a>拦截 Back 键，使 App 进入后台而不是关闭</h1><hr>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBackPressed</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  Intent launcherIntent = <span class="keyword">new</span> Intent(Intent.ACTION_MAIN);</span><br><span class="line">  launcherIntent.addCategory(Intent.CATEGORY_HOME);</span><br><span class="line">  startActivity(launcherIntent);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用 Back 键返回桌面，但不关闭当前应用，而是使之进入后台，就像按下 Home 键一样。</p>
+<h1 id="moveTaskToBack-boolean-nonRoot"><a href="#moveTaskToBack-boolean-nonRoot" class="headerlink" title="moveTaskToBack(boolean nonRoot)"></a>moveTaskToBack(boolean nonRoot)</h1><hr>
+<p>将当前 Activity 所属的 Task （Activity 栈）移到后台，应用从前台状态变为后台状态。参数为 false 时，表示该方法只作用于 task 的根 Activity；否则，作用于任何 Activity。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBackPressed</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    moveTaskToBack(<span class="keyword">false</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果像上面这样，在 Activity 中添加这段代码，便会导致用户使用 Back 键返回桌面，却不会关闭当前应用，而是使之进入后台，就像按下 Home 键一样（实际上与 Home 键的作用有所不同）。</p>
 <p>这个技巧厉害了。通常为了防止出现用户误按 Back 键退出 App 的情况，我们会在应用首页的 Activity 中监听返回键操作，使用 Toast 弱提示甚至 Dialog 强提示的方式给到用户一个再次确认的操作，但无法阻止用户通过返回键逐步关闭应用。</p>
 <p>然而，如果用这个方法拦截 App 最后一个 Activity（常见为首页界面），既没有阻碍用户操作（回到桌面），又没有关闭掉我们的应用（后台运行中），间接提高 App 的存活时间，真乃暗度陈仓。并且据我实验，微信、支付宝、微博等 App 都是这么做的，大家不妨一试。</p>
+<p>其实，像下面这样做也能达到屏蔽 Back 键退出应用的场景：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBackPressed</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Intent launcherIntent = <span class="keyword">new</span> Intent(Intent.ACTION_MAIN);</span><br><span class="line">	launcherIntent.addCategory(Intent.CATEGORY_HOME);</span><br><span class="line">	startActivity(launcherIntent);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是需要注意，与使用 <code>moveTaskToBack()</code> 方法不同的是，该写法下的 Back 键作用和按下 Home 键一样！如果你了解<a href="https://sspai.com/post/34725" target="_blank" rel="external">应用抽屉概念</a>的话，该写法导致直接回到设备桌面首页，而不是二级应用抽屉界面。而使用 <code>moveTaskToBack()</code> 就不会，符合用户从哪儿来回哪儿去的较好用户体验。所以，更推荐使用  <code>moveTaskToBack()</code> 方法实现屏蔽 Back 键使应用进入后台的功能。</p>
 <h1 id="ThumbnailUtils"><a href="#ThumbnailUtils" class="headerlink" title="ThumbnailUtils"></a>ThumbnailUtils</h1><hr>
 <p>缩略图工具类，可以根据本地视频文件源、Bitmap 对象生成缩略图，常用的公共静态方法为：</p>
 <ul>
