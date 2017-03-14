@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>闲谈 Android 中的 @ 和 ？符号的引用区别 | YiFeng&#39;s Zone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在 Android 项目开发中，我们经常会用 “@” 或者 “?” 符号去引用系统或者我们应用内添加的资源，这两种符号的引用有什么区别呢，“?attr/” 与 “?android:attr/” 之间又有怎样的不同呢？本文我们不妨闲聊一下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="闲谈 Android 中的 @ 和 ？符号的引用区别">
+<meta property="og:url" content="http://yifeng.studio/2017/03/14/the-difference-between-two-ways-reference-in-android/index.html">
+<meta property="og:site_name" content="YiFeng's Zone">
+<meta property="og:description" content="在 Android 项目开发中，我们经常会用 “@” 或者 “?” 符号去引用系统或者我们应用内添加的资源，这两种符号的引用有什么区别呢，“?attr/” 与 “?android:attr/” 之间又有怎样的不同呢？本文我们不妨闲聊一下。">
+<meta property="og:updated_time" content="2017-03-14T14:11:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="闲谈 Android 中的 @ 和 ？符号的引用区别">
+<meta name="twitter:description" content="在 Android 项目开发中，我们经常会用 “@” 或者 “?” 符号去引用系统或者我们应用内添加的资源，这两种符号的引用有什么区别呢，“?attr/” 与 “?android:attr/” 之间又有怎样的不同呢？本文我们不妨闲聊一下。">
+  
+    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+  
+  
+    
+      <link rel="icon" href="/favicon.png">
+    
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+				
+					<img lazy-src="/assets/imgSite/avatar.png" class="js-avatar">
+				
+			
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">亦枫</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">翻墙推荐：http://buytizi.com/?r=225bb619613ec09e</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">首页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+					        
+								<a class="mail" target="_blank" href="mailto:fengleegg@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 16.67px;">Android Studio</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/Hexo/" style="font-size: 13.33px;">Hexo</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Weex/" style="font-size: 13.33px;">Weex</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/guolin_blog">郭霖</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/lmj623565791">鸿洋</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/singwhatiwanna">任玉刚</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.jcodecraeer.com/plus/list.php?tid=16">泡在网上的日子</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">长期拼搏在一线开发的安卓程序猿一枚，热衷于技术，沉浸于段子，微信公众号：技术鸟（微信号：NiaoTech）。If you can&#39;t fly then run, can&#39;t run then walk, can&#39;t walk then crawl, keep moving forward.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">亦枫</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img lazy-src="null/assets/imgSite/avatar.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">亦枫</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">翻墙推荐：http://buytizi.com/?r=225bb619613ec09e</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">首页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+			        
+						<a class="mail" target="_blank" href="mailto:fengleegg@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-the-difference-between-two-ways-reference-in-android" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/03/14/the-difference-between-two-ways-reference-in-android/" class="article-date">
+  	<time datetime="2017-03-14T13:55:50.000Z" itemprop="datePublished">2017-03-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      闲谈 Android 中的 @ 和 ？符号的引用区别
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Android/">Android</a>
+	</div>
+
+
+
+        
+            <div class="bookicon"></div>
+            <div class="article-hit">
+              <span id="busuanzi_container_page_pv">
+                    热度 <span id="busuanzi_value_page_pv"></span>℃</span>
+            </div>
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在 Android 项目开发中，我们经常会用 “@” 或者 “?” 符号去引用系统或者我们应用内添加的资源，这两种符号的引用有什么区别呢，“?attr/” 与 “?android:attr/” 之间又有怎样的不同呢？本文我们不妨闲聊一下。</p>
+<a id="more"></a>
+<p>“@” 与 “?” 符号的引用在使用时都有一个规范的格式：<strong>“@[+][package:]type:name”</strong>，<strong>“?[package:][type:]name”</strong>。可以看到，二者均包含引用符号、资源所属的包、资源类型和资源名称。</p>
+<h1 id="资源引用"><a href="#资源引用" class="headerlink" title="@ 资源引用"></a>@ 资源引用</h1><hr>
+<p>“@” 符号用于引用系统和我们在项目中添加的一些固有资源（drawable，string 等），或者定义的 style 样式。比如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:text="@string/app_name"</span><br></pre></td></tr></table></figure>
+<p>这里的 app_name 就是我们自己定义在项目文件 <code>values/strings.xml</code> 中的字符串资源。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:text="@android:string/cancel"</span><br></pre></td></tr></table></figure>
+<p>而这里的 cancel 属于 Android SDK 中的系统字符串资源，所以需要添加 <strong>@android:</strong> 来指明引用来源。<strong>android:</strong> 是 <strong>package:</strong> 的一个具体实例。</p>
+<h1 id="属性引用"><a href="#属性引用" class="headerlink" title="? 属性引用"></a>? 属性引用</h1><hr>
+<p>“?” 符号用于引用当前主题中定义的一些属性值。注意，“?” 符号通过属性名字间接引用当前主题中的对应属性值，而不是属性本身。举个例子：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:divider="?android:listDivider"</span><br></pre></td></tr></table></figure>
+<p>这里的 “?” 符号通过属性名 android:listDivider 间接获取当前主题赋予该属性的值。如同 <strong>@android:</strong> 一般，<strong>?android:</strong> 表示该值源自 Android SDK 系统属性。由于在当前主题中寻找对应属性名的值，所以没有指定属性类型，其实等同于：<strong>?android:attr/listDivider</strong>。</p>
+<p>那如何引用项目中自定义的属性呢？我们在 <code>attrs.xml</code> 中定义一个属性，如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">"CustomTextView"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"colorTextCustom"</span> <span class="attr">format</span>=<span class="string">"reference|color"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>显然，此时我们定义的 colorTextCustom 属性是没有值的，直接引用没有任何作用。需要在主题 style 中赋值：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"BaseTheme"</span> <span class="attr">parent</span>=<span class="string">"Theme.AppCompat.Light.NoActionBar"</span>&gt;</span><span class="xml"></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"colorTextCustom"</span>&gt;</span>#FF0000<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"AppTheme"</span> <span class="attr">parent</span>=<span class="string">"BaseTheme"</span>&gt;</span><span class="xml"></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:textColor"</span>&gt;</span>?colorTextCustom<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>可以看到，这里在 BaseTheme 中对 colorTextCustom 属性赋值，并在 AppTheme 中通过 “?colorTextCustom” 引用该属性值。由于是本地项目中定义的属性，所以没有添加 <strong>android:</strong> 命名空间。其实，这种做法的好处是，AppTheme 所覆盖的 View 均可通过构造函数获取当前主题中的 colorTextCustom 属性值。</p>
+<h1 id="R-attr-amp-R-style"><a href="#R-attr-amp-R-style" class="headerlink" title="R.attr &amp; R.style"></a>R.attr &amp; R.style</h1><hr>
+<p>Android SDK 中定义有很多属性和主题可供使用，详见官方文档：<a href="https://developer.android.com/reference/android/R.attr.html" target="_blank" rel="external">R.attr</a> &amp; <a href="https://developer.android.com/reference/android/R.style.html" target="_blank" rel="external">R.style</a>。使用系统资源的好处就是，满足不同系统的适配需求，较为灵活。</p>
+<p>这里举几个常用的：</p>
+<p><strong>style=”?android:attr/borderlessButtonStyle”</strong></p>
+<p>Android 5.0 默认 Button 的样式自带边框阴影，可以使用这个系统样式去除该样式。当然，这是单独设置时的操作，为了方便全局控制，可以在 <code>styles.xml</code> 中自定义一个样式，继承一个无边框样式作为 parent：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"CustomBorderlessButtonStyle"</span> <span class="attr">parent</span>=<span class="string">"@style/Widget.AppCompat.Button.Borderless"</span>&gt;</span><span class="xml"></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:textColor"</span>&gt;</span>@android:color/white<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>android:background=”?android:attr/selectableItemBackground”</strong></p>
+<p>可用于设置一些 List Item、Button之类带点击效果的背景。该样式自带触摸点击效果，在 5.0 和更高版本上，更是附有 Ripple 涟漪效果，省去我们自己实现 selector 选择器的过程。当然我们也可以自己使用 <code>&lt;ripple&gt;</code> 标签定义一个 drawable 文件实现涟漪效果，只是需要注意版本限制。</p>
+<p><strong>android:background=”?android:attr/dividerVertical”</strong></p>
+<p>实现分割线背景。</p>
+<p>还有一些其他有用的系统资源，这里就不一一列举了…</p>
+
+      
+    </div>
+    
+      <! -- 添加版权信息 -->
+<div class="article-footer-copyright">
+<p>本文由&nbsp;<b>亦枫</b>&nbsp;创作并首发于&nbsp;<b><a href="/index.html" target="_blank" title="亦枫">亦枫的个人博客</a></b>&nbsp;，同步推送微信公众号：安卓笔记侠（NiaoTech）。</a></p>
+ 
+<p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
+ 
+<p>本文标题为: <b><a href="/2017/03/14/the-difference-between-two-ways-reference-in-android/" target="_blank" title="闲谈 Android 中的 @ 和 ？符号的引用区别">闲谈 Android 中的 @ 和 ？符号的引用区别</a></b> </p>
+ 
+<p>本文链接为：<b><a href="/2017/03/14/the-difference-between-two-ways-reference-in-android/" target="_blank" title="闲谈 Android 中的 @ 和 ？符号的引用区别">http://yifeng.studio/2017/03/14/the-difference-between-two-ways-reference-in-android/</a></b> </p>
+
+<p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
+</div>
+<! -- 添加版权信息 -->
+    
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/03/12/translation-java-9-features-with-examples/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【译】使用示例带你提前了解 Java 9 中的新特性</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="the-difference-between-two-ways-reference-in-android" data-title="闲谈 Android 中的 @ 和 ？符号的引用区别" data-url="http://yifeng.studio/2017/03/14/the-difference-between-two-ways-reference-in-android/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"yifengzone"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 亦枫
+    	</div>
+      <div class="footer-left">
+        &nbsp;&copy; 
+        <span id="busuanzi_container_site_pv">
+          本站访问量<span id="busuanzi_value_site_pv"></span>次
+        </span>
+        <span id="busuanzi_container_site_uv">
+          访客数<span id="busuanzi_value_site_uv"></span>人
+        </span>
+      </div>
+      	<div class="footer-right">
+      		Theme of <a href="https://github.com/Mike-bel/hexo-theme-yilia-optimization" target="_blank">yilia-opti</a>, by YiFeng
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: '/'
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-83125745-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script>
+	(function(){
+		document.write('<scr'+'ipt type="text/javascript" src="'+document.location.protocol+'//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">'+'</sc'+'ript>');
+	})();
+</script>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
