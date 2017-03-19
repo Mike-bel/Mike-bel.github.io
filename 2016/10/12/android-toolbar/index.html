@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/toolbar-sample-05.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/toolbar-sample-06.png">
 <meta property="og:image" content="https://github.com/alexstyl/Material-SearchTransition/blob/art/transition-to-search.gif?raw=true">
-<meta property="og:updated_time" content="2016-11-24T07:05:23.000Z">
+<meta property="og:updated_time" content="2017-03-16T08:30:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Toolbar，你想知道的都在这里了">
 <meta name="twitter:description" content="Android 3.0之后，Google引入了ActionBar，想统一安卓应用的导航栏样式。但由于ActionBar难以定制，很大程度上限制了开发人员，比如标题文字大小、间距等不易实现个性化，很多开发者放弃了ActionBar的使用，而是使用普通的ViewGroup来封装自己的App Bar，或者使用JakeWharton大神的ActionBarSherlock库。">
@@ -323,6 +323,12 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getSupportActionBar().setDisplayShowTitleEnabled(<span class="keyword">false</span>);</span><br></pre></td></tr></table></figure>
 <p>效果如下：</p>
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/toolbar-sample-06.png" alt="toolbar-sample-06.png"></p>
+<h1 id="“withText”-问题"><a href="#“withText”-问题" class="headerlink" title="“withText” 问题"></a>“withText” 问题</h1><hr>
+<p>Google 在设计 ActionBar 时，就约束了 menu item 中 icon 与 title 属性的关系。非溢出状态下不显示 title 文本。所以，即使在 <code>app:showAsAction</code> 属性中添加 <code>withText</code> 值也不一定能显示 title。更不用提只显示 title 不显示 icon 的情况。官方说明如下：</p>
+<blockquote>
+<p>Note: The “withText” value is a hint to the action bar that the text title should appear. The action bar will show the title when possible, but might not if an icon is available and the action bar is constrained for space.</p>
+</blockquote>
+<p>如果一定要展示 title text 的话，也不是不行，可以使用 <code>showAsAction</code> 属性指定 item 的布局内容。具体做法可参考：<a href="http://stackoverflow.com/questions/9282122/android-4-0-text-on-the-action-bar-never-shows" target="_blank" rel="external">StackOverFlow</a>。</p>
 <h1 id="搜索功能"><a href="#搜索功能" class="headerlink" title="搜索功能"></a>搜索功能</h1><hr>
 <p>系统提供了<code>search dialog</code>和<code>search widget</code>两种方式给Toolbar添加搜索功能，实现方式可参考 API 指南：<a href="https://developer.android.com/guide/topics/search/index.html" target="_blank" rel="external">Creating a Search Interface</a>。但系统提供的搜索功能略显僵硬，既无法引起用户的搜索欲望，也无法满足多数的产品设计需求，适用性不强，所以这里不作过多介绍。相反，使用自定义的搜索功能并为之添加适当的转场过度动画，效果立竿见影，参考开源项目：<a href="https://github.com/alexstyl/Material-SearchTransition" target="_blank" rel="external">Material-SearchTransition</a>，对应博文介绍：<a href="https://medium.com/@alexstyl/https-medium-com-alexstyl-animating-the-toolbar-7a8f1aab39dd#.qwkqkbyb2" target="_blank" rel="external">Exposing the Searchbar</a>，效果如下：</p>
 <p><img src="https://github.com/alexstyl/Material-SearchTransition/blob/art/transition-to-search.gif?raw=true" alt="transition-to-search.gif"></p>

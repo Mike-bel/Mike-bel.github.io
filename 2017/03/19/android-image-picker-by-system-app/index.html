@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Android 调用系统功能实现图片选择器，你可能会遇到的问题汇总 | YiFeng&#39;s Zone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="图片选择器在手机应用中屡见不鲜，设置头像、聊天传图等常见类似场景都需要使用。为了保持不同设备上体验的一致性和较好的兼容性，比较稳妥的做法是在应用内自实现相机拍照、相册选图和图片裁剪功能。但是，这个实现过程比较复杂，费时费力。更多时候，或者说在项目初期，我们都会选择直接调用系统提供的这些功能来完成一个图片选择器。然而，由于安卓设备的多样性，总会遇到各种各样的兼容问题。本文就来总结总结，调用系统相机、">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 调用系统功能实现图片选择器，你可能会遇到的问题汇总">
+<meta property="og:url" content="http://yifeng.studio/2017/03/19/android-image-picker-by-system-app/index.html">
+<meta property="og:site_name" content="YiFeng's Zone">
+<meta property="og:description" content="图片选择器在手机应用中屡见不鲜，设置头像、聊天传图等常见类似场景都需要使用。为了保持不同设备上体验的一致性和较好的兼容性，比较稳妥的做法是在应用内自实现相机拍照、相册选图和图片裁剪功能。但是，这个实现过程比较复杂，费时费力。更多时候，或者说在项目初期，我们都会选择直接调用系统提供的这些功能来完成一个图片选择器。然而，由于安卓设备的多样性，总会遇到各种各样的兼容问题。本文就来总结总结，调用系统相机、">
+<meta property="og:image" content="https://mmbiz.qlogo.cn/mmbiz_gif/GSIuO9kJrrUrY8UxlTTsNbnBxY4gBUryRFeeEYCs65neDo596Wd60V21kesTpRdruQrO5ibE51IOxSysKTNXibJQ/0?wx_fmt=gif">
+<meta property="og:updated_time" content="2017-03-19T10:54:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 调用系统功能实现图片选择器，你可能会遇到的问题汇总">
+<meta name="twitter:description" content="图片选择器在手机应用中屡见不鲜，设置头像、聊天传图等常见类似场景都需要使用。为了保持不同设备上体验的一致性和较好的兼容性，比较稳妥的做法是在应用内自实现相机拍照、相册选图和图片裁剪功能。但是，这个实现过程比较复杂，费时费力。更多时候，或者说在项目初期，我们都会选择直接调用系统提供的这些功能来完成一个图片选择器。然而，由于安卓设备的多样性，总会遇到各种各样的兼容问题。本文就来总结总结，调用系统相机、">
+<meta name="twitter:image" content="https://mmbiz.qlogo.cn/mmbiz_gif/GSIuO9kJrrUrY8UxlTTsNbnBxY4gBUryRFeeEYCs65neDo596Wd60V21kesTpRdruQrO5ibE51IOxSysKTNXibJQ/0?wx_fmt=gif">
+  
+    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+  
+  
+    
+      <link rel="icon" href="/favicon.png">
+    
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+				
+					<img lazy-src="/assets/imgSite/avatar.png" class="js-avatar">
+				
+			
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">亦枫</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">翻墙推荐：http://buytizi.com/?r=225bb619613ec09e</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">首页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+					        
+								<a class="mail" target="_blank" href="mailto:fengleegg@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 16.67px;">Android Studio</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/Hexo/" style="font-size: 13.33px;">Hexo</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Weex/" style="font-size: 13.33px;">Weex</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/guolin_blog">郭霖</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/lmj623565791">鸿洋</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/singwhatiwanna">任玉刚</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.jcodecraeer.com/plus/list.php?tid=16">泡在网上的日子</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">长期拼搏在一线开发的安卓程序猿一枚，热衷于技术，沉浸于段子，微信公众号：技术鸟（微信号：NiaoTech）。If you can&#39;t fly then run, can&#39;t run then walk, can&#39;t walk then crawl, keep moving forward.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">亦枫</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img lazy-src="null/assets/imgSite/avatar.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">亦枫</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">翻墙推荐：http://buytizi.com/?r=225bb619613ec09e</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">首页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+			        
+						<a class="mail" target="_blank" href="mailto:fengleegg@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-android-image-picker-by-system-app" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/03/19/android-image-picker-by-system-app/" class="article-date">
+  	<time datetime="2017-03-19T09:19:26.000Z" itemprop="datePublished">2017-03-19</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android 调用系统功能实现图片选择器，你可能会遇到的问题汇总
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Android/">Android</a>
+	</div>
+
+
+
+        
+            <div class="bookicon"></div>
+            <div class="article-hit">
+              <span id="busuanzi_container_page_pv">
+                    热度 <span id="busuanzi_value_page_pv"></span>℃</span>
+            </div>
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>图片选择器在手机应用中屡见不鲜，设置头像、聊天传图等常见类似场景都需要使用。为了保持不同设备上体验的一致性和较好的兼容性，比较稳妥的做法是在应用内自实现相机拍照、相册选图和图片裁剪功能。但是，这个实现过程比较复杂，费时费力。更多时候，或者说在项目初期，我们都会选择直接调用系统提供的这些功能来完成一个图片选择器。然而，由于安卓设备的多样性，总会遇到各种各样的兼容问题。本文就来总结总结，调用系统相机、相册和裁剪功能实现图片选择器的过程中，我们需要注意的一些地方。</p>
+<a id="more"></a>
+<h1 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h1><hr>
+<p>这里简单使用一个示例代码，演示调用系统相机或相册，获取图片，然后使用系统裁剪功能处理图片，并显示到一个 ImageButton 视图里面：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">FragmentActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> REQUEST_CAMERA = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> REQUEST_ALBUM = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> REQUEST_CROP = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String IMAGE_UNSPECIFIED = <span class="string">"image/*"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> ImageButton mPictureIb;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> File mImageFile;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        mPictureIb = (ImageButton) findViewById(R.id.ib_picture);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClickPicker</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">new</span> AlertDialog.Builder(<span class="keyword">this</span>)</span><br><span class="line">                .setTitle(<span class="string">"选择照片"</span>)</span><br><span class="line">                .setItems(<span class="keyword">new</span> String[]&#123;<span class="string">"拍照"</span>, <span class="string">"相册"</span>&#125;, <span class="keyword">new</span> OnClickListener() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(DialogInterface dialogInterface, <span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">                        <span class="keyword">if</span> (i == <span class="number">0</span>) &#123;</span><br><span class="line">                            selectCamera();</span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                            selectAlbum();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;)</span><br><span class="line">                .create()</span><br><span class="line">                .show();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">selectCamera</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        createImageFile();</span><br><span class="line">        <span class="keyword">if</span> (!mImageFile.exists()) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Intent cameraIntent = <span class="keyword">new</span> Intent(MediaStore.ACTION_IMAGE_CAPTURE);</span><br><span class="line">        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mImageFile));</span><br><span class="line">        startActivityForResult(cameraIntent, REQUEST_CAMERA);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">selectAlbum</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Intent albumIntent = <span class="keyword">new</span> Intent(Intent.ACTION_PICK);</span><br><span class="line">        albumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_UNSPECIFIED);</span><br><span class="line">        startActivityForResult(albumIntent, REQUEST_ALBUM);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">cropImage</span><span class="params">(Uri uri)</span></span>&#123;</span><br><span class="line">        Intent intent = <span class="keyword">new</span> Intent(<span class="string">"com.android.camera.action.CROP"</span>);</span><br><span class="line">        intent.setDataAndType(uri, IMAGE_UNSPECIFIED);</span><br><span class="line">        intent.putExtra(<span class="string">"crop"</span>, <span class="string">"true"</span>);</span><br><span class="line">        intent.putExtra(<span class="string">"aspectX"</span>, <span class="number">1</span>);</span><br><span class="line">        intent.putExtra(<span class="string">"aspectY"</span>, <span class="number">1</span>);</span><br><span class="line">        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mImageFile));</span><br><span class="line">        startActivityForResult(intent, REQUEST_CROP);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">createImageFile</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        mImageFile = <span class="keyword">new</span> File(Environment.getExternalStorageDirectory(), System.currentTimeMillis() + <span class="string">".jpg"</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            mImageFile.createNewFile();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            Toast.makeText(<span class="keyword">this</span>, <span class="string">"出错啦"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onActivityResult</span><span class="params">(<span class="keyword">int</span> requestCode, <span class="keyword">int</span> resultCode, Intent data)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onActivityResult(requestCode, resultCode, data);</span><br><span class="line">        <span class="keyword">if</span> (RESULT_OK != resultCode) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">switch</span> (requestCode) &#123;</span><br><span class="line">            <span class="keyword">case</span> REQUEST_CAMERA:</span><br><span class="line">                cropImage(Uri.fromFile(mImageFile));</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">case</span> REQUEST_ALBUM:</span><br><span class="line">                createImageFile();</span><br><span class="line">                <span class="keyword">if</span> (!mImageFile.exists()) &#123;</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                Uri uri = data.getData();</span><br><span class="line">                <span class="keyword">if</span> (uri != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    cropImage(uri);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">case</span> REQUEST_CROP:</span><br><span class="line">                mPictureIb.setImageURI(Uri.fromFile(mImageFile));</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>效果如图（不同设备，系统功能呈现有所不同）：</p>
+<p><img src="https://mmbiz.qlogo.cn/mmbiz_gif/GSIuO9kJrrUrY8UxlTTsNbnBxY4gBUryRFeeEYCs65neDo596Wd60V21kesTpRdruQrO5ibE51IOxSysKTNXibJQ/0?wx_fmt=gif" alt=""></p>
+<p>看似完美，你以为上述代码就能结束了的话，那就大错特错啦！这里面还有一些兼容问题要处理，还有一些地方需要特殊说明。</p>
+<h1 id="拍照图片存储问题"><a href="#拍照图片存储问题" class="headerlink" title="拍照图片存储问题"></a>拍照图片存储问题</h1><hr>
+<p>调用系统相机实现拍照功能的核心代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Intent cameraIntent = <span class="keyword">new</span> Intent(MediaStore.ACTION_IMAGE_CAPTURE);</span><br><span class="line">cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mImageFile));</span><br><span class="line">startActivityForResult(cameraIntent, REQUEST_CAMERA);</span><br></pre></td></tr></table></figure>
+<p>其中 <code>MediaStore.EXTRA_OUTPUT</code> 数据表示，拍照所得图片保存到指定目录下的文件（一般会在 SD 卡中创建当前应用的目录，并创建临时文件保存图片）。然后，在 onActivityResult 方法中根据文件路径获取图片。</p>
+<p>如果不为 intent 添加该数据的话，将在 onActivityResult 的 intent 对象中返回一个 Bitmap 对象，通过如下代码获取：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Bitmap bmp = data.getParcelableExtra(<span class="string">"data"</span>);</span><br></pre></td></tr></table></figure>
+<p>值得注意的是，这里的 Bitmap 对象是拍照所得图片的一个<strong>缩略图</strong>，尺寸很小！系统这么做也是充分考虑到应用的内存占用问题。试想一下，如今手机设备中高清相机拍出来的照片，一张图的大小高达十几兆，如果返回这么大的图片，内存占用相当严重，何况很多时候知识临时使用而已。所以，调用系统相机时，一般都会添加 <code>MediaStore.EXTRA_OUTPUT</code> 参数，避免返回 Bitmap 对象。当然，这么做也能保证应用产生的数据，包括文件，都能存储在应用目录下，方便清理缓存时统一清除。</p>
+<h1 id="拍照图片旋转问题"><a href="#拍照图片旋转问题" class="headerlink" title="拍照图片旋转问题"></a>拍照图片旋转问题</h1><hr>
+<p>部分手机，比如三星手机，调用系统相机拍照所得的照片可能会发生自动旋转问题，常见为旋转 90°。所以，要求我们在拍照之后，使用图片之前，判断图片是否发生过旋转，如果是，要将照片旋转回来。</p>
+<p>这是获取图片旋转角度的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 获取图片旋转角度</span><br><span class="line"> * <span class="doctag">@param</span> path 图片路径</span><br><span class="line"> * <span class="doctag">@return</span></span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">parseImageDegree</span><span class="params">(String path)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> degree = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        ExifInterface exifInterface = <span class="keyword">new</span> ExifInterface(path);</span><br><span class="line">        <span class="keyword">int</span> orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);</span><br><span class="line">        <span class="keyword">switch</span> (orientation) &#123;</span><br><span class="line">            <span class="keyword">case</span> ExifInterface.ORIENTATION_ROTATE_90:</span><br><span class="line">                degree = <span class="number">90</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> ExifInterface.ORIENTATION_ROTATE_180:</span><br><span class="line">                degree = <span class="number">180</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> ExifInterface.ORIENTATION_ROTATE_270:</span><br><span class="line">                degree = <span class="number">270</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> degree;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是根据指定角度旋转图片的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 图片旋转操作</span><br><span class="line"> *</span><br><span class="line"> * <span class="doctag">@param</span> bm 需要旋转的图片</span><br><span class="line"> * <span class="doctag">@param</span> degree 旋转角度</span><br><span class="line"> * <span class="doctag">@return</span> 旋转后的图片</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> Bitmap <span class="title">rotateBitmap</span><span class="params">(Bitmap bm, <span class="keyword">int</span> degree)</span> </span>&#123;</span><br><span class="line">    Bitmap returnBm = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    Matrix matrix = <span class="keyword">new</span> Matrix();</span><br><span class="line">    matrix.postRotate(degree);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        returnBm = Bitmap.createBitmap(bm, <span class="number">0</span>, <span class="number">0</span>, bm.getWidth(), bm.getHeight(), matrix, <span class="keyword">true</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (OutOfMemoryError e) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (returnBm == <span class="keyword">null</span>) &#123;</span><br><span class="line">        returnBm = bm;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (bm != returnBm) &#123;</span><br><span class="line">        bm.recycle();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> returnBm;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="横竖屏切换问题"><a href="#横竖屏切换问题" class="headerlink" title="横竖屏切换问题"></a>横竖屏切换问题</h1><hr>
+<p>在部分手机，调用系统拍照功能时，可能会发生横竖屏切换过程，导致返回应用时当前 Activity 发生销毁重建，各个生命周期又重新走了一遍。此时，一些应用内的变量数据可能丢失，使用时容易发生空值异常，进而导致 app 崩溃退出。</p>
+<p>为了避免这种现象，我们需要在 AndroidManifest.xml 文件的对应 <code>&lt;activity&gt;</code> 标签中添加属性:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:configChanges="orientation|screenSize"</span><br></pre></td></tr></table></figure>
+<p>这样，当发生屏幕旋转时，不会导致 Activity 销毁重建，而是执行 <code>onConfigurationChanged()</code> 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onConfigurationChanged</span><span class="params">(Configuration newConfig)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onConfigurationChanged(newConfig);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="调用系统裁剪问题"><a href="#调用系统裁剪问题" class="headerlink" title="调用系统裁剪问题"></a>调用系统裁剪问题</h1><hr>
+<p>示例中调用系统裁剪的代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(<span class="string">"com.android.camera.action.CROP"</span>);</span><br><span class="line">intent.setDataAndType(uri, IMAGE_UNSPECIFIED);</span><br><span class="line">intent.putExtra(<span class="string">"crop"</span>, <span class="string">"true"</span>);</span><br><span class="line">intent.putExtra(<span class="string">"aspectX"</span>, <span class="number">1</span>);</span><br><span class="line">intent.putExtra(<span class="string">"aspectY"</span>, <span class="number">1</span>);</span><br><span class="line">intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mImageFile));</span><br><span class="line">startActivityForResult(intent, REQUEST_CROP);</span><br></pre></td></tr></table></figure>
+<p>可以看出，调用系统裁剪功能，需要设置一些 Extra 参数，很多人容易在这里产生疑惑，不知如何取舍，如何设值。这里列举一下常用的 Extra 名字、值类型和作用：</p>
+<ul>
+<li><strong>crop</strong>：String 类型数据，发送裁剪信号</li>
+<li><strong>aspectX</strong> 和 <strong>aspectY</strong>：int 类型数据，设置裁剪框的 X 与 Y 值比例</li>
+<li><strong>outputX</strong> 和 <strong>outputY</strong>：int 类型数据，设置裁剪输出的图片大小</li>
+<li><strong>scale</strong>：boolean 类型数据，设置是否支持裁剪缩放</li>
+<li><strong>return-data</strong>：boolean 类型数据，设置是否在 onActivityResult 方法的 intent 值中返回 Bitmap 对象</li>
+<li><strong>MediaStore.EXTRA_OUTPUT</strong>：Uri 类型数据，设置是否将裁剪结果保存到指定文件中</li>
+</ul>
+<p>需要注意的是：</p>
+<p>第一，设置 return-data 参数为 true 时，返回的 Bitmap 对象也为缩略图，获取方式与前面所述相机拍照获取 Bitmap 的方式一致；</p>
+<p>第二，调用系统相册并裁剪时，如果使用<strong>MediaStore.EXTRA_OUTPUT</strong>参数，Uri 尽量不要设置为源文件对应的 Uri 值，另做保存，不损坏系统相册中的源图文件；</p>
+<p>第三，根据经验，outputX 与 outputY 值设置太大时，容易出现卡屏现象；</p>
+<p>第四，可以不设置 outputX 与 outputY 参数，使用户根据自身按比例自由裁剪，就像示例代码这样。</p>
+<h1 id="setImageURI-注意事项"><a href="#setImageURI-注意事项" class="headerlink" title="setImageURI() 注意事项"></a>setImageURI() 注意事项</h1><hr>
+<p>你可能会用到 <code>setImageURI()</code> 方法给 ImageView 设置图片内容，这里也有一个地方需要注意。我们先看一下这个方法的源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setImageURI</span><span class="params">(Uri uri)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mResource != <span class="number">0</span> ||</span><br><span class="line">            (mUri != uri &amp;&amp;</span><br><span class="line">             (uri == <span class="keyword">null</span> || mUri == <span class="keyword">null</span> || !uri.equals(mUri)))) &#123;</span><br><span class="line">        updateDrawable(<span class="keyword">null</span>);</span><br><span class="line">        mResource = <span class="number">0</span>;</span><br><span class="line">        mUri = uri;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> oldWidth = mDrawableWidth;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> oldHeight = mDrawableHeight;</span><br><span class="line"></span><br><span class="line">        resolveUri();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (oldWidth != mDrawableWidth || oldHeight != mDrawableHeight) &#123;</span><br><span class="line">            requestLayout();</span><br><span class="line">        &#125;</span><br><span class="line">        invalidate();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到，这里的 uri 参数在内部持有缓存变量，当多次调用该方法而 uri 参数值不变时，图片展示内容不变。问题就在这，如果你多次拍照或裁剪保存的图片文件路径相同时，虽然每次处理过后实际存储的文件内容发生变化，但由于路径相同，uri 参数一致，导致多次调用 <code>setImageURI()</code> 设置图片内容时，ImageView 显示内容不变！这也是为什么示例代码中我用时间戳处理图片文件名的原因所在，保证每次存储的图片路径不同。</p>
+<h1 id="根据-Uri-获取文件地址"><a href="#根据-Uri-获取文件地址" class="headerlink" title="根据 Uri 获取文件地址"></a>根据 Uri 获取文件地址</h1><hr>
+<p>有时候，我们需要根据 Uri 获取文件路径。比如如果你不需要使用裁剪功能的话，调用系统相册选择图片后返回的就是一个 Uri 对象，我们需要从这个 Uri 对象中解析出对应的图片文件路径，便于上传至服务器等后续处理。</p>
+<p>比如，这个 Uri 对象可能是：</p>
+<blockquote>
+<p>content://media/external/images/media/3066</p>
+</blockquote>
+<p>很多朋友相信有过这样的经验，使用 toString() 或者 getPath() 方法获取 Uri 对象所对应的文件路径，其实这是错误的！通过 getPath() 获取的结果字符串是：</p>
+<blockquote>
+<p>media/external/images/media/3066</p>
+</blockquote>
+<p>而正确的获取方式是：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> String <span class="title">parseFilePath</span><span class="params">(Uri uri)</span> </span>&#123;</span><br><span class="line">    String[] filePathColumn = &#123; MediaStore.Images.Media.DATA &#125;;</span><br><span class="line">    Cursor cursor = getContentResolver().query(uri, filePathColumn, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line">    cursor.moveToFirst();</span><br><span class="line">    <span class="keyword">int</span> columnIndex = cursor.getColumnIndex(filePathColumn[<span class="number">0</span>]);</span><br><span class="line">    String picturePath = cursor.getString(columnIndex);</span><br><span class="line">    cursor.close();</span><br><span class="line">    <span class="keyword">return</span> picturePath;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其对应的文件路径应该是这个样子的：</p>
+<blockquote>
+<p>/storage/emulated/0/Pictures/Screenshots/S70302-131606.jpg</p>
+</blockquote>
+<h1 id="Base64-文件编码处理"><a href="#Base64-文件编码处理" class="headerlink" title="Base64 文件编码处理"></a>Base64 文件编码处理</h1><hr>
+<p>现在很多网络框架内部都做了封装处理，上传图片时只需要传递一个文件路径即可。但是，少数情况下，根据服务器需要，我们要对图片文件字节流编码后再上传。这是使用 Base64 编码并根据字节数组获取字符串的处理过程：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">fileToBase64String</span><span class="params">(String filePath)</span> </span>&#123;</span><br><span class="line">    File photoFile = <span class="keyword">new</span> File(filePath);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        FileInputStream fis = <span class="keyword">new</span> FileInputStream(photoFile);</span><br><span class="line">        ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream(<span class="number">10000</span>);</span><br><span class="line">        <span class="keyword">byte</span>[] buffer = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1000</span>];</span><br><span class="line">        <span class="keyword">while</span> (fis.read(buffer)!=-<span class="number">1</span>) &#123;</span><br><span class="line">            baos.write(buffer);</span><br><span class="line">        &#125;</span><br><span class="line">        baos.close();</span><br><span class="line">        fis.close();</span><br><span class="line">        <span class="keyword">return</span> Arrays.toString(Base64.encode(baos.toByteArray(), Base64.DEFAULT));</span><br><span class="line">    &#125;<span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="zip-压缩文件处理"><a href="#zip-压缩文件处理" class="headerlink" title="zip 压缩文件处理"></a>zip 压缩文件处理</h1><hr>
+<p>当上传多张图片至服务器时，为了提升传输效率，往往会采用 zip 格式压缩处理。这里提供一个递归压缩代码，方便大家有需要的时候借鉴参考：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">zipCompass</span><span class="params">(String filePath)</span></span>&#123;</span><br><span class="line">    File zipFile = <span class="keyword">new</span> File(Environment.getExternalStorageDirectory(), System.currentTimeMillis() + <span class="string">".zip"</span>);</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="comment">//指定了两个待压缩的文件，都在assets目录中  </span></span><br><span class="line">        String[] filenames = <span class="keyword">new</span> String[]&#123; <span class="string">"activity_main.xml"</span>, <span class="string">"strings.xml"</span> &#125;;</span><br><span class="line">        FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(zipFile);</span><br><span class="line">        ZipOutputStream zos = <span class="keyword">new</span> ZipOutputStream(fos);</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">        <span class="comment">//枚举filenames中的所有待压缩文件  </span></span><br><span class="line">        <span class="keyword">while</span> (i &lt;= filenames.length)&#123;</span><br><span class="line">            <span class="comment">//从filenames数组中取出当前待压缩的文件名，作为压缩后的名称，以保证压缩前后文件名一致  </span></span><br><span class="line">            ZipEntry zipEntry = <span class="keyword">new</span> ZipEntry(filenames[i - <span class="number">1</span>]);</span><br><span class="line">            <span class="comment">//打开当前的zipEntry对象  </span></span><br><span class="line">            zos.putNextEntry(zipEntry);</span><br><span class="line"></span><br><span class="line">            FileInputStream is = <span class="keyword">new</span> FileInputStream(filePath);</span><br><span class="line">            <span class="keyword">byte</span>[] buffer = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">8192</span>];</span><br><span class="line">            <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">            <span class="comment">//写入数据  </span></span><br><span class="line">            <span class="keyword">while</span> ((count = is.read(buffer)) &gt;= <span class="number">0</span>)&#123;</span><br><span class="line">                zos.write(buffer, <span class="number">0</span>, count);</span><br><span class="line">            &#125;</span><br><span class="line">            zos.flush();</span><br><span class="line">            zos.closeEntry();</span><br><span class="line">            is.close();</span><br><span class="line">            i++;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        zos.finish();</span><br><span class="line">        zos.close();</span><br><span class="line">        <span class="keyword">return</span> zipFile.getAbsolutePath();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">        Toast.makeText(<span class="keyword">this</span>, e.getMessage(), Toast.LENGTH_LONG).show();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="添加系统权限"><a href="#添加系统权限" class="headerlink" title="添加系统权限"></a>添加系统权限</h1><hr>
+<p>说了这么多，别忘了在 AndroidManifest.xml 文件中添加系统权限（前面示例代码中没有考虑到 Android 6.0 运行时权限的问题，实际使用时注意添加处理）：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.CAMERA"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.READ_EXTERNAL_STORAGE"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.WRITE_EXTERNAL_STORAGE"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+      <! -- 添加版权信息 -->
+<div class="article-footer-copyright">
+<p>本文由&nbsp;<b>亦枫</b>&nbsp;创作并首发于&nbsp;<b><a href="/index.html" target="_blank" title="亦枫">亦枫的个人博客</a></b>&nbsp;，同步推送微信公众号：安卓笔记侠（NiaoTech）。</a></p>
+ 
+<p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
+ 
+<p>本文标题为: <b><a href="/2017/03/19/android-image-picker-by-system-app/" target="_blank" title="Android 调用系统功能实现图片选择器，你可能会遇到的问题汇总">Android 调用系统功能实现图片选择器，你可能会遇到的问题汇总</a></b> </p>
+ 
+<p>本文链接为：<b><a href="/2017/03/19/android-image-picker-by-system-app/" target="_blank" title="Android 调用系统功能实现图片选择器，你可能会遇到的问题汇总">http://yifeng.studio/2017/03/19/android-image-picker-by-system-app/</a></b> </p>
+
+<p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
+</div>
+<! -- 添加版权信息 -->
+    
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/03/14/the-difference-between-two-ways-reference-in-android/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">闲谈 Android 中的 @ 和 ？符号的引用区别</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="android-image-picker-by-system-app" data-title="Android 调用系统功能实现图片选择器，你可能会遇到的问题汇总" data-url="http://yifeng.studio/2017/03/19/android-image-picker-by-system-app/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"yifengzone"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 亦枫
+    	</div>
+      <div class="footer-left">
+        &nbsp;&copy; 
+        <span id="busuanzi_container_site_pv">
+          本站访问量<span id="busuanzi_value_site_pv"></span>次
+        </span>
+        <span id="busuanzi_container_site_uv">
+          访客数<span id="busuanzi_value_site_uv"></span>人
+        </span>
+      </div>
+      	<div class="footer-right">
+      		Theme of <a href="https://github.com/Mike-bel/hexo-theme-yilia-optimization" target="_blank">yilia-opti</a>, by YiFeng
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: '/'
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-83125745-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script>
+	(function(){
+		document.write('<scr'+'ipt type="text/javascript" src="'+document.location.protocol+'//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">'+'</sc'+'ript>');
+	})();
+</script>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
