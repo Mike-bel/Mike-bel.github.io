@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/toolbar-sample-05.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/toolbar-sample-06.png">
 <meta property="og:image" content="https://github.com/alexstyl/Material-SearchTransition/blob/art/transition-to-search.gif?raw=true">
-<meta property="og:updated_time" content="2017-03-16T08:30:04.000Z">
+<meta property="og:updated_time" content="2017-03-23T13:14:36.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Toolbar，你想知道的都在这里了">
 <meta name="twitter:description" content="Android 3.0之后，Google引入了ActionBar，想统一安卓应用的导航栏样式。但由于ActionBar难以定制，很大程度上限制了开发人员，比如标题文字大小、间距等不易实现个性化，很多开发者放弃了ActionBar的使用，而是使用普通的ViewGroup来封装自己的App Bar，或者使用JakeWharton大神的ActionBarSherlock库。">
@@ -266,6 +266,9 @@
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"AppTheme.Base"</span> <span class="attr">parent</span>=<span class="string">"heme.AppCompat.Light.NoActionBar"</span>&gt;</span><span class="undefined"></span><br><span class="line">	......</span><br><span class="line"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>第二步，在布局中添加v7包中的Toolbar控件（注意在<code>builde.gradle</code>文件中添加support.v7包的依赖：compile ‘com.android.support:appcompat-v7:23.3.0’），如：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">android.support.v7.widget.Toolbar</span></span><br><span class="line">    <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/tb_toolbar"</span></span><br><span class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attr">android:layout_height</span>=<span class="string">"?attr/actionBarSize"</span></span><br><span class="line">    <span class="attr">app:title</span>=<span class="string">"@string/app_name"</span></span><br><span class="line">    <span class="attr">app:titleTextColor</span>=<span class="string">"@android:color/white"</span></span><br><span class="line">    <span class="attr">android:background</span>=<span class="string">"@color/colorPrimary"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">android.support.v7.widget.Toolbar</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：如果此处不设置 title 属性，默认使用 manifest 文件中 <code>&lt;activity&gt;</code> 标签的 <code>android:label</code> 属性值作为标题内容。</p>
+</blockquote>
 <p>第三步，在Activity代码中使用Toolbar对象替换ActionBar：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Toolbar mToolbarTb = (Toolbar) findViewById(R.id.tb_toolbar);</span><br><span class="line">setSupportActionBar(mToolbarTb);</span><br></pre></td></tr></table></figure>
 <p>效果如下：</p>
