@@ -4,17 +4,34 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>YiFeng&#39;s Zone</title>
+  <title>从使用到源码，细说 Android 中的 tint 着色器 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="YiFeng's Zone">
-<meta property="og:url" content="http://yifeng.studio/index.html">
+  <meta name="description" content="自 API 21 （Android M）开始，Android SDK 引入 tint 着色器，可以随意改变安卓项目中图标或者 View 背景的颜色，一定程度上可以减少同一个样式不同颜色图标的数量，从而起到 Apk 瘦身的作用。不过使用 tint 存在一定的兼容性问题，且听本文慢慢说来。
+&amp;lt;– more –&amp;gt;
+xml 中的 tint 和 tintMode 属性
+
+android:tint">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从使用到源码，细说 Android 中的 tint 着色器">
+<meta property="og:url" content="http://yifeng.studio/2017/03/30/android-tint/index.html">
 <meta property="og:site_name" content="YiFeng's Zone">
-<meta property="og:description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
+<meta property="og:description" content="自 API 21 （Android M）开始，Android SDK 引入 tint 着色器，可以随意改变安卓项目中图标或者 View 背景的颜色，一定程度上可以减少同一个样式不同颜色图标的数量，从而起到 Apk 瘦身的作用。不过使用 tint 存在一定的兼容性问题，且听本文慢慢说来。
+&amp;lt;– more –&amp;gt;
+xml 中的 tint 和 tintMode 属性
+
+android:tint">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1490743313.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1490824929.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1490826805.gif">
+<meta property="og:updated_time" content="2017-03-29T23:37:31.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="YiFeng's Zone">
-<meta name="twitter:description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
+<meta name="twitter:title" content="从使用到源码，细说 Android 中的 tint 着色器">
+<meta name="twitter:description" content="自 API 21 （Android M）开始，Android SDK 引入 tint 着色器，可以随意改变安卓项目中图标或者 View 背景的颜色，一定程度上可以减少同一个样式不同颜色图标的数量，从而起到 Apk 瘦身的作用。不过使用 tint 存在一定的兼容性问题，且听本文慢慢说来。
+&amp;lt;– more –&amp;gt;
+xml 中的 tint 和 tintMode 属性
+
+android:tint">
+<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1490743313.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -197,9 +214,7 @@
 	</div>
 </nav>
 
-      <div class="body-wrap">
-  
-    <article id="post-android-tint" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-android-tint" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/2017/03/30/android-tint/" class="article-date">
@@ -215,12 +230,36 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/30/android-tint/">从使用到源码，细说 Android 中的 tint 着色器</a>
+    <h1 class="article-title" itemprop="name">
+      从使用到源码，细说 Android 中的 tint 着色器
     </h1>
   
 
       </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Android/">Android</a>
+	</div>
+
+
+
+        
+            <div class="bookicon"></div>
+            <div class="article-hit">
+              <span id="busuanzi_container_page_pv">
+                    热度 <span id="busuanzi_value_page_pv"></span>℃</span>
+            </div>
+        
+
+        <div class="clearfix"></div>
+      </div>
       
     
     <div class="article-entry" itemprop="articleBody">
@@ -298,635 +337,83 @@
       
     </div>
     
+      <! -- 添加版权信息 -->
+<div class="article-footer-copyright">
+<p>本文由&nbsp;<b>亦枫</b>&nbsp;创作并首发于&nbsp;<b><a href="/index.html" target="_blank" title="亦枫">亦枫的个人博客</a></b>&nbsp;，同步推送微信公众号：安卓笔记侠（NiaoTech）。</a></p>
+ 
+<p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
+ 
+<p>本文标题为: <b><a href="/2017/03/30/android-tint/" target="_blank" title="从使用到源码，细说 Android 中的 tint 着色器">从使用到源码，细说 Android 中的 tint 着色器</a></b> </p>
+ 
+<p>本文链接为：<b><a href="/2017/03/30/android-tint/" target="_blank" title="从使用到源码，细说 Android 中的 tint 着色器">http://yifeng.studio/2017/03/30/android-tint/</a></b> </p>
+
+<p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
+</div>
+<! -- 添加版权信息 -->
     
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Android/">Android</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
     
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/03/26/android-bottomnavigationview/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android BottomNavigationView，底部导航栏的简单实现</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
   
 </article>
 
 
-
-
-
-
-
-
-
-  
-    <article id="post-android-bottomnavigationview" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/03/26/android-bottomnavigationview/" class="article-date">
-  	<time datetime="2017-03-26T13:39:36.000Z" itemprop="datePublished">2017-03-26</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/26/android-bottomnavigationview/">Android BottomNavigationView，底部导航栏的简单实现</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>关于 Material Design 相关的控件，之前整理了一个系列文章，并建立一个 <a href="https://github.com/Mike-bel/MDStudySamples">MDSamples</a> 工程，使用代码和文字解说配合的方式逐一说明。截止目前，大致写有八九篇文章。期间，由于一些工作变动和琐事，停了一些时间。现在，有点时间，准备续上。</p>
-      
-    </div>
-    
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
 	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
 
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Android/">Android</a>
-	</div>
 
 
-      
-        <p class="article-more-link">
-          <a  href="/2017/03/26/android-bottomnavigationview/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
 
 
 
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="android-tint" data-title="从使用到源码，细说 Android 中的 tint 着色器" data-url="http://yifeng.studio/2017/03/30/android-tint/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"yifengzone"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
 
 
 
 
-
-
-  
-    <article id="post-android-obtain-view-width-and-heigth-not-zero" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/03/21/android-obtain-view-width-and-heigth-not-zero/" class="article-date">
-  	<time datetime="2017-03-20T23:32:51.000Z" itemprop="datePublished">2017-03-21</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/21/android-obtain-view-width-and-heigth-not-zero/">Android 获取 View 宽高的常用正确方式，避免为零</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>相信有很多朋友都有过在 Activity 中直接通过 getWidth() 之类的方法获取 View 的宽高值，可能在 onCreate() 生命周期方法中，也可能在 onResume() 生命周期方法中。然而，不幸的是，并不能获取所要的结果，宽高值均为 0。</p>
-      
-    </div>
-    
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Android/">Android</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2017/03/21/android-obtain-view-width-and-heigth-not-zero/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-android-image-picker-by-system-app" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/03/19/android-image-picker-by-system-app/" class="article-date">
-  	<time datetime="2017-03-19T09:19:26.000Z" itemprop="datePublished">2017-03-19</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/19/android-image-picker-by-system-app/">Android 调用系统功能实现图片选择器，你可能会遇到的问题汇总</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>图片选择器在手机应用中屡见不鲜，设置头像、聊天传图等常见类似场景都需要使用。为了保持不同设备上体验的一致性和较好的兼容性，比较稳妥的做法是在应用内自实现相机拍照、相册选图和图片裁剪功能。但是，这个实现过程比较复杂，费时费力。更多时候，或者说在项目初期，我们都会选择直接调用系统提供的这些功能来完成一个图片选择器。然而，由于安卓设备的多样性，总会遇到各种各样的兼容问题。本文就来总结总结，调用系统相机、相册和裁剪功能实现图片选择器的过程中，我们需要注意的一些地方。</p>
-      
-    </div>
-    
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Android/">Android</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2017/03/19/android-image-picker-by-system-app/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-the-difference-between-two-ways-reference-in-android" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/03/14/the-difference-between-two-ways-reference-in-android/" class="article-date">
-  	<time datetime="2017-03-14T13:55:50.000Z" itemprop="datePublished">2017-03-14</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/14/the-difference-between-two-ways-reference-in-android/">闲谈 Android 中的 @ 和 ？符号的引用区别</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在 Android 项目开发中，我们经常会用 “@” 或者 “?” 符号去引用系统或者我们应用内添加的资源，这两种符号的引用有什么区别呢，“?attr/” 与 “?android:attr/” 之间又有怎样的不同呢？本文我们不妨闲聊一下。</p>
-      
-    </div>
-    
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Android/">Android</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2017/03/14/the-difference-between-two-ways-reference-in-android/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-translation-java-9-features-with-examples" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/03/12/translation-java-9-features-with-examples/" class="article-date">
-  	<time datetime="2017-03-12T14:22:07.000Z" itemprop="datePublished">2017-03-12</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/12/translation-java-9-features-with-examples/">【译】使用示例带你提前了解 Java 9 中的新特性</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>Java 作为 Android 的基础编程语言，每一次迭代也是备受安卓开发人员的关注。这不，Oracle 公司在今年即将发布 Java 9 正式版，一些新的特性和改进很是值得期待。</p>
-<p>周末时间，拜读了国外的一个 Java 大牛写的有关 Java SE 9 的新功能介绍，简明扼要，示例得当。于是，一时兴起，以拙劣的英语水平磕磕绊绊翻译至此，供大家了解一番。</p>
-<p>作者：「Rambabu Posa」，一个具有 11 年丰富开发经验的技术牛人。</p>
-<p>英文出处：<a href="http://www.journaldev.com/13121/java-9-features-with-examples">Java 9 Features with Examples</a></p>
-</blockquote>
-<p>Oracle 公司即将在 2017 年 3 月底正式发布 Java SE 9。在这篇文章，我将使用一些示例简明扼要地阐述 Java 9 的新特性。当然，也是时候去了解一下。</p>
-      
-    </div>
-    
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Java/">Java</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2017/03/12/translation-java-9-features-with-examples/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-java-and-android-some-effective-apis" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/03/11/java-and-android-some-effective-apis/" class="article-date">
-  	<time datetime="2017-03-11T10:32:40.000Z" itemprop="datePublished">2017-03-11</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/11/java-and-android-some-effective-apis/">Android 系统中，那些能大幅提高工作效率的 API 汇总（持续更新中...）</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><hr>
-<p>“条条大路通罗马。”工作中，实现某个需求的方式往往不是唯一的，这些不同实现方式不仅表现在代码质量上，还影响着我们的工作效率。就像，在 Android 系统中，总有那么一些鲜为人知的 API 能够减少我们很多零碎的工作量。于是，就想凭着一些经验，整理一些常用的，找个地方归纳总结，也供日后翻阅。</p>
-      
-    </div>
-    
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Android/">Android</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2017/03/11/java-and-android-some-effective-apis/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-android-several-layout-skills" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/03/08/android-several-layout-skills/" class="article-date">
-  	<time datetime="2017-03-08T14:16:55.000Z" itemprop="datePublished">2017-03-08</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/08/android-several-layout-skills/">Android 日常开发中，两个非常实用的布局技巧</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Android 布局容器、常用控件和属性，相信每个开发者都能倒背如流，开发排版 layout 时也能适当取舍。但是，本文中介绍的这两个常见的设计场景，其特殊的实现技巧可能你真的不曾用过。</p>
-      
-    </div>
-    
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Android/">Android</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2017/03/08/android-several-layout-skills/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-android-studio-update-things" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/03/07/android-studio-update-things/" class="article-date">
-  	<time datetime="2017-03-07T14:03:53.000Z" itemprop="datePublished">2017-03-07</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/07/android-studio-update-things/">Android Studio 版本升级，一些你可能不知道的东西</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><hr>
-<p>Android Studio 版本迭代更新比较频繁，如果每次都卸载重装，翻墙下载几百兆的新版安装包，体验一定很差。浪费翻墙流量不说，每次都要重新配置之前的个性化设置等相关内容。所以，采取差异补丁包的增量升级方式显然明智许多。</p>
-      
-    </div>
-    
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android-Studio/">Android Studio</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Android/">Android</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2017/03/07/android-studio-update-things/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-android-studio-2-3-update-things" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/03/07/android-studio-2-3-update-things/" class="article-date">
-  	<time datetime="2017-03-06T23:12:25.000Z" itemprop="datePublished">2017-03-07</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/07/android-studio-2-3-update-things/">Android Studio 2.3 更新小记</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>作为 Google 官方出版并维护的 IDE，被全球数以百万计的 Android 开发者钟爱并使用的开发工具，Android Studio，在前几天的三月二号，正式迎来了 2.3 稳定版的更新。身为 Android 迷的你，赶快来和我一起看看新版 Android Studio 给我们带来了哪些变化吧。</p>
-      
-    </div>
-    
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android-Studio/">Android Studio</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Android/">Android</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2017/03/07/android-studio-2-3-update-things/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-  
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-    </nav>
-  
 </div>
       <footer id="footer">
   <div class="outer">
@@ -959,8 +446,8 @@
 		fancybox: true,
 		mathjax: true,
 		animate: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
