@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处 | YiFeng&#39;s Zone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="之前不是写了篇名为 Android 获取 View 宽高的常用正确方式，避免为零 的总结性文章嘛，在结尾简单阐述 measuredWidth 与 width 的区别。考虑到文章的重点，简单几笔带过。没曾想，引发一些争论，大家对 View 的这两对宽高属性理解各有异议。于是便想追根溯源，通过解读源码的方式说明一下，消除许多人的误解。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处">
+<meta property="og:url" content="http://yifeng.studio/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/index.html">
+<meta property="og:site_name" content="YiFeng's Zone">
+<meta property="og:description" content="之前不是写了篇名为 Android 获取 View 宽高的常用正确方式，避免为零 的总结性文章嘛，在结尾简单阐述 measuredWidth 与 width 的区别。考虑到文章的重点，简单几笔带过。没曾想，引发一些争论，大家对 View 的这两对宽高属性理解各有异议。于是便想追根溯源，通过解读源码的方式说明一下，消除许多人的误解。">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1491304232.jpg">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1491304242.jpg">
+<meta property="og:updated_time" content="2017-04-04T12:45:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处">
+<meta name="twitter:description" content="之前不是写了篇名为 Android 获取 View 宽高的常用正确方式，避免为零 的总结性文章嘛，在结尾简单阐述 measuredWidth 与 width 的区别。考虑到文章的重点，简单几笔带过。没曾想，引发一些争论，大家对 View 的这两对宽高属性理解各有异议。于是便想追根溯源，通过解读源码的方式说明一下，消除许多人的误解。">
+<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1491304232.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+  
+  
+    
+      <link rel="icon" href="/favicon.png">
+    
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+				
+					<img lazy-src="/assets/imgSite/avatar.png" class="js-avatar">
+				
+			
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">亦枫</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">翻墙推荐：http://buytizi.com/?r=225bb619613ec09e</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">首页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+					        
+								<a class="mail" target="_blank" href="mailto:fengleegg@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 16.67px;">Android Studio</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/Hexo/" style="font-size: 13.33px;">Hexo</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Weex/" style="font-size: 13.33px;">Weex</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/guolin_blog">郭霖</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/lmj623565791">鸿洋</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/singwhatiwanna">任玉刚</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.jcodecraeer.com/plus/list.php?tid=16">泡在网上的日子</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">长期拼搏在一线开发的安卓程序猿一枚，热衷于技术，沉浸于段子，微信公众号：技术鸟（微信号：NiaoTech）。If you can&#39;t fly then run, can&#39;t run then walk, can&#39;t walk then crawl, keep moving forward.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">亦枫</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img lazy-src="null/assets/imgSite/avatar.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">亦枫</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">翻墙推荐：http://buytizi.com/?r=225bb619613ec09e</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">首页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+			        
+						<a class="mail" target="_blank" href="mailto:fengleegg@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-the-difference-between-getWidth-and-getMeasuredWidth" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/" class="article-date">
+  	<time datetime="2017-03-29T23:35:41.000Z" itemprop="datePublished">2017-03-30</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Android/">Android</a>
+	</div>
+
+
+
+        
+            <div class="bookicon"></div>
+            <div class="article-hit">
+              <span id="busuanzi_container_page_pv">
+                    热度 <span id="busuanzi_value_page_pv"></span>℃</span>
+            </div>
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>之前不是写了篇名为 <a href="http://yifeng.studio/2017/03/21/android-obtain-view-width-and-heigth-not-zero/">Android 获取 View 宽高的常用正确方式，避免为零</a> 的总结性文章嘛，在结尾简单阐述 measuredWidth 与 width 的区别。考虑到文章的重点，简单几笔带过。没曾想，引发一些争论，大家对 View 的这两对宽高属性理解各有异议。于是便想追根溯源，通过解读源码的方式说明一下，消除许多人的误解。</p>
+<a id="more"></a>
+<p>备注：由于 height 和 measuedHeight 原理也都一样，为了精简语言，就不再重复叙说。</p>
+<h1 id="width-和-measuredWidth-的误解"><a href="#width-和-measuredWidth-的误解" class="headerlink" title="width 和 measuredWidth 的误解"></a>width 和 measuredWidth 的误解</h1><hr>
+<p>先来看看大家误解的点在哪里。很多人包括网上很多资料也都是这么介绍的，初学 Android 时我也曾被这样的言论误导过：</p>
+<blockquote>
+<p>width 表示 View 在屏幕上可显示的区域大小，measuredWidth 表示 View 的实际大小，包括超出屏幕范围外的尺寸；甚至有这样的公式总结到：</p>
+<p>getMeasuredWidth() = visible width + invisible width;</p>
+</blockquote>
+<p>一个简单的例子就足以说明这样的解释是错误的。写一个简单的布局文件：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">TextView</span></span><br><span class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/tv_sample"</span></span><br><span class="line">        <span class="attr">android:layout_width</span>=<span class="string">"tv_sample"</span></span><br><span class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">        <span class="attr">android:text</span>=<span class="string">"This is a sample."</span></span><br><span class="line">        <span class="attr">android:background</span>=<span class="string">"@android:color/darker_gray"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>包含一个宽高自适应的 TextView 控件，在 Activity 中通过下面的代码获取 width 和 measuredWidth 属性值：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onWindowFocusChanged</span><span class="params">(<span class="keyword">boolean</span> hasFocus)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onWindowFocusChanged(hasFocus);</span><br><span class="line">    Log.i(<span class="string">"size"</span>, <span class="string">"The width is "</span> + mSampleTv.getWidth());</span><br><span class="line">    Log.i(<span class="string">"size"</span>, <span class="string">"The measured width is "</span> + mSampleTv.getMeasuredWidth());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果如图：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1491304232.jpg" alt=""></p>
+<p>logcat 控制台打印如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">04-04 16:25:52.191 31669-31669/com.yifeng.samples I/size: The width is 314</span><br><span class="line">04-04 16:25:52.191 31669-31669/com.yifeng.samples I/size: The measured width is 314</span><br></pre></td></tr></table></figure>
+<p>这里所用设备的屏幕尺寸为 1080x1920，足以容纳这个 TextView 的宽度。Log 显示，width 和 measuredWidth 大小相同，均为 314 px。然后修改 android:layout_width 属性值，使其超出屏幕宽度，同时，将文本内容加长一些：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="tag">&lt;<span class="name">TextView</span></span><br><span class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/tv_sample"</span></span><br><span class="line">    <span class="attr">android:layout_width</span>=<span class="string">"2000px"</span></span><br><span class="line">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">    <span class="attr">android:text</span>=<span class="string">"This is a long sample.This is a long sample.This is a long sample.This is a long sample."</span></span><br><span class="line">    <span class="attr">android:background</span>=<span class="string">"@android:color/darker_gray"</span>/&gt;</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>再次运行，效果如图：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1491304242.jpg" alt=""></p>
+<p>显然，文本内容已经超过屏幕宽度，显示到屏幕之外的区域。如果按照前面的言论的话，width 应该为屏幕上显示的宽度，即 1080 px，而 measuredWidth 肯定大于 width。事实真的如此吗，请看 log 日志：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">04-04 16:36:47.329 6974-6974/com.yifeng.samples I/size: The width is 2000</span><br><span class="line">04-04 16:36:47.330 6974-6974/com.yifeng.samples I/size: The measured width is 2000</span><br></pre></td></tr></table></figure>
+<p>width 等于 measuredWidth，都为 2000 px，事与愿违，与我们想象的不一样，前面的言论也就不攻自破。那到底 width 和 measuredWidth 有什么区别呢，我们从源码的角度跟进一下。</p>
+<h1 id="getMeasuredWidth-源码剖析"><a href="#getMeasuredWidth-源码剖析" class="headerlink" title="getMeasuredWidth 源码剖析"></a>getMeasuredWidth 源码剖析</h1><hr>
+<p>先看 getMeasuredWidth() 方法的源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getMeasuredWidth</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> mMeasuredWidth &amp; MEASURED_SIZE_MASK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里有个与运算，其中，MEASURED_SIZE_MASK 是个常量值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public static final int MEASURED_SIZE_MASK = 0x00ffffff;</span><br></pre></td></tr></table></figure>
+<p>换算成二进制是：111111111111111111111111，在与运算中，1 与任何数字进行与运算的结果都取决于对方。所以，mMeasuredWidth 变量值决定了 getMeasuredWidth() 方法的返回值。进一步查看，mMeasuredWidth 的赋值在这里：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setMeasuredDimensionRaw</span><span class="params">(<span class="keyword">int</span> measuredWidth, <span class="keyword">int</span> measuredHeight)</span> </span>&#123;</span><br><span class="line">    mMeasuredWidth = measuredWidth;</span><br><span class="line">    mMeasuredHeight = measuredHeight;</span><br><span class="line"></span><br><span class="line">    mPrivateFlags |= PFLAG_MEASURED_DIMENSION_SET;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但这个方法是私有方法，在 View 类内部调用，在这里：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">setMeasuredDimension</span><span class="params">(<span class="keyword">int</span> measuredWidth, <span class="keyword">int</span> measuredHeight)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">boolean</span> optical = isLayoutModeOptical(<span class="keyword">this</span>);</span><br><span class="line">    <span class="comment">// 只展示核心代码</span></span><br><span class="line">    ...</span><br><span class="line">    setMeasuredDimensionRaw(measuredWidth, measuredHeight);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出，mMeasuredWidth 的赋值，即 getMeasuredWidth() 的取值最终来源于 setMeasuredDimension() 方法调用时传递的参数！在自定义 View 时测量并设置 View 宽高时经常用到。通常在 onMeasure() 方法中设置，可以翻看一下系统中的 TextView、LinearLayout 等方法，都是如此。</p>
+<h1 id="getWidth-源码剖析"><a href="#getWidth-源码剖析" class="headerlink" title="getWidth 源码剖析"></a>getWidth 源码剖析</h1><hr>
+<p>再看 getWidth() 方法的源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getWidth</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> mRight - mLeft;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>mRight、mLeft 变量分别表示 View 相对父容器的左右边缘位置，并且二者的赋值是通过 setFrame() 方法中的参数获取的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">setFrame</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> top, <span class="keyword">int</span> right, <span class="keyword">int</span> bottom)</span> </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">        mLeft = left;</span><br><span class="line">        mTop = top;</span><br><span class="line">        mRight = right;</span><br><span class="line">        mBottom = bottom;</span><br><span class="line">        ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>setFrame() 方法中有这么一句注释，表明该方法的调用来自 layout() 方法：</p>
+<blockquote>
+<p>Assign a size and position to this view.</p>
+<p>This is called from layout.</p>
+</blockquote>
+<p>那么我们再看一下 layout() 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">layout</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> t, <span class="keyword">int</span> r, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">   ... </span><br><span class="line">   <span class="keyword">boolean</span> changed = isLayoutModeOptical(mParent) ?</span><br><span class="line">            setOpticalFrame(l, t, r, b) : setFrame(l, t, r, b);</span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中也确实调用 setFrame() 方法。所以，getWidth() 的取值最终来源于 layout() 方法的调用。通常，layout() 方法在 parent 中被调用，来确定 child views 在父容器中的位置，一般在自定义 ViewGroup 的 onLayout() 方法中调用。</p>
+<h1 id="使用场景小结"><a href="#使用场景小结" class="headerlink" title="使用场景小结"></a>使用场景小结</h1><hr>
+<p>分析完源码，至少能够知道：measuredWidth 值在 View 的 measure 阶段决定的，是通过 setMeasuredDimension() 方法赋值的；width 值在 layout 阶段决定的，是由 layout() 方法决定的。有一点需要注意，通常来讲，View 的 width 和 height 是由 View 本身和 parent 容器共同决定的。</p>
+<p>一般情况下，getWidth() 与 getMeasuredWidth() 的返回值是相同的。在自定义 ViewGroup 时，会在 onLayout() 方法中通过 child.getMeasuredWidth() 方法获取 child views 的原始大小来设置其显示区域（诸如 LinearLayout 之类的系统中的 ViewGroup 都是这么做的）；除此之外，我们都可以通过 getWidth() 方法获取 View 的实际显示宽度。</p>
+
+      
+    </div>
+    
+      <! -- 添加版权信息 -->
+<div class="article-footer-copyright">
+<p>本文由&nbsp;<b>亦枫</b>&nbsp;创作并首发于&nbsp;<b><a href="/index.html" target="_blank" title="亦枫">亦枫的个人博客</a></b>&nbsp;，同步推送微信公众号：安卓笔记侠（NiaoTech）。</a></p>
+ 
+<p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
+ 
+<p>本文标题为: <b><a href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/" target="_blank" title="从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处">从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处</a></b> </p>
+ 
+<p>本文链接为：<b><a href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/" target="_blank" title="从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处">http://yifeng.studio/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/</a></b> </p>
+
+<p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
+</div>
+<! -- 添加版权信息 -->
+    
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/03/30/android-tint/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">从使用到源码，细说 Android 中的 tint 着色器</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="the-difference-between-getWidth-and-getMeasuredWidth" data-title="从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处" data-url="http://yifeng.studio/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"yifengzone"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 亦枫
+    	</div>
+      <div class="footer-left">
+        &nbsp;&copy; 
+        <span id="busuanzi_container_site_pv">
+          本站访问量<span id="busuanzi_value_site_pv"></span>次
+        </span>
+        <span id="busuanzi_container_site_uv">
+          访客数<span id="busuanzi_value_site_uv"></span>人
+        </span>
+      </div>
+      	<div class="footer-right">
+      		Theme of <a href="https://github.com/Mike-bel/hexo-theme-yilia-optimization" target="_blank">yilia-opti</a>, by YiFeng
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: '/'
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-83125745-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script>
+	(function(){
+		document.write('<scr'+'ipt type="text/javascript" src="'+document.location.protocol+'//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">'+'</sc'+'ript>');
+	})();
+</script>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

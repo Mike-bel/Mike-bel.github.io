@@ -6,20 +6,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>从使用到源码，细说 Android 中的 tint 着色器 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="自 API 21 （Android M）开始，Android SDK 引入 tint 着色器，可以随意改变安卓项目中图标或者 View 背景的颜色，一定程度上可以减少同一个样式不同颜色图标的数量，从而起到 Apk 瘦身的作用。不过使用 tint 存在一定的兼容性问题，且听本文慢慢说来。">
+  <meta name="description" content="自 API 21 （Android L）开始，Android SDK 引入 tint 着色器，可以随意改变安卓项目中图标或者 View 背景的颜色，一定程度上可以减少同一个样式不同颜色图标的数量，从而起到 Apk 瘦身的作用。不过使用 tint 存在一定的兼容性问题，且听本文慢慢说来。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从使用到源码，细说 Android 中的 tint 着色器">
 <meta property="og:url" content="http://yifeng.studio/2017/03/30/android-tint/index.html">
 <meta property="og:site_name" content="YiFeng's Zone">
-<meta property="og:description" content="自 API 21 （Android M）开始，Android SDK 引入 tint 着色器，可以随意改变安卓项目中图标或者 View 背景的颜色，一定程度上可以减少同一个样式不同颜色图标的数量，从而起到 Apk 瘦身的作用。不过使用 tint 存在一定的兼容性问题，且听本文慢慢说来。">
+<meta property="og:description" content="自 API 21 （Android L）开始，Android SDK 引入 tint 着色器，可以随意改变安卓项目中图标或者 View 背景的颜色，一定程度上可以减少同一个样式不同颜色图标的数量，从而起到 Apk 瘦身的作用。不过使用 tint 存在一定的兼容性问题，且听本文慢慢说来。">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1490743313.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1490824929.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1490824937.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1490826805.gif">
-<meta property="og:updated_time" content="2017-03-29T23:54:29.000Z">
+<meta property="og:updated_time" content="2017-04-03T14:18:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从使用到源码，细说 Android 中的 tint 着色器">
-<meta name="twitter:description" content="自 API 21 （Android M）开始，Android SDK 引入 tint 着色器，可以随意改变安卓项目中图标或者 View 背景的颜色，一定程度上可以减少同一个样式不同颜色图标的数量，从而起到 Apk 瘦身的作用。不过使用 tint 存在一定的兼容性问题，且听本文慢慢说来。">
+<meta name="twitter:description" content="自 API 21 （Android L）开始，Android SDK 引入 tint 着色器，可以随意改变安卓项目中图标或者 View 背景的颜色，一定程度上可以减少同一个样式不同颜色图标的数量，从而起到 Apk 瘦身的作用。不过使用 tint 存在一定的兼容性问题，且听本文慢慢说来。">
 <meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1490743313.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
@@ -253,7 +253,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>自 API 21 （Android M）开始，Android SDK 引入 tint 着色器，可以随意改变安卓项目中图标或者 View 背景的颜色，一定程度上可以减少同一个样式不同颜色图标的数量，从而起到 Apk 瘦身的作用。不过使用 tint 存在一定的兼容性问题，且听本文慢慢说来。</p>
+        <p>自 API 21 （Android L）开始，Android SDK 引入 tint 着色器，可以随意改变安卓项目中图标或者 View 背景的颜色，一定程度上可以减少同一个样式不同颜色图标的数量，从而起到 Apk 瘦身的作用。不过使用 tint 存在一定的兼容性问题，且听本文慢慢说来。</p>
 <a id="more"></a>
 <h1 id="xml-中的-tint-和-tintMode-属性"><a href="#xml-中的-tint-和-tintMode-属性" class="headerlink" title="xml 中的 tint 和 tintMode 属性"></a>xml 中的 tint 和 tintMode 属性</h1><hr>
 <ul>
@@ -348,6 +348,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处
+        
+      </div>
+    </a>
   
   
     <a href="/2017/03/26/android-bottomnavigationview/" id="article-nav-older" class="article-nav-link-wrap">
