@@ -14,7 +14,7 @@
 <meta property="og:description" content="关于 Material Design 相关的控件，之前整理了一个系列文章，并建立一个 MDSamples 工程，使用代码和文字解说配合的方式逐一说明。截止目前，大致写有八九篇文章。期间，由于一些工作变动和琐事，停了一些时间。现在，有点时间，准备续上。">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1490533348.gif">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1490533362.gif">
-<meta property="og:updated_time" content="2017-03-27T08:08:30.000Z">
+<meta property="og:updated_time" content="2017-04-22T05:12:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android BottomNavigationView，底部导航栏的简单实现">
 <meta name="twitter:description" content="关于 Material Design 相关的控件，之前整理了一个系列文章，并建立一个 MDSamples 工程，使用代码和文字解说配合的方式逐一说明。截止目前，大致写有八九篇文章。期间，由于一些工作变动和琐事，停了一些时间。现在，有点时间，准备续上。">
@@ -288,7 +288,7 @@
 <p>通过 setOnNavigationItemSelectedListener() 方法可以监听不同子菜单的选中切换事件。但是，竟然没有一个简便的方法直接设置选中某个子菜单，就像 check(id) 这样。不知是不是 BottomNavigationView 控件设计时的遗漏。目前能够想到的一个做法就是获取 menu item 对象，利用 performClick() 模拟点击事件，如：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">BottomNavigationView view = (BottomNavigationView) findViewById(R.id.bnv_menu);</span><br><span class="line">view.findViewById(R.id.action_explore).performClick();</span><br></pre></td></tr></table></figure>
 <p>以上便是 BottomNavigationView 的所有内容，按照 Android 上的 Bottom Navigation 设计规范定制而成。可以看出，使用起来还是很简单的。同时，可定制性也非常有限。比如，想在底部某个子菜单添加一个小红点提示的视图，就有些难以处理。如果使用 RadioGroup 实现导航栏的话，就灵活一些。</p>
-<p>附：GitHub 站有一个 <a href="https://github.com/RoyWallace/BottomNavigationBar" target="_blank" rel="external">BottomNavigationBar</a> 开源项目，专门针对 Material Design 风格的 Bottom Navigation 量身定制的，可供参考。</p>
+<p>附：GitHub 站有两个开源项目： <a href="https://github.com/RoyWallace/BottomNavigationBar" target="_blank" rel="external">BottomNavigationBar</a> 和<a href="https://github.com/ittianyu/BottomNavigationViewEx" target="_blank" rel="external">BottomNavigationViewEx</a>，专门针对 Material Design 风格的 Bottom Navigation 量身定制的，可供参考。</p>
 
       
     </div>

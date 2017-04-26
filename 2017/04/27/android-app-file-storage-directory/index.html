@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Android 应用中，数据存储目录的相关知识 | YiFeng&#39;s Zone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本文导读：在安卓手机上，安装或者卸载一个 App，会涉及到本地存储系统的哪些目录结构变化？作为开发人员，如何恰当地存储应用相关的信息？相关存储目录的生命周期、访问方式和访问权限又是怎样的呢？这些问题，希望读完这篇文章，你能够有所收获。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 应用中，数据存储目录的相关知识">
+<meta property="og:url" content="http://yifeng.studio/2017/04/27/android-app-file-storage-directory/index.html">
+<meta property="og:site_name" content="YiFeng's Zone">
+<meta property="og:description" content="本文导读：在安卓手机上，安装或者卸载一个 App，会涉及到本地存储系统的哪些目录结构变化？作为开发人员，如何恰当地存储应用相关的信息？相关存储目录的生命周期、访问方式和访问权限又是怎样的呢？这些问题，希望读完这篇文章，你能够有所收获。">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1493214455.jpg">
+<meta property="og:updated_time" content="2017-04-26T23:33:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 应用中，数据存储目录的相关知识">
+<meta name="twitter:description" content="本文导读：在安卓手机上，安装或者卸载一个 App，会涉及到本地存储系统的哪些目录结构变化？作为开发人员，如何恰当地存储应用相关的信息？相关存储目录的生命周期、访问方式和访问权限又是怎样的呢？这些问题，希望读完这篇文章，你能够有所收获。">
+<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1493214455.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+  
+  
+    
+      <link rel="icon" href="/favicon.png">
+    
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+				
+					<img lazy-src="/assets/imgSite/avatar.png" class="js-avatar">
+				
+			
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">亦枫</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">翻墙推荐：http://buytizi.com/?r=225bb619613ec09e</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">首页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+					        
+								<a class="mail" target="_blank" href="mailto:fengleegg@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 16.67px;">Android Studio</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/Hexo/" style="font-size: 13.33px;">Hexo</a> <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Weex/" style="font-size: 13.33px;">Weex</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/guolin_blog">郭霖</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/lmj623565791">鸿洋</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/singwhatiwanna">任玉刚</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.jcodecraeer.com/plus/list.php?tid=16">泡在网上的日子</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">长期拼搏在一线开发的安卓程序猿一枚，热衷于技术，沉浸于段子，微信公众号：技术鸟（微信号：NiaoTech）。If you can&#39;t fly then run, can&#39;t run then walk, can&#39;t walk then crawl, keep moving forward.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">亦枫</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img lazy-src="null/assets/imgSite/avatar.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">亦枫</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">翻墙推荐：http://buytizi.com/?r=225bb619613ec09e</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">首页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/Mike-bel" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/3137408085/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+			        
+						<a class="mail" target="_blank" href="mailto:fengleegg@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-android-app-file-storage-directory" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/04/27/android-app-file-storage-directory/" class="article-date">
+  	<time datetime="2017-04-26T23:31:45.000Z" itemprop="datePublished">2017-04-27</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android 应用中，数据存储目录的相关知识
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Android/">Android</a>
+	</div>
+
+
+
+        
+            <div class="bookicon"></div>
+            <div class="article-hit">
+              <span id="busuanzi_container_page_pv">
+                    热度 <span id="busuanzi_value_page_pv"></span>℃</span>
+            </div>
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>本文导读：</strong>在安卓手机上，安装或者卸载一个 App，会涉及到本地存储系统的哪些目录结构变化？作为开发人员，如何恰当地存储应用相关的信息？相关存储目录的生命周期、访问方式和访问权限又是怎样的呢？这些问题，希望读完这篇文章，你能够有所收获。</p>
+<a id="more"></a>
+<h1 id="内部存储空间中的应用私有目录"><a href="#内部存储空间中的应用私有目录" class="headerlink" title="内部存储空间中的应用私有目录"></a>内部存储空间中的应用私有目录</h1><hr>
+<p>对于设备中每一个安装的 App，系统都会在内部存储空间的 data/data 目录下以应用包名为名字自动创建与之对应的文件夹。这个文件夹用于 App 中的 WebView 缓存页面信息，SharedPreferences 和 SQLiteDatabase 持久化应用相关数据等。</p>
+<p>对于没有 Root 过的手机，普通用户是无法查看 data/data 目录内容。不过开发人员可以使用模拟器调试应用，并通过 <a href="https://developer.android.com/studio/profile/ddms.html" target="_blank" rel="external">DDMS</a>（Dalvik Debug Monitor Server）提供的 File Explorer 工具查看模拟器设备的存储空间。</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1493214455.jpg" alt=""></p>
+<p>操作路径：</p>
+<p>第一步：Android Studio –&gt; Tools –&gt; Android –&gt; Android Device Monitor；</p>
+<p>第二步：Window –&gt; Show View –&gt; Android –&gt; File Explorer。</p>
+<p>Android SDK 提供有如下方法可以获取并操作内部存储空间下应用私有目录文件的方，都位于 Application Context 中，供开发者直接调用：</p>
+<ul>
+<li><p><strong>getFilesDir()</strong>：</p>
+</li>
+<li><p><strong>getCacheDir()</strong>：</p>
+</li>
+<li><p><strong>deleteFile()</strong></p>
+</li>
+<li><p><strong>fileList()</strong></p>
+</li>
+</ul>
+<p>等等，也可以通过 Environment 类访问：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Environment.getDataDirectory();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：当用户卸载 App 时，系统自动删除 data/data 目录下对应包名的文件夹及其内容。</p>
+</blockquote>
+<h1 id="外部存储空间中的应用私有目录"><a href="#外部存储空间中的应用私有目录" class="headerlink" title="外部存储空间中的应用私有目录"></a>外部存储空间中的应用私有目录</h1><hr>
+<p>考虑内部存储空间容量有限，普通用户不能直接直观地查看目录文件等其他原因，Android 在外部存储空间中也提供有特殊目录供应用存放私有文件，文件路径为：</p>
+<p>/storage/emulated/0/Android/data/app package name</p>
+<p><strong>备注：</strong>一般设备都有内置 SD 卡，同时也提供外部 SD 卡拓展，可能对应路径的目录名有所差异。</p>
+<p>值得注意的是，与内部存储空间的应用私有目录不同的是：</p>
+<p>第一，默认情况下，系统并不会自动创建外部存储空间的应用私有目录。只有在应用需要的时候，开发人员通过 SDK 提供的 API 创建该目录文件夹和操作文件夹内容。</p>
+<p>第二，自 Android 7.0 开始，系统对应用私有目录的访问权限做进一步限制，其他 App 无法直接通过 file:// 这种形式的 Uri 直接读写该目录下的文件内容，而是通过 FileProvider 访问。</p>
+<p>第三，宿主 App 可以直接读写内部存储空间中的应用私有目录；而在 4.4 版本开始，宿主 App 才可以直接读写外部存储空间中的应用私有目录，使开发人员无需在 Manifest 文件中申请文件外部存储空间的读写权限。</p>
+<p>而相同点在于：同属于应用私有目录，当用户卸载 App 时，系统也会自动删除外部存储空间下的对应 App 私有目录文件夹及其内容。</p>
+<p>同样，Android SDK 中也提供有便捷的 API 供开发人员直接操作外部存储空间下的应用私有目录：</p>
+<ul>
+<li><p><strong>getExternalFilesDir()</strong></p>
+</li>
+<li><p><strong>getExternalCacheDir()</strong></p>
+</li>
+</ul>
+<p>等等，当然，也可以通过 Environment 类间接操作，只不过需要向用户申请操作权限：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Environment.getExternalStorageDirectory();</span><br></pre></td></tr></table></figure>
+<p>类似于 File 和 Cache 默认目录，开发人员也可以在应用私有目录中创建属于自己的自定义目录，方便于分类存储应用相关文件。</p>
+<p>值得注意的一点是，对于外部存储空间下的应用私有目录文件，由于普通用户可以自由修改和删除，开发人员在使用时，一定要做好判空处理和异常捕获，防止应用崩溃退出！</p>
+<h1 id="外部存储空间中的公共目录"><a href="#外部存储空间中的公共目录" class="headerlink" title="外部存储空间中的公共目录"></a>外部存储空间中的公共目录</h1><hr>
+<p>通常来说，应用涉及到的持久化数据分为两类：应用相关数据和应用无关数据。</p>
+<p>前者是指专供宿主 App 使用的数据信息，比如一些应用的配置信息，数据库信息，缓存文件等。当应用被卸载，这些信息也应该被随之删除，避免存储空间产生不必要的占用。</p>
+<p>相对而言，后者更偏向于这类信息：当应用被卸载，用户仍然希望保留于设备当中的信息。常见如，拍照类应用的图片文件，用户是使用浏览器手动下载的文件等。</p>
+<p>显然，无论是内部存储空间，还是外部储存空间，上述两个应用私有目录由于其特有的生命周期（随着应用卸载而自动清除）只适合存储应用相关数据。</p>
+<p>或者从访问权限上来说，应用无关数据应该是宿主应用希望与其他应用共享这些数据的，应该存放在外部存储空间的公共目录文件夹下。</p>
+<p>外部存储空间默认分类过一些公共目录，同时通过 Environment 类提供的方法可以获取相应目录的绝对路径，通过不同的 type 类型获取不同公共目录路径地址：</p>
+<p><strong>Environment.getExternalStoragePublicDirectory(String type)</strong></p>
+<p>Envinonment 类提供诸多 type 参数的常量，比如：</p>
+<ul>
+<li><p><strong>DIRECTORY_MUSIC</strong>：Music</p>
+</li>
+<li><p><strong>DIRECTORY_MOVIES</strong>：Movies</p>
+</li>
+<li><p><strong>DIRECTORY_PICTURES</strong>：Pictures</p>
+</li>
+<li><p><strong>DIRECTORY_DOWNLOADS</strong>：Download</p>
+</li>
+</ul>
+<p>等等，以第一个常量为例，音乐类别的公共目录绝对路径为：/storage/emulated/0/Music。如果你使用文件管理器打开设备的外部存储空间的话，均可以看到这些公共目录文件夹。</p>
+<p>面对如此诸多的默认类别，开发人员在保存自己应用的公共文件时，也要养成良好的习惯，将要保存的数据分门别类地保存在不同公共目录下。当然，你也可以在公共目录下再次创建属于自己应用的目录，便于管理。</p>
+<blockquote>
+<p>注意：访问外部存储空间时记得申请读写权限！</p>
+</blockquote>
+<h1 id="外部存储空间中的其他目录"><a href="#外部存储空间中的其他目录" class="headerlink" title="外部存储空间中的其他目录"></a>外部存储空间中的其他目录</h1><hr>
+<p>一般来说，利用两种应用私有目录和公共目录便能够存储应用中需要保存的数据和文件。如果这些还不够的话，那一定是你的开发姿势不对。在 Code Review 的前提下，如果还是不够的话，还可以在外部存储空间自由创建其他目录，通过这个方式获取外部存储空间的绝对路径，然后操作文件：</p>
+<p>Environment.getExternalStorageDirectory()</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><hr>
+<p>使用应用私有目录保存应用相关数据，使用公共目录保存应用无关数据（共享数据）。无论哪种情况，都需要做好数据分类保存，便于清除等统一管理。随便打开手机上的几个应用，不难发现，很多应用都包含一个清理缓存的功能。事实上，开发人员清理的就是应用相关数据，也就是应用私有目录下的文件。</p>
+<p>考虑到外部存储空间上的内容可能被用户手动删除，或者卸载拓展 SD 卡等不可控因素，操作前记得使用 Environment 类提供的 API 方法判断容量是否充足、文件是否存在等情况，做好异常捕获，减少应用崩溃率。相信这一定是一个良好的习惯。</p>
+<p>更多存储选项和存储框架，参考开发者官网：</p>
+<ul>
+<li><p><a href="https://developer.android.com/guide/topics/data/data-storage.html" target="_blank" rel="external">API Guides／Data Storage</a></p>
+</li>
+<li><p><a href="https://developer.android.com/guide/topics/providers/document-provider.html" target="_blank" rel="external">API Guides／Provider</a></p>
+</li>
+</ul>
+
+      
+    </div>
+    
+      <! -- 添加版权信息 -->
+<div class="article-footer-copyright">
+<p>本文由&nbsp;<b>亦枫</b>&nbsp;创作并首发于&nbsp;<b><a href="/index.html" target="_blank" title="亦枫">亦枫的个人博客</a></b>&nbsp;，同步推送微信公众号：安卓笔记侠（NiaoTech）。</a></p>
+ 
+<p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
+ 
+<p>本文标题为: <b><a href="/2017/04/27/android-app-file-storage-directory/" target="_blank" title="Android 应用中，数据存储目录的相关知识">Android 应用中，数据存储目录的相关知识</a></b> </p>
+ 
+<p>本文链接为：<b><a href="/2017/04/27/android-app-file-storage-directory/" target="_blank" title="Android 应用中，数据存储目录的相关知识">http://yifeng.studio/2017/04/27/android-app-file-storage-directory/</a></b> </p>
+
+<p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
+</div>
+<! -- 添加版权信息 -->
+    
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/04/18/android-theme-appcompat-color-attrs/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android Theme.AppCompat 中，你应该熟悉的颜色属性</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="android-app-file-storage-directory" data-title="Android 应用中，数据存储目录的相关知识" data-url="http://yifeng.studio/2017/04/27/android-app-file-storage-directory/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"yifengzone"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 亦枫
+    	</div>
+      <div class="footer-left">
+        &nbsp;&copy; 
+        <span id="busuanzi_container_site_pv">
+          本站访问量<span id="busuanzi_value_site_pv"></span>次
+        </span>
+        <span id="busuanzi_container_site_uv">
+          访客数<span id="busuanzi_value_site_uv"></span>人
+        </span>
+      </div>
+      	<div class="footer-right">
+      		Theme of <a href="https://github.com/Mike-bel/hexo-theme-yilia-optimization" target="_blank">yilia-opti</a>, by YiFeng
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: '/'
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-83125745-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script>
+	(function(){
+		document.write('<scr'+'ipt type="text/javascript" src="'+document.location.protocol+'//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">'+'</sc'+'ript>');
+	})();
+</script>
+
+
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
