@@ -226,90 +226,6 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>由于 Android 7.0 或更高版本的系统在国内手机市场上的占比不是很高，很多 Android 开发人员并没有做 7.0 适配工作，同时测试人员也容易忽视这方面的兼容问题。这导致 7.0 及以上版本的手机用户在使用到应用部分功能时可能出现 App 崩溃闪退。其中，大部分原因都是由项目中使用到 <strong>file://</strong> 类型的 URI 所引发的。本文我们便来一探究竟。</p>
-<h1 id="Android-7-0-权限变更"><a href="#Android-7-0-权限变更" class="headerlink" title="Android 7.0 权限变更"></a>Android 7.0 权限变更</h1><hr>
-<p>为了提高私有目录的安全性，防止应用信息的泄漏，从 Android 7.0 开始，应用私有目录的访问权限被做限制。具体表现为，开发人员不能够再简单地通过 <strong>file://</strong> URI 访问其他应用的私有目录文件或者让其他应用访问自己的私有目录文件。</p>
-<p><strong>备注：</strong>如果你对应用私有目录不太清楚的话，可以阅读我的这篇文章：<a href="http://yifeng.studio/2017/04/27/android-app-file-storage-directory/">了解 Android 应用的文件存储目录，掌握持久化数据的正确姿势</a>。</p>
-<p>同时，也是从 7.0 开始，Android SDK 中的 <a href="https://developer.android.com/reference/android/os/StrictMode.html" target="_blank" rel="external">StrictMode</a> 策略禁止开发人员在应用外部公开 <strong>file://</strong> URI。具体表现为，当我们在应用中使用包含 <strong>file://</strong> URI 的 Intent 离开自己的应用时，程序会发生故障。</p>
-<p>开发中，如果我们在使用 <strong>file://</strong> URI 时忽视了这两条规定，将导致用户在 7.0 及更高版本系统的设备中使用到相关功能时，出现 <strong>FileUriExposedException</strong> 异常，导致应用出现崩溃闪退问题。而这两个过程的替代解决方案便是使用 <code>FileProvider</code>。</p>
-<h1 id="FileProvider"><a href="#FileProvider" class="headerlink" title="FileProvider"></a>FileProvider</h1><hr>
-<p>作为四大组件之一的 <code>ContentProvider</code>，一直扮演着应用间共享资源的角色。这里我们要使用到的 <code>FileProvider</code>，就是 <code>ContentProvider</code> 的一个特殊子类，帮助我们将访问受限的 <strong>file://</strong> URI 转化为可以授权共享的 <strong>content://</strong> URI。</p>
-<p><strong>第一步，注册一个 FileProvider</strong></p>
-<p>作为系统四大组件之一的 ContentProvider，其子类FileProvider，也同样需要使用 <provider> 元素在 Manifest 文件中添加注册信息，并按照要求设置相关属性值。</provider></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">application</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="tag">&lt;<span class="name">provider</span></span><br><span class="line">        <span class="attr">android:name</span>=<span class="string">"android.support.v4.content.FileProvider"</span></span><br><span class="line">        <span class="attr">android:authorities</span>=<span class="string">"$&#123;applicationId&#125;.yourname"</span></span><br><span class="line">        <span class="attr">android:exported</span>=<span class="string">"false"</span></span><br><span class="line">        <span class="attr">android:grantUriPermissions</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">        ...</span><br><span class="line">    <span class="tag">&lt;/<span class="name">provider</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>其中，<code>android:authorities</code> 属性值是一个由 build.gradle 文件中的 <strong>applicationId</strong> 值和自定义的名称组成的 Uri 字符串（这样写是约定俗成的）。其他属性值使用如上固定值即可。</p>
-<p><strong>第二步，添加共享目录</strong></p>
-<p>在 res/xml 目录下新建一个 xml 文件，用于存放应用需要共享的目录文件。这个 xml 文件的内容类似这样：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">paths</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">files-path</span> <span class="attr">name</span>=<span class="string">"my_images"</span> <span class="attr">path</span>=<span class="string">"images/"</span>/&gt;</span></span><br><span class="line">    ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">paths</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><path></path> 元素必须包含一到多个子元素。这些子元素用于指定共享文件的目录路径，必须是这些元素之一：</p>
-<ul>
-<li><p><code>&lt;files-path&gt;</code>：内部存储空间应用私有目录下的 files/ 目录，等同于 <code>Context.getFilesDir()</code> 所获取的目录路径；</p>
-</li>
-<li><p><code>&lt;cache-path&gt;</code>：内部存储空间应用私有目录下的 cache/ 目录，等同于 <code>Context.getCacheDir()</code> 所获取的目录路径；</p>
-</li>
-<li><p><code>&lt;external-path&gt;</code>：外部存储空间根目录，等同于 <code>Environment.getExternalStorageDirectory()</code>  所获取的目录路径；</p>
-</li>
-<li><p><code>&lt;external-files-path&gt;</code>：外部存储空间应用私有目录下的 files/ 目录，等同于 <code>Context.getExternalFilesDir(null)</code> 所获取的目录路径；</p>
-</li>
-<li><p><code>&lt;external-cache-path&gt;</code>：外部存储空间应用私有目录下的 cache/ 目录，等同于 Context.getExternalCacheDir()；</p>
-</li>
-</ul>
-<p>可以看出，这五种子元素基本涵盖内外存储空间所有目录路径，包含应用私有目录。同时，每个子元素都拥有 <strong>name</strong> 和 <strong>path</strong> 两个属性。</p>
-<p>其中，path 属性用于指定当前子元素所代表目录下需要共享的子目录名称。注意：path 属性值不能使用具体的独立文件名，只能是目录名。</p>
-<p>而 name 属性用于给 path 属性所指定的子目录名称取一个别名。后续生成 <strong>content://</strong> URI 时，会使用这个别名代替真实目录名。这样做的目的，很显然是为了提高安全性。</p>
-<p>如果我们需要分享的文件位于同级别目录下不同的子目录中，就需要添加多个子元素逐一指定要分享的文件目录，或者共享他们通用的父目录也行。</p>
-<p>添加完共享目录后，再在 <code>&lt;provider&gt;</code> 元素中使用 <code>&lt;meta-data&gt;</code> 元素将 res/xml 中的 path 文件与注册的 FileProvider 链接起来：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">provider</span></span><br><span class="line">    <span class="attr">android:name</span>=<span class="string">"android.support.v4.content.FileProvider"</span></span><br><span class="line">    <span class="attr">android:authorities</span>=<span class="string">"$&#123;applicationId&#125;.yourname"</span></span><br><span class="line">    <span class="attr">android:exported</span>=<span class="string">"false"</span></span><br><span class="line">    <span class="attr">android:grantUriPermissions</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta-data</span></span><br><span class="line">        <span class="attr">android:name</span>=<span class="string">"android.support.FILE_PROVIDER_PATHS"</span></span><br><span class="line">        <span class="attr">android:resource</span>=<span class="string">"@xml/yourfilename"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">provider</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><strong>第三步，生成 Content URI</strong></p>
-<p>在 Android 7.0 出现之前，我们通常使用 <code>Uri.fromFile()</code> 方法生成一个 File URI。这里，我们需要使用 <code>FileProvider</code> 类提供的公有静态方法 <code>getUriForFile</code> 生成 Content URI。比如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Uri contentUri = FileProvider.getUriForFile(<span class="keyword">this</span>,</span><br><span class="line">                BuildConfig.APPLICATION_ID + <span class="string">".myprovider"</span>, myFile);</span><br></pre></td></tr></table></figure>
-<p>需要传递三个参数。第二个参数便是 Manifest 文件中注册 FileProvider 时设置的 authorities 属性值，第三个参数为要共享的文件，并且这个文件一定位于第二步我们在 path 文件中添加的子目录里面。</p>
-<p>举个例子：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">String filePath = Environment.getExternalStorageDirectory() + <span class="string">"/images/"</span>+System.currentTimeMillis()+<span class="string">".jpg"</span>;</span><br><span class="line">File outputFile = <span class="keyword">new</span> File(filePath);</span><br><span class="line"><span class="keyword">if</span> (!outputFile.getParentFile().exists()) &#123;</span><br><span class="line">    outputFile.getParentFile().mkdir();</span><br><span class="line">&#125;</span><br><span class="line">Uri contentUri = FileProvider.getUriForFile(<span class="keyword">this</span>,</span><br><span class="line">        BuildConfig.APPLICATION_ID + <span class="string">".myprovider"</span>, outputFile);</span><br></pre></td></tr></table></figure>
-<p>生成的 Content URI 是这样的：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">content://com.yifeng.samples.myprovider/my_images/1493715330339.jpg</span><br></pre></td></tr></table></figure>
-<p>其中，构成 URI 的 host 部分为 <code>&lt;provider&gt;</code> 元素的 authorities 属性值（applicationId ＋ customname），path 片段 my_images 为 res/xml 文件中指定的子目录别名（真实目录名为：images）。</p>
-<p><strong>第四步，授予 Content URI 访问权限</strong></p>
-<p>生成 Content URI 对象后，需要对其授权访问权限。授权方式有两种：</p>
-<p>第一种方式，使用 Context 提供的 <code>grantUriPermission(package, Uri, mode_flags)</code> 方法向其他应用授权访问 URI 对象。三个参数分别表示授权访问 URI 对象的其他应用包名，授权访问的 Uri 对象，和授权类型。其中，授权类型为 Intent 类提供的读写类型常量：</p>
-<ul>
-<li><p>FLAG_GRANT_READ_URI_PERMISSION</p>
-</li>
-<li><p>FLAG_GRANT_WRITE_URI_PERMISSION</p>
-</li>
-</ul>
-<p>或者二者同时授权。这种形式的授权方式，权限有效期截止至发生设备重启或者手动调用 <code>revokeUriPermission()</code> 方法撤销授权时。</p>
-<p>第二种方式，配合 Intent 使用。通过 <code>setData()</code> 方法向 intent 对象添加 Content URI。然后使用 <code>setFlags()</code> 或者 <code>addFlags()</code> 方法设置读写权限，可选常量值同上。这种形式的授权方式，权限有效期截止至其它应用所处的堆栈销毁，并且一旦授权给某一个组件后，该应用的其它组件拥有相同的访问权限。</p>
-<p><strong>第五步，提供 Content URI 给其它应用</strong></p>
-<p>拥有授予权限的 Content URI 后，便可以通过 <code>startActivity()</code> 或者 <code>setResult()</code> 方法启动其他应用并传递授权过的 Content URI 数据。当然，也有其他方式提供服务。</p>
-<p>如果你需要一次性传递多个 URI 对象，可以使用 intent 对象提供的 <code>setClipData()</code> 方法，并且 <code>setFlags()</code> 方法设置的权限适用于所有 Content URIs。</p>
-<h1 id="常见使用场景"><a href="#常见使用场景" class="headerlink" title="常见使用场景"></a>常见使用场景</h1><hr>
-<p>前面介绍的内容都是理论部分，在 <a href="https://developer.android.com/reference/android/support/v4/content/FileProvider.html" target="_blank" rel="external">开发者官方 FileProvider 部分</a> 都有所介绍。接下来我们看看，实际开发一款应用的过程中，会经常遇见哪些 FileProvider 的使用场景。</p>
-<p><strong>自动安装文件</strong></p>
-<p>版本更新完成时打开新版本 apk 文件实现自动安装的功能，应该是最常见的使用场景，也是每个应用必备功能之一。常见操作为，通知栏显示下载新版本完毕，用户点击或者监听下载过程自动打开新版本 apk 文件。适配 Android 7.0 版本之前，我们代码可能是这样：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">File apkFile = <span class="keyword">new</span> File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), <span class="string">"app_sample.apk"</span>);</span><br><span class="line"></span><br><span class="line">Intent installIntent = <span class="keyword">new</span> Intent(Intent.ACTION_VIEW);</span><br><span class="line">installIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</span><br><span class="line">installIntent.setDataAndType(Uri.fromFile(apkFile), <span class="string">"application/vnd.android.package-archive"</span>);</span><br><span class="line">startActivity(installIntent);</span><br></pre></td></tr></table></figure>
-<p>现在为了适配 7.0 及以上版本的系统，必须使用 Content URI 代替 File URI。</p>
-<p>在 res/xml 目录下新建一个 file_provider_paths.xml 文件（文件名自由定义），并添加子目录路径信息：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">paths</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">external-files-path</span> <span class="attr">name</span>=<span class="string">"my_download"</span> <span class="attr">path</span>=<span class="string">"Download"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">paths</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>然后在 Manifest 文件中注册 FileProvider 对象，并链接上面的 path 路径文件：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">provider</span></span><br><span class="line">    <span class="attr">android:name</span>=<span class="string">"android.support.v4.content.FileProvider"</span></span><br><span class="line">    <span class="attr">android:authorities</span>=<span class="string">"com.yifeng.samples.myprovider"</span></span><br><span class="line">    <span class="attr">android:exported</span>=<span class="string">"false"</span></span><br><span class="line">    <span class="attr">android:grantUriPermissions</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta-data</span></span><br><span class="line">        <span class="attr">android:name</span>=<span class="string">"android.support.FILE_PROVIDER_PATHS"</span></span><br><span class="line">        <span class="attr">android:resource</span>=<span class="string">"@xml/file_provider_paths"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">provider</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>修改 java 代码，根据 File 对象生成 Content URI 对象，并授权访问：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">File apkFile = <span class="keyword">new</span> File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), <span class="string">"app_sample.apk"</span>);</span><br><span class="line">Uri apkUri = FileProvider.getUriForFile(<span class="keyword">this</span>,</span><br><span class="line">        BuildConfig.APPLICATION_ID+<span class="string">".myprovider"</span>, apkFile);</span><br><span class="line"></span><br><span class="line">Intent installIntent = <span class="keyword">new</span> Intent(Intent.ACTION_VIEW);</span><br><span class="line">installIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</span><br><span class="line">installIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);</span><br><span class="line">installIntent.setDataAndType(apkUri, <span class="string">"application/vnd.android.package-archive"</span>);</span><br><span class="line">startActivity(installIntent);</span><br></pre></td></tr></table></figure>
-<p>如此这般，便完成了应用中调用系统功能打开 apk 文件的 7.0 适配工作。</p>
-<p><strong>调用系统拍照</strong></p>
-<p>调用系统拍照功能时也需要传递一个 Uri 对象，用于保存图片至指定目录，这里也需要适配 7.0 版本。其他步骤不再赘述，核心 java 代码如下（路径不同，注意添加 res/xml 中的 path 文件子目录）：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">String filePath = Environment.getExternalStorageDirectory() + <span class="string">"/images/"</span>+System.currentTimeMillis()+<span class="string">".jpg"</span>;</span><br><span class="line">File outputFile = <span class="keyword">new</span> File(filePath);</span><br><span class="line"><span class="keyword">if</span> (!outputFile.getParentFile().exists()) &#123;</span><br><span class="line">    outputFile.getParentFile().mkdir();</span><br><span class="line">&#125;</span><br><span class="line">Uri contentUri = FileProvider.getUriForFile(<span class="keyword">this</span>,</span><br><span class="line">        BuildConfig.APPLICATION_ID + <span class="string">".myprovider"</span>, outputFile);</span><br><span class="line"></span><br><span class="line">Intent intent = <span class="keyword">new</span> Intent(MediaStore.ACTION_IMAGE_CAPTURE);</span><br><span class="line">intent.putExtra(MediaStore.EXTRA_OUTPUT, contentUri);</span><br><span class="line">startActivityForResult(intent, REQUEST_TAKE_PICTURE);</span><br></pre></td></tr></table></figure>
-<p><strong>调用系统裁剪</strong></p>
-<p>调用系统裁剪的过程中涉及到两个 Uri 对象：inputUri 和 outputUri，较为复杂一些。通常，调用系统裁剪的来源为调用系统拍照或选择系统相册。前者返回的是一个 File URI 对象，后者返回的是一个 Content URI 对象。作为裁剪源，我们要做的就是对其做进一步处理。但是不能像上面那样使用 <code>getUriForFile()</code> 方法，这个并不难理解，因为如果是选择系统相册所得的图片，本身也不一定属于我们自己的应用。正确处理方式是这样：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> Uri <span class="title">getImageContentUri</span><span class="params">(String path)</span></span>&#123;</span><br><span class="line">    Cursor cursor = getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,</span><br><span class="line">            <span class="keyword">new</span> String[]&#123;MediaStore.Images.Media._ID&#125;,</span><br><span class="line">            MediaStore.Images.Media.DATA + <span class="string">"=? "</span>,</span><br><span class="line">            <span class="keyword">new</span> String[]&#123;path&#125;, <span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">if</span> (cursor != <span class="keyword">null</span> &amp;&amp; cursor.moveToFirst()) &#123;</span><br><span class="line">        <span class="keyword">int</span> id = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.Media._ID));</span><br><span class="line">        Uri baseUri = Uri.parse(<span class="string">"content://media/external/images/media"</span>);</span><br><span class="line">        <span class="keyword">return</span> Uri.withAppendedPath(baseUri, <span class="string">""</span>+id);</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        ContentValues contentValues = <span class="keyword">new</span> ContentValues(<span class="number">1</span>);</span><br><span class="line">        contentValues.put(MediaStore.Images.Media.DATA, path);</span><br><span class="line">        <span class="keyword">return</span> getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>拿到正确的 Content URI 后，作为 inputUri，传递给 Intent 对象：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(<span class="string">"com.android.camera.action.CROP"</span>);</span><br><span class="line">intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);</span><br><span class="line">intent.setDataAndType(inputUri, <span class="string">"image/*"</span>);</span><br><span class="line">intent.putExtra(<span class="string">"crop"</span>, <span class="string">"true"</span>);</span><br><span class="line">intent.putExtra(<span class="string">"aspectX"</span>, <span class="number">1</span>);</span><br><span class="line">intent.putExtra(<span class="string">"aspectY"</span>, <span class="number">1</span>);</span><br><span class="line">intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outputFile));</span><br><span class="line">startActivityForResult(intent, REQUEST_PICK);</span><br></pre></td></tr></table></figure>
-<p><strong>注意：</strong>这里的 outputUri 并没有改变，仍然使用的是 <code>Uri.fromFile()</code> 方法获取的 File URI 类型！这是很奇怪的一点，但是不得不这么做。事实上，使用这种方式调用系统裁剪功能本身就是有问题的！Crop Intent 在官方文档中本来就无迹可寻，本身就是一种不推荐的用法！取而代之的是，我们可以使用 GitHub 上的一些开源库实现应用内的图片裁剪功能，比如 <a href="https://github.com/Yalantis/uCrop" target="_blank" rel="external">uCrop</a>、<a href="https://github.com/edmodo/cropper" target="_blank" rel="external">cropper</a> 等。</p>
-<h1 id="历史版本问题"><a href="#历史版本问题" class="headerlink" title="历史版本问题"></a>历史版本问题</h1><hr>
-<p>说了这么多，还有一个大家比较关心的问题就是：哪些已经上线的旧版本应用没有做 7.0 适配工作怎么办？关于这个问题，Google 已经提前帮我们想好解决方案啦。</p>
-<p>还记得 6.0 运行时权限问题吗？如果你不想处理运行时权限事宜的话，只需要在 build.gradle 文件中将 targetSdkVersion 的值设为 23 以下即可。</p>
-<p>同样的，只要 targetSdkVersion 值小于 24，File URI 的使用依旧可以出现在 7.0 及以上版本的设备中。不过需要注意的是，如前面所述，调用系统裁剪功能比较特殊，可能会出现一些问题。</p>
-<p>虽然 Google 在每次发布新版 Android 系统时，都提供这种设置 targetSdkVersion 的方式兼容旧版本，但只是一种临时解决方案，并不推荐大家使用这种技巧绕开新版本的适配问题。要知道，新出现的 API 改变一定是在解决过去存在的系统问题，是一种进步的表现。遵循规范，是我们每个开发人员开发时都应铭记于心的格言。</p>
-
       
     </div>
     
@@ -319,6 +235,10 @@
       
       
 
+      
+        <p class="article-more-link">
+          <a  href="/2017/05/03/android-7-0-compat-fileprovider/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -596,71 +516,6 @@
 
 
   
-    <article id="post-android-tint" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/03/30/android-tint/" class="article-date">
-  	<time datetime="2017-03-29T23:35:41.000Z" itemprop="datePublished">2017-03-30</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/30/android-tint/">从使用到源码，细说 Android 中的 tint 着色器</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>自 API 21 （Android L）开始，Android SDK 引入 tint 着色器，可以随意改变安卓项目中图标或者 View 背景的颜色，一定程度上可以减少同一个样式不同颜色图标的数量，从而起到 Apk 瘦身的作用。不过使用 tint 存在一定的兼容性问题，且听本文慢慢说来。</p>
-      
-    </div>
-    
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Android/">Android</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2017/03/30/android-tint/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-the-difference-between-getWidth-and-getMeasuredWidth" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -708,6 +563,71 @@
       
         <p class="article-more-link">
           <a  href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-android-tint" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/03/30/android-tint/" class="article-date">
+  	<time datetime="2017-03-29T23:35:41.000Z" itemprop="datePublished">2017-03-30</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/30/android-tint/">从使用到源码，细说 Android 中的 tint 着色器</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>自 API 21 （Android L）开始，Android SDK 引入 tint 着色器，可以随意改变安卓项目中图标或者 View 背景的颜色，一定程度上可以减少同一个样式不同颜色图标的数量，从而起到 Apk 瘦身的作用。不过使用 tint 存在一定的兼容性问题，且听本文慢慢说来。</p>
+      
+    </div>
+    
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Android/">Android</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2017/03/30/android-tint/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
