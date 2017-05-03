@@ -4,17 +4,24 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>YiFeng&#39;s Zone</title>
+  <title>关于 Android 7.0 适配中 FileProvider 部分的总结 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="YiFeng's Zone">
-<meta property="og:url" content="http://yifeng.studio/index.html">
+  <meta name="description" content="由于 Android 7.0 或更高版本的系统在国内手机市场上的占比不是很高，很多 Android 开发人员并没有做 7.0 适配工作，同时测试人员也容易忽视这方面的兼容问题。这导致 7.0 及以上版本的手机用户在使用到应用部分功能时可能出现 App 崩溃闪退。其中，大部分原因都是由项目中使用到 file:// 类型的 URI 所引发的。本文我们便来一探究竟。
+Android 7.0 权限变更
+为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于 Android 7.0 适配中 FileProvider 部分的总结">
+<meta property="og:url" content="http://yifeng.studio/2017/05/03/android-7-0-compat-fileprovider/index.html">
 <meta property="og:site_name" content="YiFeng's Zone">
-<meta property="og:description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
+<meta property="og:description" content="由于 Android 7.0 或更高版本的系统在国内手机市场上的占比不是很高，很多 Android 开发人员并没有做 7.0 适配工作，同时测试人员也容易忽视这方面的兼容问题。这导致 7.0 及以上版本的手机用户在使用到应用部分功能时可能出现 App 崩溃闪退。其中，大部分原因都是由项目中使用到 file:// 类型的 URI 所引发的。本文我们便来一探究竟。
+Android 7.0 权限变更
+为">
+<meta property="og:updated_time" content="2017-05-03T14:00:26.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="YiFeng's Zone">
-<meta name="twitter:description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
+<meta name="twitter:title" content="关于 Android 7.0 适配中 FileProvider 部分的总结">
+<meta name="twitter:description" content="由于 Android 7.0 或更高版本的系统在国内手机市场上的占比不是很高，很多 Android 开发人员并没有做 7.0 适配工作，同时测试人员也容易忽视这方面的兼容问题。这导致 7.0 及以上版本的手机用户在使用到应用部分功能时可能出现 App 崩溃闪退。其中，大部分原因都是由项目中使用到 file:// 类型的 URI 所引发的。本文我们便来一探究竟。
+Android 7.0 权限变更
+为">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -197,9 +204,7 @@
 	</div>
 </nav>
 
-      <div class="body-wrap">
-  
-    <article id="post-android-7-0-compat-fileprovider" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-android-7-0-compat-fileprovider" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/2017/05/03/android-7-0-compat-fileprovider/" class="article-date">
@@ -215,12 +220,28 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/03/android-7-0-compat-fileprovider/">关于 Android 7.0 适配中 FileProvider 部分的总结</a>
+    <h1 class="article-title" itemprop="name">
+      关于 Android 7.0 适配中 FileProvider 部分的总结
     </h1>
   
 
       </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+
+        
+            <div class="bookicon"></div>
+            <div class="article-hit">
+              <span id="busuanzi_container_page_pv">
+                    热度 <span id="busuanzi_value_page_pv"></span>℃</span>
+            </div>
+        
+
+        <div class="clearfix"></div>
+      </div>
       
     
     <div class="article-entry" itemprop="articleBody">
@@ -313,619 +334,83 @@
       
     </div>
     
-    
-    <div class="article-info article-info-index">
-      
-      
-      
+      <! -- 添加版权信息 -->
+<div class="article-footer-copyright">
+<p>本文由&nbsp;<b>亦枫</b>&nbsp;创作并首发于&nbsp;<b><a href="/index.html" target="_blank" title="亦枫">亦枫的个人博客</a></b>&nbsp;，同步推送微信公众号：安卓笔记侠（NiaoTech）。</a></p>
+ 
+<p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
+ 
+<p>本文标题为: <b><a href="/2017/05/03/android-7-0-compat-fileprovider/" target="_blank" title="关于 Android 7.0 适配中 FileProvider 部分的总结">关于 Android 7.0 适配中 FileProvider 部分的总结</a></b> </p>
+ 
+<p>本文链接为：<b><a href="/2017/05/03/android-7-0-compat-fileprovider/" target="_blank" title="关于 Android 7.0 适配中 FileProvider 部分的总结">http://yifeng.studio/2017/05/03/android-7-0-compat-fileprovider/</a></b> </p>
 
-      
-      <div class="clearfix"></div>
-    </div>
+<p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
+</div>
+<! -- 添加版权信息 -->
+    
     
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/04/29/debug-android-webview-with-chrome-dev-tools/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">利用 Chrome 开发者工具远程调试 Android 中的原生 WebView</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
   
 </article>
 
 
-
-
-
-
-
-
-
-  
-    <article id="post-debug-android-webview-with-chrome-dev-tools" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/04/29/debug-android-webview-with-chrome-dev-tools/" class="article-date">
-  	<time datetime="2017-04-29T01:26:23.000Z" itemprop="datePublished">2017-04-29</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/29/debug-android-webview-with-chrome-dev-tools/">利用 Chrome 开发者工具远程调试 Android 中的原生 WebView</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>之前写过一篇关于 [Android Studio 断点调试技巧] 的文章，但都是针对 Native 代码的调试，对于 Hybrid 开发模式下的 WebView 却无从下手。幸运的是，PC 中的 Chrome 浏览器提供的开发者工具能够帮助我们远程调试 Android 中的 WebView 加载的网页。</p>
-      
-    </div>
-    
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Debug-Android/">Debug - Android</a></li></ul>
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
 	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
 
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Android/">Android</a>
-	</div>
 
 
-      
-        <p class="article-more-link">
-          <a  href="/2017/04/29/debug-android-webview-with-chrome-dev-tools/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
 
 
 
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="android-7-0-compat-fileprovider" data-title="关于 Android 7.0 适配中 FileProvider 部分的总结" data-url="http://yifeng.studio/2017/05/03/android-7-0-compat-fileprovider/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"yifengzone"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
 
 
 
 
-
-
-  
-    <article id="post-android-app-file-storage-directory" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/04/27/android-app-file-storage-directory/" class="article-date">
-  	<time datetime="2017-04-26T23:31:45.000Z" itemprop="datePublished">2017-04-27</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/27/android-app-file-storage-directory/">了解 Android 应用的文件存储目录，掌握持久化数据的正确姿势</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>本文导读：</strong>在安卓手机上，安装或者卸载一个 App，会涉及到本地存储系统的哪些目录结构变化？作为开发人员，如何恰当地存储应用相关的信息？相关存储目录的生命周期、访问方式和访问权限又是怎样的呢？带着这些问题，希望读完这篇文章，你能够有所收获。</p>
-      
-    </div>
-    
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Android/">Android</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2017/04/27/android-app-file-storage-directory/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-android-theme-appcompat-color-attrs" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/04/18/android-theme-appcompat-color-attrs/" class="article-date">
-  	<time datetime="2017-04-18T14:03:41.000Z" itemprop="datePublished">2017-04-18</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/18/android-theme-appcompat-color-attrs/">Android Theme.AppCompat 中，你应该熟悉的颜色属性</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>创建一个 Android 工程，第一步，也是必不可少的一步，就是定制 Application 主题样式。利用系统诸多属性定义 App 各种 View 的默认样式，能够减少 layout 文件中很多重复性的属性设置代码。在开发者官网 <a href="https://developer.android.com/reference/android/R.attr.html">R.attr</a> 栏目中，Google 列出了所有 Android SDK 中的系统级属性。如何取舍，如何区分，又有哪些常用的属性呢？本文就来列举颜色相关的一些属性介绍，以供参考。</p>
-      
-    </div>
-    
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Android/">Android</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2017/04/18/android-theme-appcompat-color-attrs/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-android-palette-and-use-case" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/04/09/android-palette-and-use-case/" class="article-date">
-  	<time datetime="2017-04-09T09:41:19.000Z" itemprop="datePublished">2017-04-09</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/09/android-palette-and-use-case/">利用 Android 中的 palette 调色板，动态改变 Toolbar 颜色</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>前不久，就 Android 系统中的 <a href="http://yifeng.studio/2017/03/30/android-tint/">tint 着色器</a> 写有一篇文章，从使用到源码，详细予以阐述。从色彩的角度上来讲，Palette（调色板）似乎与之遥相呼应，所以便有了这篇：关于 Android 中的 Palette 类。</p>
-      
-    </div>
-    
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Android/">Android</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2017/04/09/android-palette-and-use-case/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-android-tint" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/03/30/android-tint/" class="article-date">
-  	<time datetime="2017-03-29T23:35:41.000Z" itemprop="datePublished">2017-03-30</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/30/android-tint/">从使用到源码，细说 Android 中的 tint 着色器</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>自 API 21 （Android L）开始，Android SDK 引入 tint 着色器，可以随意改变安卓项目中图标或者 View 背景的颜色，一定程度上可以减少同一个样式不同颜色图标的数量，从而起到 Apk 瘦身的作用。不过使用 tint 存在一定的兼容性问题，且听本文慢慢说来。</p>
-      
-    </div>
-    
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Android/">Android</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2017/03/30/android-tint/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-the-difference-between-getWidth-and-getMeasuredWidth" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/" class="article-date">
-  	<time datetime="2017-03-29T23:35:41.000Z" itemprop="datePublished">2017-03-30</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/">从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>之前不是写了篇名为 <a href="http://yifeng.studio/2017/03/21/android-obtain-view-width-and-heigth-not-zero/">Android 获取 View 宽高的常用正确方式，避免为零</a> 的总结性文章嘛，在结尾简单阐述 measuredWidth 与 width 的区别。考虑到文章的重点，简单几笔带过。没曾想，引发一些争论，大家对 View 的这两对宽高属性理解各有异议。于是便想追根溯源，通过解读源码的方式说明一下，消除许多人的误解。</p>
-      
-    </div>
-    
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Android/">Android</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-android-bottomnavigationview" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/03/26/android-bottomnavigationview/" class="article-date">
-  	<time datetime="2017-03-26T13:39:36.000Z" itemprop="datePublished">2017-03-26</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/26/android-bottomnavigationview/">Android BottomNavigationView，底部导航栏的简单实现</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>关于 Material Design 相关的控件，之前整理了一个系列文章，并建立一个 <a href="https://github.com/Mike-bel/MDStudySamples">MDSamples</a> 工程，使用代码和文字解说配合的方式逐一说明。截止目前，大致写有八九篇文章。期间，由于一些工作变动和琐事，停了一些时间。现在，有点时间，准备续上。</p>
-      
-    </div>
-    
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Android/">Android</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2017/03/26/android-bottomnavigationview/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-android-obtain-view-width-and-heigth-not-zero" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/03/21/android-obtain-view-width-and-heigth-not-zero/" class="article-date">
-  	<time datetime="2017-03-20T23:32:51.000Z" itemprop="datePublished">2017-03-21</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/21/android-obtain-view-width-and-heigth-not-zero/">Android 获取 View 宽高的常用正确方式，避免为零</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>相信有很多朋友都有过在 Activity 中直接通过 getWidth() 之类的方法获取 View 的宽高值，可能在 onCreate() 生命周期方法中，也可能在 onResume() 生命周期方法中。然而，不幸的是，并不能获取所要的结果，宽高值均为 0。</p>
-      
-    </div>
-    
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Android/">Android</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2017/03/21/android-obtain-view-width-and-heigth-not-zero/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-android-image-picker-by-system-app" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/03/19/android-image-picker-by-system-app/" class="article-date">
-  	<time datetime="2017-03-19T09:19:26.000Z" itemprop="datePublished">2017-03-19</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/19/android-image-picker-by-system-app/">Android 调用系统功能实现图片选择器，你可能会遇到的问题汇总</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>图片选择器在手机应用中屡见不鲜，设置头像、聊天传图等常见类似场景都需要使用。为了保持不同设备上体验的一致性和较好的兼容性，比较稳妥的做法是在应用内自实现相机拍照、相册选图和图片裁剪功能。但是，这个实现过程比较复杂，费时费力。更多时候，或者说在项目初期，我们都会选择直接调用系统提供的这些功能来完成一个图片选择器。然而，由于安卓设备的多样性，总会遇到各种各样的兼容问题。本文就来总结总结，调用系统相机、相册和裁剪功能实现图片选择器的过程中，我们需要注意的一些地方。</p>
-      
-    </div>
-    
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Android/">Android</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2017/03/19/android-image-picker-by-system-app/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-  
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-    </nav>
-  
 </div>
       <footer id="footer">
   <div class="outer">
@@ -958,8 +443,8 @@
 		fancybox: true,
 		mathjax: true,
 		animate: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
