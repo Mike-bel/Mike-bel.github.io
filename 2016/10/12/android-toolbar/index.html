@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/toolbar-sample-05.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/toolbar-sample-06.png">
 <meta property="og:image" content="https://github.com/alexstyl/Material-SearchTransition/blob/art/transition-to-search.gif?raw=true">
-<meta property="og:updated_time" content="2017-04-10T07:56:45.000Z">
+<meta property="og:updated_time" content="2017-05-06T14:22:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Toolbar，你想知道的都在这里了">
 <meta name="twitter:description" content="Android 3.0之后，Google引入了ActionBar，想统一安卓应用的导航栏样式。但由于ActionBar难以定制，很大程度上限制了开发人员，比如标题文字大小、间距等不易实现个性化，很多开发者放弃了ActionBar的使用，而是使用普通的ViewGroup来封装自己的App Bar，或者使用JakeWharton大神的ActionBarSherlock库。">
@@ -253,7 +253,7 @@ ga('send', 'pageview');
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/1491808100.jpg" alt=""></p>
 <p>这种情况下，就需要额外定义一个 layout 文件，然后通过 actionLayout 属性引入到  <item> 标签中，比如：</item></p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">menu</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">  <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">item</span></span><br><span class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/action_search"</span></span><br><span class="line">    <span class="attr">android:title</span>=<span class="string">"搜索"</span></span><br><span class="line">    <span class="attr">app:actionLayout</span>=<span class="string">"@layout/menu_search"</span></span><br><span class="line">    <span class="attr">app:showAsAction</span>=<span class="string">"always"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">menu</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>但是这里有一点需要注意，menu_search 布局文件的内容必须以 RelativeLayout 作为根容器布局，否则，actionLayout 对应的视图宽度不足以填充满 Toolbar 或者说 ActionBar 的宽度，显示效果如同设置 layout_width 属性值为 wrap_content 一般。</p>
+<p>这里有两点需要注意：第一，menu_search 布局文件的内容必须以 RelativeLayout 作为根容器布局，否则，actionLayout 对应的视图宽度不足以填充满 Toolbar 或者说 ActionBar 的宽度，显示效果如同设置 layout_width 属性值为 wrap_content 一般；第二，actionLayout 属性必须使用 app 作为命名空间，如果使用 android 的话，会导致 menuItem 对象通过 getActionView() 始终获取的对象为 null 。</p>
 <h1 id="Up-Enable"><a href="#Up-Enable" class="headerlink" title="Up Enable"></a>Up Enable</h1><hr>
 <p>在二级界面等Activity中，通过如下设置可以在Toolbar左边显示一个返回按钮：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getSupportActionBar().setDisplayHomeAsUpEnabled(<span class="keyword">true</span>);</span><br></pre></td></tr></table></figure>

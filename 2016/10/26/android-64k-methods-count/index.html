@@ -6,24 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yifeng.studio">
-  <title>Android 突破64K方法数的限制 | YiFeng&#39;s Zone</title>
+  <title>Android 突破 DEX 文件的 64K 方法数限制 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="随着安卓平台的不断发展与壮大，市场上大而全的应用比比皆是，产品需求的变更累积和UI交互的极致追求，除了 resources 文件的俱增，在 Android Project 中依赖的 Library 和 自己写的 Java 代码也会越来越多。这些变化，除了会导致打包出的 APK 文件越来越大之外，当项目中java代码包含的方法数（method count）超出一个峰值时，编译过程中就会出现如下错误：">
+  <meta name="description" content="随着安卓平台的不断发展与壮大，市场上大而全的应用比比皆是，产品需求的变更累积和UI交互的极致追求，除了 resources 文件的俱增，在 Android Project 中依赖的 Library 和 自己写的 Java 代码也会越来越多。这些变化，除了会导致打包出的 APK 文件越来越大之外，当项目中java代码包含的方法数（method count）超出一个峰值时，编译过程中就会出现如下错误">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android 突破64K方法数的限制">
+<meta property="og:title" content="Android 突破 DEX 文件的 64K 方法数限制">
 <meta property="og:url" content="http://yifeng.studio/2016/10/26/android-64k-methods-count/index.html">
 <meta property="og:site_name" content="YiFeng's Zone">
-<meta property="og:description" content="随着安卓平台的不断发展与壮大，市场上大而全的应用比比皆是，产品需求的变更累积和UI交互的极致追求，除了 resources 文件的俱增，在 Android Project 中依赖的 Library 和 自己写的 Java 代码也会越来越多。这些变化，除了会导致打包出的 APK 文件越来越大之外，当项目中java代码包含的方法数（method count）超出一个峰值时，编译过程中就会出现如下错误：">
+<meta property="og:description" content="随着安卓平台的不断发展与壮大，市场上大而全的应用比比皆是，产品需求的变更累积和UI交互的极致追求，除了 resources 文件的俱增，在 Android Project 中依赖的 Library 和 自己写的 Java 代码也会越来越多。这些变化，除了会导致打包出的 APK 文件越来越大之外，当项目中java代码包含的方法数（method count）超出一个峰值时，编译过程中就会出现如下错误">
+<meta property="og:image" content="https://mmbiz.qlogo.cn/mmbiz_png/GSIuO9kJrrXEt0EqMBtsMdD844vLTeKvItAEkMLdu03BOuj8TN1gSEcl1pNoicnm9Y5uR0L53UoP34eMwcniaEOg/0?wx_fmt=png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/methodscount-samples-01.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/methodscount-samples-02.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/methodscount-samples-03.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/apk-method-count-samples.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/Android-Studio-APK-Analyzer-Samples.png">
-<meta property="og:updated_time" content="2017-05-05T05:51:16.000Z">
+<meta property="og:updated_time" content="2017-05-07T14:48:51.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android 突破64K方法数的限制">
-<meta name="twitter:description" content="随着安卓平台的不断发展与壮大，市场上大而全的应用比比皆是，产品需求的变更累积和UI交互的极致追求，除了 resources 文件的俱增，在 Android Project 中依赖的 Library 和 自己写的 Java 代码也会越来越多。这些变化，除了会导致打包出的 APK 文件越来越大之外，当项目中java代码包含的方法数（method count）超出一个峰值时，编译过程中就会出现如下错误：">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/methodscount-samples-01.png">
+<meta name="twitter:title" content="Android 突破 DEX 文件的 64K 方法数限制">
+<meta name="twitter:description" content="随着安卓平台的不断发展与壮大，市场上大而全的应用比比皆是，产品需求的变更累积和UI交互的极致追求，除了 resources 文件的俱增，在 Android Project 中依赖的 Library 和 自己写的 Java 代码也会越来越多。这些变化，除了会导致打包出的 APK 文件越来越大之外，当项目中java代码包含的方法数（method count）超出一个峰值时，编译过程中就会出现如下错误">
+<meta name="twitter:image" content="https://mmbiz.qlogo.cn/mmbiz_png/GSIuO9kJrrXEt0EqMBtsMdD844vLTeKvItAEkMLdu03BOuj8TN1gSEcl1pNoicnm9Y5uR0L53UoP34eMwcniaEOg/0?wx_fmt=png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -179,7 +180,7 @@ ga('send', 'pageview');
         
   
     <h1 class="article-title" itemprop="name">
-      Android 突破64K方法数的限制
+      Android 突破 DEX 文件的 64K 方法数限制
     </h1>
   
 
@@ -192,20 +193,21 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>随着安卓平台的不断发展与壮大，市场上大而全的应用比比皆是，产品需求的变更累积和UI交互的极致追求，除了 resources 文件的俱增，在 Android Project 中依赖的 Library 和 自己写的 Java 代码也会越来越多。这些变化，除了会导致打包出的 APK 文件越来越大之外，当项目中java代码包含的方法数（method count）超出一个峰值时，编译过程中就会出现如下错误：</p>
+        <p><img src="https://mmbiz.qlogo.cn/mmbiz_png/GSIuO9kJrrXEt0EqMBtsMdD844vLTeKvItAEkMLdu03BOuj8TN1gSEcl1pNoicnm9Y5uR0L53UoP34eMwcniaEOg/0?wx_fmt=png" alt=""></p>
+<p>随着安卓平台的不断发展与壮大，市场上大而全的应用比比皆是，产品需求的变更累积和UI交互的极致追求，除了 resources 文件的俱增，在 Android Project 中依赖的 Library 和 自己写的 Java 代码也会越来越多。这些变化，除了会导致打包出的 APK 文件越来越大之外，当项目中java代码包含的方法数（method count）超出一个峰值时，编译过程中就会出现如下错误：</p>
 <a id="more"></a>
 <p>较早版本的编译系统中，错误内容如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Conversion to Dalvik format failed:</span><br><span class="line">Unable to execute dex: method ID not in [<span class="number">0</span>, <span class="number">0xffff</span>]: <span class="number">65536</span></span><br></pre></td></tr></table></figure>
-<p>较新版本的编译系统中，错误内容如下：</p>
+<p>而在新版编译系统中，是这样：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">trouble writing output:</span><br><span class="line">Too many field references: <span class="number">131000</span>; max is <span class="number">65536</span>.</span><br><span class="line">You may <span class="keyword">try</span> using --multi-dex option.</span><br></pre></td></tr></table></figure>
-<p>尽管在不同版本的编译系统中显示的错误内容不尽相同，但都提到了一个具体的数字：65536，也就是本文要讲到的核心内容，Android 64K Method Counts Limit 的峰值。详细信息，参考官网用户指南：<a href="https://developer.android.com/studio/build/multidex.html" target="_blank" rel="external">Configure Apps with Over 64K Methods</a></p>
+<p>尽管在不同版本的编译系统中显示的错误内容不尽相同，但内容中都提到了一个具体的数字：65536，这个数字也是本文要讲到的核心内容：Android 64K Method Counts Limit 的峰值。详细信息，参考官网用户指南：<a href="https://developer.android.com/studio/build/multidex.html" target="_blank" rel="external">Configure Apps with Over 64K Methods</a>。</p>
 <h1 id="Android-64K-Method-Counts-Limit"><a href="#Android-64K-Method-Counts-Limit" class="headerlink" title="Android 64K Method Counts Limit"></a>Android 64K Method Counts Limit</h1><hr>
 <p>Android Project 经过编译打包，其中的Java代码（包括Library）转化为DEX格式的字节码文件，这是Android 5.0之前的 Dalvik 虚拟机决定的（5.0之后改为 ART 虚拟机），并且采用 short 类型引用 DEX 文件中的 method，这也为method数量的峰值大小埋下了隐患。short 类型能够表示的最大值是 65536，也就说单个 DEX 文件中最多只有 65536 个 method 能够得到引用，如果代码执行了超出部分的 method 引用，自然会报错，如 methodNotFound 等。1K 等于 1024，65536 刚好是 64K，为了便于称呼和使用，就将这个限制规则统称为 64K 方法数的引用限制。</p>
-<p>为了解决64K方法数限制的问题，我们可以在项目中使用multidex配置，当项目中的方法数（包括：Android framework，library和我们自己写的代码）超过64K时，编译系统会自动编译出多个DEX文件。</p>
+<p>为了解决 64K 方法数限制的问题，我们可以在项目中使用 multidex 配置，当项目中的方法数（包括：Android framework，library 和我们自己写的代码）超过 64K 时，编译系统会自动编译出多个 DEX 文件。</p>
 <h1 id="Multidex-Support"><a href="#Multidex-Support" class="headerlink" title="Multidex Support"></a>Multidex Support</h1><hr>
-<p>Android 5.0之前，安卓系统采用的是Dalvik虚拟机，采用的是JIT技术（Just-in-time compilation，即时编译，运行时编译DEX字节码文件，这也是以前为什么安卓手机用户总是诟病Android系统比iOS系统运行卡顿的原因），限制每个APK文件只能包含一个DEX文件（即<code>classes.dex</code>）。为了绕开这个限制，Google给我们提供了<a href="https://developer.android.com/tools/support-library/features.html#multidex" target="_blank" rel="external">multidex support library</a>兼容包，帮助我们实现应用程序加载多个DEX文件，并且这个兼容包作为程序的主DEX文件，管理者其他DEX文件的访问。</p>
+<p>Android 5.0 之前，安卓系统采用的是 Dalvik 虚拟机，采用的是JIT技术（Just-in-time compilation，即时编译，运行时编译DEX字节码文件，这也是以前为什么安卓手机用户总是诟病Android系统比iOS系统运行卡顿的原因），限制每个APK文件只能包含一个 DEX 文件（即 <code>classes.dex</code>）。为了绕开这个限制，Google给我们提供了<a href="https://developer.android.com/tools/support-library/features.html#multidex" target="_blank" rel="external">multidex support library</a> 兼容包，帮助我们实现应用程序加载多个DEX文件，并且这个兼容包作为程序的主DEX文件，管理者其他DEX文件的访问。</p>
 <blockquote>
-<p>注意：由于<a href="https://developer.android.com/tools/building/building-studio.html#instant-run" target="_blank" rel="external">Instant Run</a>机制利用的就是multidex原理，当项目中<code>minSdkVersion</code>参数设置为20或者更小，并且运行在Android 4.4 (API level 20)或更低版本的设备中时，<code>Instant Run</code>将失效。</p>
+<p>注意：由于 <a href="https://developer.android.com/tools/building/building-studio.html#instant-run" target="_blank" rel="external">Instant Run</a> 机制利用的就是 multidex 原理，当项目中<code>minSdkVersion</code>参数设置为20或者更小，并且运行在 Android 4.4 (API  20) 或更低版本的设备中时，<code>Instant Run</code>将失效。</p>
 </blockquote>
 <p>Android 5.0之后，安卓系统改用了ART虚拟机（Android RunTime），采用的是OAT技术（Ahead-of-time，预编译，在应用安装的时候扫描应用中的所有DEX文件，并编译成一个<code>.oat</code>格式的文件供安卓设备执行，所以相比Dalvik虚拟机下的应用，安装时间较长）。因此可以理解为，使用ART虚拟机下的安卓系统自动支持APK文件中多个DEX的加载。</p>
 <blockquote>
@@ -217,18 +219,27 @@ ga('send', 'pageview');
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line"></span><br><span class="line">    compileSdkVersion <span class="number">21</span></span><br><span class="line">    buildToolsVersion <span class="string">"21.1.0"</span></span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Enabling multidex support.</span></span><br><span class="line">        multiDexEnabled <span class="keyword">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">  <span class="keyword">compile</span> <span class="string">'com.android.support:multidex:1.0.0'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>第二步，修改<code>AndroidManifest.xml</code>文件，引用<code>MultiDexApplication</code>类：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">manifest</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attr">package</span>=<span class="string">"com.yifeng.mdstudysamples"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">application</span></span><br><span class="line">        <span class="attr">...</span></span><br><span class="line">        <span class="attr">android:name</span>=<span class="string">"android.support.multidex.MultiDexApplication"</span>&gt;</span></span><br><span class="line">        ...</span><br><span class="line">    <span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>添加这些配置后，编译工具会构建出一个主DEX文件（classes.dex）和其他DEX文件（classes2.dex，classes3.dex等，如果需要的话），编译系统会将他们打包到APK文件中。</p>
+<p>有时候，你可能还需要改变一下 javaMaxHeapSize 的大小：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    dexOptions &#123;</span><br><span class="line">        javaMaxHeapSize &quot;4g&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>添加这些配置后，编译工具会构建出一个主 DEX 文件（classes.dex）和其他附属 DEX 文件（classes2.dex，classes3.dex 等，如果需要的话），编译系统会将他们打包到 Apk 文件中。</p>
 <blockquote>
 <p>注意：一般我们会在项目中自定义一个继承自<code>Application</code>的类，此时就需要重写<code>attachBaseContext()</code>方法，并在该方法里面调用<code>MultiDex.install(this)</code>来支持multidex，可参考：<a href="https://developer.android.com/reference/android/support/multidex/MultiDexApplication.html" target="_blank" rel="external">MultiDexApplication</a></p>
 </blockquote>
 <h1 id="Optimizing-Multidex-Development-Builds"><a href="#Optimizing-Multidex-Development-Builds" class="headerlink" title="Optimizing Multidex Development Builds"></a>Optimizing Multidex Development Builds</h1><hr>
-<p>multidex配置下的应用，编译系统需要经过复杂的DEX分割运算，导致增加项目的编译时间，从而影响开发人员的开发效率。我们可以使用<a href="http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Product-flavors" target="_blank" rel="external">productFlavors</a>构建开发环境和正式环境的不同flavors来优化multidex的长时间编译问题。</p>
-<p>对于development flavor，设置<code>minSdkVersion</code>值为21，运行在Android 5.0以上版本的设备中，使用ART-supported格式生成multidex的速度要快得多。对于release flavor，<code>minSdkVersion</code>值则设为应用实际支持的版本，编译系统耗费较长的时间来生成适配多设备的multidex APK文件。如：</p>
+<p>multidex 配置下的应用，编译系统需要经过复杂的 DEX 分割运算，导致增加项目的编译时间，从而影响开发人员的开发效率。我们可以使用 <a href="http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Product-flavors" target="_blank" rel="external">productFlavors</a> 构建开发环境和正式环境的不同 flavors 来优化 multidex 的长时间编译问题。</p>
+<p>对于development flavor，设置 <code>minSdkVersion</code> 值为21，运行在Android 5.0以上版本的设备中，使用 ART-supported 格式生成 multidex 的速度要快得多。对于 release flavor，<code>minSdkVersion</code> 值则设为应用实际支持的版本，编译系统耗费较长的时间来生成适配多设备的multidex APK文件。如：</p>
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    productFlavors &#123;</span><br><span class="line">        <span class="comment">// Define separate dev and prod product flavors.</span></span><br><span class="line">        dev &#123;</span><br><span class="line">            <span class="comment">// dev utilizes minSDKVersion = 21 to allow the Android gradle plugin</span></span><br><span class="line">            <span class="comment">// to pre-dex each module and produce an APK that can be tested on</span></span><br><span class="line">            <span class="comment">// Android Lollipop without time consuming dex merging processes.</span></span><br><span class="line">            minSdkVersion <span class="number">21</span></span><br><span class="line">        &#125;</span><br><span class="line">        prod &#123;</span><br><span class="line">            <span class="comment">// The actual minSdkVersion for the application.</span></span><br><span class="line">            minSdkVersion <span class="number">14</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">          ...</span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        release &#123;</span><br><span class="line">            runProguard <span class="keyword">true</span></span><br><span class="line">            proguardFiles getDefaultProguardFile(<span class="string">'proguard-android.txt'</span>),</span><br><span class="line">                                                 <span class="string">'proguard-rules.pro'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">  <span class="keyword">compile</span> <span class="string">'com.android.support:multidex:1.0.0'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这样，在开发阶段，使用devDebug类型的变种app，取消混淆，支持multidex，并且运行在5.0及以上版本的设备中，能够加快编译过程。有关flavors的信息，以前写过一篇文章：<a href="http://yifeng.studio/2016/09/06/apk-environment-separate/">Android 利用Gradle实现app的环境分离</a>，更多信息可以参考英文手册：<a href="http://tools.android.com/tech-docs/new-build-system/user-guide" target="_blank" rel="external">Gradle Plugin User Guide</a>，对应中文版译文：<a href="http://avatarqing.github.io/Gradle-Plugin-User-Guide-Chinese-Verision/" target="_blank" rel="external">Gradle Android插件用户指南翻译</a>。</p>
+<p>这样，在开发阶段，使用 devDebug 类型的变种 app，取消混淆，支持 multidex，并且运行在 5.0 及以上版本的设备中，能够加快编译过程。有关 flavors 的信息，以前写过一篇文章：<a href="http://yifeng.studio/2016/09/06/apk-environment-separate/">Android 利用Gradle实现app的环境分离</a>，更多信息可以参考英文手册：<a href="http://tools.android.com/tech-docs/new-build-system/user-guide" target="_blank" rel="external">Gradle Plugin User Guide</a>，对应中文版译文：<a href="http://avatarqing.github.io/Gradle-Plugin-User-Guide-Chinese-Verision/" target="_blank" rel="external">Gradle Android插件用户指南翻译</a>。</p>
+<h1 id="strings-count-limit"><a href="#strings-count-limit" class="headerlink" title="strings count limit"></a>strings count limit</h1><hr>
+<p>前面我们说完单一 dex 文件的方法数限制，事实上，还有一个字符串数量限制。如果项目没有使用 multidex 支持的话，当 strings 超出一定限制，编译过程也会出错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Dex: Error converting bytecode to dex:</span><br><span class="line">Cause: com.android.dex.DexIndexOverflowException: Cannot merge new index 65868 into a non-jumbo instruction!</span><br></pre></td></tr></table></figure>
+<p>不同项目编译过程中报错信息里的具体数字可能不同。Dex 文件中出现的 string 默认是 4 个字节即 16 位大小的 int 类型的数字引用使用的，即单个 Dex 文件最多只能引用 2^16 个 strings，当你的项目中出现超过这个最大数字的字符串引用，而又没有使用 multidex 支持，编译过程便会出错。</p>
+<p>对于这种情况，除了使用 multidex，还有另外一种解决方案：jumboMode。这个模式允许单个 Dex 文件支持到 32 为大小的 strings 引用，即 2^32 的引用峰值。使用方法是，在工程 app 模块下  build.gradle 文件的 android 配置下添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dexOptions &#123;</span><br><span class="line">        jumboMode true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong>虽然单个 Dex 文件中  strings 数量限制与 method 数量限制非常相似，但是如果项目方法数超过 64K， 我们还是需要使用 multidex 来解决，注意区分。有关这方面的更多详细介绍，请参考 <a href="https://source.android.com/devices/tech/dalvik/dalvik-bytecode" target="_blank" rel="external">Dalvik bytecode</a>。</p>
 <h1 id="Methods-Count-Statistics"><a href="#Methods-Count-Statistics" class="headerlink" title="Methods Count Statistics"></a>Methods Count Statistics</h1><hr>
 <p>尽管安卓系统支持multidex，我们还是要学会分析我们的应用，查看各个部分的方法数，减少冗余方法。这里推荐几个工具，帮助我们分析。</p>
-<h2 id="Library-Methods-count"><a href="#Library-Methods-count" class="headerlink" title="Library Methods count"></a><a href="http://www.methodscount.com/" target="_blank" rel="external">Library Methods count</a></h2><p>一个在线统计 Android Library 方法数的网站，能够统计出Android领域常见libraries的方法数、JAR文件和DEX文件大小，并且能够选择不同版本，以图表的形式展示出来。</p>
+<h2 id="Library-Methods-count"><a href="#Library-Methods-count" class="headerlink" title="Library Methods count"></a><a href="http://www.methodscount.com/" target="_blank" rel="external">Library Methods count</a></h2><p>一个在线统计 Android Library 方法数的网站，能够统计出 Android 领域常见 libraries 的方法数、JAR 文件和 DEX 文件大小，并且能够选择不同版本，以图表的形式展示出来。</p>
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/methodscount-samples-01.png" alt="http://www.methodscount.com/"></p>
 <p>该网站也提供了Android Studio的插件，帮助我们分析项目中所依赖的libraries的方法数，如图所示：</p>
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/methodscount-samples-02.png" alt="methodscount-samples-02.png"></p>
@@ -266,9 +277,9 @@ ga('send', 'pageview');
  
 <p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
  
-<p>本文标题为: <b><a href="/2016/10/26/android-64k-methods-count/" target="_blank" title="Android 突破64K方法数的限制">Android 突破64K方法数的限制</a></b> </p>
+<p>本文标题为: <b><a href="/2016/10/26/android-64k-methods-count/" target="_blank" title="Android 突破 DEX 文件的 64K 方法数限制">Android 突破 DEX 文件的 64K 方法数限制</a></b> </p>
  
-<p>本文链接为：<b><a href="/2016/10/26/android-64k-methods-count/" target="_blank" title="Android 突破64K方法数的限制">http://yifeng.studio/2016/10/26/android-64k-methods-count/</a></b> </p>
+<p>本文链接为：<b><a href="/2016/10/26/android-64k-methods-count/" target="_blank" title="Android 突破 DEX 文件的 64K 方法数限制">http://yifeng.studio/2016/10/26/android-64k-methods-count/</a></b> </p>
 
 <p>科学上网，翻墙推荐：<b><a href="http://buytizi.com/?r=225bb619613ec09e" target="_blank" title="http://buytizi.com/?r=225bb619613ec09e">http://yifeng.studio/2016/10/26/android-64k-methods-count/</a></b> </p>
 
@@ -435,7 +446,7 @@ ga('send', 'pageview');
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="android-64k-methods-count" data-title="Android 突破64K方法数的限制" data-url="http://yifeng.studio/2016/10/26/android-64k-methods-count/"></div>
+	<div class="ds-thread" data-thread-key="android-64k-methods-count" data-title="Android 突破 DEX 文件的 64K 方法数限制" data-url="http://yifeng.studio/2016/10/26/android-64k-methods-count/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
