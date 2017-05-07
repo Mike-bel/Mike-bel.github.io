@@ -8,23 +8,22 @@
   <link rel="dns-prefetch" href="http://yifeng.studio">
   <title>Android 突破 DEX 文件的 64K 方法数限制 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="随着安卓平台的不断发展与壮大，市场上大而全的应用比比皆是，产品需求的变更累积和UI交互的极致追求，除了 resources 文件的俱增，在 Android Project 中依赖的 Library 和 自己写的 Java 代码也会越来越多。这些变化，除了会导致打包出的 APK 文件越来越大之外，当项目中java代码包含的方法数（method count）超出一个峰值时，编译过程中就会出现如下错误">
+  <meta name="description" content="随着安卓平台的不断发展与壮大，市场上大而全的应用比比皆是，产品需求的变更累积和UI交互的极致追求，除了 resources 文件的俱增，在 Android Project 中依赖的 Library 和 自己写的 Java 代码也会越来越多。这些变化，除了会导致打包出的 APK 文件越来越大之外，当项目中java代码包含的方法数（method count）超出一个峰值时，编译过程中就会出现如下错误：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 突破 DEX 文件的 64K 方法数限制">
 <meta property="og:url" content="http://yifeng.studio/2016/10/26/android-64k-methods-count/index.html">
 <meta property="og:site_name" content="YiFeng's Zone">
-<meta property="og:description" content="随着安卓平台的不断发展与壮大，市场上大而全的应用比比皆是，产品需求的变更累积和UI交互的极致追求，除了 resources 文件的俱增，在 Android Project 中依赖的 Library 和 自己写的 Java 代码也会越来越多。这些变化，除了会导致打包出的 APK 文件越来越大之外，当项目中java代码包含的方法数（method count）超出一个峰值时，编译过程中就会出现如下错误">
-<meta property="og:image" content="https://mmbiz.qlogo.cn/mmbiz_png/GSIuO9kJrrXEt0EqMBtsMdD844vLTeKvItAEkMLdu03BOuj8TN1gSEcl1pNoicnm9Y5uR0L53UoP34eMwcniaEOg/0?wx_fmt=png">
+<meta property="og:description" content="随着安卓平台的不断发展与壮大，市场上大而全的应用比比皆是，产品需求的变更累积和UI交互的极致追求，除了 resources 文件的俱增，在 Android Project 中依赖的 Library 和 自己写的 Java 代码也会越来越多。这些变化，除了会导致打包出的 APK 文件越来越大之外，当项目中java代码包含的方法数（method count）超出一个峰值时，编译过程中就会出现如下错误：">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/methodscount-samples-01.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/methodscount-samples-02.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/methodscount-samples-03.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/apk-method-count-samples.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/Android-Studio-APK-Analyzer-Samples.png">
-<meta property="og:updated_time" content="2017-05-07T14:48:51.000Z">
+<meta property="og:updated_time" content="2017-05-07T14:59:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 突破 DEX 文件的 64K 方法数限制">
-<meta name="twitter:description" content="随着安卓平台的不断发展与壮大，市场上大而全的应用比比皆是，产品需求的变更累积和UI交互的极致追求，除了 resources 文件的俱增，在 Android Project 中依赖的 Library 和 自己写的 Java 代码也会越来越多。这些变化，除了会导致打包出的 APK 文件越来越大之外，当项目中java代码包含的方法数（method count）超出一个峰值时，编译过程中就会出现如下错误">
-<meta name="twitter:image" content="https://mmbiz.qlogo.cn/mmbiz_png/GSIuO9kJrrXEt0EqMBtsMdD844vLTeKvItAEkMLdu03BOuj8TN1gSEcl1pNoicnm9Y5uR0L53UoP34eMwcniaEOg/0?wx_fmt=png">
+<meta name="twitter:description" content="随着安卓平台的不断发展与壮大，市场上大而全的应用比比皆是，产品需求的变更累积和UI交互的极致追求，除了 resources 文件的俱增，在 Android Project 中依赖的 Library 和 自己写的 Java 代码也会越来越多。这些变化，除了会导致打包出的 APK 文件越来越大之外，当项目中java代码包含的方法数（method count）超出一个峰值时，编译过程中就会出现如下错误：">
+<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/methodscount-samples-01.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -193,8 +192,7 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="https://mmbiz.qlogo.cn/mmbiz_png/GSIuO9kJrrXEt0EqMBtsMdD844vLTeKvItAEkMLdu03BOuj8TN1gSEcl1pNoicnm9Y5uR0L53UoP34eMwcniaEOg/0?wx_fmt=png" alt=""></p>
-<p>随着安卓平台的不断发展与壮大，市场上大而全的应用比比皆是，产品需求的变更累积和UI交互的极致追求，除了 resources 文件的俱增，在 Android Project 中依赖的 Library 和 自己写的 Java 代码也会越来越多。这些变化，除了会导致打包出的 APK 文件越来越大之外，当项目中java代码包含的方法数（method count）超出一个峰值时，编译过程中就会出现如下错误：</p>
+        <p>随着安卓平台的不断发展与壮大，市场上大而全的应用比比皆是，产品需求的变更累积和UI交互的极致追求，除了 resources 文件的俱增，在 Android Project 中依赖的 Library 和 自己写的 Java 代码也会越来越多。这些变化，除了会导致打包出的 APK 文件越来越大之外，当项目中java代码包含的方法数（method count）超出一个峰值时，编译过程中就会出现如下错误：</p>
 <a id="more"></a>
 <p>较早版本的编译系统中，错误内容如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Conversion to Dalvik format failed:</span><br><span class="line">Unable to execute dex: method ID not in [<span class="number">0</span>, <span class="number">0xffff</span>]: <span class="number">65536</span></span><br></pre></td></tr></table></figure>
