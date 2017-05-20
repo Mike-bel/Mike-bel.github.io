@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://yifeng.studio">
   <title>Android Toolbar，你想知道的都在这里了 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Android 3.0之后，Google引入了ActionBar，想统一安卓应用的导航栏样式。但由于ActionBar难以定制，很大程度上限制了开发人员，比如标题文字大小、间距等不易实现个性化，很多开发者放弃了ActionBar的使用，而是使用普通的ViewGroup来封装自己的App Bar，或者使用JakeWharton大神的ActionBarSherlock库。">
+  <meta name="description" content="Android 3.0之后，Google引入了ActionBar，想统一安卓应用的导航栏样式。但由于ActionBar难以定制，很大程度上限制了开发人员，比如标题文字大小、间距等不易实现个性化，很多开发者放弃了ActionBar的使用，而是使用普通的ViewGroup来封装自己的App Bar，或者使用 JakeWharton大神 的 ActionBarSherlock 库。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android Toolbar，你想知道的都在这里了">
 <meta property="og:url" content="http://yifeng.studio/2016/10/12/android-toolbar/index.html">
 <meta property="og:site_name" content="YiFeng's Zone">
-<meta property="og:description" content="Android 3.0之后，Google引入了ActionBar，想统一安卓应用的导航栏样式。但由于ActionBar难以定制，很大程度上限制了开发人员，比如标题文字大小、间距等不易实现个性化，很多开发者放弃了ActionBar的使用，而是使用普通的ViewGroup来封装自己的App Bar，或者使用JakeWharton大神的ActionBarSherlock库。">
+<meta property="og:description" content="Android 3.0之后，Google引入了ActionBar，想统一安卓应用的导航栏样式。但由于ActionBar难以定制，很大程度上限制了开发人员，比如标题文字大小、间距等不易实现个性化，很多开发者放弃了ActionBar的使用，而是使用普通的ViewGroup来封装自己的App Bar，或者使用 JakeWharton大神 的 ActionBarSherlock 库。">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/toolbar-sample-01.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/toolbar-sample-02.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/toolbar-sample-04.png">
@@ -22,10 +22,10 @@
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/toolbar-sample-05.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/toolbar-sample-06.png">
 <meta property="og:image" content="https://github.com/alexstyl/Material-SearchTransition/blob/art/transition-to-search.gif?raw=true">
-<meta property="og:updated_time" content="2017-05-06T14:22:42.000Z">
+<meta property="og:updated_time" content="2017-05-10T13:50:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Toolbar，你想知道的都在这里了">
-<meta name="twitter:description" content="Android 3.0之后，Google引入了ActionBar，想统一安卓应用的导航栏样式。但由于ActionBar难以定制，很大程度上限制了开发人员，比如标题文字大小、间距等不易实现个性化，很多开发者放弃了ActionBar的使用，而是使用普通的ViewGroup来封装自己的App Bar，或者使用JakeWharton大神的ActionBarSherlock库。">
+<meta name="twitter:description" content="Android 3.0之后，Google引入了ActionBar，想统一安卓应用的导航栏样式。但由于ActionBar难以定制，很大程度上限制了开发人员，比如标题文字大小、间距等不易实现个性化，很多开发者放弃了ActionBar的使用，而是使用普通的ViewGroup来封装自己的App Bar，或者使用 JakeWharton大神 的 ActionBarSherlock 库。">
 <meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/toolbar-sample-01.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
@@ -195,7 +195,7 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Android 3.0之后，Google引入了ActionBar，想统一安卓应用的导航栏样式。但由于ActionBar难以定制，很大程度上限制了开发人员，比如标题文字大小、间距等不易实现个性化，很多开发者放弃了ActionBar的使用，而是使用普通的ViewGroup来封装自己的App Bar，或者使用<a href="https://github.com/JakeWharton" target="_blank" rel="external">JakeWharton大神</a>的<a href="https://github.com/JakeWharton/ActionBarSherlock" target="_blank" rel="external">ActionBarSherlock</a>库。</p>
+        <p>Android 3.0之后，Google引入了ActionBar，想统一安卓应用的导航栏样式。但由于ActionBar难以定制，很大程度上限制了开发人员，比如标题文字大小、间距等不易实现个性化，很多开发者放弃了ActionBar的使用，而是使用普通的ViewGroup来封装自己的App Bar，或者使用 <a href="https://github.com/JakeWharton" target="_blank" rel="external">JakeWharton大神</a> 的 <a href="https://github.com/JakeWharton/ActionBarSherlock" target="_blank" rel="external">ActionBarSherlock</a> 库。</p>
 <a id="more"></a>
 <p>后来，自2014年Google I/O 上Material Design横空出世后，市场上的应用又逐步趋向了样式的风格统一，support library中很快就出来了Toolbar控件，一个定制化的ViewGroup，来完善ActionBar的使用，App Bar又迎来了春天。</p>
 <h1 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h1><hr>
@@ -231,6 +231,10 @@ ga('send', 'pageview');
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"OverFlowMenuTheme"</span> <span class="attr">parent</span>=<span class="string">"Theme.AppCompat.NoActionBar"</span>&gt;</span><span class="xml"></span><br><span class="line">    <span class="comment">&lt;!-- 设置Menu菜单的背景色 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:itemBackground"</span>&gt;</span>@android:color/white<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 设置Menu菜单的字体颜色 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:textColorPrimary"</span>&gt;</span>@android:color/black<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 设置Menu窗口不覆盖Toolbar视图 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"overlapAnchor"</span>&gt;</span>false<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>这样设置下的效果如下图所示：</p>
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/toolbar-sample-04.png" alt="toolbar-sample-04.png"></p>
+<p>另外，也可以获取 MenuItem 对象，然后通过如下方法设置 Item 的显示与隐藏：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MenuItem item = menu.findItem(R.id.action_search);</span><br><span class="line">item.setVisible(<span class="keyword">false</span>);</span><br></pre></td></tr></table></figure>
+<p>或者直接移除所有 Item 内容：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">menu.clear();</span><br></pre></td></tr></table></figure>
 <h1 id="ActionMenuView"><a href="#ActionMenuView" class="headerlink" title="ActionMenuView"></a>ActionMenuView</h1><hr>
 <p><code>Toolbar</code> 默认将 Menu 内容显示在右边，那如何将其显示在左边或者中间呢？不妨试一下 <code>ActionMenuView</code> 。</p>
 <p><code>ActionMenuView</code> 是将原本位于 <code>Toolbar</code> 或者 <code>ActionBar</code> 中的 Menu 内容移到自己的名下，以 <code>ViewGroup</code> 的姿态将一系列的 Menu Item 囊括其中，再将自己搁置于 <code>Toolbar</code> 容器中，这样，更方便于管理和呈现 Menu 内容。所以，原本孤立的 <code>Toolbar</code> 控件，就有了一个 Child，代码如下：</p>
@@ -621,19 +625,19 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Gradle</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Mac</a>
+                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Mac</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -167,6 +167,115 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-android-studio-duplicate-introduce-jar" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/20/android-studio-duplicate-introduce-jar/">有关 Android Studio 重复引入包的问题和解决方案</a>
+    </h1>
+  
+
+        
+        <a href="/2017/05/20/android-studio-duplicate-introduce-jar/" class="archive-article-date">
+  	<time datetime="2017-05-20T14:44:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>随着产品功能需求的增加，我们开发的安卓项目不得不入引入越来越多的第三方库。这些三方库可能以 Jar 包的形式放置在 libs 目录下，可能以 Gradle 远程依赖的形式下载引入，也可能是以 Library Module 的形式放置在工程目录下，等等。</p>
+<p>随之而来的问题是，复杂的依赖关系很可能导致重复引入包的问题。比较常见的使用场景就是 support-v4 包的重复引入。这样就会导致，执行 Run 操作打包生成 Apk 文件时出现类似这样的 DexException 错误提示，导致编译失败：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Error:Execution failed <span class="keyword">for</span> task <span class="string">':app:transformClassesWithDexForDebug'</span>.</span><br><span class="line">&gt; com.android.build.api.transform.TransformException: com.android.ide.common.process.ProcessException: java.util.concurrent.ExecutionException: com.android.dex.DexException: Multiple dex files define Landroid/support/v4/app/ActivityCompatHoneycomb;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">有多种使用场景会出现这种问题。根据解决方案的不同，大体上可以分为两种：本地 Jar 包重复嵌入和 Gradle 远程重复依赖。</span><br><span class="line"></span><br><span class="line">第一种，比较好理解。比如 app <span class="keyword">module</span> 与 library <span class="keyword">module</span> 各自 libs 目录中嵌入了相同的 Jar 包。这种情况也比较好解决，只需要将 app <span class="keyword">module</span> 下的重复 jar 包删除即可。</span><br><span class="line"></span><br><span class="line">第二种，稍微复杂一点。比如对于 Gradle 远程依赖的两个第三方库，他们内部同时依赖相同的另一个辅助第三方库。这个时候我们就没办法像第一种情况那样手动删除本地文件。好在 Gradle 插件提供了相应的解决方案，即使用 exclude group 语法，如：</span><br><span class="line"></span><br><span class="line">```xml</span><br><span class="line">compile <span class="string">'com.yifeng.example:example-1:1.0'</span></span><br><span class="line">compile <span class="string">'com.yifeng.example:example-2:1.0'</span>&#123;</span><br><span class="line">    exclude group: <span class="string">'com.android.support:support-v4:21.0.0'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如例子中所示，远程依赖的第三方库 example-1 与 example-2 内部同时引入 support-v4 包，那么只需要在其中一个的引入地方添加 exclude group 语句，将相同引入的 v4 包剔除在外即可。</p>
+<p>以上两种场景算是比较好处理的。还有一种特殊情况，就是不同第三方库内部出现相同包名相同文件名的 java 类。这种情况出现的概率很低，但是不幸的是我在工作中就遇见过。</p>
+<p>当时项目中引入的 <a href="http://dev.umeng.com/analytics/android-doc/integration" target="_blank" rel="external">友盟统计</a> 和 <a href="http://dev.10086.cn/wiki/?p5_01_01-&amp;from=homezd04" target="_blank" rel="external">移动统一认证</a> 的 SDK 出现重复引入问题，执行 Run 操作编译打包时出现 duplicate entry 错误，如图：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1495288914.png" alt=""></p>
+<p>通过错误提示，很容易就找到错误出处，我们看下两个 SDK 中的 jar 包源码：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1495288901.png" alt="友盟统计 SDK"></p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1495288920.png" alt="移动统一认证 SDK"></p>
+<p>虽然相同包名相同类名的文件在不同 SDK 中出现的概率极低，但是一旦出现，处理起来就比较棘手。最好的解决方案就是联系提供 SDK 的技术人员反映问题，让其通过修改源码重新打包一个新的 Jar 包。</p>
+<p>还有一个解决办法就是，重新命名 Jar 包里的包名或者文件名。网上也有一个工具：<strong>jarjar.jar</strong>，可以帮助我们重命名包名和文件名，以及 Jar 包中的相关代码引用路径。参考地址如下：</p>
+<ul>
+<li><p>GitHub 源码：<a href="https://github.com/shevek/jarjar" target="_blank" rel="external">https://github.com/shevek/jarjar</a></p>
+</li>
+<li><p>Jar 文件下载：<a href="https://code.google.com/archive/p/jarjar/downloads" target="_blank" rel="external">https://code.google.com/archive/p/jarjar/downloads</a></p>
+</li>
+</ul>
+<p>该工具提供有多种使用方式，最简单实用的就是通过命令行使用。举个例子，打开命令行工具，执行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar jarjar-1.4.jar process rule.txt example.jar example_output.jar</span><br></pre></td></tr></table></figure>
+<p>其中，rule.txt 是包含重命名规则的文件，内容如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rule p.rn.asm.** com.yifeng.example.@<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>我们看一下重命名前后 Jar 包内容的代码对比图：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1495016140.png" alt=""><br><img src="http://ocq7gtgqu.bkt.clouddn.com/1495016130.jpg" alt=""></p>
+<p>可以看到，不仅包名改变，Jar 包中的相关类引用路径也自动改变。这种 Jar 包重命名的方式虽然能解决重复引入包的问题，但不是长久之计，需要后续持续关注 SDK 的升级替换。</p>
+<p>不同 Jar 包包含相同文件（路径也相同）的情况还有一种，就是 duplicate files 错误。多个 Jar 包包含重复的文件。这种情况在网上看到过，出自 <a href="http://stackoverflow.com/questions/31912459/duplicate-lib-file-copied-in-apk-meta-inf-license-txt-error-in-android-studio" target="_blank" rel="external">StackOverFlow</a>，错误提示类似：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Error:duplicate files during packaging of APK E:\Code\iDoc\app\build\outputs\apk\app-debug-unaligned.apk</span><br><span class="line">    Path in archive: META-INF/license.txt</span><br><span class="line">    Origin <span class="number">1</span>: E:\Code\iDoc\app\libs\spring-core-<span class="number">3.1</span>.0.RELEASE.jar</span><br><span class="line">    Origin <span class="number">2</span>: E:\Code\iDoc\app\libs\spring-web-<span class="number">3.1</span>.0.RELEASE.jar</span><br><span class="line">You can ignore those files in your build.gradle:</span><br><span class="line">    android &#123;</span><br><span class="line">      packagingOptions &#123;</span><br><span class="line">        exclude <span class="string">'META-INF/license.txt'</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到，解决方案已经在错误提示中有给出，使用 packagingOptions 配置的 exclude 语句删除重复文件即可，比如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">packagingOptions &#123;</span><br><span class="line">        exclude 'META-INF/DEPENDENCIES'</span><br><span class="line">        exclude 'META-INF/NOTICE'</span><br><span class="line">        exclude 'META-INF/LICENSE'</span><br><span class="line">        exclude 'META-INF/LICENSE.txt'</span><br><span class="line">        exclude 'META-INF/NOTICE.txt'</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>最后再补充一点，关于 Gradle 依赖的 Scope 问题。通常依赖某个第三方库我们使用的都是 <strong>compile</strong> 关键字，实际上，还有一个 <strong>Provided</strong> 关键字偶尔也会用到。</p>
+<p>打开 Project Structure，查看 Modules 的 Dependencies 内容时，可以看到每一个依赖项的右边有个 Scope 选项：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1495288591.png" alt=""></p>
+<p>compile 表示依赖的第三方库在工程编译阶段、测试阶段和 Apk 运行阶段都需要使用到；而 provided 表示该第三方库仅仅是在编译阶段和测试阶段使用到，不会出现在运行阶段，即表示不会打包到最终的 apk 文件中去，目标运行环境已经包含有该第三方库。（貌似 Dagger2 的使用可能会涉及到这个问题。）</p>
+<p>关于 Scope 的详细介绍，可以参考文章：<a href="https://sinking.in/blog/provided-scope-in-gradle/" target="_blank" rel="external">PROVIDED SCOPE IN GRADLE</a>。</p>
+
+      
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Android Studio</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Android/" class="article-tag-list-link color3">Android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/05/20/android-studio-duplicate-introduce-jar/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-android-7-0-compat-fileprovider" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -552,83 +661,6 @@ ga('send', 'pageview');
 
 
   
-    <article id="post-the-difference-between-getWidth-and-getMeasuredWidth" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/">从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处</a>
-    </h1>
-  
-
-        
-        <a href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/" class="archive-article-date">
-  	<time datetime="2017-03-29T23:35:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>之前不是写了篇名为 <a href="http://yifeng.studio/2017/03/21/android-obtain-view-width-and-heigth-not-zero/">Android 获取 View 宽高的常用正确方式，避免为零</a> 的总结性文章嘛，在结尾简单阐述 measuredWidth 与 width 的区别。考虑到文章的重点，简单几笔带过。没曾想，引发一些争论，大家对 View 的这两对宽高属性理解各有异议。于是便想追根溯源，通过解读源码的方式说明一下，消除许多人的误解。</p>
-        
-          <a class="article-more-a" href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/#more">more >></a>
-        
-      
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
     <article id="post-android-tint" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -692,6 +724,83 @@ ga('send', 'pageview');
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/03/30/android-tint/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
+    <article id="post-the-difference-between-getWidth-and-getMeasuredWidth" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/">从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/" class="archive-article-date">
+  	<time datetime="2017-03-29T23:35:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>之前不是写了篇名为 <a href="http://yifeng.studio/2017/03/21/android-obtain-view-width-and-heigth-not-zero/">Android 获取 View 宽高的常用正确方式，避免为零</a> 的总结性文章嘛，在结尾简单阐述 measuredWidth 与 width 的区别。考虑到文章的重点，简单几笔带过。没曾想，引发一些争论，大家对 View 的这两对宽高属性理解各有异议。于是便想追根溯源，通过解读源码的方式说明一下，消除许多人的误解。</p>
+        
+          <a class="article-more-a" href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/#more">more >></a>
+        
+      
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Android/" class="article-tag-list-link color3">Android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/">展开全文 >></a>
         </p>
       
 
@@ -860,83 +969,6 @@ ga('send', 'pageview');
 
 
   
-    <article id="post-android-image-picker-by-system-app" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/19/android-image-picker-by-system-app/">Android 调用系统功能实现图片选择器，你可能会遇到的问题汇总</a>
-    </h1>
-  
-
-        
-        <a href="/2017/03/19/android-image-picker-by-system-app/" class="archive-article-date">
-  	<time datetime="2017-03-19T09:19:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>图片选择器在手机应用中屡见不鲜，设置头像、聊天传图等常见类似场景都需要使用。为了保持不同设备上体验的一致性和较好的兼容性，比较稳妥的做法是在应用内自实现相机拍照、相册选图和图片裁剪功能。但是，这个实现过程比较复杂，费时费力。更多时候，或者说在项目初期，我们都会选择直接调用系统提供的这些功能来完成一个图片选择器。然而，由于安卓设备的多样性，总会遇到各种各样的兼容问题。本文就来总结总结，调用系统相机、相册和裁剪功能实现图片选择器的过程中，我们需要注意的一些地方。</p>
-        
-          <a class="article-more-a" href="/2017/03/19/android-image-picker-by-system-app/#more">more >></a>
-        
-      
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/19/android-image-picker-by-system-app/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1057,19 +1089,19 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Gradle</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Mac</a>
+                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Mac</a>
               </li>
              
               <li class="article-tag-list-item">
