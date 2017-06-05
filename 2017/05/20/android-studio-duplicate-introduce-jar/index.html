@@ -20,7 +20,7 @@
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1495016140.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1495016130.jpg">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1495288591.png">
-<meta property="og:updated_time" content="2017-05-20T14:56:01.000Z">
+<meta property="og:updated_time" content="2017-06-05T03:24:17.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="有关 Android Studio 重复引入包的问题和解决方案">
 <meta name="twitter:description" content="随着产品功能需求的增加，我们开发的安卓项目不得不入引入越来越多的第三方库。这些三方库可能以 Jar 包的形式放置在 libs 目录下，可能以 Gradle 远程依赖的形式下载引入，也可能是以 Library Module 的形式放置在工程目录下，等等。">
@@ -196,8 +196,15 @@ ga('send', 'pageview');
         <p>随着产品功能需求的增加，我们开发的安卓项目不得不入引入越来越多的第三方库。这些三方库可能以 Jar 包的形式放置在 libs 目录下，可能以 Gradle 远程依赖的形式下载引入，也可能是以 Library Module 的形式放置在工程目录下，等等。</p>
 <a id="more"></a>
 <p>随之而来的问题是，复杂的依赖关系很可能导致重复引入包的问题。比较常见的使用场景就是 support-v4 包的重复引入。这样就会导致，执行 Run 操作打包生成 Apk 文件时出现类似这样的 DexException 错误提示，导致编译失败：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Error:Execution failed <span class="keyword">for</span> task <span class="string">':app:transformClassesWithDexForDebug'</span>.</span><br><span class="line">&gt; com.android.build.api.transform.TransformException: com.android.ide.common.process.ProcessException: java.util.concurrent.ExecutionException: com.android.dex.DexException: Multiple dex files define Landroid/support/v4/app/ActivityCompatHoneycomb;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">有多种使用场景会出现这种问题。根据解决方案的不同，大体上可以分为两种：本地 Jar 包重复嵌入和 Gradle 远程重复依赖。</span><br><span class="line"></span><br><span class="line">第一种，比较好理解。比如 app <span class="keyword">module</span> 与 library <span class="keyword">module</span> 各自 libs 目录中嵌入了相同的 Jar 包。这种情况也比较好解决，只需要将 app <span class="keyword">module</span> 下的重复 jar 包删除即可。</span><br><span class="line"></span><br><span class="line">第二种，稍微复杂一点。比如对于 Gradle 远程依赖的两个第三方库，他们内部同时依赖相同的另一个辅助第三方库。这个时候我们就没办法像第一种情况那样手动删除本地文件。好在 Gradle 插件提供了相应的解决方案，即使用 exclude group 语法，如：</span><br><span class="line"></span><br><span class="line">```xml</span><br><span class="line">compile <span class="string">'com.yifeng.example:example-1:1.0'</span></span><br><span class="line">compile <span class="string">'com.yifeng.example:example-2:1.0'</span>&#123;</span><br><span class="line">    exclude group: <span class="string">'com.android.support:support-v4:21.0.0'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如例子中所示，远程依赖的第三方库 example-1 与 example-2 内部同时引入 support-v4 包，那么只需要在其中一个的引入地方添加 exclude group 语句，将相同引入的 v4 包剔除在外即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Error:Execution failed <span class="keyword">for</span> task <span class="string">':app:transformClassesWithDexForDebug'</span>.</span><br><span class="line">&gt; com.android.build.api.transform.TransformException: com.android.ide.common.process.ProcessException: java.util.concurrent.ExecutionException: com.android.dex.DexException: Multiple dex files define Landroid/support/v4/app/ActivityCompatHoneycomb;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">有多种使用场景会出现这种问题。根据解决方案的不同，大体上可以分为两种：本地 Jar 包重复嵌入和 Gradle 远程重复依赖。</span><br><span class="line"></span><br><span class="line">第一种，比较好理解。比如 app <span class="keyword">module</span> 与 library <span class="keyword">module</span> 各自 libs 目录中嵌入了相同的 Jar 包。这种情况也比较好解决，只需要将 app <span class="keyword">module</span> 下的重复 jar 包删除即可。</span><br><span class="line"></span><br><span class="line">第二种，稍微复杂一点。比如对于 Gradle 远程依赖的两个第三方库，他们内部同时依赖相同的另一个辅助第三方库。这个时候我们就没办法像第一种情况那样手动删除本地文件。好在 Gradle 插件提供了相应的解决方案，即使用 exclude 语法，如：</span><br><span class="line"></span><br><span class="line">```xml</span><br><span class="line">compile <span class="string">'com.yifeng.example:example-1:1.0'</span></span><br><span class="line">compile (<span class="string">'com.yifeng.example:example-2:1.0'</span>) &#123;</span><br><span class="line">    exclude group: <span class="string">'com.android.support'</span>, <span class="keyword">module</span>: <span class="string">'support-v4'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如例子中所示，远程依赖的第三方库 example-1 与 example-2 内部同时引入 support-v4 包，那么只需要在其中一个的引入地方添加 exclude 语句，根据 group 和 module 过滤规则，将相同引入的 v4 包剔除在外即可。</p>
+<p>当需要在一个依赖中去除多个递归依赖项时，可以使用多条 exclude 语句，比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">compile (&apos;com.wdullaer:materialdatetimepicker:3.2.2&apos;) &#123;</span><br><span class="line">    exclude group: &apos;com.android.support&apos;, module: &apos;support-v4&apos;</span><br><span class="line">    exclude group: &apos;com.android.support&apos;, module: &apos;design&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还有一种更简单的写法，使用 Groove 语言的循环语句，模板如下（同样适用于 module 规则）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">compile() &#123; dep -&gt;</span><br><span class="line">    [group1, group2].each&#123; group -&gt; dep.exclude group: group &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于上面的例子，便可以改造成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">compile() &#123; dep -&gt;</span><br><span class="line">    [&apos;support-v4&apos;, &apos;support-v13&apos;, &apos;design&apos;].each&#123; module -&gt; dep.exclude module: module &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>更多细节，参考：<a href="https://docs.gradle.org/current/javadoc/org/gradle/api/artifacts/ModuleDependency.html#exclude(java.util.Map" target="_blank" rel="external">ModuleDependency</a>)。</p>
 <p>以上两种场景算是比较好处理的。还有一种特殊情况，就是不同第三方库内部出现相同包名相同文件名的 java 类。这种情况出现的概率很低，但是不幸的是我在工作中就遇见过。</p>
 <p>当时项目中引入的 <a href="http://dev.umeng.com/analytics/android-doc/integration" target="_blank" rel="external">友盟统计</a> 和 <a href="http://dev.10086.cn/wiki/?p5_01_01-&amp;from=homezd04" target="_blank" rel="external">移动统一认证</a> 的 SDK 出现重复引入问题，执行 Run 操作编译打包时出现 duplicate entry 错误，如图：</p>
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/1495288914.png" alt=""></p>
@@ -228,6 +235,12 @@ ga('send', 'pageview');
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/1495288591.png" alt=""></p>
 <p>compile 表示依赖的第三方库在工程编译阶段、测试阶段和 Apk 运行阶段都需要使用到；而 provided 表示该第三方库仅仅是在编译阶段和测试阶段使用到，不会出现在运行阶段，即表示不会打包到最终的 apk 文件中去，目标运行环境已经包含有该第三方库。（貌似 Dagger2 的使用可能会涉及到这个问题。）</p>
 <p>关于 Scope 的详细介绍，可以参考文章：<a href="https://sinking.in/blog/provided-scope-in-gradle/" target="_blank" rel="external">PROVIDED SCOPE IN GRADLE</a>。</p>
+<p>相关拓展阅读：</p>
+<ul>
+<li><a href="https://docs.gradle.org/current/dsl/org.gradle.api.artifacts.ResolutionStrategy.html" target="_blank" rel="external">ResolutionStrategy</a></li>
+<li><a href="https://docs.gradle.org/current/userguide/dependency_management.html" target="_blank" rel="external">Dependency Management</a></li>
+<li><a href="http://www.paincker.com/gradle-dependencies" target="_blank" rel="external">Gradle依赖项学习总结，dependencies、transitive、force、exclude的使用与依赖冲突解决</a></li>
+</ul>
 
       
 
@@ -291,7 +304,7 @@ ga('send', 'pageview');
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Android Studio</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android Studio, Gradle</a>
         		</li>
       		
 		</ul>
@@ -530,11 +543,15 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+                <a href="javascript:void(0)" class="js-tag color3">Android Studio, Gradle</a>
               </li>
              
               <li class="article-tag-list-item">
