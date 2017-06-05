@@ -16,7 +16,7 @@
 <meta property="og:description" content="在 Windows 系统下配置环境变量较为简单，全程都在图形化界面中完成，而在 Mac OS X 系统下相对来说就复杂很多，全程依赖于终端工具，需要使用到各种 Linux 命令。本文以 Android SDK 中的 adb 工具为例，详细描述一下如何在 Mac 系统中配置环境变量。">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/mac-path-samples-01.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/mac-path-samples-02.png">
-<meta property="og:updated_time" content="2016-11-08T11:58:22.000Z">
+<meta property="og:updated_time" content="2017-05-23T14:02:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mac OS X 系统的环境变量配置">
 <meta name="twitter:description" content="在 Windows 系统下配置环境变量较为简单，全程都在图形化界面中完成，而在 Mac OS X 系统下相对来说就复杂很多，全程依赖于终端工具，需要使用到各种 Linux 命令。本文以 Android SDK 中的 adb 工具为例，详细描述一下如何在 Mac 系统中配置环境变量。">
@@ -217,6 +217,16 @@ ga('send', 'pageview');
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> .bash_profile</span><br></pre></td></tr></table></figure>
 <p>然后，就可以正常使用了，比如执行 <code>adb devices</code> 查看已连接的设备列表，再也不用四处 <code>cd</code> 啦。补充一点，通过 <code>echo $PATH</code> 命令可以查看当前用户所能使用的环境变量，如：</p>
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/mac-path-samples-02.png" alt="mac-path-samples-02.png"></p>
+<p>再举一个常见的例子：Gradle 环境变量的配置。</p>
+<p>通常使用  Android Studio 作为 IDE 的安卓工程在根目录下面都有一个可执行的 gradlew 文件，里面会内置一些 gradle 命令供开发人员使用，使用时只需要借助 <code>./gradlew</code> 命令操作即可。</p>
+<p>然而功能有限，更多的 Gradle 命令还是需要借助 gradle 插件实现。可执行的 gradle 程序位于预先下载好的系统目录中，如果每次使用时都先 cd 到指定目录的话，显然很麻烦。为了方便起见，最好也需要配置一下 gradle 环境变量。</p>
+<p>操作步骤和前面的一样，我们只需要找到 gradle 的下载目录即可。比如在我的 Mac 上，gradle 目录如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/Users/xianfeng/.gradle/wrapper/dists/gradle-3.3-all/55gk2rcmfc6p2dg9u9ohc3hw9/gradle-3.3/bin</span><br></pre></td></tr></table></figure>
+<p>当然也可以选择 gradle 的其他版本，这里只是举个例子。将这个路径添加到 <code>.bash_profile</code> 文件中即可，结合前面 adb 的配置，内容如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=/Users/xianfeng/Develop/SDK/platform-tools:/Users/xianfeng/.gradle/wrapper/dists/gradle-3.3-all/55gk2rcmfc6p2dg9u9ohc3hw9/gradle-3.3/bin:<span class="variable">$&#123;PATH&#125;</span></span><br></pre></td></tr></table></figure>
+<p>配置完成，并使之见效后，便可以使用 <code>gradle</code> 命令啦，比如在当前项目根目录下使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle dependencies</span><br></pre></td></tr></table></figure>
+<p>即可查看项目中的依赖关系。</p>
 
       
 
@@ -528,15 +538,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Gradle</a>
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -544,11 +550,15 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Mac</a>
+                <a href="javascript:void(0)" class="js-tag color2">Gradle</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Mac</a>
               </li>
              
               <li class="article-tag-list-item">
