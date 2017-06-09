@@ -14,7 +14,7 @@
 <meta property="og:url" content="http://yifeng.studio/2017/05/03/android-7-0-compat-fileprovider/index.html">
 <meta property="og:site_name" content="YiFeng's Zone">
 <meta property="og:description" content="由于 Android 7.0 或更高版本的系统在国内手机市场上的占比不是很高，很多 Android 开发人员并没有做 7.0 适配工作，同时测试人员也容易忽视这方面的兼容问题。这导致 7.0 及以上版本的手机用户在使用到应用部分功能时可能出现 App 崩溃闪退。其中，大部分原因都是由项目中使用到 file:// 类型的 URI 所引发的。本文我们便来一探究竟。">
-<meta property="og:updated_time" content="2017-05-05T08:40:58.000Z">
+<meta property="og:updated_time" content="2017-06-09T03:51:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于 Android 7.0 适配中 FileProvider 部分的总结">
 <meta name="twitter:description" content="由于 Android 7.0 或更高版本的系统在国内手机市场上的占比不是很高，很多 Android 开发人员并没有做 7.0 适配工作，同时测试人员也容易忽视这方面的兼容问题。这导致 7.0 及以上版本的手机用户在使用到应用部分功能时可能出现 App 崩溃闪退。其中，大部分原因都是由项目中使用到 file:// 类型的 URI 所引发的。本文我们便来一探究竟。">
@@ -271,6 +271,8 @@ ga('send', 'pageview');
 <p>还记得 6.0 运行时权限问题吗？如果你不想处理运行时权限事宜的话，只需要在 build.gradle 文件中将 targetSdkVersion 的值设为 23 以下即可。</p>
 <p>同样的，只要 targetSdkVersion 值小于 24，File URI 的使用依旧可以出现在 7.0 及以上版本的设备中。不过需要注意的是，如前面所述，调用系统裁剪功能比较特殊，可能会出现一些问题。</p>
 <p>虽然 Google 在每次发布新版 Android 系统时，都提供这种设置 targetSdkVersion 的方式兼容旧版本，但只是一种临时解决方案，并不推荐大家使用这种技巧绕开新版本的适配问题。要知道，新出现的 API 改变一定是在解决过去存在的系统问题，是一种进步的表现。遵循规范，是我们每个开发人员开发时都应铭记于心的格言。</p>
+<p><strong>补充</strong>：就在完成这篇文章之后的一个月，无意间发现博客大神「鸿洋」也针对 7.0 FileProvider 问题著有一篇。一番观摩之后，发现该文章的细节分析更加到位，值得后续写技术类博客时反思改进。博客地址：</p>
+<p><a href="http://blog.csdn.net/lmj623565791/article/details/72859156" target="_blank" rel="external">Android 7.0 行为变更 通过FileProvider在应用间共享文件吧</a></p>
 
       
 
@@ -578,7 +580,7 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -586,7 +588,7 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
