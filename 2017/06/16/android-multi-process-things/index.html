@@ -17,7 +17,7 @@
 <meta property="og:description" content="引言
 不知道大家在平时的开发中有没有遇到这样一个问题：自定义的 Application 在应用启动的时候多次创建，或者在使用到某个功能的时候 Application 再次创建。换句话说，Application 的 onCreate() 方法被调用了两次甚至多次。">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1497627202.png">
-<meta property="og:updated_time" content="2017-06-16T15:39:33.000Z">
+<meta property="og:updated_time" content="2017-06-16T16:24:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 中的多进程，你值得了解的一些知识">
 <meta name="twitter:description" content="引言
@@ -194,22 +194,22 @@ ga('send', 'pageview');
         <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><hr>
 <p>不知道大家在平时的开发中有没有遇到这样一个问题：自定义的 Application 在应用启动的时候多次创建，或者在使用到某个功能的时候 Application 再次创建。换句话说，Application 的 onCreate() 方法被调用了两次甚至多次。</p>
 <a id="more"></a>
-<p>通常，我们会在 Application 里做一些应用的初始化工作。如果 Application 初始化多次的话，就会带来一些不容易发现的问题。比如，描述一个我曾经接手到的项目中遇到的问题：</p>
+<p>通常，我们会在 Application 里做一些应用的初始化工作。如果 Application 被多次创建的话，就会带来一些不容易发现的潜在问题。举个真实的例子，一个我曾经接手到的项目中遇到的问题：</p>
 <p>工程中嵌入了极光推送 SDK，并且为之单独分配了一个进程（如何分配，后面会讲道）。Application 中有一些初始化的工作，其中包括一个与服务器端的网络通信请求。当时并没有注意到多进程，也就没有在 Application 中对进程做区分。这样就会出现一个问题：</p>
-<p>有时候，我们的应用并没有启动，而其他也嵌入有极光推送 SDK的应用，由于互相拉起机制，会激活我们应用中极光推送注册的服务所处的进程，Application 被创建，导致 onCreate() 方法中的初始化工作被执行，其中，就包括那个网络通信。如果一旦请求失败，比如网络出错啊，就会弹出 Toast 错误提示。那这就很奇怪了，不说自己应用有什么问题，莫名飞来一个错误提示，给用户的体验就不好啦。</p>
-<p>像这种问题，还不太好测试，进程间的互相拉起，再加上网络通信错误而发生 UI 上的变化，条件苛刻，很难复现。其实只需要我们在开发中稍微注意一下多进程的问题，就可以很容易地避免这种问题。下面就来聊聊多进程的来龙去脉。</p>
+<p>有时候，应用并没有启动，而手机上其他嵌入有极光推送 SDK的应用，由于互相拉起机制，会激活我们应用中极光推送注册的服务所处的进程，Application 随即被创建，导致 onCreate() 方法中的初始化工作被执行。其中，就包括那个网络请求。而且如果一旦请求失败，比如网络出错啊，就会弹出 Toast 错误提示。那这就很奇怪了，虽然不会带来实际性的功能问题，但是使用在玩手机时莫名弹出一个错误提示，这种体验就不好啦。</p>
+<p>像这种问题，还不太好测试，进程间的互相拉起，再加上网络通信错误而发生 UI 上的变化，条件苛刻，很难复现。但其实只要我们在开发中稍微注意一下多进程的问题，就可以很容易地避免这种问题。下面就来聊聊多进程的来龙去脉。</p>
 <h1 id="关于进程"><a href="#关于进程" class="headerlink" title="关于进程"></a>关于进程</h1><hr>
 <p>大家知道，一个应用中通常包含多个线程，用于处理耗时任务，防止 ANR 之类的错误。但是一个应用其实也能包含多个进程，只是一般用不到而已。</p>
 <p>由于 Android 系统特有的机制，会为每个 App 单独分配一个进程，同时赋予一定大小的内存供其使用。这样，进程之间，或者说 App 之间都是独立运行的，彼此不会互相影响。比如，不会发生某一个 App 崩溃出错导致其他 App 也跟着无法使用的状况。</p>
-<p>那么这么多进程争夺系统系统资源，而系统资源是有限的，怎么办呢？别急，有进程优先级。当系统内存资源不足时，为了保证高优先级的进程能够顺畅使用，那些低优先级的进程很容易被系统杀掉，释放资源。更多进程优先级的知识，可以阅读文章末尾的参考链接。</p>
-<h1 id="为什么使用多进程"><a href="#为什么使用多进程" class="headerlink" title="为什么使用多进程"></a>为什么使用多进程</h1><hr>
-<p>通常，我们应用中的 Activity、Service 等四大组件默认都位于一个进程里面，并且这个进程名就是我们给应用定义的包名。既然有了一个默认的进程，为什么还要使用多进程呢？</p>
-<p>前面我们说道，系统为每个进程分配的内存是有限的，比如以前的手机常见是 16M，现在的机器更多一些，32M、48M，甚至更高。但是，总是有限的，毕竟一个手机出厂之后 RAM 的大小就定了，总是无法满足所有应用的需求。</p>
-<p>当然，你可以在 Application 中使用 largeHeap 属性为自己应用的进程争取分配更大的内存，就像这样：</p>
+<p>那么这么多进程争夺系统内存等资源，而系统资源是有限的，怎么办呢？别急，有进程优先级。当系统内存资源不足时，为了保证高优先级的进程能够顺畅使用，那些低优先级的进程很容易被系统杀掉，从而释放资源。更多进程优先级的知识，可以阅读文章末尾的参考链接。</p>
+<h1 id="为什么要使用多进程"><a href="#为什么要使用多进程" class="headerlink" title="为什么要使用多进程"></a>为什么要使用多进程</h1><hr>
+<p>通常，我们应用中的 Activity、Service 等四大组件默认都位于一个进程里面，并且这个进程名称的默认值就是我们给应用定义的包名。既然有了一个默认的进程，为什么还要使用多进程呢？</p>
+<p>前面我们说道，系统为每个进程分配的内存是有限的，比如在以前的低端手机上常见是 16M，现在的机器内存更大一些，32M、48M，甚至更高。但是，总是有限的，毕竟一个手机出厂之后 RAM 的大小就定了，总是无法满足所有应用的需求。</p>
+<p>当然，你可以在 Application 中通过使用 largeHeap 属性为自己应用所处的进程争取分配更大的内存，就像这样：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">application</span></span><br><span class="line">    <span class="attr">android:icon</span>=<span class="string">"@mipmap/ic_launcher"</span></span><br><span class="line">    <span class="attr">android:label</span>=<span class="string">"@string/app_name"</span></span><br><span class="line">    <span class="attr">android:largeHeap</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    ......</span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>但也存在不够用的可能，一旦超出，马上发生 OOM，内存溢出。</p>
-<p>所以，一个明智的选择就是使用多进程，将一些看不见的服务和比较独立的功能运行在另一个进程当中，主动分担主进程的内存占用。常见如，应用中的推送服务，音乐类 App 的后台播放器等，单独运行在一个进程中。</p>
-<p>使用多进程还有一个好处就是，互相拉起。当然，这显得有些流氓，然而你会发现市场上很多全家桶之类的应用确实是这么做的。一定程度上，这种做法也能够保证自家应用的功能更好地服务用户。</p>
+<p>所以，一个明智的选择就是使用多进程，将一些看不见的服务、比较独立而又相当占用内存的功能运行在另外一个进程当中，主动分担主进程的内存消耗。常见如，应用中的推送服务，音乐类 App 的后台播放器等等，单独运行在一个进程中。</p>
+<p>使用多进程还有一个好处就是，互相拉起。当然，这显得有些流氓，然而你会发现市场上很多全家桶之类的应用确实是这么做的。某种程度上，这种做法也能够保证自家应用的功能更好地服务用户。</p>
 <h1 id="如何使用多进程"><a href="#如何使用多进程" class="headerlink" title="如何使用多进程"></a>如何使用多进程</h1><hr>
 <p>在项目中使用多进程操作起来非常简单，在 AndroidManafest.xml 清单文件中注册 Activity、Service 等四大组件时，使用 android:process 属性指定进程名即可，如：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">service</span></span><br><span class="line">      <span class="attr">android:name</span>=<span class="string">".ProcessName"</span></span><br><span class="line">      <span class="attr">android:process</span>=<span class="string">":music"</span></span><br><span class="line">    /&gt;</span></span><br></pre></td></tr></table></figure>
@@ -220,7 +220,7 @@ ga('send', 'pageview');
 <p>如果你在调试一个多进程的应用，并且多个进程处于运行状态，在 Android Studio 的 Monitor 界面，可以直接看到多个进程名同时存在：</p>
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/1497627202.png" alt=""></p>
 <h1 id="使用多进程的注意事项"><a href="#使用多进程的注意事项" class="headerlink" title="使用多进程的注意事项"></a>使用多进程的注意事项</h1><hr>
-<p>使用多进程，特别要注意的一点就是：Application 的重复创建。当你注册四大组件中的任意一个组件并且使用到了多进程，运行该组件时，都会创建一个新的 Application 对象。关于这一点，老罗的博客中有所介绍，可以访问文章末尾的参考链接。</p>
+<p>使用多进程，特别要注意的一点就是：Application 的重复创建。当你注册四大组件中的任意一个组件时使用到了多进程，运行该组件时，都会创建一个新的 Application 对象。关于这一点，在老罗的博客中有所介绍，可以访问文章末尾的参考链接了解相关知识。</p>
 <p>多数情况下，我们都会在工程中自定义一个 Application 类，并且将一些全局性的初始化工作放在这个类里面。当这个类多次创建时，如果不对进程加以区分的话，我们的这些初始化工作也会被执行多次。除了影响应用的启动时间，还有可能就会出现其他问题。比如，文章引言部分，我曾经遇到的案例。</p>
 <p>对于多进程重复创建 Application 这种情况，只需要在该类中对当前进程加以判断即可。比如，一些主进程内的应用初始化工作只在主进程的 Application 中执行。前面我们提到，主进程默认使用的是应用包名作为进程名，而其他的进程名也是我们自由定义的。所以，判断当前进程是谁，自然也不是难事：</p>
 <p>在 Application 中获取当前进程 ID，再根据进程 ID 获取进程名，有选择地做一些初始化工作：</p>
@@ -229,7 +229,7 @@ ga('send', 'pageview');
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line">* 根据进程 ID 获取进程名</span><br><span class="line">* <span class="doctag">@param</span> pid</span><br><span class="line">* <span class="doctag">@return</span></span><br><span class="line">*/</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getProcessName</span><span class="params">(<span class="keyword">int</span> pid)</span></span>&#123;</span><br><span class="line">  ActivityManager am = (ActivityManager) MainApplication.getContext().getSystemService(Context.ACTIVITY_SERVICE);</span><br><span class="line">  List&lt;RunningAppProcessInfo&gt; processInfoList = am.getRunningAppProcesses();</span><br><span class="line">  <span class="keyword">if</span> (processInfoList == <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span> (RunningAppProcessInfo processInfo : processInfoList) &#123;</span><br><span class="line">    <span class="keyword">if</span> (processInfo.pid == pid) &#123;</span><br><span class="line">      <span class="keyword">return</span> processInfo.processName;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>除了利用 ActivityManager 服务获取当前进程名，还有一种黑科技，不妨看看：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getProcessName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    File file = <span class="keyword">new</span> File(<span class="string">"/proc/"</span> + android.os.Process.myPid() + <span class="string">"/"</span> + <span class="string">"cmdline"</span>);</span><br><span class="line">    BufferedReader mBufferedReader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(file));</span><br><span class="line">    String processName = mBufferedReader.readLine().trim();</span><br><span class="line">    mBufferedReader.close();</span><br><span class="line">    <span class="keyword">return</span> processName;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这是多进程对 Application 的影响，以及我们使用中的注意事项。前面我们说道，多个进程之间彼此独立，你所定义的那些全局静态数据等，在进程之间是不能直接共享使用的。比如，如果你在 Application 中定义了一个全局的 Activity 数组来管理应用中的 Activity，同时你又用到其他进程运行某些 Activity，那你在应用完全退出这种场景的使用时就得多加注意了。</p>
+<p>这是多进程对 Application 的影响，以及我们使用中的注意事项。前面我们说道，多个进程之间彼此独立，你所定义的那些全局静态数据等，在进程之间是不能直接共享使用的。比如，如果你在 Application 中定义了一个全局的 Activity 数组来管理应用中的 Activity，同时你又用到其他进程运行某些 Activity，那你在应用完全退出这种使用场景下就得多加注意了。</p>
 <p>如果你一定要在多进程中通信，有可能就要用到 AIDL 机制，或者利用文件这种数据持久化操作实现。关于 AIDL 的知识，本文就不再深入探讨啦，大家可以自行查找相关资料。</p>
 <h1 id="关于多进程，你还可以参考"><a href="#关于多进程，你还可以参考" class="headerlink" title="关于多进程，你还可以参考"></a>关于多进程，你还可以参考</h1><hr>
 <p>如果你觉得这篇文章不过瘾，或者再深入一点了解相关知识，那你还可以参考这些文章：</p>
@@ -240,7 +240,7 @@ ga('send', 'pageview');
 </li>
 <li><p><a href="https://developer.android.com/guide/components/processes-and-threads.html" target="_blank" rel="external">Android Developers/API Guides/Process &amp; Thread</a></p>
 </li>
-<li><p><a href="http://blog.csdn.net/lynn0708/article/details/13624403" target="_blank" rel="external">apk，task，android:process与android:sharedUserId的区别</a></p>
+<li><p><a href="http://blog.csdn.net/lynn0708/article/details/13624403" target="_blank" rel="external">apk，task，android:process 与 android:sharedUserId 的区别</a></p>
 </li>
 </ul>
 
@@ -545,11 +545,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
+                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -557,11 +557,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Gradle</a>
+                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
+                <a href="javascript:void(0)" class="js-tag color2">Gradle</a>
               </li>
              
               <li class="article-tag-list-item">
