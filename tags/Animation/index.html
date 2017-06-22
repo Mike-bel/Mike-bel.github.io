@@ -6,20 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yifeng.studio">
-  <title>Android Apk 文件反编译和重新打包的过程分析 | YiFeng&#39;s Zone</title>
+  <title>Tag: Animation | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="学习的方式有很多种，Read the fucking source code 绝对不失为最佳的方式。除了阅读 Android SDK 的源码，还能通过反编译 APK 的方式，阅读他人开发的应用源码。本文就来聊聊在 Mac 环境下如何借助第三方工具反编译 APK 压缩文件（通过爱加密、360加固等手段处理的 APK 文件除外），阅读源码、修改源码并重新打包成一个新的 APK 安装文件。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Android Apk 文件反编译和重新打包的过程分析">
-<meta property="og:url" content="http://yifeng.studio/2016/12/05/android-apk-decompile-and-repackaging/index.html">
+  <meta name="description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="YiFeng's Zone">
+<meta property="og:url" content="http://yifeng.studio/tags/Animation/index.html">
 <meta property="og:site_name" content="YiFeng's Zone">
-<meta property="og:description" content="学习的方式有很多种，Read the fucking source code 绝对不失为最佳的方式。除了阅读 Android SDK 的源码，还能通过反编译 APK 的方式，阅读他人开发的应用源码。本文就来聊聊在 Mac 环境下如何借助第三方工具反编译 APK 压缩文件（通过爱加密、360加固等手段处理的 APK 文件除外），阅读源码、修改源码并重新打包成一个新的 APK 安装文件。">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1480926234.png">
-<meta property="og:updated_time" content="2016-12-05T13:32:17.000Z">
+<meta property="og:description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android Apk 文件反编译和重新打包的过程分析">
-<meta name="twitter:description" content="学习的方式有很多种，Read the fucking source code 绝对不失为最佳的方式。除了阅读 Android SDK 的源码，还能通过反编译 APK 的方式，阅读他人开发的应用源码。本文就来聊聊在 Mac 环境下如何借助第三方工具反编译 APK 压缩文件（通过爱加密、360加固等手段处理的 APK 文件除外），阅读源码、修改源码并重新打包成一个新的 APK 安装文件。">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1480926234.png">
+<meta name="twitter:title" content="YiFeng's Zone">
+<meta name="twitter:description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -168,146 +165,36 @@ ga('send', 'pageview');
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-android-apk-decompile-and-repackaging" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      Android Apk 文件反编译和重新打包的过程分析
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2017" class="archive-year">2017</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/06/23/android-animation-interpolators/" class="archive-article-date">
+  	<time datetime="2017-06-22T22:35:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-23</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/06/23/android-animation-interpolators/">【译】从数学公式入手，详细了解 Animation 的 Interpolators</a>
     </h1>
   
 
-        
-        <a href="/2016/12/05/android-apk-decompile-and-repackaging/" class="archive-article-date">
-  	<time datetime="2016-12-05T13:13:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>学习的方式有很多种，Read the fucking source code 绝对不失为最佳的方式。除了阅读 Android SDK 的源码，还能通过反编译 APK 的方式，阅读他人开发的应用源码。本文就来聊聊在 Mac 环境下如何借助第三方工具反编译 APK 压缩文件（通过爱加密、360加固等手段处理的 APK 文件除外），阅读源码、修改源码并重新打包成一个新的 APK 安装文件。</p>
-<a id="more"></a>
-<h1 id="准备工具"><a href="#准备工具" class="headerlink" title="准备工具"></a>准备工具</h1><hr>
-<p>本文描述的反编译手段需要借助三个工具，分别是：apktool、dex2jar 和 jd-gui，下面我一一介绍下他们的下载及配置过程。</p>
-<p><strong>apktool</strong></p>
-<ol>
-<li><p>打开 <a href="https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/osx/apktool" target="_blank" rel="external">apktool 脚本链接网页</a>，右键存储为一个命名为 apktool 的文件，记得不要添加任何格式后缀；</p>
-</li>
-<li><p>打开 <a href="https://bitbucket.org/iBotPeaches/apktool/downloads" target="_blank" rel="external">apktool.jar</a> 下载链接，下载最新版本，下载完成之后重命名为 apktool.jar；</p>
-</li>
-<li><p>打开命令行工具，使用 cp 命令将前面两步下载的 apktool 脚本文件和 apktool.jar 文件复制到 PC 的 /usr/local/bin 目录下 (复制前的文件至此可以删除)，如：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cp apktool apktool.jar /usr/<span class="built_in">local</span>/bin</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用 chmod 命令为上一步复制过去的两个文件添加可执行权限，如：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x apktool apktool.jar</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>操作至此，便可以在任一路径下使用 apktool 命令了。现在，你就可以使用 apktool -version 命令检查以上过程是否配置正确。</p>
-</li>
-</ol>
-<p>有关 apktool 工具的详细信息，可以参考官网介绍：<a href="https://ibotpeaches.github.io/Apktool/" target="_blank" rel="external">A tool for reverse engineering Android apk files</a>。</p>
-<p><strong>dex2jar</strong></p>
-<ol>
-<li><p>你可以从 <a href="http://mac.softpedia.com/get/Developer-Tools/dex2jar.shtml" target="_blank" rel="external">softpedia</a> 或者 <a href="https://sourceforge.net/projects/dex2jar/" target="_blank" rel="external">sourceforge</a> 网站找到 dex2jar 的 Mac 版下载链接，并解压缩；</p>
-</li>
-<li><p>同样使用 chmod 命令修改 sh 文件的用户权限，如：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod a+x *.sh</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p><strong>jd-gui</strong></p>
-<p>从 <a href="http://mac.softpedia.com/get/Development/Java/JD-GUI.shtml" target="_blank" rel="external">softpedia</a> 或者 <a href="http://jd.benow.ca/" target="_blank" rel="external">http://jd.benow.ca/</a> 网站下载并解压缩即可，里面的 JD-GUI 文件便是阅读 jar 包的应用程序。</p>
-<h1 id="反编译-apk-资源文件"><a href="#反编译-apk-资源文件" class="headerlink" title="反编译 apk 资源文件"></a>反编译 apk 资源文件</h1><hr>
-<p>apk 文件就是一个压缩文件，通过解压缩工具便可以打开并解压缩。但是里面的资源文件，除了 drawable 图片资源，其他都是经过编译处理的二进制文件，什么也看不出来。</p>
-<p>而使用 apktool 工具可以直接从 apk 文件中反编译出诸如 AndroidManifest.xml 、layout、strings 等资源文件，可以直接修改，供再次打包。如：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apktool d example.apk</span><br></pre></td></tr></table></figure>
-<h1 id="反编译-java-源码文件"><a href="#反编译-java-源码文件" class="headerlink" title="反编译 java 源码文件"></a>反编译 java 源码文件</h1><hr>
-<p>解压缩 apk 文件，可以看到 classes.dex 源码文件，可能不止一个。通过 dex2jar 工具可以将其转化为 jar 文件，并使用 jd-gui 工具打开并阅读应用源码。</p>
-<p>第一步，dex2jar 操作，得到 classes-dex2jar.jar 文件。注意 d2j-dex2jar.sh 和 classes.dex 文件的路径，按需修改：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh d2j-dex2jar.sh classes.dex</span><br></pre></td></tr></table></figure>
-<p>第二步，使用 jd-gui 打开 classes-dex2jar.jar 文件，便可以看到目标应用所用到的第三方 library 和 开发源码，如：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1480926234.png" alt=""></p>
-<blockquote>
-<p>如果对方开发人员在工程中开启了混淆功能，将会增加你的阅读难度，不过仔细分析，也能找到一些蛛丝马迹，给予你一些“灵感”。</p>
-</blockquote>
-<p>当然，也可以直接针对 apk 文件使用 dex2jar 命令获取 jar 文件，减少上述 apk 文件解压缩的这一步骤，如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh d2j-dex2jar.sh example.apk</span><br></pre></td></tr></table></figure>
-<h1 id="重新打包-apk-安装文件"><a href="#重新打包-apk-安装文件" class="headerlink" title="重新打包 apk 安装文件"></a>重新打包 apk 安装文件</h1><hr>
-<p>学会如何反编译 apk 文件后，我们还可以修改 apk 文件中的内容，比如应用名称、桌面图标，甚至是 Java 源码等，然后使用 apktool 工具重新打包，产生一个新的 apk 安装文件。</p>
-<p>这里以修改应用名称和桌面图标为例，看看如何重新打包 apk 文件并安装至手机上。(此处仅供学习参考，勿作恶！)</p>
-<p>第一步，使用前文介绍的反编译 apk 资源文件的方式得到反编译后的文件夹，打开 AndroidManifest.xml 文件，找到 application 标签的 label 和 icon 属性。这样，我们就知道在哪里修改对应的资源文件了；</p>
-<p>第二步，找到对应的 drawable 图标文件和 strings 字符串资源，比如 ic_launcher.png 和 app_name，替换图标并修改字符串内容；</p>
-<p>第三步，使用 <code>apktool b files</code> 命令编译打包，这里的 files 对应第一步反编译 apk 文件时得到的应用文件夹。执行完毕，便会得到一个新的 apk 文件；</p>
-<blockquote>
-<p>注意：此时得到的 apk 文件是没有没有经过签名的，使用 adb install 命令安装时会得到一个失败提示：Failure [INSTALL_PARSE_FAILED_NO_CERTIFICATES]。</p>
-</blockquote>
-<p>第四步，生成自己的签名文件。你可以选择使用 Android Studio -&gt; Build -&gt; Next -&gt; Create New… 可视化操作界面生成一个新的签名文件，也可以直接使用 keytool 工具直接在终端工具上生成，如：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keytool -genkey -keystore example.keystore -keyalg RSA -validity 10000 -alias example</span><br></pre></td></tr></table></figure>
-<p>第五步，使用 jarsigner 工具为 apk 文件签名，签名过后得到的 apk 文件便可以使用 adb install 命令安装至连接到 PC 的安卓设备上了。签名命令如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jarsigner -verbose -keystore example.keystore -signedjar example-signed.apk example.apk example</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>注意：如果签名过后的 apk 文件依旧安装失败，可以试试在签名命令上加上 <code>-digestalg SHA1 -sigalg MD5withRSA -tsa</code> 参数。当然这里我在测试时没有添加该参数，但也能正常安装。</p>
-</blockquote>
-<p>修改资源文件并重新打包还是比较简单的，但是修改 java 源码再重新打包就比较复杂了，特别是在改动较大的情况下。「鸿洋」大神有一篇文章，描述了如何反编译 apk 并为其添加启动页广告的过程，当然也没有涉及到原开发人员的 Java 源代码改动，详情可参考：<a href="http://blog.csdn.net/lmj623565791/article/details/53370414" target="_blank" rel="external"> Android 反编译初探 应用是如何被注入广告的</a>。</p>
-
-      
-
-      
-        <! -- 添加版权信息 -->
-<hr>
-<div class="article-footer-copyright">
-<p>本文由&nbsp;<b>亦枫</b>&nbsp;创作并首发于&nbsp;<b><a href="/index.html" target="_blank" title="亦枫">亦枫的个人博客</a></b>&nbsp;，同步推送微信公众号：安卓笔记侠（NiaoTech）。</a></p>
- 
-<p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
- 
-<p>本文标题为: <b><a href="/2016/12/05/android-apk-decompile-and-repackaging/" target="_blank" title="Android Apk 文件反编译和重新打包的过程分析">Android Apk 文件反编译和重新打包的过程分析</a></b> </p>
- 
-<p>本文链接为：<b><a href="/2016/12/05/android-apk-decompile-and-repackaging/" target="_blank" title="Android Apk 文件反编译和重新打包的过程分析">http://yifeng.studio/2016/12/05/android-apk-decompile-and-repackaging/</a></b> </p>
-
-<p><b>● 科学上网，翻墙推荐：</b><b><a href="http://buytizi.com/?r=225bb619613ec09e" target="_blank" title="http://buytizi.com/?r=225bb619613ec09e">http://buytizi.com/?r=225bb619613ec09e</a></b> </p>
-
-<p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
-</div>
-<! -- 添加版权信息 -->
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>请我喝咖啡，资瓷资瓷~<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="http://ocq7gtgqu.bkt.clouddn.com/yifeng_pay_alipay.png">
-                      <span class="reward-type">支付宝</span>
-                    </div>
-                    
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="http://ocq7gtgqu.bkt.clouddn.com/yifeng_pay_wechat.png">
-                      <span class="reward-type">微信</span>
-                    </div>
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -315,11 +202,15 @@ ga('send', 'pageview');
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
         		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Animation</a>
+        		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -332,128 +223,17 @@ ga('send', 'pageview');
 	</div>
 
 
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-clock icon"></i>
-	    <ul class="article-tag-list">
-		    <li class="article-tag-list-item">
-		    	<span id="busuanzi_container_page_pv">热度 <span id="busuanzi_value_page_pv"></span>℃</span>
-		    </li>
-		</ul>
-    </div>
-
-
-
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yifeng.studio/2016/12/05/android-apk-decompile-and-repackaging/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2016/12/15/android-fragment-attentions/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Android Fragment 的使用，一些你不可不知的注意事项
-        
-      </div>
-    </a>
   
   
-    <a href="/2016/12/01/android-webview-java-js-interaction/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Android WebView —— Java 与 JavaScript 交互总结</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-
-
-
-  
-  <div class="duoshuo">
-	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="android-apk-decompile-and-repackaging" data-title="Android Apk 文件反编译和重新打包的过程分析" data-url="http://yifeng.studio/2016/12/05/android-apk-decompile-and-repackaging/"></div>
-	<!-- 多说评论框 end -->
-	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"yifengzone"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<!-- 多说公共JS代码 end -->
-</div>
-
-  
-  
+    </div></section>
   
 
-  
-
-  
+    
 
 
           </div>
@@ -485,9 +265,9 @@ ga('send', 'pageview');
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		root: "/",

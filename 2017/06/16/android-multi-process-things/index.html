@@ -9,19 +9,19 @@
   <title>Android 中的多进程，你值得了解的一些知识 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="引言
-不知道大家在平时的开发中有没有遇到这样一个问题：自定义的 Application 在应用启动的时候多次创建，或者在使用到某个功能的时候 Application 再次创建。换句话说，Application 的 onCreate() 方法被调用了两次甚至多次。">
+不知道大家在平时的开发中有没有遇到这样一个问题：自定义的 Application 类在应用启动的时候被多次创建，或者在使用到某个功能的时候 Application 再次被创建。换句话说，Application 的 onCreate() 方法被调用了两次或者更多次。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 中的多进程，你值得了解的一些知识">
 <meta property="og:url" content="http://yifeng.studio/2017/06/16/android-multi-process-things/index.html">
 <meta property="og:site_name" content="YiFeng's Zone">
 <meta property="og:description" content="引言
-不知道大家在平时的开发中有没有遇到这样一个问题：自定义的 Application 在应用启动的时候多次创建，或者在使用到某个功能的时候 Application 再次创建。换句话说，Application 的 onCreate() 方法被调用了两次甚至多次。">
+不知道大家在平时的开发中有没有遇到这样一个问题：自定义的 Application 类在应用启动的时候被多次创建，或者在使用到某个功能的时候 Application 再次被创建。换句话说，Application 的 onCreate() 方法被调用了两次或者更多次。">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1497627202.jpg">
-<meta property="og:updated_time" content="2017-06-16T23:03:35.000Z">
+<meta property="og:updated_time" content="2017-06-16T23:41:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 中的多进程，你值得了解的一些知识">
 <meta name="twitter:description" content="引言
-不知道大家在平时的开发中有没有遇到这样一个问题：自定义的 Application 在应用启动的时候多次创建，或者在使用到某个功能的时候 Application 再次创建。换句话说，Application 的 onCreate() 方法被调用了两次甚至多次。">
+不知道大家在平时的开发中有没有遇到这样一个问题：自定义的 Application 类在应用启动的时候被多次创建，或者在使用到某个功能的时候 Application 再次被创建。换句话说，Application 的 onCreate() 方法被调用了两次或者更多次。">
 <meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1497627202.jpg">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
@@ -192,9 +192,9 @@ ga('send', 'pageview');
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><hr>
-<p>不知道大家在平时的开发中有没有遇到这样一个问题：自定义的 Application 在应用启动的时候多次创建，或者在使用到某个功能的时候 Application 再次创建。换句话说，Application 的 onCreate() 方法被调用了两次甚至多次。</p>
+<p>不知道大家在平时的开发中有没有遇到这样一个问题：自定义的 Application 类在应用启动的时候被多次创建，或者在使用到某个功能的时候 Application 再次被创建。换句话说，Application 的 onCreate() 方法被调用了两次或者更多次。</p>
 <a id="more"></a>
-<p>通常，我们会在 Application 里做一些应用的初始化工作。如果 Application 被多次创建的话，就会带来一些不容易发现的潜在问题。举个真实的例子，我曾经接手到的项目时遇到的问题：</p>
+<p>通常，我们会在 Application 里做一些应用的初始化工作。如果 Application 被多次创建的话，就会带来一些不容易发现的潜在问题。举个真实的例子，一个我曾经接手到的项目所遇到的问题：</p>
 <p>工程中嵌入了极光推送 SDK，并且为之单独分配了一个进程（如何分配，后面会讲道）。Application 中有一些初始化的工作，其中包括一个与服务器端的网络通信请求。当时并没有注意到多进程，也就没有在 Application 中对进程做区分。这样就会出现一个问题：</p>
 <p>有时候，应用并没有启动，而手机上其他嵌入有极光推送 SDK的应用，由于互相拉起机制，会激活我们应用中极光推送注册的服务所处的进程，Application 随即被创建，导致 onCreate() 方法中的初始化工作被执行。其中，就包括那个网络请求。而且如果一旦请求失败，比如网络出错啊，就会弹出 Toast 错误提示。那这就很奇怪了，虽然不会带来实际性的功能问题，但是使用在玩手机时莫名弹出一个错误提示，这种体验就不好啦。</p>
 <p>像这种问题，还不太好测试，进程间的互相拉起，再加上网络通信错误而发生 UI 上的变化，条件苛刻，很难复现。但其实只要我们在开发中稍微注意一下多进程的问题，就可以很容易地避免这种问题。下面就来聊聊多进程的来龙去脉。</p>
@@ -399,6 +399,15 @@ ga('send', 'pageview');
   
 <nav id="article-nav">
   
+    <a href="/2017/06/23/android-animation-interpolators/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          【译】从数学公式入手，详细了解 Animation 的 Interpolators
+        
+      </div>
+    </a>
+  
   
     <a href="/2017/06/13/md5-profile-and-implementation-in-java/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">MD5 简介，及其在 Java 中的实现方式</div>
@@ -553,6 +562,10 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Animation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android Studio, Gradle</a>
               </li>
              
@@ -565,11 +578,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+                <a href="javascript:void(0)" class="js-tag color4">Mac</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Mac</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
