@@ -6,24 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yifeng.studio">
-  <title>【译】使用示例带你提前了解 Java 9 中的新特性 | YiFeng&#39;s Zone</title>
+  <title>Java 代码规范，你应该知道的一些工具和用法 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Java 作为 Android 的基础编程语言，每一次迭代也是备受安卓开发人员的关注。这不，Oracle 公司在今年即将发布 Java 9 正式版，一些新的特性和改进很是值得期待。
-周末时间，拜读了国外的一个 Java 大牛写的有关 Java SE 9 的新功能介绍，简明扼要，示例得当。于是，一时兴起，以拙劣的英语水平磕磕绊绊翻译至此，供大家了解一番。
-作者：「Rambabu Posa」，一个具">
+  <meta name="description" content="从事编程这个行业，你一定被别人说过或者说过别人这句话：代码要规范！求职面试时也能从 JD 上看到这个要求：要有良好的编程习惯。其实都是在讲代码规范（Code Style）这件事情。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【译】使用示例带你提前了解 Java 9 中的新特性">
-<meta property="og:url" content="http://yifeng.studio/2017/03/12/translation-java-9-features-with-examples/index.html">
+<meta property="og:title" content="Java 代码规范，你应该知道的一些工具和用法">
+<meta property="og:url" content="http://yifeng.studio/2017/06/30/coding-with-code-style/index.html">
 <meta property="og:site_name" content="YiFeng's Zone">
-<meta property="og:description" content="Java 作为 Android 的基础编程语言，每一次迭代也是备受安卓开发人员的关注。这不，Oracle 公司在今年即将发布 Java 9 正式版，一些新的特性和改进很是值得期待。
-周末时间，拜读了国外的一个 Java 大牛写的有关 Java SE 9 的新功能介绍，简明扼要，示例得当。于是，一时兴起，以拙劣的英语水平磕磕绊绊翻译至此，供大家了解一番。
-作者：「Rambabu Posa」，一个具">
-<meta property="og:updated_time" content="2017-03-12T15:08:47.000Z">
+<meta property="og:description" content="从事编程这个行业，你一定被别人说过或者说过别人这句话：代码要规范！求职面试时也能从 JD 上看到这个要求：要有良好的编程习惯。其实都是在讲代码规范（Code Style）这件事情。">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1498777939.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1498777946.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1498777953.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1498777959.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1498777964.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1498777971.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1498777977.png">
+<meta property="og:updated_time" content="2017-06-30T14:25:04.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【译】使用示例带你提前了解 Java 9 中的新特性">
-<meta name="twitter:description" content="Java 作为 Android 的基础编程语言，每一次迭代也是备受安卓开发人员的关注。这不，Oracle 公司在今年即将发布 Java 9 正式版，一些新的特性和改进很是值得期待。
-周末时间，拜读了国外的一个 Java 大牛写的有关 Java SE 9 的新功能介绍，简明扼要，示例得当。于是，一时兴起，以拙劣的英语水平磕磕绊绊翻译至此，供大家了解一番。
-作者：「Rambabu Posa」，一个具">
+<meta name="twitter:title" content="Java 代码规范，你应该知道的一些工具和用法">
+<meta name="twitter:description" content="从事编程这个行业，你一定被别人说过或者说过别人这句话：代码要规范！求职面试时也能从 JD 上看到这个要求：要有良好的编程习惯。其实都是在讲代码规范（Code Style）这件事情。">
+<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1498777939.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -172,166 +174,113 @@ ga('send', 'pageview');
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-translation-java-9-features-with-examples" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-coding-with-code-style" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      【译】使用示例带你提前了解 Java 9 中的新特性
+      Java 代码规范，你应该知道的一些工具和用法
     </h1>
   
 
         
-        <a href="/2017/03/12/translation-java-9-features-with-examples/" class="archive-article-date">
-  	<time datetime="2017-03-12T14:22:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-12</time>
+        <a href="/2017/06/30/coding-with-code-style/" class="archive-article-date">
+  	<time datetime="2017-06-29T23:52:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-30</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>Java 作为 Android 的基础编程语言，每一次迭代也是备受安卓开发人员的关注。这不，Oracle 公司在今年即将发布 Java 9 正式版，一些新的特性和改进很是值得期待。</p>
-<p>周末时间，拜读了国外的一个 Java 大牛写的有关 Java SE 9 的新功能介绍，简明扼要，示例得当。于是，一时兴起，以拙劣的英语水平磕磕绊绊翻译至此，供大家了解一番。</p>
-<p>作者：「Rambabu Posa」，一个具有 11 年丰富开发经验的技术牛人。</p>
-<p>英文出处：<a href="http://www.journaldev.com/13121/java-9-features-with-examples" target="_blank" rel="external">Java 9 Features with Examples</a></p>
-</blockquote>
-<p>Oracle 公司即将在 2017 年 3 月底正式发布 Java SE 9。在这篇文章，我将使用一些示例简明扼要地阐述 Java 9 的新特性。当然，也是时候去了解一下。</p>
+        <p>从事编程这个行业，你一定被别人说过或者说过别人这句话：代码要规范！求职面试时也能从 JD 上看到这个要求：要有良好的编程习惯。其实都是在讲<strong>代码规范（Code Style）</strong>这件事情。</p>
 <a id="more"></a>
-<h1 id="1-Java-9-PEPK（JShell）"><a href="#1-Java-9-PEPK（JShell）" class="headerlink" title="1. Java 9 PEPK（JShell）"></a>1. Java 9 PEPK（JShell）</h1><hr>
-<p>Oracle 公司（Java Library 开发者）新引进一个代表 Java Shell 的称之为 “jshell” 或者 REPL（Read Evaluate Print Loop）的新工具。该工具可以被用来执行和测试任何 Java 中的结构，如 class，interface，enum，object，statements 等。使用非常简单。</p>
-<p>JDK 9 EA（Early Access）下载地址：<a href="https://jdk9.java.net/download/" target="_blank" rel="external">https://jdk9.java.net/download/</a></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">G:\&gt;jshell</span><br><span class="line">|  Welcome to JShell -- Version 9-ea</span><br><span class="line">|  For an introduction <span class="built_in">type</span>: /<span class="built_in">help</span> intro</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">jshell&gt; int a = 10</span><br><span class="line">a ==&gt; 10</span><br><span class="line"></span><br><span class="line">jshell&gt; System.out.println(<span class="string">"a value = "</span> + a )</span><br><span class="line">a value = 10</span><br></pre></td></tr></table></figure>
-<p>有关 REPL 工具的更多信息，可访问 <a href="http://www.journaldev.com/9879/java9-install-and-repl-jshell-tutorial" target="_blank" rel="external">Java 9 REPL Basics (Part-1)</a> 和 <a href="http://www.journaldev.com/12938/javase9-repl-jshell-examples-part2" target="_blank" rel="external">Java 9 REPL Features (Part-2)</a>.</p>
-<h1 id="2-不可变集合类的工厂方法"><a href="#2-不可变集合类的工厂方法" class="headerlink" title="2. 不可变集合类的工厂方法"></a>2. 不可变集合类的工厂方法</h1><hr>
-<p>Oracle 公司引入一些方便使用的工厂方法，用于创建不可变集合 List，Set，Map 和 Map.Entry 对象。这些高效实用的方法可用来创建空或者非空集合对象。</p>
-<p>在 Java SE 8 和更早版本中，我们常用类似 unmodifiableXXX 的集合类方法创建不可变集合对象。举个例子，比如我们想创建一个不可变的 List 对象，可能使用到 <code>Collections.unmodifiableList</code> 方法。</p>
-<p>然而，这些 <code>Collections.unmodifiableXXX</code> 方法显得非常冗长乏味。为了克服这些缺陷，Oracle 公司给 List、Set 和 Map 接口分别添加了两个更加实用的方法。</p>
-<p>List 和 Set 接口使用 <code>of()</code> 方法创建一个空或者非空的不可变 List 或 Set 对象，如：</p>
-<p><strong>空 List 示例</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List immutableList = List.of();</span><br></pre></td></tr></table></figure>
-<p><strong>非空 List 示例</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List immutableList = List.of(<span class="string">"one"</span>,<span class="string">"two"</span>,<span class="string">"three"</span>);</span><br></pre></td></tr></table></figure>
-<p>Map 分别有两个方法用于创建不可变 Map 对象和不可变 Map.Entry 对象：<code>of()</code> 和 <code>ofEntries()</code>。</p>
-<p><strong>空 Map 示例</strong></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jshell&gt; Map emptyImmutableMap = Map.of()</span><br><span class="line">emptyImmutableMap ==&gt; &#123;&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>非空 Map 示例</strong></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jshell&gt; Map nonemptyImmutableMap = Map.of(1, <span class="string">"one"</span>, 2, <span class="string">"two"</span>, 3, <span class="string">"three"</span>)</span><br><span class="line">nonemptyImmutableMap ==&gt; &#123;2=two, 3=three, 1=one&#125;</span><br></pre></td></tr></table></figure>
-<p>更多有关这些实用方法的信息，可以通过这些链接查询：</p>
+<p>每个人都有自己的编程习惯，比如你喜欢 2 个空格数量的行前缩进，而他喜欢 4 个空格数量的行前缩进；你喜欢左大括号位于行尾出，而他喜欢另起一行。等等，这些习惯都没有孰优孰劣之分，只是每个人长期以往形成的个人编程爱好而已。</p>
+<p>当你独立开发一个项目时，谈不上代码规范，按照你个人的编程习惯即可。但是，如果是多人协作、共同开发一个项目，如果没有统一的代码规范的话，项目中的每个人都按照自己的习惯率性而为，就会导致整个项目的代码看上去杂乱无章，可读性非常差，并且持续增加后续的维护成本。</p>
+<p>所以，在团队协作时，常常会涉及到代码规范。通常，一个公司也会拥有一份统一的代码规范。事实上，根据经验，使用代码规范在一定程度上还能减少 BUG 数量，降低错误率。本篇文章，我们就来讲讲如何在 Android 项目中使用代码规范，主要是 Java 语言的代码规范。</p>
+<h1 id="Code-Style"><a href="#Code-Style" class="headerlink" title="Code Style"></a>Code Style</h1><hr>
+<p>代码规范也是因人而异的，或者说因公司而异。之前，我工作的公司，有领导专门使用 word 文档编写一份代码规范，然后同事们仔细阅读，谨记于心，在 Coding 时多加注意。事实上，可以利用 IDE 将代码规范文件配置其中。这样，可以减少大部分凭借记忆解决的难题，实现自动化规范。</p>
+<p>关于代码规范文件，一些知名互联网公司也公开有各自的代码规范，这些都是我们可以直接借鉴、拿来使用的优秀资源，当然你也可以再根据自己的情况作出修改。比较出名的有：</p>
 <ul>
-<li><a href="http://www.journaldev.com/12942/javase9-factory-methods-immutable-list" target="_blank" rel="external">Java 9 Factory Methods for Immutable List</a></li>
-<li><a href="http://www.journaldev.com/12984/javase9-factories-for-immutable-set" target="_blank" rel="external">Java 9 Factory Methods for Immutable Set</a></li>
-<li><a href="http://www.journaldev.com/13057/javase9-factory-methods-immutable-map" target="_blank" rel="external">Java 9 Factory Methods for Immutable Map and Map.Entry</a></li>
+<li><p><a href="https://github.com/google/styleguide" target="_blank" rel="external">Google Style Guides</a></p>
+</li>
+<li><p><a href="">Square Java Style</a></p>
+</li>
 </ul>
-<h1 id="3-接口中的私有方法"><a href="#3-接口中的私有方法" class="headerlink" title="3. 接口中的私有方法"></a>3. 接口中的私有方法</h1><hr>
-<p>在 Java 8 中，我们可以在接口中使用默认或者静态方法提供一些实现方式，但是不能创建私有方法。</p>
-<p>为了避免冗余代码和提高重用性，Oracle 公司准备在 Java SE 9 接口中引入私有方法。也就是说从 Java SE 9 开始，我们也能够在接口类中使用 ‘private’ 关键字写私有化方法和私有化静态方法。</p>
-<p>接口中的私有方法与 class 类中的私有方法在写法上并无差异，如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Card</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> Long <span class="title">createCardID</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">// Method implementation goes here.</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">displayCardDetails</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">// Method implementation goes here.</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>有关接口私有方法新特性的更多信息，可访问我的初体验之：<a href="http://www.journaldev.com/12850/java9-private-methods-in-interface" target="_blank" rel="external">Java 9 Private methods in Interface</a>。</p>
-<h1 id="4-Java-9-Module-System"><a href="#4-Java-9-Module-System" class="headerlink" title="4. Java 9 Module System"></a>4. Java 9 Module System</h1><hr>
-<p>Java 9 新特性中最大的一个变化就是 Module System。Oracle 公司将引入如下特性作为 <strong>Jigsaw Project</strong> 的一部分：</p>
+<p>这里我们拿 Google 公司提供的 Java 语言代码规范为例，简单描述一下如何使用 Android Studio 配置 Code Style。</p>
+<p>首先下载 intellij IDE 对应的配置文件到本地电脑上：</p>
+<p><a href="https://github.com/google/styleguide/blob/gh-pages/intellij-java-google-style.xml" target="_blank" rel="external">intellij-java-google-style.xml</a></p>
+<p>该文件内容都是一些 xml 配置，这里不妨截取一部分看看：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">code_scheme</span> <span class="attr">name</span>=<span class="string">"GoogleStyle"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">name</span>=<span class="string">"OTHER_INDENT_OPTIONS"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">option</span> <span class="attr">name</span>=<span class="string">"INDENT_SIZE"</span> <span class="attr">value</span>=<span class="string">"2"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">option</span> <span class="attr">name</span>=<span class="string">"CONTINUATION_INDENT_SIZE"</span> <span class="attr">value</span>=<span class="string">"4"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">option</span> <span class="attr">name</span>=<span class="string">"TAB_SIZE"</span> <span class="attr">value</span>=<span class="string">"2"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">option</span> <span class="attr">name</span>=<span class="string">"USE_TAB_CHARACTER"</span> <span class="attr">value</span>=<span class="string">"false"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">option</span> <span class="attr">name</span>=<span class="string">"SMART_TABS"</span> <span class="attr">value</span>=<span class="string">"false"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">option</span> <span class="attr">name</span>=<span class="string">"LABEL_INDENT_SIZE"</span> <span class="attr">value</span>=<span class="string">"0"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">option</span> <span class="attr">name</span>=<span class="string">"LABEL_INDENT_ABSOLUTE"</span> <span class="attr">value</span>=<span class="string">"false"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">option</span> <span class="attr">name</span>=<span class="string">"USE_RELATIVE_INDENTS"</span> <span class="attr">value</span>=<span class="string">"false"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">  </span><br><span class="line">  ......</span><br><span class="line">  </span><br><span class="line"><span class="tag">&lt;/<span class="name">code_scheme</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>打开 Android Studio，在 <strong>Preferences</strong> 界面中找到 <strong>Code Style</strong> 菜单，选择 <strong>Java</strong> 语言，点击 <strong>Manage</strong> 按钮，<strong>Import</strong> 前面下载好的 xml 配置文件。然后在 <strong>Scheme</strong> 下拉列表中便可以看到 GoogleStyle 选项，切换即可：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1498777939.png" alt=""></p>
+<p>之后，在 Coding 过程中，使用一些快捷键操作，比如格式化、TAB 键等，就会自动按照这份代码规范执行。当然，你也可以修改这份代码规范，前提是你要知道该规范的内容意义。关于这个，Google 也提供有一份在线文档，可供参考：</p>
+<p><a href="https://google.github.io/styleguide/javaguide.html" target="_blank" rel="external">Google Java Style Guide</a></p>
+<h1 id="代码格式化"><a href="#代码格式化" class="headerlink" title="代码格式化"></a>代码格式化</h1><hr>
+<p>有了代码规范，便可以直接使用快捷键格式化当前文件的代码，Mac 上默认快捷键为：</p>
+<p><strong>Option + Command + L</strong></p>
+<p>你也可以直接选择整个项目或某个目录，右键点击 <strong>Reformat Code</strong> 选项，批量格式化。</p>
+<p>当然，还可以下载 Google 提供的格式化 Jar 包，使用命令行工具对指定文件进行格式化操作。GitHub 地址为：</p>
+<p><a href="https://github.com/google/google-java-format" target="_blank" rel="external">google-java-format</a></p>
+<p>举个例子，批量格式化当前目录下的所有 Java 文件（实际使用时注意修改 jar 文件目录）：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -name <span class="string">"*.java"</span> -exec java -jar ~/tools/google-java-format-1.3-all-deps.jar -r &#123;&#125; \;</span><br></pre></td></tr></table></figure>
+<h1 id="Check-Style"><a href="#Check-Style" class="headerlink" title="Check Style"></a>Check Style</h1><hr>
+<p>有了代码规范和格式化操作，虽然一定程度上能够借助 IDE 规范化我们的代码，但是有些部分还是不能完全约束开发人员。比如，变量命名，你还是可以随意命名；每行代码字符个数你也可以随意书写。这些主观人为的操作，遵守不遵守规范，还是在于你个人。</p>
+<p>那么，有没有一种办法检查你写完的代码是否符合某些规范要求呢？答案是肯定的。<strong>CheckStyle</strong>，自动帮你检查代码是否符合规范的一种插件化工具。</p>
+<p>CheckStyle 工具可以帮助你检查 Javadoc 注视文档是否符合规范（比如首行必须以英文句号结束），变量、函数等命名是否符合给定正则表达式，括号、大括号前后留白是否符合规范，等等，这些规范要求都是可以在 xml 文件中自由约定设置的。</p>
+<p>CheckStyle 的 GitHub 下载地址为：</p>
+<p><a href="https://github.com/checkstyle/checkstyle" target="_blank" rel="external">https://github.com/checkstyle/checkstyle</a></p>
+<p>也可以使用 Android Studio 在线安装的方式搜索安装：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1498777946.png" alt=""></p>
+<p>CheckStyle 的使用需要配合着 xml 检查文件。Google 公司也提供有一份对应 Java 代码规范的检查规则文件和<a href="http://checkstyle.sourceforge.net/google_style.html" target="_blank" rel="external">文档说明</a>，检查文件的下载地址请点击：</p>
+<p><a href="https://github.com/checkstyle/checkstyle/blob/master/src/main/resources/google_checks.xml" target="_blank" rel="external">google_checks.xml</a></p>
+<p>同样的，你也可以按照自己的需要随意修改。不过最好和你前面使用的 Code Style 文件保持一致。</p>
+<p>然后你就可以将这份检查规则文件配置给 CheckStyle 工具，也是在 <strong>Preferences</strong> 窗口中配置（ IDE 中默认也有一套 CheckStyle 规则）：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1498777953.png" alt=""></p>
+<p>重启 IDE，然后便可以在底部菜单栏中看到 CheckStyle 操作选项：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1498777959.png" alt=""></p>
+<p>打开 CheckStyle 窗口，选择前面配置的 google-checkstyle 检查规则文件，点击左边的 Run 按钮，便可以对当前打开的 Java 文件检查规范：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1498777964.png" alt=""></p>
+<p>可以看到，不符合规范的地方都有对应行数等提示信息，可以选择并逐一修改。修改完毕，再次执行 Run 操作检查时，如果完全符合 CheckStyle 的话，看到的就是 no problems 提示：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1498777971.png" alt=""></p>
+<p>CheckStyle 插件工具的好处是，你能够直接在 IDE 中对项目中的某个 Java 文件检查规范，并且从错误信息处直接定位到相关代码位置，从而很方便地作出修改。还有一个好处是，你可以在编写代码时，实时得到 CheckStyle 的检测提示，如：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1498777977.png" alt=""></p>
+<p>可以看到，在编辑区直接提示，方法中的左大括号前面需要使用空格与其他内容隔开。这样，我们在 Coding 的时候就能随时知道当前代码是否符合规范，非常方便。</p>
+<p>而 CheckStyle 插件工具不好的地方在于，其不能做到对多个文件批量检查。比如，我想知道某个项目或者某个目录下的 Java 文件是否符合规范，插件就做不到。这个时候，你就可以使用命令行工具了。</p>
+<p>下载 CheckStyle 提供的 Jar 包及 xml 规则文件，然后打开命令行工具，输入检查命令即可。如：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar ~/tools/checkstyle-7.8.2-all.jar -c ~/tools/google_checks.xml MainActivity.java</span><br></pre></td></tr></table></figure>
+<p>命令行工具的弊端在于没有定位源码的功能，你只能看到当前文件哪里是否符合规范。有关 CheckStyle 的更多使用详情，请参考 <a href="http://checkstyle.sourceforge.net/checks.html" target="_blank" rel="external">在线文档</a>。</p>
+<blockquote>
+<p>事实上，CheckStyle 工具非常适合团队协作开发。比如，管理员可以将 CheckStyle 部署在 SVN 或者 Git 的远程仓库所在的服务器上。如果发现 push 或者 merge 的代码不符合这个规范要求，将拒绝接受。这样，便可以强制团队中的每一个开发人员严格按照规范修改自己的代码，使得整个项目或整个公司的项目代码保持统一的风格。</p>
+</blockquote>
+<h1 id="开源规范"><a href="#开源规范" class="headerlink" title="开源规范"></a>开源规范</h1><hr>
+<p>除了前面我们说到的 Google 公司提供的 Check 检查规则文件，还有一些其他知名公司开源的内容可供选择：</p>
 <ul>
-<li>Modular JDK</li>
-<li>Modular Java Source Code</li>
-<li>Modular Run-time Images</li>
-<li>Encapsulate Java Internal APIs</li>
-<li>Java Platform Module System</li>
+<li><p><a href="https://gist.github.com/ownwell/c32878440216f1866842" target="_blank" rel="external">HuaWei CheckStyle</a></p>
+</li>
+<li><p><a href="https://github.com/square/picasso/blob/master/checkstyle.xml" target="_blank" rel="external">Square CheckStyle</a></p>
+</li>
 </ul>
-<p>Java SE 9 版本之前，我们使用 Monolithic Jars 来开发基于 Java 语言的应用程序。这种体系架构有许多局限性和缺点。为了避免这些缺陷，Java SE 9 迎来了 Module System。</p>
-<p>JDK 9 包含有 92 个 modules（当然也可能在最终发布版中有所变化）。我们可以使用 JDK Modules，也能创建我们自己的 modules，如：</p>
-<p><strong>简单 Module 示例</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> com.foo.bar &#123; &#125;</span><br></pre></td></tr></table></figure>
-<p>这里我们使用 <code>module</code> 关键字创建了一个简单的 module。每个 module 都有一个名字，对应代码和其它一些资源。</p>
-<p>想了解更多有关这个新体系架构和亲自动手体验的话，可以参考这里我的体验之：</p>
+<h1 id="其他工具"><a href="#其他工具" class="headerlink" title="其他工具"></a>其他工具</h1><hr>
+<p>静态代码分析工具当然不止 CheckStyle 这一个，提高代码质量你还可以使用这些工具：</p>
 <ul>
-<li>Java 9 Module System Basics</li>
-<li>Java 9 Module System Examples</li>
+<li><p><a href="https://developer.android.com/studio/write/lint.html?hl=zh-cn" target="_blank" rel="external">Android Lint</a></p>
+</li>
+<li><p><a href="http://findbugs.sourceforge.net/" target="_blank" rel="external">FindBugs</a> </p>
+</li>
+<li><p><a href="http://pmd.sourceforge.net/" target="_blank" rel="external">PMD</a></p>
+</li>
 </ul>
-<h1 id="5-Process-API-Improvements"><a href="#5-Process-API-Improvements" class="headerlink" title="5. Process API Improvements"></a>5. Process API Improvements</h1><hr>
-<p>Java SE 9 迎来一些 Process API 的改进，通过添加一些新的类和方法来优化系统级进程的管控。</p>
-<p>Process API 中的两个新接口：</p>
+<p>诸如此类，选择一款适合你自己的就好。工具只是一种手段，提高团队协作效率、保证代码质量才是我们的终极目的。</p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><hr>
+<p>关于代码规范和相关工具的使用，你还可以阅读这些文章：</p>
 <ul>
-<li>java.lang.ProcessHandle</li>
-<li>java.lang.ProcessHandle.Info</li>
+<li><p><a href="http://vincentbrison.com/2014/07/19/how-to-improve-quality-and-syntax-of-your-android-code/" target="_blank" rel="external">How to improve quality and syntax of your Android code</a></p>
+</li>
+<li><p><a href="http://tech.glowing.com/cn/dai-ma-gui-fan-he-androidxiang-mu-zhong-de-xie-ke-yong-gong-ju/" target="_blank" rel="external">代码规范和Android项目中的一些可用工具</a></p>
+</li>
 </ul>
-<p><strong>Process API 示例</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ProcessHandle currentProcess = ProcessHandle.current();</span><br><span class="line">System.out.println(<span class="string">"Current Process Id: = "</span> + currentProcess.getPid());</span><br></pre></td></tr></table></figure>
-<p>想了解更多新 API 的信息，可以通过参考我的初体验之：Java SE 9: Process API Improvements。</p>
-<h1 id="6-Try-With-Resources-Improvement"><a href="#6-Try-With-Resources-Improvement" class="headerlink" title="6. Try With Resources Improvement"></a>6. Try With Resources Improvement</h1><hr>
-<p>我们知道，Java SE 7 引入了一个新的异常处理结构：<code>Try-With-Resources</code>，来自动管理资源。这个新的声明结构主要目的是实现“Automatic Better Resource Management”（“自动资源管理”）。</p>
-<p>Java SE 9 将对这个声明作出一些改进来避免一些冗长写法，同时提高可读性。</p>
-<p><strong>Java SE 7 示例</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">testARM_Before_Java9</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line"> BufferedReader reader1 = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(<span class="string">"journaldev.txt"</span>));</span><br><span class="line"> <span class="keyword">try</span> (BufferedReader reader2 = reader1) &#123;</span><br><span class="line">   System.out.println(reader2.readLine());</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>Java SE 9 示例</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">testARM_Java9</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line"> BufferedReader reader1 = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(<span class="string">"journaldev.txt"</span>));</span><br><span class="line"> <span class="keyword">try</span> (reader1) &#123;</span><br><span class="line">   System.out.println(reader1.readLine());</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>有关这个特性的更多信息，可以参考我的初体验之：<a href="http://www.journaldev.com/12940/javase9-try-with-resources-improvements" target="_blank" rel="external">Java 9 Try-With-Resources Improvements</a></p>
-<h1 id="7-CompletableFuture-API-Improvements"><a href="#7-CompletableFuture-API-Improvements" class="headerlink" title="7. CompletableFuture API Improvements"></a>7. CompletableFuture API Improvements</h1><hr>
-<p>在 Java SE 9 中，Oracle 公司将改进 CompletableFuture API 来解决一些 Java SE 8 中出现的问题。这些被添加的 API 将用来支持一些延时和超时操作，实用方法和更好的子类化。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Executor exe = CompletableFuture.delayedExecutor(<span class="number">50L</span>, TimeUnit.SECONDS);</span><br></pre></td></tr></table></figure>
-<p>这里的 delayedExecutor() 是静态实用方法，用来返回一个在指定延时时间提交任务到默认执行器的新 Executor 对象。</p>
-<p>有关这个特性的更多信息，请访问我的初体验之：Java SE 9: CompletableFuture API Improvements。</p>
-<h1 id="8-Reactive-Streams"><a href="#8-Reactive-Streams" class="headerlink" title="8. Reactive Streams"></a>8. Reactive Streams</h1><hr>
-<p>现在，Reactive Programming 由于其便利性在应用程序开发中变得非常流行。Scala、Play、Akka 等框架已经集成 Reactive Streams 并且受益良多。Oracle 公司也在 Java SE 9 中引入了一个新的 Reactive Streams API。</p>
-<p>Java SE 9 Reactive Streams API 是一个发布订阅型框架，使我们能够非常简单地使用 Java 语言就能实现异步的、可拓展的和并行的应用。</p>
-<p>Java SE 9 引进下面这些 API 来在基于 Java 语言的应用中开发 Reactive Streams：</p>
-<ul>
-<li>java.util.concurrent.Flow</li>
-<li>java.util.concurrent.Flow.Publisher</li>
-<li>java.util.concurrent.Flow.Subscriber</li>
-<li>java.util.concurrent.Flow.Processor</li>
-</ul>
-<p>如果你想了解这个新 API 的更多信息，可以参考我的初体验之：Introduction to Reactive Programming and Java SE 9: Reactive Streams。</p>
-<h1 id="9-Diamond-Operator-for-Anonymous-Inner-Class"><a href="#9-Diamond-Operator-for-Anonymous-Inner-Class" class="headerlink" title="9. Diamond Operator for Anonymous Inner Class"></a>9. Diamond Operator for Anonymous Inner Class</h1><hr>
-<p>我们知道，Java SE 7 引入了一个新的特性：Diamond Operator，来避免冗长代码和提升可读性。然而在 Java SE 8 中，Oracle 公司发现在 Diamond 操作器和匿名内部类的使用中存在一些局限性，后来修复了这些问题并准备将其作为 Java 9 的一部分发布出去。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List <span class="title">getEmployee</span><span class="params">(String empid)</span></span>&#123;</span><br><span class="line">	<span class="comment">// Code to get Employee details from Data Store</span></span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> List(emp)&#123; &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="10-Optional-Class-Improvements"><a href="#10-Optional-Class-Improvements" class="headerlink" title="10. Optional Class Improvements"></a>10. Optional Class Improvements</h1><hr>
-<p>在 Java SE 9 中，Oracle 公司添加了一些新的实用方法到 <code>java.util.Optional</code> 类里面。这里我将使用一些简单的示例来描述其中的一个：stream 方法。</p>
-<p>如果一个值出现在给定 Optional 对象中，stream() 方法可以返回包含该值的一个顺序 Stream 对象。否则，将返回一个空 Stream。</p>
-<p><code>stream()</code> 方法已经被添加，并用来在 Optional 对象中使用，如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;Optional&gt; emp = getEmployee(id)</span><br><span class="line">Stream empStream = emp.flatMap(Optional::stream)</span><br></pre></td></tr></table></figure>
-<p>这里的 <code>Optional.stream()</code> 方法被用来转化 Employee 可选流对象 到 Employee 流中，如此我们便可以在后续代码中使用这个结果。</p>
-<p>理解这个特性的更多信息，可参考我的初体验过程：<a href="http://www.journaldev.com/13108/javase9-optional-class-improvements" target="_blank" rel="external">Java SE 9: Optional Class Improvements</a>。</p>
-<h1 id="11-Stream-API-Improvements"><a href="#11-Stream-API-Improvements" class="headerlink" title="11. Stream API Improvements"></a>11. Stream API Improvements</h1><hr>
-<p>在 Java SE 9 中，Oracle 公司添加了四个非常有用的新方法到 <code>java.util.Stream</code> 接口里面。正如 Stream 作为一个接口类，所有这些新的实现方法都是默认方法。其中有两个方法非常重要：dropWhile 和 takeWhile。</p>
-<p>如果你熟悉 Scala 语言或者其它函数编程语言的话，你一定知道这些方法。他们在写一些功能样式代码时非常有用。这里我们一起讨论一下 takeWhile 实用方法。</p>
-<p>这个 <code>takeWhile()</code> 方法使用一个断言作为参数，返回给定 Stream 的子集直到断言语句第一次返回 false。如果第一个值不满足断言条件，将返回一个空的 Stream。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">jshell&gt; Stream.of(1,2,3,4,5,6,7,8,9,10).takeWhile(i -&gt; i &lt; 5 )</span><br><span class="line">                 .forEach(System.out::println);</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
-<p>更多有关 takeWhile、dropWhile 和其它新方法的信息，可以参考我的初体验过程之：<a href="http://www.journaldev.com/13204/javase9-stream-api-improvements" target="_blank" rel="external">Java SE 9: Stream API Improvements</a>。</p>
-<h1 id="12-Enhanced-Deprecated-annotation"><a href="#12-Enhanced-Deprecated-annotation" class="headerlink" title="12. Enhanced @Deprecated annotation"></a>12. Enhanced @Deprecated annotation</h1><hr>
-<p>在 Java SE 8 和更早版本上，@Deprecated 注解只是一个没有任何方法的标记类接口。它的作用是标记一个 Java API，可以是 calss，field，method，interface，constructor 等。</p>
-<p>在 Java SE 9 中，Oracle 公司强化了 @Deprecated 注解，来提供更多有关废弃 API 的介绍信息，同时也提供一个工具来分析项目中的废弃 API 的静态使用情况。Oracle 公司添加了两个方法到 Deprecated 接口中来提供服务：<strong>forRemoval</strong> 和 <strong>since</strong>。</p>
-<h1 id="13-HTTP-2-Client"><a href="#13-HTTP-2-Client" class="headerlink" title="13. HTTP 2 Client"></a>13. HTTP 2 Client</h1><hr>
-<p>在 Java SE 9 中，Oracle 公司将发布新的 HTTP 2 Client API 来支持 HTTP/2 协议和 WebSocket 特性。现有的 HTTP Client API 存在很多问题（如支持 HTTP/1.1 协议但是不支持 HTTP/2 协议和 WebSocket，仅仅作用在 Blocking 模式中，并存在大量性能问题），他们正在被使用新的 HTTP 客户端的 HttpURLConnection API 所替代。</p>
-<p>Oracle 公司准备在 “java.net.http” 包下引入新的 HTTP 2 Client API。它将同时支持 HTTP/1.1 和 HTTP/2 协议，也同时支持同步（Blocking Mode）和异步模式，支持 WebSocket API 使用中的异步模式。</p>
-<p>我们可以在这里查看这个新 API 信息：<a href="http://download.java.net/java/jdk9/docs/api/java/net/http/package-summary.html" target="_blank" rel="external">http://download.java.net/java/jdk9/docs/api/java/net/http/package-summary.html</a>。</p>
-<p><strong>HTTP 2 Client 示例</strong></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">jshell&gt; import java.net.http.*</span><br><span class="line"></span><br><span class="line">jshell&gt; import static java.net.http.HttpRequest.*</span><br><span class="line"></span><br><span class="line">jshell&gt; import static java.net.http.HttpResponse.*</span><br><span class="line"></span><br><span class="line">jshell&gt; URI uri = new URI(<span class="string">"http://rams4java.blogspot.co.uk/2016/05/java-news.html"</span>)</span><br><span class="line">uri ==&gt; http://rams4java.blogspot.co.uk/2016/05/java-news.html</span><br><span class="line"></span><br><span class="line">jshell&gt; HttpResponse response = HttpRequest.create(uri).body(noBody()).GET().response()</span><br><span class="line">response ==&gt; java.net.http.HttpResponseImpl@79efed2d</span><br><span class="line"></span><br><span class="line">jshell&gt; System.out.println(<span class="string">"Response was "</span> + response.body(asString()))</span><br></pre></td></tr></table></figure>
-<p>可以通过我的初体验之：<strong>Java SE 9: HTTP 2 Client</strong>，理解 HTTP/2 协议和 WebSocket，以及使用一些有用的示例对比新 API 的优势和旧 OLD API 的缺陷。</p>
-<h1 id="14-Мulti-Resolution-Image-API"><a href="#14-Мulti-Resolution-Image-API" class="headerlink" title="14. Мulti-Resolution Image API"></a>14. Мulti-Resolution Image API</h1><hr>
-<p>在 Java SE 9 中，Oracle 公司将引入一个新的 Мulti-Resolution Image API。这个 API 中比较重要的接口是 <code>MultiResolutionImage</code>，在 <code>java.awt.image</code> 包下可获取到。</p>
-<p><code>MultiResolutionImage</code> 封装不同高度和宽度图片（不同解决方案）到一个集合中，并允许我们按需查询使用。</p>
-<p>想理解这个 API 的更多信息，可参考我的初体验之：<strong>Java SE 9: Мulti-Resolution Image API</strong>。</p>
-<h1 id="15-Miscellaneous-Java-9-Features"><a href="#15-Miscellaneous-Java-9-Features" class="headerlink" title="15. Miscellaneous Java 9 Features"></a>15. Miscellaneous Java 9 Features</h1><hr>
-<p>在这个部分，我将列出 Java SE 9 新特性中其它一些内容。当然，这并不是这些内容就不重要。使用一些示例去理解他们也是非常重要并且很实用的。</p>
-<p>截至目前，我并没有获取到这些特性的足够多信息。这就是为什么我将他们简单列举至此的原因。我也会一个一个去获取信息并采用一些示例来说明这个部分列举的特性内容。并且会在晚些写成一个独立的体验部分。</p>
-<ul>
-<li>GC (Garbage Collector) Improvements</li>
-<li>Stack-Walking API</li>
-<li>Filter Incoming Serialization Data</li>
-<li>Deprecate the Applet API</li>
-<li>Indify String Concatenation</li>
-<li>Enhanced Method Handles</li>
-<li>Java Platform Logging API and Service</li>
-<li>Compact Strings</li>
-<li>Parser API for Nashorn</li>
-<li>Javadoc Search</li>
-<li>HTML5 Javadoc</li>
-</ul>
-<p>后面我将逐个搜集这些 java 9 中的特性，并使用足够的描述性文字和示例代码予以解释。</p>
-<p>至此，上述就是 java 9 中所有新引进的特性，一些简介和示例代码。</p>
 
       
 
@@ -343,9 +292,9 @@ ga('send', 'pageview');
  
 <p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
  
-<p>本文标题为: <b><a href="/2017/03/12/translation-java-9-features-with-examples/" target="_blank" title="【译】使用示例带你提前了解 Java 9 中的新特性">【译】使用示例带你提前了解 Java 9 中的新特性</a></b> </p>
+<p>本文标题为: <b><a href="/2017/06/30/coding-with-code-style/" target="_blank" title="Java 代码规范，你应该知道的一些工具和用法">Java 代码规范，你应该知道的一些工具和用法</a></b> </p>
  
-<p>本文链接为：<b><a href="/2017/03/12/translation-java-9-features-with-examples/" target="_blank" title="【译】使用示例带你提前了解 Java 9 中的新特性">http://yifeng.studio/2017/03/12/translation-java-9-features-with-examples/</a></b> </p>
+<p>本文链接为：<b><a href="/2017/06/30/coding-with-code-style/" target="_blank" title="Java 代码规范，你应该知道的一些工具和用法">http://yifeng.studio/2017/06/30/coding-with-code-style/</a></b> </p>
 
 <p><b>● 科学上网，翻墙推荐：</b><b><a href="http://buytizi.com/?r=225bb619613ec09e" target="_blank" title="http://buytizi.com/?r=225bb619613ec09e">http://buytizi.com/?r=225bb619613ec09e</a></b> </p>
 
@@ -395,7 +344,7 @@ ga('send', 'pageview');
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Code Style</a>
         		</li>
       		
 		</ul>
@@ -407,7 +356,7 @@ ga('send', 'pageview');
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Java/" class="article-tag-list-link color5">Java</a>
+        			<a href="/categories/Android/" class="article-tag-list-link color3">Android</a>
         		</li>
       		
 		</ul>
@@ -474,7 +423,7 @@ ga('send', 'pageview');
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yifeng.studio/2017/03/12/translation-java-9-features-with-examples/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yifeng.studio/2017/06/30/coding-with-code-style/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -488,18 +437,9 @@ ga('send', 'pageview');
   
 <nav id="article-nav">
   
-    <a href="/2017/03/14/the-difference-between-two-ways-reference-in-android/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          闲谈 Android 中的 @ 和 ？符号的引用区别
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/03/11/java-and-android-some-effective-apis/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Android 系统中，那些能大幅提高工作效率的 API 汇总（持续更新中...）</div>
+    <a href="/2017/06/23/android-animation-interpolators/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【译】从数学公式入手，详细了解 Animation 的 Interpolators</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -512,7 +452,7 @@ ga('send', 'pageview');
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="translation-java-9-features-with-examples" data-title="【译】使用示例带你提前了解 Java 9 中的新特性" data-url="http://yifeng.studio/2017/03/12/translation-java-9-features-with-examples/"></div>
+	<div class="ds-thread" data-thread-key="coding-with-code-style" data-title="Java 代码规范，你应该知道的一些工具和用法" data-url="http://yifeng.studio/2017/06/30/coding-with-code-style/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
