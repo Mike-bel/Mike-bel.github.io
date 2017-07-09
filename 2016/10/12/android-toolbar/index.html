@@ -21,8 +21,10 @@
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1491808100.jpg">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/toolbar-sample-05.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/toolbar-sample-06.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1498967978.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1498969334.png">
 <meta property="og:image" content="https://github.com/alexstyl/Material-SearchTransition/blob/art/transition-to-search.gif?raw=true">
-<meta property="og:updated_time" content="2017-05-10T13:50:58.000Z">
+<meta property="og:updated_time" content="2017-07-02T05:04:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Toolbar，你想知道的都在这里了">
 <meta name="twitter:description" content="Android 3.0之后，Google引入了ActionBar，想统一安卓应用的导航栏样式。但由于ActionBar难以定制，很大程度上限制了开发人员，比如标题文字大小、间距等不易实现个性化，很多开发者放弃了ActionBar的使用，而是使用普通的ViewGroup来封装自己的App Bar，或者使用 JakeWharton大神 的 ActionBarSherlock 库。">
@@ -283,6 +285,17 @@ ga('send', 'pageview');
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getSupportActionBar().setDisplayShowTitleEnabled(<span class="keyword">false</span>);</span><br></pre></td></tr></table></figure>
 <p>效果如下：</p>
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/toolbar-sample-06.png" alt="toolbar-sample-06.png"></p>
+<h1 id="Bottom-Line"><a href="#Bottom-Line" class="headerlink" title="Bottom Line"></a>Bottom Line</h1><hr>
+<p>像上面标题剧中这种情况，有时候，还需要使用白色背景的 Toolbar，根据 Material Design 规范，当然是希望 Toolbar 底部与页面内容区以阴影的方式隔开。然而，如果一定要使用分割线来分隔怎么办呢？你总不能在每个 Activity 页面添加分割线吧，还是要加到 include 标签包含的 Toolbar 内容中。这里，就可以借助 AppBarLayout 来实现：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">android.support.design.widget.AppBarLayout</span> </span><br><span class="line">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/app_bar"</span></span><br><span class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attr">android:layout_height</span>=<span class="string">"?attr/actionBarSize"</span></span><br><span class="line">    <span class="attr">app:elevation</span>=<span class="string">"0dp"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">android.support.v7.widget.Toolbar</span></span><br><span class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/tb_toolbar"</span></span><br><span class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">        <span class="attr">android:layout_height</span>=<span class="string">"0dp"</span></span><br><span class="line">        <span class="attr">android:layout_weight</span>=<span class="string">"1"</span></span><br><span class="line">        <span class="attr">android:background</span>=<span class="string">"@android:color/white"</span></span><br><span class="line">        <span class="attr">app:popupTheme</span>=<span class="string">"@style/ThemeOverlay.AppCompat.Dark"</span></span><br><span class="line">        <span class="attr">app:theme</span>=<span class="string">"@style/ThemeOverlay.AppCompat.Light"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">TextView</span></span><br><span class="line">            <span class="attr">android:id</span>=<span class="string">"@+id/tv_toolbar_title"</span></span><br><span class="line">            <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span><br><span class="line">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">            <span class="attr">android:layout_gravity</span>=<span class="string">"center"</span></span><br><span class="line">            <span class="attr">android:ellipsize</span>=<span class="string">"end"</span></span><br><span class="line">            <span class="attr">android:singleLine</span>=<span class="string">"true"</span></span><br><span class="line">            <span class="attr">android:text</span>=<span class="string">"@string/app_name"</span></span><br><span class="line">            <span class="attr">android:textColor</span>=<span class="string">"@color/textColorPrimary"</span></span><br><span class="line">            <span class="attr">android:textSize</span>=<span class="string">"@dimen/sp_18"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">android.support.v7.widget.Toolbar</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">View</span></span><br><span class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">        <span class="attr">android:layout_height</span>=<span class="string">"@dimen/divider_size"</span></span><br><span class="line">        <span class="attr">android:background</span>=<span class="string">"@color/divider"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">android.support.design.widget.AppBarLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong>AppBarLayout 在 API 21 及更高版本的系统中自带阴影，在使用 Bottom Line 分割线的时候就不需要这个阴影了。这时可以像上面代码中所写的那样，使用 elevation 去除阴影：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app:elevation="0dp"</span><br></pre></td></tr></table></figure>
+<p>当然，还可以借助 OutlineProvider 实现去除阴影的效果，就是稍微麻烦一些，需要在 Java 代码中动态添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);</span><br><span class="line">        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP &amp;&amp; appBarLayout != null) &#123;</span><br><span class="line">            appBarLayout.setOutlineProvider (null);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>效果如图：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1498967978.png" alt=""></p>
+<p><strong>注意：</strong>在部分 ROM 系统上，会自动根据 Toolbar 设置的 Theme 相关属性处理状态栏背景颜色，导致 AppTheme 主题中设置的 colorPrimaryDark 属性属性失效。比如这里的例子，Toolbar 使用 Light 主题，虽然在 style 中设置 colorPrimaryDark 颜色为灰白色，但是在魅族等手机上，会自动将状态栏也使用白色背景，同时将状态栏中的文字等内容的颜色自动设置为黑色，效果如图：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1498969334.png" alt=""></p>
 <h1 id="“withText”-问题"><a href="#“withText”-问题" class="headerlink" title="“withText” 问题"></a>“withText” 问题</h1><hr>
 <p>Google 在设计 ActionBar 时，就约束了 menu item 中 icon 与 title 属性的关系。非溢出状态下不显示 title 文本。所以，即使在 <code>app:showAsAction</code> 属性中添加 <code>withText</code> 值也不一定能显示 title。更不用提只显示 title 不显示 icon 的情况。官方说明如下：</p>
 <blockquote>
@@ -629,15 +642,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android Studio, Gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Gradle</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
+                <a href="javascript:void(0)" class="js-tag color3">Android Studio, Gradle</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -645,7 +654,15 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Mac</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -654,10 +671,6 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">MD5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">

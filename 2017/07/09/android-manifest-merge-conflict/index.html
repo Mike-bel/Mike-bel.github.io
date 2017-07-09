@@ -6,17 +6,34 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yifeng.studio">
-  <title>Category: Android | YiFeng&#39;s Zone</title>
+  <title>有关项目依赖包发生 Manifest Merge 冲突的详细解决方案 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="YiFeng's Zone">
-<meta property="og:url" content="http://yifeng.studio/categories/Android/page/4/index.html">
+  <meta name="description" content="安卓开发使用 Gradle 插件管理依赖包确实非常方便，尤其是在解决一些依赖冲突的问题上。比如，重复依赖的问题，具体内容请我之前写的一篇文章：
+
+有关 Android Studio 重复引入包的问题和解决方案
+
+开发中，你可能还会遇到一种情况，就是项目所引用的 AAR 、Library 等第三方库所包含的 Manifest 清单文件与主 Module （默认名为 app ）中定义的 Manifes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="有关项目依赖包发生 Manifest Merge 冲突的详细解决方案">
+<meta property="og:url" content="http://yifeng.studio/2017/07/09/android-manifest-merge-conflict/index.html">
 <meta property="og:site_name" content="YiFeng's Zone">
-<meta property="og:description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
+<meta property="og:description" content="安卓开发使用 Gradle 插件管理依赖包确实非常方便，尤其是在解决一些依赖冲突的问题上。比如，重复依赖的问题，具体内容请我之前写的一篇文章：
+
+有关 Android Studio 重复引入包的问题和解决方案
+
+开发中，你可能还会遇到一种情况，就是项目所引用的 AAR 、Library 等第三方库所包含的 Manifest 清单文件与主 Module （默认名为 app ）中定义的 Manifes">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1499589933.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1499589938.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1499589944.png">
+<meta property="og:updated_time" content="2017-07-09T12:45:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="YiFeng's Zone">
-<meta name="twitter:description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
+<meta name="twitter:title" content="有关项目依赖包发生 Manifest Merge 冲突的详细解决方案">
+<meta name="twitter:description" content="安卓开发使用 Gradle 插件管理依赖包确实非常方便，尤其是在解决一些依赖冲突的问题上。比如，重复依赖的问题，具体内容请我之前写的一篇文章：
+
+有关 Android Studio 重复引入包的问题和解决方案
+
+开发中，你可能还会遇到一种情况，就是项目所引用的 AAR 、Library 等第三方库所包含的 Manifest 清单文件与主 Module （默认名为 app ）中定义的 Manifes">
+<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1499589933.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -165,36 +182,137 @@ ga('send', 'pageview');
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-android-manifest-merge-conflict" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      有关项目依赖包发生 Manifest Merge 冲突的详细解决方案
+    </h1>
+  
+
+        
+        <a href="/2017/07/09/android-manifest-merge-conflict/" class="archive-article-date">
+  	<time datetime="2017-07-09T12:43:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-09</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>安卓开发使用 Gradle 插件管理依赖包确实非常方便，尤其是在解决一些依赖冲突的问题上。比如，重复依赖的问题，具体内容请我之前写的一篇文章：</p>
+<ul>
+<li><a href="http://yifeng.studio/2017/05/20/android-studio-duplicate-introduce-jar/">有关 Android Studio 重复引入包的问题和解决方案</a></li>
+</ul>
+<p>开发中，你可能还会遇到一种情况，就是项目所引用的 AAR 、Library 等第三方库所包含的 Manifest 清单文件与主 Module （默认名为 app ）中定义的 Manifest 内容合并时发生冲突。</p>
+<a id="more"></a>
+<p>举个例子。比如在项目中引用的某个 Library 的 AndroidManifest 文件中，application 标签中内容如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">application</span> </span><br><span class="line">    <span class="attr">android:theme</span>=<span class="string">"@android:style/Theme.Black"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>其中的 <code>android:theme</code> 属性在我们的 app module 主工程的 AndroidManifest 文件中也被定义：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">application</span></span><br><span class="line">    <span class="attr">android:allowBackup</span>=<span class="string">"false"</span></span><br><span class="line">    <span class="attr">android:icon</span>=<span class="string">"@mipmap/ic_launcher"</span></span><br><span class="line">    <span class="attr">android:label</span>=<span class="string">"@string/app_name"</span></span><br><span class="line">    <span class="attr">android:roundIcon</span>=<span class="string">"@mipmap/ic_launcher_round"</span></span><br><span class="line">    <span class="attr">android:supportsRtl</span>=<span class="string">"true"</span></span><br><span class="line">    <span class="attr">android:theme</span>=<span class="string">"@style/AppTheme"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>并且二者所使用的值不同。这样，在编译的时候就会发生合并冲突，错误信息如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Error:Execution failed for task ':app:processDebugManifest'.</span><br><span class="line">&gt; Manifest merger failed with multiple errors, see logs</span><br></pre></td></tr></table></figure>
+<p>通过点击 Messages 菜单左侧【Show Console Output】选项可以打开 Gradle Console 控制台查看错误日志和对应的解决方案：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1499589933.png" alt=""></p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1499589938.png" alt=""></p>
+<p>如上图所示，Library 与 主 Module 在合并 Manifest 时发生错误。其中还包含看到具体错误信息，注明了是 <code>android:theme</code> 属性发生冲突。并且给出了建议的解决方案，使用 <code>tools:replace</code> 方式解决冲突。</p>
+<p>我们就按照错误提示在主 Module 的 Manifest 文件中添加这行设置试试看：（注意需要声明 tools 命名空间）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">application</span></span><br><span class="line">    <span class="attr">android:allowBackup</span>=<span class="string">"false"</span></span><br><span class="line">    <span class="attr">android:icon</span>=<span class="string">"@mipmap/ic_launcher"</span></span><br><span class="line">    <span class="attr">android:label</span>=<span class="string">"@string/app_name"</span></span><br><span class="line">    <span class="attr">android:roundIcon</span>=<span class="string">"@mipmap/ic_launcher_round"</span></span><br><span class="line">    <span class="attr">android:supportsRtl</span>=<span class="string">"true"</span></span><br><span class="line">    <span class="attr">android:theme</span>=<span class="string">"@style/AppTheme"</span></span><br><span class="line">    <span class="attr">tools:replace</span>=<span class="string">"android:theme"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如此这样，再次 Build 时便能编译通过。其实原理就是，借助 tools 域名空间设置 Manifest 的合并优先级问题。这里 <code>tools:place</code> 表明合并时移除低优先级 Library 中的相关属性，使用高优先级 app module 中定义的对应属性内容。</p>
+<p>有关 Manifest 合并相关的知识，在开发者官网上介绍得非常清楚，大家可以访问如下链接：</p>
+<ul>
+<li><a href="https://developer.android.com/studio/build/manifest-merge.html#merge_priorities" target="_blank" rel="external">Merge Multiple Manifest Files</a></li>
+</ul>
+<p>你以为这样就结束了吗，非也，还有一种极端情况。像上面这种情况，如果我们脑洞再开大一点，假设这个 Library 也使用了 <code>tools:replace</code> 属性会发生什么情况呢。我们不妨试验一下。修改 Library 的 Manifest 内容：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">application</span> </span><br><span class="line">    <span class="attr">android:theme</span>=<span class="string">"@android:style/Theme.Black"</span></span><br><span class="line">    <span class="attr">tools:replace</span>=<span class="string">"android:theme"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>而此时 app module 中的 Manifest 内容的 <code>tools:replace</code> 属性也做了一些修改：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">application</span></span><br><span class="line">    <span class="attr">android:allowBackup</span>=<span class="string">"false"</span></span><br><span class="line">    <span class="attr">android:icon</span>=<span class="string">"@mipmap/ic_launcher"</span></span><br><span class="line">    <span class="attr">android:label</span>=<span class="string">"@string/app_name"</span></span><br><span class="line">    <span class="attr">android:roundIcon</span>=<span class="string">"@mipmap/ic_launcher_round"</span></span><br><span class="line">    <span class="attr">android:supportsRtl</span>=<span class="string">"true"</span></span><br><span class="line">    <span class="attr">android:theme</span>=<span class="string">"@style/AppTheme"</span></span><br><span class="line">    <span class="attr">tools:replace</span>=<span class="string">"android:allowBackup, android:theme"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这里，我故意设置二者的 tools:replace 属性为不同值。Build 一下，看看结果：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Error:Execution failed for task ':app:processDebugManifest'.</span><br><span class="line">&gt; Multiple entries with same key: android:theme=REPLACE and android:theme=REPLACE</span><br></pre></td></tr></table></figure>
+<p>如我们所想，合并时发生冲突。然而，痛苦的是这种情况下，编译器也无解，无法给出相应解决方案！</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1499589944.png" alt=""></p>
+<p>当然，这种情况很极端，但也不是没有出现的可能。第三方库和我们的 App Module 都想使用自己的属性，也在情理之中。那么怎么办呢，如果是本地 Library 依赖方式的话，还可以手动修改 Library 的 Manifest 内容。但是如果是远程依赖的 AAR的话，我们是改不了的啊。</p>
+<p>这个时候，我们就得想办法在合并的时候自动删除 Library 的 Manifest 内容。伟大的 GitHub网站有一个插件，能够帮助我们实现这个功能。先上地址：</p>
+<ul>
+<li><a href="https://github.com/2BAB/Seal" target="_blank" rel="external">https://github.com/2BAB/Seal</a></li>
+</ul>
+<p>这个插件可以帮助我们做到这些：</p>
+<ol>
+<li>删除 Application 节点中的指定属性；</li>
+<li>删除 Application 节点中 <code>tools:replace</code> 属性的指定值。</li>
+</ol>
+<p>这里我们还用上面的例子，介绍一下 Seal 插件的使用方式。</p>
+<p>首先在项目根目录下的 build.gradle 文件中设置 Seal 插件的地址：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">buildscript &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">    dependencies &#123;</span><br><span class="line">        classpath 'com.android.tools.build:gradle:2.3.0'</span><br><span class="line">        classpath 'me.xx2bab.gradle:seal-manifest-precheck-plugin:1.0.0'</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在 app module 的 build.gradle 文件中引用这个插件：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: 'com.android.application'</span><br><span class="line">apply plugin: 'seal'</span><br></pre></td></tr></table></figure>
+<p>接着还是修改这个 build.gradle 文件，配置合并时的删除规则：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">def projectRoot = project.getRootProject().rootDir.absolutePath</span><br><span class="line"></span><br><span class="line">// Folders may include AndroidManifest.xml files</span><br><span class="line">// 1. For gradle plugin 2.3.0 or higher, build-cache is default choice,</span><br><span class="line">// 2. But we should make sure snapshot-libs will be checked too.</span><br><span class="line">// 3. Free to add your folders for more customization</span><br><span class="line">def manifestPath = [</span><br><span class="line">        // for AAR of Release</span><br><span class="line">        // see note below</span><br><span class="line">        projectRoot + '/build-cache',</span><br><span class="line">        projectRoot + '/samplelibrary',</span><br><span class="line">        // for AAR of SNAPSHOT</span><br><span class="line">        projectRoot + '/app/build/intermediates/exploded-aar'</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">def removeAttrs = [</span><br><span class="line">        'android:theme'</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">def replaceValues = [</span><br><span class="line">        'android:theme'</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">seal &#123;</span><br><span class="line">    enabled = true</span><br><span class="line">    manifests = manifestPath</span><br><span class="line"></span><br><span class="line">    appAttrs &#123;</span><br><span class="line">        enabled = true</span><br><span class="line">        attrsShouldRemove = removeAttrs</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    appReplaceValues &#123;</span><br><span class="line">        enabled = true</span><br><span class="line">        valuesShouldRemove = replaceValues</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，在 manifestPath 配置下添加自己项目引入并发生冲突的 Library 名字，例子中使用的是 samplelibrary。同时在<br>removeAttrs 和 replaceValues 配置下添加对应冲突的属性名字，例子中冲突的是 <code>android:theme</code> 属性。</p>
+<p>还有一点需要注意的是，如果 Gradle 插件开启了 build-cache 功能（Gradle 插件 2.3 版本开始默认开启），还需要在项目根目录下的 gradle.properties 文件中添加如下内容：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android.buildCacheDir=./build-cache</span><br></pre></td></tr></table></figure>
+<p>这些工作都做完之后，我们再次 Build 工程，就能成功编译通过啦。</p>
+<p>当然，真实项目中 Manifest 合并时能遇到 tools 规则冲突的情况并不多见，而更多的是，普通属性的使用冲突。不过，还是值得注意一下，以备不时之需。</p>
+
+      
+
+      
+        <! -- 添加版权信息 -->
+<hr>
+<div class="article-footer-copyright">
+<p>本文由&nbsp;<b>亦枫</b>&nbsp;创作并首发于&nbsp;<b><a href="/index.html" target="_blank" title="亦枫">亦枫的个人博客</a></b>&nbsp;，同步推送微信公众号：安卓笔记侠（NiaoTech）。</a></p>
+ 
+<p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
+ 
+<p>本文标题为: <b><a href="/2017/07/09/android-manifest-merge-conflict/" target="_blank" title="有关项目依赖包发生 Manifest Merge 冲突的详细解决方案">有关项目依赖包发生 Manifest Merge 冲突的详细解决方案</a></b> </p>
+ 
+<p>本文链接为：<b><a href="/2017/07/09/android-manifest-merge-conflict/" target="_blank" title="有关项目依赖包发生 Manifest Merge 冲突的详细解决方案">http://yifeng.studio/2017/07/09/android-manifest-merge-conflict/</a></b> </p>
+
+<p><b>● 科学上网，翻墙推荐：</b><b><a href="http://buytizi.com/?r=225bb619613ec09e" target="_blank" title="http://buytizi.com/?r=225bb619613ec09e">http://buytizi.com/?r=225bb619613ec09e</a></b> </p>
+
+<p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
+</div>
+<! -- 添加版权信息 -->
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>请我喝咖啡，资瓷资瓷~<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://ocq7gtgqu.bkt.clouddn.com/yifeng_pay_alipay.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://ocq7gtgqu.bkt.clouddn.com/yifeng_pay_wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/11/28/android-textinputlayout/" class="archive-article-date">
-  	<time datetime="2016-11-28T07:24:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/11/28/android-textinputlayout/">Android TextInputLayout，打造 Material Design 风格的文本输入框</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -202,11 +320,15 @@ ga('send', 'pageview');
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
         		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Gradle</a>
+        		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -219,461 +341,118 @@ ga('send', 'pageview');
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/11/15/android-optimize-for-cold-start/" class="archive-article-date">
-  	<time datetime="2016-11-15T14:44:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/11/15/android-optimize-for-cold-start/">Android 你应该知道的的应用冷启动过程分析和优化方案</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
+      
 	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
+		<i class="icon-clock icon"></i>
+	    <ul class="article-tag-list">
+		    <li class="article-tag-list-item">
+		    	<span id="busuanzi_container_page_pv">热度 <span id="busuanzi_value_page_pv"></span>℃</span>
+		    </li>
 		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
+    </div>
 
 
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yifeng.studio/2017/07/09/android-manifest-merge-conflict/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/11/07/android-android-studio-2-2-preview-refresh-issue/" class="archive-article-date">
-  	<time datetime="2016-11-07T07:22:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/11/07/android-android-studio-2-2-preview-refresh-issue/">Android 如何在 Android Studio 2.2 版本实现 refresh 操作？</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Android Studio</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/11/06/android-office-document-viewer/" class="archive-article-date">
-  	<time datetime="2016-11-06T05:04:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/11/06/android-office-document-viewer/">Android 阅读 Office 文档，所有你能想到的解决方案都在这啦</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/11/02/android-app-running-status/" class="archive-article-date">
-  	<time datetime="2016-11-02T03:10:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/11/02/android-app-running-status/">Android 判断应用前后台运行状态并获取当前 Activity 实例</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/10/27/android-develop-30-things-that-experience-made-me-learn-the-hard-way/" class="archive-article-date">
-  	<time datetime="2016-10-27T13:01:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/27/android-develop-30-things-that-experience-made-me-learn-the-hard-way/">［译］开发安卓Apps，我所努力学习到的三十多条宝贵经验</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/10/26/android-64k-methods-count/" class="archive-article-date">
-  	<time datetime="2016-10-26T07:55:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-26</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/26/android-64k-methods-count/">Android 突破 DEX 文件的 64K 方法数限制</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/10/20/android-renderscript-blur/" class="archive-article-date">
-  	<time datetime="2016-10-20T06:28:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/20/android-renderscript-blur/">Android RenderScript 简单高效实现图片的高斯模糊效果</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/10/18/android-cardview/" class="archive-article-date">
-  	<time datetime="2016-10-18T08:18:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/18/android-cardview/">Android 使用CardView轻松实现卡片式设计</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/10/13/android-tools-attributes/" class="archive-article-date">
-  	<time datetime="2016-10-13T10:49:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/13/android-tools-attributes/">Android Tools Attributes，让布局设计所见即所得</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2017/06/30/coding-with-code-style/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Java 代码规范，你应该知道的一些工具和用法</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="android-manifest-merge-conflict" data-title="有关项目依赖包发生 Manifest Merge 冲突的详细解决方案" data-url="http://yifeng.studio/2017/07/09/android-manifest-merge-conflict/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"yifengzone"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+  
+  
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/categories/Android/page/3/">&laquo; Prev</a><a class="page-number" href="/categories/Android/">1</a><a class="page-number" href="/categories/Android/page/2/">2</a><a class="page-number" href="/categories/Android/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/categories/Android/page/5/">5</a><a class="extend next" rel="next" href="/categories/Android/page/5/">Next &raquo;</a>
-    </nav>
+  
+
   
 
 
@@ -706,10 +485,10 @@ ga('send', 'pageview');
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: false,
 		root: "/",
 		innerArchive: true,
