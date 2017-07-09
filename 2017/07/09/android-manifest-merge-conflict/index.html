@@ -22,10 +22,11 @@
 有关 Android Studio 重复引入包的问题和解决方案
 
 开发中，你可能还会遇到一种情况，就是项目所引用的 AAR 、Library 等第三方库所包含的 Manifest 清单文件与主 Module （默认名为 app ）中定义的 Manifes">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1499589928.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1499589933.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1499589938.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1499589944.png">
-<meta property="og:updated_time" content="2017-07-09T12:45:27.000Z">
+<meta property="og:updated_time" content="2017-07-09T12:54:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="有关项目依赖包发生 Manifest Merge 冲突的详细解决方案">
 <meta name="twitter:description" content="安卓开发使用 Gradle 插件管理依赖包确实非常方便，尤其是在解决一些依赖冲突的问题上。比如，重复依赖的问题，具体内容请我之前写的一篇文章：
@@ -33,7 +34,7 @@
 有关 Android Studio 重复引入包的问题和解决方案
 
 开发中，你可能还会遇到一种情况，就是项目所引用的 AAR 、Library 等第三方库所包含的 Manifest 清单文件与主 Module （默认名为 app ）中定义的 Manifes">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1499589933.png">
+<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1499589928.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -215,8 +216,8 @@ ga('send', 'pageview');
 <p>并且二者所使用的值不同。这样，在编译的时候就会发生合并冲突，错误信息如下：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Error:Execution failed for task ':app:processDebugManifest'.</span><br><span class="line">&gt; Manifest merger failed with multiple errors, see logs</span><br></pre></td></tr></table></figure>
 <p>通过点击 Messages 菜单左侧【Show Console Output】选项可以打开 Gradle Console 控制台查看错误日志和对应的解决方案：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1499589928.png" alt=""></p>
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/1499589933.png" alt=""></p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1499589938.png" alt=""></p>
 <p>如上图所示，Library 与 主 Module 在合并 Manifest 时发生错误。其中还包含看到具体错误信息，注明了是 <code>android:theme</code> 属性发生冲突。并且给出了建议的解决方案，使用 <code>tools:replace</code> 方式解决冲突。</p>
 <p>我们就按照错误提示在主 Module 的 Manifest 文件中添加这行设置试试看：（注意需要声明 tools 命名空间）</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">application</span></span><br><span class="line">    <span class="attr">android:allowBackup</span>=<span class="string">"false"</span></span><br><span class="line">    <span class="attr">android:icon</span>=<span class="string">"@mipmap/ic_launcher"</span></span><br><span class="line">    <span class="attr">android:label</span>=<span class="string">"@string/app_name"</span></span><br><span class="line">    <span class="attr">android:roundIcon</span>=<span class="string">"@mipmap/ic_launcher_round"</span></span><br><span class="line">    <span class="attr">android:supportsRtl</span>=<span class="string">"true"</span></span><br><span class="line">    <span class="attr">android:theme</span>=<span class="string">"@style/AppTheme"</span></span><br><span class="line">    <span class="attr">tools:replace</span>=<span class="string">"android:theme"</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -232,6 +233,7 @@ ga('send', 'pageview');
 <p>这里，我故意设置二者的 tools:replace 属性为不同值。Build 一下，看看结果：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Error:Execution failed for task ':app:processDebugManifest'.</span><br><span class="line">&gt; Multiple entries with same key: android:theme=REPLACE and android:theme=REPLACE</span><br></pre></td></tr></table></figure>
 <p>如我们所想，合并时发生冲突。然而，痛苦的是这种情况下，编译器也无解，无法给出相应解决方案！</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1499589938.png" alt=""></p>
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/1499589944.png" alt=""></p>
 <p>当然，这种情况很极端，但也不是没有出现的可能。第三方库和我们的 App Module 都想使用自己的属性，也在情理之中。那么怎么办呢，如果是本地 Library 依赖方式的话，还可以手动修改 Library 的 Manifest 内容。但是如果是远程依赖的 AAR的话，我们是改不了的啊。</p>
 <p>这个时候，我们就得想办法在合并的时候自动删除 Library 的 Manifest 内容。伟大的 GitHub网站有一个插件，能够帮助我们实现这个功能。先上地址：</p>
@@ -593,15 +595,15 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">MD5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
