@@ -6,17 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yifeng.studio">
-  <title>Archives: 2017/6 | YiFeng&#39;s Zone</title>
+  <title>Android 自定义 View 集锦｜实现水波纹扩散效果 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="YiFeng's Zone">
-<meta property="og:url" content="http://yifeng.studio/archives/2017/06/index.html">
+  <meta name="description" content="通过自定义 View 来满足 UI 中的特殊设计在工作中是很常见的事情，比如带图例的柱状图、带进度的进度条等。这些实现起来相对简单的自定义 View 往往也需要费点时间在实现方式上多多思考。
+自工作以来，也写过不少各式各样的自定义 View，但很少汇总起来，供日后参考。导致后续需要的时候都得重新设计、Coding，比较费时费力。于是打算将这些自定义 View 汇总到一个 Demo 工程中，并上传至">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 自定义 View 集锦｜实现水波纹扩散效果">
+<meta property="og:url" content="http://yifeng.studio/2017/07/24/android-custom-views-water-ripple-effect/index.html">
 <meta property="og:site_name" content="YiFeng's Zone">
-<meta property="og:description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
+<meta property="og:description" content="通过自定义 View 来满足 UI 中的特殊设计在工作中是很常见的事情，比如带图例的柱状图、带进度的进度条等。这些实现起来相对简单的自定义 View 往往也需要费点时间在实现方式上多多思考。
+自工作以来，也写过不少各式各样的自定义 View，但很少汇总起来，供日后参考。导致后续需要的时候都得重新设计、Coding，比较费时费力。于是打算将这些自定义 View 汇总到一个 Demo 工程中，并上传至">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1500849386.gif">
+<meta property="og:updated_time" content="2017-07-23T23:52:16.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="YiFeng's Zone">
-<meta name="twitter:description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
+<meta name="twitter:title" content="Android 自定义 View 集锦｜实现水波纹扩散效果">
+<meta name="twitter:description" content="通过自定义 View 来满足 UI 中的特殊设计在工作中是很常见的事情，比如带图例的柱状图、带进度的进度条等。这些实现起来相对简单的自定义 View 往往也需要费点时间在实现方式上多多思考。
+自工作以来，也写过不少各式各样的自定义 View，但很少汇总起来，供日后参考。导致后续需要的时候都得重新设计、Coding，比较费时费力。于是打算将这些自定义 View 汇总到一个 Demo 工程中，并上传至">
+<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1500849386.gif">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -165,85 +171,110 @@ ga('send', 'pageview');
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-android-custom-views-water-ripple-effect" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/06/30/coding-with-code-style/" class="archive-article-date">
-  	<time datetime="2017-06-29T23:52:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-30</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/30/coding-with-code-style/">Java 代码规范，你应该知道的一些工具和用法</a>
+    <h1 class="article-title" itemprop="name">
+      Android 自定义 View 集锦｜实现水波纹扩散效果
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Code Style</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/06/23/android-animation-interpolators/" class="archive-article-date">
-  	<time datetime="2017-06-22T22:35:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-23</time>
+        
+        <a href="/2017/07/24/android-custom-views-water-ripple-effect/" class="archive-article-date">
+  	<time datetime="2017-07-23T23:48:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-24</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/23/android-animation-interpolators/">【译】从数学公式入手，详细了解 Animation 的 Interpolators</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>通过自定义 View 来满足 UI 中的特殊设计在工作中是很常见的事情，比如带图例的柱状图、带进度的进度条等。这些实现起来相对简单的自定义 View 往往也需要费点时间在实现方式上多多思考。</p>
+<p>自工作以来，也写过不少各式各样的自定义 View，但很少汇总起来，供日后参考。导致后续需要的时候都得重新设计、Coding，比较费时费力。于是打算将这些自定义 View 汇总到一个 Demo 工程中，并上传至 GitHub 网站，供自己备用的同时，也能给他人带来帮助。</p>
+<p><a href="https://github.com/Mike-bel/android-custom-views" target="_blank" rel="external">https://github.com/Mike-bel/android-custom-views</a></p>
+<a id="more"></a>
+<p>考虑到这种简单的自定义 View 并不需要通过 Library 的形式引入第三方开源库，所以也没有做成 Gradle 依赖的形式。可以找到对应 View 的源码，直接复制使用即可。</p>
+<p>目前已经上传第一个自定义 View，实现的效果是带图标的水波纹扩散效果，效果如图：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1500849386.gif" height="600"></p>
+<p>实现方式可以有很多种，简单描述一下我的实现思路是：</p>
+<ol>
+<li><p>由于中间是一张圆形图片，不同半径大小的静态水波纹可以通过绘制不同圆环宽度的方式实现，圆环内径也就是圆形图片的半径；</p>
+</li>
+<li><p>动态的扩散效果实际上就是定时改变每条波纹的圆环宽度，然后不停地重新绘制便产生了动画效果；</p>
+</li>
+<li><p>不同大小的波纹可以使用画笔 Paint 对象的 Alpha 值实现渐变效果，而这个值可以根据当前圆环宽度与最大值的对比计算得出。</p>
+</li>
+</ol>
+<p>有了清晰的实现思路，写起代码来就会很得心应手，完整代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yifeng.view.view;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.content.Context;</span><br><span class="line"><span class="keyword">import</span> android.content.res.TypedArray;</span><br><span class="line"><span class="keyword">import</span> android.graphics.Bitmap;</span><br><span class="line"><span class="keyword">import</span> android.graphics.Canvas;</span><br><span class="line"><span class="keyword">import</span> android.graphics.Paint;</span><br><span class="line"><span class="keyword">import</span> android.graphics.drawable.BitmapDrawable;</span><br><span class="line"><span class="keyword">import</span> android.graphics.drawable.Drawable;</span><br><span class="line"><span class="keyword">import</span> android.support.annotation.Nullable;</span><br><span class="line"><span class="keyword">import</span> android.support.v4.content.ContextCompat;</span><br><span class="line"><span class="keyword">import</span> android.util.AttributeSet;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.yifeng.view.R;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Created by lxf on 2017/7/23.</span><br><span class="line"> * 水波纹效果</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WaterRippleView</span> <span class="keyword">extends</span> <span class="title">View</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> mRunning = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] mStrokeWidthArr;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mMaxStrokeWidth;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mRippleCount;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mRippleSpacing;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Paint mPaint;</span><br><span class="line">    <span class="keyword">private</span> Bitmap mBitmap;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mWidth;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mHeight;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WaterRippleView</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>(context, <span class="keyword">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WaterRippleView</span><span class="params">(Context context, @Nullable AttributeSet attrs)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>(context, attrs, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WaterRippleView</span><span class="params">(Context context, @Nullable AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context, attrs, defStyleAttr);</span><br><span class="line">        initAttrs(context, attrs);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initAttrs</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</span><br><span class="line">        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.WaterRippleView);</span><br><span class="line">        <span class="keyword">int</span> waveColor = typedArray.getColor(R.styleable.WaterRippleView_rippleColor,</span><br><span class="line">                ContextCompat.getColor(context, R.color.colorPrimary));</span><br><span class="line">        Drawable drawable = typedArray.getDrawable(R.styleable.WaterRippleView_rippleCenterIcon);</span><br><span class="line">        mRippleCount = typedArray.getInt(R.styleable.WaterRippleView_rippleCount, <span class="number">2</span>);</span><br><span class="line">        mRippleSpacing = typedArray.getDimensionPixelSize(R.styleable.WaterRippleView_rippleSpacing,</span><br><span class="line">                <span class="number">16</span>);</span><br><span class="line">        mRunning = typedArray.getBoolean(R.styleable.WaterRippleView_rippleAutoRunning, <span class="keyword">false</span>);</span><br><span class="line">        typedArray.recycle();</span><br><span class="line"></span><br><span class="line">        mBitmap = ((BitmapDrawable) drawable).getBitmap();</span><br><span class="line"></span><br><span class="line">        mPaint = <span class="keyword">new</span> Paint();</span><br><span class="line">        mPaint.setAntiAlias(<span class="keyword">true</span>);</span><br><span class="line">        mPaint.setStyle(Paint.Style.STROKE);</span><br><span class="line">        mPaint.setColor(waveColor);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onMeasure(widthMeasureSpec, heightMeasureSpec);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> size = (mRippleCount * mRippleSpacing + mBitmap.getWidth() / <span class="number">2</span>) * <span class="number">2</span>;</span><br><span class="line">        mWidth = resolveSize(size, widthMeasureSpec);</span><br><span class="line">        mHeight = resolveSize(size, heightMeasureSpec);</span><br><span class="line">        setMeasuredDimension(mWidth, mHeight);</span><br><span class="line"></span><br><span class="line">        mMaxStrokeWidth = (mWidth - mBitmap.getWidth()) / <span class="number">2</span>;</span><br><span class="line">        initArray();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initArray</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        mStrokeWidthArr = <span class="keyword">new</span> <span class="keyword">int</span>[mRippleCount];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; mStrokeWidthArr.length; i++) &#123;</span><br><span class="line">            mStrokeWidthArr[i] = - mMaxStrokeWidth / mRippleCount * i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">        drawBitmap(canvas);</span><br><span class="line">        <span class="keyword">if</span> (mRunning) &#123;</span><br><span class="line">            drawRipple(canvas);</span><br><span class="line">            postInvalidateDelayed(<span class="number">50</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawBitmap</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> left = (mWidth - mBitmap.getWidth()) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">int</span> top = (mHeight - mBitmap.getHeight()) / <span class="number">2</span>;</span><br><span class="line">        canvas.drawBitmap(mBitmap, left, top, <span class="keyword">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawRipple</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> strokeWidth : mStrokeWidthArr) &#123;</span><br><span class="line">            <span class="keyword">if</span> (strokeWidth &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            mPaint.setStrokeWidth(strokeWidth);</span><br><span class="line">            mPaint.setAlpha(<span class="number">255</span> - <span class="number">255</span> * strokeWidth / mMaxStrokeWidth);</span><br><span class="line">            canvas.drawCircle(mWidth / <span class="number">2</span>, mHeight / <span class="number">2</span>, mBitmap.getWidth() / <span class="number">2</span> + strokeWidth/<span class="number">2</span>,</span><br><span class="line">                    mPaint);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; mStrokeWidthArr.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> ((mStrokeWidthArr[i] += <span class="number">4</span>) &gt; mMaxStrokeWidth) &#123;</span><br><span class="line">                mStrokeWidthArr[i] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        mRunning = <span class="keyword">true</span>;</span><br><span class="line">        postInvalidate();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        mRunning = <span class="keyword">false</span>;</span><br><span class="line">        initArray();</span><br><span class="line">        postInvalidate();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>需要注意的是：</strong>整个自定义 View 的宽度是由水波纹的波纹条数和波纹间距控制的。事实上，感官上的波纹移动速度也是由这两个属性间接体现出来的。</p>
+<p>再看看 attrs 中的自定义属性内容：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">"WaterRippleView"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"rippleSpacing"</span> <span class="attr">format</span>=<span class="string">"dimension|reference"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"rippleCount"</span> <span class="attr">format</span>=<span class="string">"integer|reference"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"rippleColor"</span> <span class="attr">format</span>=<span class="string">"color|reference"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"rippleCenterIcon"</span> <span class="attr">format</span>=<span class="string">"reference"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"rippleAutoRunning"</span> <span class="attr">format</span>=<span class="string">"boolean"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如上所示，相邻波纹间距、波纹数量、波纹颜色、图标和是否自动开启动画都能够通过 Layout 中的设置自由定制。并且能够通过 Java 代码动态启动或停止动画效果。</p>
+<p>这样，一个完整的水波纹扩散效果的自定义 View 就完成了，并且使用起来灵活度很高。</p>
+<blockquote>
+<p><a href="https://github.com/Mike-bel/android-custom-views" target="_blank" rel="external">android-custom-views</a> 慢慢也会添加更多项目中常用的自定义 View 内容，喜欢的话欢迎给个 Star，或者通过 issue 的方式提出你的意见，和我一起交流，共同进步。</p>
+</blockquote>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+        <! -- 添加版权信息 -->
+<hr>
+<div class="article-footer-copyright">
+<p>本文由&nbsp;<b>亦枫</b>&nbsp;创作并首发于&nbsp;<b><a href="/index.html" target="_blank" title="亦枫">亦枫的个人博客</a></b>&nbsp;，同步推送微信公众号：安卓笔记侠（NiaoTech）。</a></p>
+ 
+<p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
+ 
+<p>本文标题为: <b><a href="/2017/07/24/android-custom-views-water-ripple-effect/" target="_blank" title="Android 自定义 View 集锦｜实现水波纹扩散效果">Android 自定义 View 集锦｜实现水波纹扩散效果</a></b> </p>
+ 
+<p>本文链接为：<b><a href="/2017/07/24/android-custom-views-water-ripple-effect/" target="_blank" title="Android 自定义 View 集锦｜实现水波纹扩散效果">http://yifeng.studio/2017/07/24/android-custom-views-water-ripple-effect/</a></b> </p>
+
+<p><b>● 科学上网，翻墙推荐：</b><b><a href="http://buytizi.com/?r=225bb619613ec09e" target="_blank" title="http://buytizi.com/?r=225bb619613ec09e">http://buytizi.com/?r=225bb619613ec09e</a></b> </p>
+
+<p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
+</div>
+<! -- 添加版权信息 -->
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>请我喝咖啡，资瓷资瓷~<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://ocq7gtgqu.bkt.clouddn.com/yifeng_pay_alipay.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://ocq7gtgqu.bkt.clouddn.com/yifeng_pay_wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -253,13 +284,13 @@ ga('send', 'pageview');
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Animation</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Custom View</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -272,119 +303,147 @@ ga('send', 'pageview');
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/06/16/android-multi-process-things/" class="archive-article-date">
-  	<time datetime="2017-06-16T15:36:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/16/android-multi-process-things/">Android 中的多进程，你值得了解的一些知识</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
+      
 	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
+		<i class="icon-clock icon"></i>
+	    <ul class="article-tag-list">
+		    <li class="article-tag-list-item">
+		    	<span id="busuanzi_container_page_pv">热度 <span id="busuanzi_value_page_pv"></span>℃</span>
+		    </li>
 		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android/" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
+    </div>
 
 
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yifeng.studio/2017/07/24/android-custom-views-water-ripple-effect/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/06/13/md5-profile-and-implementation-in-java/" class="archive-article-date">
-  	<time datetime="2017-06-13T13:04:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-13</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/07/16/android-webview-security-scan-mode/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">开启 Android WebView 的安全浏览模式</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/13/md5-profile-and-implementation-in-java/">MD5 简介，及其在 Java 中的实现方式</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">MD5</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Java/" class="article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    So Crazy! No TOCs...
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="android-custom-views-water-ripple-effect" data-title="Android 自定义 View 集锦｜实现水波纹扩散效果" data-url="http://yifeng.studio/2017/07/24/android-custom-views-water-ripple-effect/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"yifengzone"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -416,8 +475,8 @@ ga('send', 'pageview');
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
