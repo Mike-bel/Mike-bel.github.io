@@ -6,27 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yifeng.studio">
-  <title>Android Studio 版本升级，一些你可能不知道的东西 | YiFeng&#39;s Zone</title>
+  <title>Android 自定义 View 集锦｜自定义圆形旋转进度条，仿微博头像加载效果 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="写在前面
-Android Studio 版本迭代更新比较频繁，如果每次都卸载重装，翻墙下载几百兆的新版安装包，体验一定很差。浪费翻墙流量不说，每次都要重新配置之前的个性化设置等相关内容。所以，采取差异补丁包的增量升级方式显然明智许多。">
+  <meta name="description" content="微博 App 的用户头像有一个圆形旋转进度条的加载效果，看上去效果非常不错，如图所示：">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android Studio 版本升级，一些你可能不知道的东西">
-<meta property="og:url" content="http://yifeng.studio/2017/03/07/android-studio-update-things/index.html">
+<meta property="og:title" content="Android 自定义 View 集锦｜自定义圆形旋转进度条，仿微博头像加载效果">
+<meta property="og:url" content="http://yifeng.studio/2017/08/04/android-custom-views-circle-loading-view/index.html">
 <meta property="og:site_name" content="YiFeng's Zone">
-<meta property="og:description" content="写在前面
-Android Studio 版本迭代更新比较频繁，如果每次都卸载重装，翻墙下载几百兆的新版安装包，体验一定很差。浪费翻墙流量不说，每次都要重新配置之前的个性化设置等相关内容。所以，采取差异补丁包的增量升级方式显然明智许多。">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1488900440.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1488900456.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1488900475.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1488900486.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1488900500.jpeg">
-<meta property="og:updated_time" content="2017-03-08T00:35:57.000Z">
+<meta property="og:description" content="微博 App 的用户头像有一个圆形旋转进度条的加载效果，看上去效果非常不错，如图所示：">
+<meta property="og:image" content="https://github.com/Mike-bel/android-custom-views/blob/master/pictures/1501857872.gif?raw=true">
+<meta property="og:image" content="https://github.com/Mike-bel/android-custom-views/blob/master/pictures/1501857864.gif?raw=true">
+<meta property="og:updated_time" content="2017-08-04T14:51:31.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android Studio 版本升级，一些你可能不知道的东西">
-<meta name="twitter:description" content="写在前面
-Android Studio 版本迭代更新比较频繁，如果每次都卸载重装，翻墙下载几百兆的新版安装包，体验一定很差。浪费翻墙流量不说，每次都要重新配置之前的个性化设置等相关内容。所以，采取差异补丁包的增量升级方式显然明智许多。">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1488900440.png">
+<meta name="twitter:title" content="Android 自定义 View 集锦｜自定义圆形旋转进度条，仿微博头像加载效果">
+<meta name="twitter:description" content="微博 App 的用户头像有一个圆形旋转进度条的加载效果，看上去效果非常不错，如图所示：">
+<meta name="twitter:image" content="https://github.com/Mike-bel/android-custom-views/blob/master/pictures/1501857872.gif?raw=true">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -175,102 +169,57 @@ ga('send', 'pageview');
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-android-studio-update-things" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-android-custom-views-circle-loading-view" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Android Studio 版本升级，一些你可能不知道的东西
+      Android 自定义 View 集锦｜自定义圆形旋转进度条，仿微博头像加载效果
     </h1>
   
 
         
-        <a href="/2017/03/07/android-studio-update-things/" class="archive-article-date">
-  	<time datetime="2017-03-07T14:03:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-07</time>
+        <a href="/2017/08/04/android-custom-views-circle-loading-view/" class="archive-article-date">
+  	<time datetime="2017-08-04T14:49:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-04</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><hr>
-<p>Android Studio 版本迭代更新比较频繁，如果每次都卸载重装，翻墙下载几百兆的新版安装包，体验一定很差。浪费翻墙流量不说，每次都要重新配置之前的个性化设置等相关内容。所以，采取差异补丁包的增量升级方式显然明智许多。</p>
+        <p>微博 App 的用户头像有一个圆形旋转进度条的加载效果，看上去效果非常不错，如图所示：</p>
 <a id="more"></a>
-<p>关于 Android Studio 的版本更新，其实很简单，本没有写的必要，直接选择 <code>Check for Updates...</code>，然后下载安装补丁包即可。但是，如果当前版本和最新版本之间相差很多个版本，比如以前有次我使用的是 Android Studio 1.5.0 版本，而当时最新版本是 2.1.1 版本，就无法利用 Android Studio 本身提供的自动更新功能，怎么办呢？不妨跟着我一起尝试一下。</p>
-<h1 id="准备工具"><a href="#准备工具" class="headerlink" title="准备工具"></a>准备工具</h1><hr>
-<p>想要在大陆境内顺利完成 Android Studio 版本更新的相关事宜，除了保证基本的网速，科学上网也是硬性条件。网络上的翻墙代理工具五花八门，这里给大家安利一款我常用的 —— <a href="http://buytizi.com/?r=225bb619613ec09e" target="_blank" rel="external">云梯</a>，速度和稳定性目前是我所接触过的代理工具中最稳定的一个，使用下面的推荐链接注册账户还能优惠 10 元：</p>
-<p><a href="http://buytizi.com/?r=225bb619613ec09e" target="_blank" rel="external">http://buytizi.com/?r=225bb619613ec09e</a></p>
-<p>另外补充一点：本文所描述的内容都是基于 Mac OS X 系统中 Android Studio 的版本升级，Windows 系统中的操作大同小异，不再赘述。</p>
-<h1 id="手动更新"><a href="#手动更新" class="headerlink" title="手动更新"></a>手动更新</h1><hr>
-<p>举个例子。首先，检查版本确认是否需要更新：[Android Studio] ＝＝》[Check for Updates…]， 如果不能翻墙，检查失败，会得到如下提示：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1488900440.png" alt="check error.png"></p>
-<p>翻墙成功并且存在新版本时，显示如下：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1488900456.png" alt="check for updates.png"></p>
-<p>可以看到 Android Studio 在特定渠道下的当前版本和最新版本信息。这里需要说明一下，如果当前版本与最新版本之间相差的版本比较少，上图中的第二个按钮将显示为“Update and Restart”，点击即可下载版本之间的 patch 包，完成自动更新。如果差距太大，下载按钮就会显示为上图中的 “Download”，点击将会进入最新版本的完整安装包下载页面。关于版本跨越太多无法使用 patch 包更新的问题后面再提，我们先来看下其它地方。</p>
-<p>点击图中 [ Updates ] 链接文字可以配置更新渠道等相关信息。一般来说，Android Studio 的版本发布会经历四个阶段，按时间顺序依次如下：</p>
-<ol>
-<li><p><strong>Canary Channel</strong>：金丝雀版本，开放新功能，同时 BUG 也很多。想第一时间尝鲜的开发人员可以选择这个渠道；</p>
-</li>
-<li><p><strong>Dev Channel</strong>：开发者版本，到了这个版本很多 BUG 已经得到了解决；</p>
-</li>
-<li><p><strong>Beta Channel</strong>：测试版，BUG 出现概率相对较小；</p>
-</li>
-<li><p><strong>Stable Channel</strong>：稳定版，官方发布的正式版，发布日期较晚。这是 Android Studio 默认的更新设置，也是大多数开发人员青睐使用的版本。</p>
-</li>
-</ol>
-<p>可以看出，例子中的 Android Studio 当前版本太低，无法使用自动更新功能。那么我们怎么知道新版本支持补丁包增量更新方式的相关旧版本有哪些呢？不妨打开这个网址：</p>
-<p><a href="https://dl.google.com/android/studio/patches/updates.xml" target="_blank" rel="external">https://dl.google.com/android/studio/patches/updates.xml</a></p>
-<p>网页中包含各渠道最新版本所支持的 patch 包详细情况。这里截取其中的一段用来展示说明：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">channel</span> <span class="attr">feedback</span>=<span class="string">"https://code.google.com/p/android/issues/entry?template=Android+Studio+bug"</span> <span class="attr">id</span>=<span class="string">"AI-2-eap"</span> <span class="attr">majorVersion</span>=<span class="string">"2"</span> <span class="attr">name</span>=<span class="string">"Android Studio updates"</span><span class="attr">status</span>=<span class="string">"eap"</span> <span class="attr">url</span>=<span class="string">"http://tools.android.com/recent"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">build</span> <span class="attr">apiVersion</span>=<span class="string">"AI-143.1821.5"</span> <span class="attr">number</span>=<span class="string">"AI-143.2821654"</span> <span class="attr">version</span>=<span class="string">"2.1.1"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">message</span>&gt;</span></span><br><span class="line">&lt;![CDATA[</span><br><span class="line">&lt;html&gt;A new Android Studio 2.1.1 is available in the canary channel.&lt;p/&gt; &lt;b&gt;Please update to Android Studio v2.1.1&lt;/b&gt;. This fixes a serious security vulnerability in all older versions of Android Studio.&lt;br/&gt;&lt;/html&gt;</span><br><span class="line">]]&gt;</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">message</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">download</span>=<span class="string">"true"</span> <span class="attr">name</span>=<span class="string">"Download"</span> <span class="attr">url</span>=<span class="string">"http://tools.android.com/download/studio/canary/latest/"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">name</span>=<span class="string">"Release Notes"</span> <span class="attr">url</span>=<span class="string">"http://tools.android.com/recent"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">patch</span> <span class="attr">from</span>=<span class="string">"141.2456560"</span> <span class="attr">size</span>=<span class="string">"82"</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 1.5.1.0 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">patch</span> <span class="attr">from</span>=<span class="string">"143.2664576"</span> <span class="attr">size</span>=<span class="string">"42"</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 2.1.0.0 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">patch</span> <span class="attr">from</span>=<span class="string">"143.2682553"</span> <span class="attr">size</span>=<span class="string">"42"</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 2.1.0.1 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">patch</span> <span class="attr">from</span>=<span class="string">"143.2712822"</span> <span class="attr">size</span>=<span class="string">"42"</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 2.1.0.2 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">patch</span> <span class="attr">from</span>=<span class="string">"143.2730271"</span> <span class="attr">size</span>=<span class="string">"42"</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 2.1.0.3 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">patch</span> <span class="attr">from</span>=<span class="string">"143.2739321"</span> <span class="attr">size</span>=<span class="string">"18"</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 2.0.0.20 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">patch</span> <span class="attr">from</span>=<span class="string">"143.2759333"</span> <span class="attr">size</span>=<span class="string">"42"</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 2.1.0.5 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">patch</span> <span class="attr">from</span>=<span class="string">"143.2765781"</span> <span class="attr">size</span>=<span class="string">"42"</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 2.1.0.6 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">patch</span> <span class="attr">from</span>=<span class="string">"143.2771856"</span> <span class="attr">size</span>=<span class="string">"42"</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 2.1.0.7 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">patch</span> <span class="attr">from</span>=<span class="string">"143.2783836"</span> <span class="attr">size</span>=<span class="string">"14"</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 2.1.0.8 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">patch</span> <span class="attr">from</span>=<span class="string">"143.2790544"</span> <span class="attr">size</span>=<span class="string">"3"</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 2.1.0.9 --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">channel</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>可以看出，在这些信息中包含有 Android Studio 的当前最新版本及其所支持使用 patch 包增量更新的所有版本信息和对应补丁大小。比如本例中的最新版本为 2.1.1，版本号为 AI-143.2821654，支持增量更新的最低版本为1.5.1.0，版本号为 141.2456560。而目前使用的是 1.5.0 版本，所以为了使用增量更新的方式更新到最新版本，至少先将本地 Android Studio 升级到 1.5.1.0 版本。</p>
-<p>补丁包的下载链接格式如下，其中 <code>$FROM</code> 表示当前版本的版本号，<code>$TO</code> 表示要更新版本的版本号：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://dl.google.com/android/studio/patches/AI-$FROM-$TO-patch-mac.jar</span><br></pre></td></tr></table></figure>
-<p>通过选择 Android Studio ==&gt; About Android Studio 可以查看当前 Android Studio 的版本号。所以，从 1.5.0 版本升级到1.5.1.0 版本的 patch 包下载链接为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://dl.google.com/android/studio/patches/AI-141.2422023-141.2456560-patch-mac.jar</span><br></pre></td></tr></table></figure>
-<p>下载完成之后，使用系统或者 Android Studio 提供的命令行工具进入到 Android Studio安装包目录下（ <code>Contents</code> 同级目录），输入如下命令并执行，经过短暂的等待便可完成手动更新的过程（注意 patch 包的路径，根据实际情况另行修改）：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -classpath /Users/yifeng/Desktop/AI-141.2422023-141.2456560-patch-mac.jar com.intellij.updater.Runner install Contents/</span><br></pre></td></tr></table></figure>
-<p>注意：如果上述命令执行的目录位置错误，比如进入到了 Contents 目录里面，会出现如下错误：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1488900475.png" alt="IOException.png"></p>
-<p>更新完成之后，重启 Android Studio，再查看当前版本信息：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1488900486.png" alt="当前版本信息.png"></p>
-<p>如图所示，当前版本已经为1.5.1，符合使用 Android Studio 自动更新功能升级至 最新版本2.1.1的最低版本要求。</p>
-<h1 id="自动更新"><a href="#自动更新" class="headerlink" title="自动更新"></a>自动更新</h1><hr>
-<p>执行 Android Studio ==&gt; Check for Updates…，此时弹出的版本信息对话框的下载更新按钮显示为：Update and Restart，点击即可完成自动升级。</p>
-<h1 id="忽略更新"><a href="#忽略更新" class="headerlink" title="忽略更新"></a>忽略更新</h1><hr>
-<p>Android Studio 每次启动时默认自动检查更新，包括自身版本以及使用的插件版本。可能有时候我们想忽略某个版本的更新，可以在更新提示的弹窗中选择 <code>Ignore This Update</code> 操作，这样在下次执行检查更新时便会忽视该版本。但如果你误按了这个按钮，会发生什么呢？</p>
-<p>比如当前使用 Android Studio 是 2.2 版本，最新版本为 2.3 版本，由于之前误操作选择了忽略 2.3 版本，执行检查更新时会得到如下提示：</p>
-<blockquote>
-<p>You already have the latest version of Android Studio (Preview) installed.</p>
-</blockquote>
-<p>实际上，我们知道不是最新版本，怎么办呢？在系统目录下有专门的文件存储着更新相关的配置。在以前比较旧的版本中，使用 <code>other.xml</code> 文件存储，路径如下：</p>
-<blockquote>
-<p>~/Library/Preferences/AndroidStudioPreview/options/other.xml</p>
-</blockquote>
-<p>注意，后来有所改变，使用 <code>updates.xml</code> 文件存储，路径如下：</p>
-<blockquote>
-<p>Users/yifeng/Library/Preferences/AndroidStudio2.2/options/updates.xml</p>
-</blockquote>
-<p>在 <code>updates.xml</code> 有这么一个 <code>&lt;ignoredBuildNumbers&gt;</code> 标签，控制着忽略配置，部分内容如下：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ignoredBuildNumbers</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">item</span> <span class="attr">value</span>=<span class="string">"162.2228.14"</span> /&gt;</span></span><br><span class="line">  ......</span><br><span class="line"><span class="tag">&lt;/<span class="name">ignoredBuildNumbers</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>可以看到，其中 <code>162.2228.14</code> 正是之前误操作忽略的 Android Studio 2.3 版本的版本号。删除这一项 item，重启 Android Studio，便会自动检测到 2.3 版本，进行下一步更新操作了。</p>
-<h1 id="Gradle-更新"><a href="#Gradle-更新" class="headerlink" title="Gradle 更新"></a>Gradle 更新</h1><hr>
-<p>Android Gradle 插件伴随着 Android Studio 的更新而更新，似乎成为了必然。比如这次 Android Studio 2.3 版本需要 Gradle 3.3 版本才能使用 Instant Run 功能。然而不幸的是，Gradle 更新更加缓慢，很容易就使项目进入漫长的等待当中，让我们处于一个既不能继续开发又不能退出 Stop Task 的进退两难境界：</p>
-<blockquote>
-<p>Refreshing ‘XXX’ Gradle project</p>
-</blockquote>
-<p>当然你可以打开 module 目录 gradle/wrapper 下的 <code>gradle-wrapper.properties</code> 文件，修改 <code>distributionUrl</code> 一项，将其设置为电脑中已有的低版本 gradle ，避免更新操作。但这样就无法使用新版 Android Studio 中的一些新功能。怎么办呢？</p>
-<p>复制 <code>distributionUrl</code> 对应链接，使用浏览器下载 gradle 文件，将其放置到自己的服务器上，获取新 Url 链接，替换 <code>distributionUrl</code> 值，重新同步 gradle 即可。或者，我们还可以找到系统中存放 gradle 的目录，比如 Mac OS 中的路径如下：</p>
-<blockquote>
-<p>~/.gradle/wrapper/dists/</p>
-</blockquote>
-<p>这个目录下存放着所有版本的 gradle 文件。将下载好的 gradle 文件复制至此，然后在项目中同步 gradle，这样也不失为一种不错的解决方案。</p>
-<h1 id="一点思考"><a href="#一点思考" class="headerlink" title="一点思考"></a>一点思考</h1><hr>
-<p>关于 Android Studio 的增量更新包的版本跨越限制的问题，我们通过反编译一个补丁包（patch）可以看看相关代码：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1488900500.jpeg" alt="patch version limit.jpeg"></p>
-<p>在制作生成 patch 包时，Google只允许接近最新版本的有限个版本，比如上图中的 patch 包，只支持最新版本前6个版本。关于这一点，我想 Google 也是为了避免由于版本跨越太多导致补丁太大而加大更新出错的概率，同时也可以避免为每个旧版本都制作最新版本的差异包从而导致补丁包数量剧增。</p>
-<p>之所介绍这个，就是想着我们在开发自己的 app 并实现版本增量更新的时候，不妨可以学习借鉴一下 Google 的做法。</p>
+<p><img src="https://github.com/Mike-bel/android-custom-views/blob/master/pictures/1501857872.gif?raw=true" alt=""></p>
+<p>据说 Instagram 也采用了这种效果。最近抽空研究了一下，最后实现的效果是这样：</p>
+<p><img src="https://github.com/Mike-bel/android-custom-views/blob/master/pictures/1501857864.gif?raw=true" alt=""></p>
+<p>基本上能模拟出个大概，代码量不大，来讲讲实现思路吧。</p>
+<p>模拟一种动画效果，首先需要仔细分析其运作过程，找到其中的物理规律，从而确定实现方案。像这种运动速度较快的动画，一般不是很容易看清。可以先通过录屏软件，录取动画运作的过程，然后借助一些辅助工具放慢放大，比如 PS，反复重复播放几遍，基本上就能看出动画的运作规律了。</p>
+<p>回到这里的加载效果，拆分开来，可以理解为画笔上的两层绘制和时间上的两段过程。时间上，很明显可以看出氛围前 360 度和后 360 度，主要在画笔上：</p>
+<p>1，单一完整的圆弧绘制。前 360 度，从 360 度的圆弧到 0 度圆弧的递减过程；后 360 度，从 0 度圆弧到 360 度圆弧的递增过程。</p>
+<p>2，重复片段的圆弧绘制。前 360 度，从零开始，逐渐递增，直到多段填满圆周；后 360 度，反过来，逐渐递减，直到数量为零。</p>
+<p>其他的就是细节的处理，后面具体实现时再提及，我们先来看看如何实现这两个核心流程的绘制。</p>
+<p>由于这两个流程使用的画笔属性相同，所以使用一个 Paint 对象即可，这段代码没什么好讲的，就是一些初始化工作：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mPaint = <span class="keyword">new</span> Paint();</span><br><span class="line">mPaint.setAntiAlias(<span class="keyword">true</span>);</span><br><span class="line">mPaint.setStyle(Paint.Style.STROKE);</span><br><span class="line">mPaint.setStrokeWidth(mArcWidth);</span><br><span class="line">mPaint.setStrokeCap(Paint.Cap.ROUND);</span><br></pre></td></tr></table></figure>
+<p>注意，与微博原图效果不同的是，我的效果图中使用到了渐变色圆环，这样效果更好看一些。使用 setShader() 方法可以给画笔设置渐变色，实现方式是：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSizeChanged</span><span class="params">(<span class="keyword">int</span> w, <span class="keyword">int</span> h, <span class="keyword">int</span> oldw, <span class="keyword">int</span> oldh)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onSizeChanged(w, h, oldw, oldh);</span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    Shader shader = <span class="keyword">new</span> LinearGradient(<span class="number">0f</span>, <span class="number">0f</span>, mWidth, mHeight,</span><br><span class="line">            mStartColor, mEndColor, Shader.TileMode.CLAMP);</span><br><span class="line">    mPaint.setShader(shader);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Shader 子类有很多，这里使用的是线性渐变类 LinearGradient，由于需要使用 View 宽高，所以放在了 onSizeChanged() 函数里面。</p>
+<p>核心计算和绘制工作都在 onDraw() 方法里面，看下这里的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (maxAngle &lt;= <span class="number">360</span>) &#123;</span><br><span class="line">        <span class="keyword">float</span> angle = <span class="number">0</span>;</span><br><span class="line">        canvas.rotate(mRatio * maxAngle / <span class="number">360</span>, mWidth / <span class="number">2</span>, mHeight / <span class="number">2</span>);</span><br><span class="line">        canvas.drawArc(mRectF, maxAngle, <span class="number">360</span> - maxAngle, <span class="keyword">false</span>, mPaint);</span><br><span class="line">        <span class="keyword">while</span> (angle &lt;= maxAngle) &#123;</span><br><span class="line">            <span class="keyword">float</span> length = mArcRadian * angle / maxAngle;</span><br><span class="line">            canvas.drawArc(mRectF, <span class="number">0</span>, length, <span class="keyword">false</span>, mPaint);</span><br><span class="line">            canvas.rotate(mArcSpacing, mWidth / <span class="number">2</span>, mHeight / <span class="number">2</span>);</span><br><span class="line">            angle += mArcSpacing;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">float</span> angle = <span class="number">0</span>;</span><br><span class="line">        canvas.rotate(mRatio + mRatio * (maxAngle - <span class="number">360</span>) / <span class="number">360</span>, mWidth / <span class="number">2</span>, mHeight / <span class="number">2</span>);</span><br><span class="line">        canvas.drawArc(mRectF, <span class="number">0</span>, maxAngle - <span class="number">360</span>, <span class="keyword">false</span>, mPaint);</span><br><span class="line">        canvas.rotate(maxAngle - <span class="number">360</span>, mWidth / <span class="number">2</span>, mHeight / <span class="number">2</span>);</span><br><span class="line">        <span class="keyword">while</span> (angle &lt;= <span class="number">720</span> - maxAngle) &#123;</span><br><span class="line">            <span class="keyword">float</span> length = mArcRadian * angle / (<span class="number">720</span> - maxAngle);</span><br><span class="line">            canvas.drawArc(mRectF, <span class="number">0</span>, length, <span class="keyword">false</span>, mPaint);</span><br><span class="line">            canvas.rotate(mArcSpacing, mWidth / <span class="number">2</span>, mHeight / <span class="number">2</span>);</span><br><span class="line">            angle += mArcSpacing;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (maxAngle &lt;= <span class="number">720</span>) &#123;</span><br><span class="line">        maxAngle += mArcSpacing;</span><br><span class="line">        postInvalidateDelayed(<span class="number">30</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>前面提到，动画在时间上分前后 360 度的两段过程，所以这里定义了一个 maxAngle 变量来定义时间的变化。可以看到，前后 360 度的绘制代码看上去差不多，但还是有很大区别的。需要理解的地方有：</p>
+<p>1，多个小段圆弧可以利用画布旋转的方式轻松实现，也就是 canvas.rotate() 方法，上面代码中的 while 循环部分。这里有个细节处理，就是每段圆弧的弧度有个递增变化。</p>
+<p>2，整个 View 给人的感觉有一种旋转的效果，为了实现这个效果，在每次绘制前，都增加了旋转的步骤，也就是这行代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">canvas.rotate(mRatio * maxAngle / <span class="number">360</span>, mWidth / <span class="number">2</span>, mHeight / <span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+<p>其中 mRatio 表示整个动画结束时，View 相比初始状态时整体旋转的角度。 这里我设置的默认值是 60，值越大，动画执行时呈现出越快的旋转效果。大家可以查看源码，自己尝试一下。</p>
+<p>3，还有一点就是，maxAngle 变量每次增量值的设置，一定要设置为相邻两段片段圆弧的间距弧度。这样做的目的是，保证每次绘制，片段圆弧都能有一个完整的递增或递减。否则，动画执行时，看上会发生视觉上的抖动效果。</p>
+<p>基本上就是这样，代码量虽然不多，但是各种细节的处理还是耗费了很多时间调整。本来想使用一些图例展示一下每行代码的作用，但是太费时间了。如果感兴趣的，完全可以自己下载一下源码，修改试试看。</p>
+<p>经过简单地封装，提取出一部分属性：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">"CircleLoadingView"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"circleStartColor"</span> <span class="attr">format</span>=<span class="string">"color|reference"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"circleEndColor"</span> <span class="attr">format</span>=<span class="string">"color|reference"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"circleArcWidth"</span> <span class="attr">format</span>=<span class="string">"integer|reference"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"circleArcRadian"</span> <span class="attr">format</span>=<span class="string">"integer|reference"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"circleArcSpacing"</span> <span class="attr">format</span>=<span class="string">"integer|reference"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>注意：中间的头像部分可以不是这里自定义 View 的内容，使用时可以自由填充内容。比如，看下我这里的使用方式，还是比较自由的：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">RelativeLayout</span></span><br><span class="line">    <span class="attr">android:layout_width</span>=<span class="string">"200dp"</span></span><br><span class="line">    <span class="attr">android:layout_height</span>=<span class="string">"200dp"</span></span><br><span class="line">    <span class="attr">android:layout_centerInParent</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">com.yifeng.view.view.CircleLoadingView</span></span><br><span class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span><br><span class="line">        <span class="attr">app:circleStartColor</span>=<span class="string">"#ffff00"</span></span><br><span class="line">        <span class="attr">app:circleEndColor</span>=<span class="string">"#ff0000"</span></span><br><span class="line">        <span class="attr">app:circleArcRadian</span>=<span class="string">"5"</span></span><br><span class="line">        <span class="attr">app:circleArcWidth</span>=<span class="string">"10"</span></span><br><span class="line">        <span class="attr">app:circleArcSpacing</span>=<span class="string">"10"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">ImageView</span></span><br><span class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span><br><span class="line">        <span class="attr">android:layout_margin</span>=<span class="string">"10dp"</span></span><br><span class="line">        <span class="attr">android:src</span>=<span class="string">"@mipmap/ic_avatar_default"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>源代码还是老样子，统一在 GitHub 上的自定义 View 集锦库里，地址如下。：</p>
+<p><a href="https://github.com/Mike-bel/android-custom-views" target="_blank" rel="external">https://github.com/Mike-bel/android-custom-views</a></p>
 
       
 
@@ -282,9 +231,9 @@ ga('send', 'pageview');
  
 <p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
  
-<p>本文标题为: <b><a href="/2017/03/07/android-studio-update-things/" target="_blank" title="Android Studio 版本升级，一些你可能不知道的东西">Android Studio 版本升级，一些你可能不知道的东西</a></b> </p>
+<p>本文标题为: <b><a href="/2017/08/04/android-custom-views-circle-loading-view/" target="_blank" title="Android 自定义 View 集锦｜自定义圆形旋转进度条，仿微博头像加载效果">Android 自定义 View 集锦｜自定义圆形旋转进度条，仿微博头像加载效果</a></b> </p>
  
-<p>本文链接为：<b><a href="/2017/03/07/android-studio-update-things/" target="_blank" title="Android Studio 版本升级，一些你可能不知道的东西">http://yifeng.studio/2017/03/07/android-studio-update-things/</a></b> </p>
+<p>本文链接为：<b><a href="/2017/08/04/android-custom-views-circle-loading-view/" target="_blank" title="Android 自定义 View 集锦｜自定义圆形旋转进度条，仿微博头像加载效果">http://yifeng.studio/2017/08/04/android-custom-views-circle-loading-view/</a></b> </p>
 
 <p><b>● 科学上网，翻墙推荐：</b><b><a href="http://buytizi.com/?r=225bb619613ec09e" target="_blank" title="http://buytizi.com/?r=225bb619613ec09e">http://buytizi.com/?r=225bb619613ec09e</a></b> </p>
 
@@ -334,7 +283,11 @@ ga('send', 'pageview');
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Android Studio</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Custom View</a>
         		</li>
       		
 		</ul>
@@ -413,7 +366,7 @@ ga('send', 'pageview');
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yifeng.studio/2017/03/07/android-studio-update-things/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yifeng.studio/2017/08/04/android-custom-views-circle-loading-view/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -427,18 +380,9 @@ ga('send', 'pageview');
   
 <nav id="article-nav">
   
-    <a href="/2017/03/08/android-several-layout-skills/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Android 日常开发中，两个非常实用的布局技巧
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/03/07/android-studio-2-3-update-things/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Android Studio 2.3 更新小记</div>
+    <a href="/2017/07/24/android-custom-views-water-ripple-effect/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android 自定义 View 集锦｜实现水波纹扩散效果</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -465,7 +409,7 @@ ga('send', 'pageview');
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#写在前面"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#准备工具"><span class="toc-number">2.</span> <span class="toc-text">准备工具</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#手动更新"><span class="toc-number">3.</span> <span class="toc-text">手动更新</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#自动更新"><span class="toc-number">4.</span> <span class="toc-text">自动更新</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#忽略更新"><span class="toc-number">5.</span> <span class="toc-text">忽略更新</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Gradle-更新"><span class="toc-number">6.</span> <span class="toc-text">Gradle 更新</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#一点思考"><span class="toc-number">7.</span> <span class="toc-text">一点思考</span></a></li></ol>
+                    So Crazy! No TOCs...
                     </div>
                 </span>
             </div>
@@ -479,7 +423,7 @@ ga('send', 'pageview');
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="android-studio-update-things" data-title="Android Studio 版本升级，一些你可能不知道的东西" data-url="http://yifeng.studio/2017/03/07/android-studio-update-things/"></div>
+	<div class="ds-thread" data-thread-key="android-custom-views-circle-loading-view" data-title="Android 自定义 View 集锦｜自定义圆形旋转进度条，仿微博头像加载效果" data-url="http://yifeng.studio/2017/08/04/android-custom-views-circle-loading-view/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
