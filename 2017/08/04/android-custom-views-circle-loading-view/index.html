@@ -16,7 +16,7 @@
 <meta property="og:description" content="微博 App 的用户头像有一个圆形旋转进度条的加载效果，看上去效果非常不错，如图所示：">
 <meta property="og:image" content="https://github.com/Mike-bel/android-custom-views/blob/master/pictures/1501857872.gif?raw=true">
 <meta property="og:image" content="https://github.com/Mike-bel/android-custom-views/blob/master/pictures/1501857864.gif?raw=true">
-<meta property="og:updated_time" content="2017-08-04T14:51:31.000Z">
+<meta property="og:updated_time" content="2017-08-04T14:56:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 自定义 View 集锦｜自定义圆形旋转进度条，仿微博头像加载效果">
 <meta name="twitter:description" content="微博 App 的用户头像有一个圆形旋转进度条的加载效果，看上去效果非常不错，如图所示：">
@@ -196,7 +196,7 @@ ga('send', 'pageview');
 <p><img src="https://github.com/Mike-bel/android-custom-views/blob/master/pictures/1501857864.gif?raw=true" alt=""></p>
 <p>基本上能模拟出个大概，代码量不大，来讲讲实现思路吧。</p>
 <p>模拟一种动画效果，首先需要仔细分析其运作过程，找到其中的物理规律，从而确定实现方案。像这种运动速度较快的动画，一般不是很容易看清。可以先通过录屏软件，录取动画运作的过程，然后借助一些辅助工具放慢放大，比如 PS，反复重复播放几遍，基本上就能看出动画的运作规律了。</p>
-<p>回到这里的加载效果，拆分开来，可以理解为画笔上的两层绘制和时间上的两段过程。时间上，很明显可以看出氛围前 360 度和后 360 度，主要在画笔上：</p>
+<p>回到这里的加载效果，拆分开来，可以理解为画笔上的两层绘制和时间上的两段过程。时间上，很明显可以看出分为前 360 度和后 360 度，主要在画笔上：</p>
 <p>1，单一完整的圆弧绘制。前 360 度，从 360 度的圆弧到 0 度圆弧的递减过程；后 360 度，从 0 度圆弧到 360 度圆弧的递增过程。</p>
 <p>2，重复片段的圆弧绘制。前 360 度，从零开始，逐渐递增，直到多段填满圆周；后 360 度，反过来，逐渐递减，直到数量为零。</p>
 <p>其他的就是细节的处理，后面具体实现时再提及，我们先来看看如何实现这两个核心流程的绘制。</p>
@@ -211,12 +211,12 @@ ga('send', 'pageview');
 <p>1，多个小段圆弧可以利用画布旋转的方式轻松实现，也就是 canvas.rotate() 方法，上面代码中的 while 循环部分。这里有个细节处理，就是每段圆弧的弧度有个递增变化。</p>
 <p>2，整个 View 给人的感觉有一种旋转的效果，为了实现这个效果，在每次绘制前，都增加了旋转的步骤，也就是这行代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">canvas.rotate(mRatio * maxAngle / <span class="number">360</span>, mWidth / <span class="number">2</span>, mHeight / <span class="number">2</span>);</span><br></pre></td></tr></table></figure>
-<p>其中 mRatio 表示整个动画结束时，View 相比初始状态时整体旋转的角度。 这里我设置的默认值是 60，值越大，动画执行时呈现出越快的旋转效果。大家可以查看源码，自己尝试一下。</p>
+<p>其中 mRatio 表示整个动画结束时，View 相比初始状态时整体旋转的角度。 这里我设置的默认值是 60，值越大，动画执行时呈现出越快的旋转效果。大家可以修改源码，自己尝试一下。</p>
 <p>3，还有一点就是，maxAngle 变量每次增量值的设置，一定要设置为相邻两段片段圆弧的间距弧度。这样做的目的是，保证每次绘制，片段圆弧都能有一个完整的递增或递减。否则，动画执行时，看上会发生视觉上的抖动效果。</p>
 <p>基本上就是这样，代码量虽然不多，但是各种细节的处理还是耗费了很多时间调整。本来想使用一些图例展示一下每行代码的作用，但是太费时间了。如果感兴趣的，完全可以自己下载一下源码，修改试试看。</p>
 <p>经过简单地封装，提取出一部分属性：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">"CircleLoadingView"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"circleStartColor"</span> <span class="attr">format</span>=<span class="string">"color|reference"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"circleEndColor"</span> <span class="attr">format</span>=<span class="string">"color|reference"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"circleArcWidth"</span> <span class="attr">format</span>=<span class="string">"integer|reference"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"circleArcRadian"</span> <span class="attr">format</span>=<span class="string">"integer|reference"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"circleArcSpacing"</span> <span class="attr">format</span>=<span class="string">"integer|reference"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>注意：中间的头像部分可以不是这里自定义 View 的内容，使用时可以自由填充内容。比如，看下我这里的使用方式，还是比较自由的：</p>
+<p>注意：中间的头像部分不是这里自定义 View 的内容，使用时可以自由填充内容。比如，看下我这里的使用方式，还是比较自由的：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">RelativeLayout</span></span><br><span class="line">    <span class="attr">android:layout_width</span>=<span class="string">"200dp"</span></span><br><span class="line">    <span class="attr">android:layout_height</span>=<span class="string">"200dp"</span></span><br><span class="line">    <span class="attr">android:layout_centerInParent</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">com.yifeng.view.view.CircleLoadingView</span></span><br><span class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span><br><span class="line">        <span class="attr">app:circleStartColor</span>=<span class="string">"#ffff00"</span></span><br><span class="line">        <span class="attr">app:circleEndColor</span>=<span class="string">"#ff0000"</span></span><br><span class="line">        <span class="attr">app:circleArcRadian</span>=<span class="string">"5"</span></span><br><span class="line">        <span class="attr">app:circleArcWidth</span>=<span class="string">"10"</span></span><br><span class="line">        <span class="attr">app:circleArcSpacing</span>=<span class="string">"10"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">ImageView</span></span><br><span class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span><br><span class="line">        <span class="attr">android:layout_margin</span>=<span class="string">"10dp"</span></span><br><span class="line">        <span class="attr">android:src</span>=<span class="string">"@mipmap/ic_avatar_default"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>源代码还是老样子，统一在 GitHub 上的自定义 View 集锦库里，地址如下。：</p>
 <p><a href="https://github.com/Mike-bel/android-custom-views" target="_blank" rel="external">https://github.com/Mike-bel/android-custom-views</a></p>
@@ -555,11 +555,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
+                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -583,11 +583,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
+                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
+                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
               </li>
              
               <li class="article-tag-list-item">
