@@ -9,11 +9,13 @@
   <title>Android Theme.AppCompat 中，你应该熟悉的颜色属性 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="创建一个 Android 工程，第一步，也是必不可少的一步，就是定制 Application 主题样式。利用系统诸多属性定义 App 各种 View 的默认样式，能够减少 layout 文件中很多重复性的属性设置代码。在开发者官网 R.attr 栏目中，Google 列出了所有 Android SDK 中的系统级属性。如何取舍，如何区分，又有哪些常用的属性呢？本文就来列举颜色相关的一些属性介绍，以">
+<meta name="keywords" content="Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android Theme.AppCompat 中，你应该熟悉的颜色属性">
 <meta property="og:url" content="http://yifeng.studio/2017/04/18/android-theme-appcompat-color-attrs/index.html">
-<meta property="og:site_name" content="YiFeng's Zone">
+<meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="创建一个 Android 工程，第一步，也是必不可少的一步，就是定制 Application 主题样式。利用系统诸多属性定义 App 各种 View 的默认样式，能够减少 layout 文件中很多重复性的属性设置代码。在开发者官网 R.attr 栏目中，Google 列出了所有 Android SDK 中的系统级属性。如何取舍，如何区分，又有哪些常用的属性呢？本文就来列举颜色相关的一些属性介绍，以">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1492523942.png">
 <meta property="og:updated_time" content="2017-04-18T14:12:28.000Z">
 <meta name="twitter:card" content="summary">
@@ -192,7 +194,7 @@ ga('send', 'pageview');
 <a id="more"></a>
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/1492523942.png" alt=""></p>
 <p>通常，在 res/values/styles.xml 文件中定义的 application 主题样式里，你可能见到的最常见的使用组合是这样：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Base application theme. --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"AppTheme"</span> <span class="attr">parent</span>=<span class="string">"Theme.AppCompat.Light.NoActionBar"</span>&gt;</span><span class="xml"></span><br><span class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"colorPrimary"</span>&gt;</span>@color/colorPrimary<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"colorPrimaryDark"</span>&gt;</span>@color/colorPrimaryDark<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"colorAccent"</span>&gt;</span>@color/colorAccent<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- Base application theme. --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"AppTheme"</span> <span class="attr">parent</span>=<span class="string">"Theme.AppCompat.Light.NoActionBar"</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"colorPrimary"</span>&gt;</span>@color/colorPrimary<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></div><div class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"colorPrimaryDark"</span>&gt;</span>@color/colorPrimaryDark<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></div><div class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"colorAccent"</span>&gt;</span>@color/colorAccent<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></div><div class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>事实上，远不止这样…</p>
 <h1 id="Theme-AppCompat"><a href="#Theme-AppCompat" class="headerlink" title="Theme.AppCompat"></a>Theme.AppCompat</h1><hr>
 <p>自 Lollipop 开始，Android 系统引入 Material Design 风格，各个控件的呈现样式大有改变。为了在不同版本的系统中统一 UI 样式，设置自定义的 Application Theme 的 parent 样式为 Theme.AppCompat 系列即可。比如这里的 <code>Theme.AppCompat.Light.NoActionBar</code> 主题。</p>
@@ -202,7 +204,7 @@ ga('send', 'pageview');
 <p>同时，由于部分属性的版本兼容问题，为了避免添加多个版本的 styles 文件，可以省略 <code>android:</code> 命名空间。</p>
 <p><strong>colorPrimary</strong></p>
 <p>App Bar 的背景色，即 ActionBar，通常也是一个 App 的主题色调。不过  ActionBar 已经退出历史舞台，由 Toolbar 代替使用，但是 Toolbar 需要在 layout 文件中单独使用 background 属性设置背景色，如：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">android.support.v7.widget.Toolbar</span></span><br><span class="line">  <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">  <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">  <span class="attr">android:background</span>=<span class="string">"?attr/colorPrimary"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">android.support.v7.widget.Toolbar</span></span></div><div class="line"><span class="tag">  <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">  <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">  <span class="attr">android:background</span>=<span class="string">"?attr/colorPrimary"</span> /&gt;</span></div></pre></td></tr></table></figure>
 <p><strong>colorPrimaryDark</strong></p>
 <p>status bar（状态栏）背景色。仅作用于 Lollipop 及更高版本。</p>
 <p><strong>colorAccent</strong></p>
@@ -236,9 +238,9 @@ ga('send', 'pageview');
 <p>正如命名所表达的含义一般，ThemeOverlay.AppCompat 系列主题用于覆盖基本的 AppCompat.Theme 样式，按照需求仅仅改变部分属性的样式。这里列举一些常见用法：</p>
 <p><strong>ThemeOverlay.AppCompat</strong></p>
 <p>继承自 @style/Base.ThemeOverlay.AppCompat。这是一个空主题，但是却将 AppCompat 主题中的相关属性复制了一遍。这在给个别 View 单独设置部分样式时非常实用。举个例子：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"AppTheme.Secondary"</span> <span class="attr">parent</span>=<span class="string">"ThemeOverlay.AppCompat"</span>&gt;</span><span class="xml"></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"colorAccent"</span>&gt;</span>@color/colorPrimary<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"AppTheme.Secondary"</span> <span class="attr">parent</span>=<span class="string">"ThemeOverlay.AppCompat"</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="xml">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"colorAccent"</span>&gt;</span>@color/colorPrimary<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></div><div class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>然后再借助 <code>android:theme</code> 属性使用在 layout 中的某个 View 上：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:theme="@style/AppTheme.Secondary"</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">android:theme="@style/AppTheme.Secondary"</div></pre></td></tr></table></figure>
 <p>在这个例子中，重写了 colorAccent 属性，同时保证其他属性继续延用 parent 为 Theme.AppCompat 的 AppTheme 中的设置。从 ThemeOverlay.AppCompat 文档介绍中可以看出，比如 colorPrimary 属性是这样复制的：</p>
 <blockquote>
 <p>android:colorPrimary = ?attr/colorPrimary</p>
@@ -247,11 +249,11 @@ ga('send', 'pageview');
 <p><strong>ThemeOverlay.AppCompat.Light（Dark）</strong></p>
 <p>与 ThemeOverlay.AppCompat 不同的是，这个主题修改背景色、文本颜色、高亮状态颜色来匹配 Light（Dark）主题。比如 Light 样式下的白色背景里，显示黑色（Dark）文本；Dark 样式下的黑色背景里，显示白色（Light）文本。</p>
 <p>这个主题的使用场景可以是这样，比如我们的全局主题是 Light，但是有一部分 UI 可能需要使用一个 Dark 样式的背景，这种情况下，每个 View 单独设置颜色就比较麻烦，可以在 ViewGroup 中统一设置，比如：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">FrameLayout</span></span><br><span class="line">    <span class="attr">android:background</span>=<span class="string">”@color/dark_background”</span></span><br><span class="line">    <span class="attr">android:theme</span>=<span class="string">"@style/ThemeOverlay.AppCompat.Dark”&gt;</span><br><span class="line">  &lt;TextView /&gt;</span><br><span class="line">&lt;/FrameLayout&gt;</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">FrameLayout</span></span></div><div class="line"><span class="tag">    <span class="attr">android:background</span>=<span class="string">”@color/dark_background”</span></span></div><div class="line"><span class="tag">    <span class="attr">android:theme</span>=<span class="string">"@style/ThemeOverlay.AppCompat.Dark”&gt;</span></span></div><div class="line"><span class="tag"><span class="string">  &lt;TextView /&gt;</span></span></div><div class="line"><span class="tag"><span class="string">&lt;/FrameLayout&gt;</span></span></div></pre></td></tr></table></figure>
 <p><strong>ThemeOverlay.AppCompat.Dark.ActionBar</strong><br><strong>ThemeOverlay.AppCompat.Light.ActionBar</strong></p>
 <p>相比而言，由于 Toolbar 的广泛使用，这对主题使用的就比较多啦。前面我们说过，colorControlNormal 和 textColorPrimary 属性都可以影响 Toolbar 或者 ActionBar 的溢出按钮颜色和溢出文本颜色，同时也改变着其他 View 的显示颜色。综合考虑下，我们不会使用在 Application Theme 使用这些属性控制 Toolbar 的内容颜色，而是使用这对主题单独设置给 Toolbar 的 theme 属性。</p>
 <p>比如全局使用的是 Light 主题，Toolbar 的背景色是蓝色或者红色之类的颜色，要求溢出按钮的颜色是白色。如果没有特殊设置的话，默认情况下溢出按钮显示为黑色。此时，便可以用上这个主题：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">android.support.v7.widget.Toolbar</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attr">android:layout_height</span>=<span class="string">"?android:attr/actionBarSize"</span></span><br><span class="line">    <span class="attr">android:theme</span>=<span class="string">"@style/ThemeOverlay.AppCompat.Dark.ActionBar"</span></span><br><span class="line">    <span class="attr">android:background</span>=<span class="string">"?attr/colorPrimary"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">android.support.v7.widget.Toolbar</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">android.support.v7.widget.Toolbar</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"?android:attr/actionBarSize"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:theme</span>=<span class="string">"@style/ThemeOverlay.AppCompat.Dark.ActionBar"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:background</span>=<span class="string">"?attr/colorPrimary"</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">android.support.v7.widget.Toolbar</span>&gt;</span></div></pre></td></tr></table></figure>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><hr>
 <p>系统主题提供的属性样式非常之多，同时也会相互影响，多对多关系，错综复杂，并且有些还会存在版本兼容问题，使用时一定要多多测试。当然，使用恰当的话，能够减少很多重复性的 xml 代码，也方便后续 App 主题变更的需求，拓展之类的场景。</p>
 
@@ -594,11 +596,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
+                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -630,11 +632,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+                <a href="javascript:void(0)" class="js-tag color4">Mac</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Mac</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">

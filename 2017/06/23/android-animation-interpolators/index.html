@@ -8,14 +8,14 @@
   <link rel="dns-prefetch" href="http://yifeng.studio">
   <title>【译】从数学公式入手，详细了解 Animation 的 Interpolators | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="我们在做动画的时候，总是避免不了会使用到 Interpolator（插值器）这个东西，比如 LinearInterpolator 等。这样做的好处是，能够让动画的变化速度符合现实世界中的物理规律，看上去更加逼真。比如汽车启动时，速度总是越来越快的。    
-Android SDK 提供有多种插值器供开发人员使用。但很多时候，由于我们的英语水平、数学水平等原因，总是无法直观地区分各种插值器之间的细">
+  <meta name="description" content="我们在做动画的时候，总是避免不了会使用到 Interpolator（插值器）这个东西，比如 LinearInterpolator 等。这样做的好处是，能够让动画的变化速度符合现实世界中的物理规律，看上去更加逼真。比如汽车启动时，速度总是越来越快的。     Android SDK 提供有多种插值器供开发人员使用。但很多时候，由于我们的英语水平、数学水平等原因，总是无法直观地区分各种插值器之间的细">
+<meta name="keywords" content="Android,Animation">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【译】从数学公式入手，详细了解 Animation 的 Interpolators">
 <meta property="og:url" content="http://yifeng.studio/2017/06/23/android-animation-interpolators/index.html">
-<meta property="og:site_name" content="YiFeng's Zone">
-<meta property="og:description" content="我们在做动画的时候，总是避免不了会使用到 Interpolator（插值器）这个东西，比如 LinearInterpolator 等。这样做的好处是，能够让动画的变化速度符合现实世界中的物理规律，看上去更加逼真。比如汽车启动时，速度总是越来越快的。    
-Android SDK 提供有多种插值器供开发人员使用。但很多时候，由于我们的英语水平、数学水平等原因，总是无法直观地区分各种插值器之间的细">
+<meta property="og:site_name" content="YiFeng&#39;s Zone">
+<meta property="og:description" content="我们在做动画的时候，总是避免不了会使用到 Interpolator（插值器）这个东西，比如 LinearInterpolator 等。这样做的好处是，能够让动画的变化速度符合现实世界中的物理规律，看上去更加逼真。比如汽车启动时，速度总是越来越快的。     Android SDK 提供有多种插值器供开发人员使用。但很多时候，由于我们的英语水平、数学水平等原因，总是无法直观地区分各种插值器之间的细">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/accelerate-300x225.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/linear_settings.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/accelerate_settings.png">
@@ -35,8 +35,7 @@ Android SDK 提供有多种插值器供开发人员使用。但很多时候，�
 <meta property="og:updated_time" content="2017-06-22T23:45:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【译】从数学公式入手，详细了解 Animation 的 Interpolators">
-<meta name="twitter:description" content="我们在做动画的时候，总是避免不了会使用到 Interpolator（插值器）这个东西，比如 LinearInterpolator 等。这样做的好处是，能够让动画的变化速度符合现实世界中的物理规律，看上去更加逼真。比如汽车启动时，速度总是越来越快的。    
-Android SDK 提供有多种插值器供开发人员使用。但很多时候，由于我们的英语水平、数学水平等原因，总是无法直观地区分各种插值器之间的细">
+<meta name="twitter:description" content="我们在做动画的时候，总是避免不了会使用到 Interpolator（插值器）这个东西，比如 LinearInterpolator 等。这样做的好处是，能够让动画的变化速度符合现实世界中的物理规律，看上去更加逼真。比如汽车启动时，速度总是越来越快的。     Android SDK 提供有多种插值器供开发人员使用。但很多时候，由于我们的英语水平、数学水平等原因，总是无法直观地区分各种插值器之间的细">
 <meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/accelerate-300x225.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
@@ -230,11 +229,11 @@ ga('send', 'pageview');
 <h1 id="定制化插值器"><a href="#定制化插值器" class="headerlink" title="定制化插值器"></a>定制化插值器</h1><hr>
 <p>大部分系统插值器都可以使用 XML 资源文件或者动态编程的方式实现定制化。通过 XML 资源定制化插值器的话，你必须在 res/anim 目录下创建一个新的 XML 文件。比如，我们想修改加速度插值器，设置 f 因子的值为 2，创建一个新文件：</p>
 <p>res/anim/my_accelerate_interpolator.xml</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">accelerateInterpolator</span></span><br><span class="line">  <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">  <span class="attr">android:factor</span>=<span class="string">"2"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">accelerateInterpolator</span></span></div><div class="line"><span class="tag">  <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line"><span class="tag">  <span class="attr">android:factor</span>=<span class="string">"2"</span> /&gt;</span></div></pre></td></tr></table></figure>
 <p><strong>注意：</strong>指定插值器的标签使用的是对应插值器的类名，但是第一个字母改为小写字母。然后你就可以像平时那样，在动画资源文件中简单地通过引用方式使用这个自定义的插值器：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@anim/my_accelerate_interpolator</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@anim/my_accelerate_interpolator</div></pre></td></tr></table></figure>
 <p>举个例子，在 Scale 动画中使用：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">scale</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">        <span class="attr">android:interpolator</span>=<span class="string">"@anim/my_accelerate_interpolator"</span></span><br><span class="line">        <span class="attr">android:fromXScale</span>=<span class="string">"0.0"</span></span><br><span class="line">        <span class="attr">android:toXScale</span>=<span class="string">"1.0"</span></span><br><span class="line">        <span class="attr">android:fromYScale</span>=<span class="string">"0.0"</span></span><br><span class="line">        <span class="attr">android:toYScale</span>=<span class="string">"1.0"</span></span><br><span class="line">        <span class="attr">android:duration</span>=<span class="string">"300"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">scale</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:interpolator</span>=<span class="string">"@anim/my_accelerate_interpolator"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:fromXScale</span>=<span class="string">"0.0"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:toXScale</span>=<span class="string">"1.0"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:fromYScale</span>=<span class="string">"0.0"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:toYScale</span>=<span class="string">"1.0"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:duration</span>=<span class="string">"300"</span> /&gt;</span></div></pre></td></tr></table></figure>
 <h1 id="插值器一览"><a href="#插值器一览" class="headerlink" title="插值器一览"></a>插值器一览</h1><hr>
 <p><strong>Linear Interpolator</strong>（线性插值器）</p>
 <p><strong>类名：</strong><br>LinearInterpolator<br><strong>资源 id：</strong><br>@android:anim/linear_interpolator<br><strong>标签名：</strong><br>linearInterpolator<br><strong>数学公式：</strong><br>y = t<br><strong>类构造函数：</strong><br>public LinearInterpolator()<br><strong>属性：</strong><br>无</p>
@@ -272,7 +271,7 @@ ga('send', 'pageview');
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/cycle_settings.png" alt=""> </p>
 <h1 id="创建新的插值器"><a href="#创建新的插值器" class="headerlink" title="创建新的插值器"></a>创建新的插值器</h1><hr>
 <p>正如上面所言，插值器本质上展示的是一个数学公式。要想创建一个属于你自己的插值器类，你必须实现 Interpolator 接口。这个接口只定义了一个方法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">getInterpolation</span><span class="params">(<span class="keyword">float</span> t)</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">float</span> <span class="title">getInterpolation</span><span class="params">(<span class="keyword">float</span> t)</span></span></div></pre></td></tr></table></figure>
 <p>用于公式中的计算。举个例子，我想创建一个名为 HesitateInterpolator 的插值器，动画以最快的速度启动，然后减速运动至一半，最后加速运动至结束。运动曲线如图所示：</p>
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/hesitate_settings-150x150.png" alt=""> </p>
 <p>对应数学公式为：</p>
@@ -280,9 +279,9 @@ ga('send', 'pageview');
 <p>y=0.5 × ((2t − 1)<sup>3</sup>+1) </p>
 </blockquote>
 <p>HesitateInterpolator 类的代码也很简单：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HesitateInterpolator</span> <span class="keyword">implements</span> <span class="title">Interpolator</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">HesitateInterpolator</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">float</span> <span class="title">getInterpolation</span><span class="params">(<span class="keyword">float</span> t)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">float</span> x=<span class="number">2.0f</span>*t-<span class="number">1.0f</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0.5f</span>*(x*x*x + <span class="number">1.0f</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HesitateInterpolator</span> <span class="keyword">implements</span> <span class="title">Interpolator</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">HesitateInterpolator</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">float</span> <span class="title">getInterpolation</span><span class="params">(<span class="keyword">float</span> t)</span> </span>&#123;</div><div class="line">    <span class="keyword">float</span> x=<span class="number">2.0f</span>*t-<span class="number">1.0f</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0.5f</span>*(x*x*x + <span class="number">1.0f</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>使用这个插值器时，你只需要通过动态编程的方式将其添加到你的 View 动画中去：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ScaleAnimation scale = <span class="keyword">new</span> ScaleAnimation(<span class="number">0.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>, <span class="number">1.0f</span>);</span><br><span class="line">scale.setInterpolator(<span class="keyword">new</span> HesitateInterpolator());</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ScaleAnimation scale = <span class="keyword">new</span> ScaleAnimation(<span class="number">0.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>, <span class="number">1.0f</span>);</div><div class="line">scale.setInterpolator(<span class="keyword">new</span> HesitateInterpolator());</div></pre></td></tr></table></figure>
 <p>就是这些！不需要任何额外代码。</p>
 <p>不幸的事，你不能在 XML 动画资源中使用这个插值器，只支持动态编程的方式。</p>
 <h1 id="GIF-图效果"><a href="#GIF-图效果" class="headerlink" title="GIF 图效果"></a>GIF 图效果</h1><hr>
@@ -646,11 +645,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
+                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -682,11 +681,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+                <a href="javascript:void(0)" class="js-tag color4">Mac</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Mac</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">

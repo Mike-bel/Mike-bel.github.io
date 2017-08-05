@@ -9,11 +9,13 @@
   <title>Android Apk 文件反编译和重新打包的过程分析 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="学习的方式有很多种，Read the fucking source code 绝对不失为最佳的方式。除了阅读 Android SDK 的源码，还能通过反编译 APK 的方式，阅读他人开发的应用源码。本文就来聊聊在 Mac 环境下如何借助第三方工具反编译 APK 压缩文件（通过爱加密、360加固等手段处理的 APK 文件除外），阅读源码、修改源码并重新打包成一个新的 APK 安装文件。">
+<meta name="keywords" content="Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android Apk 文件反编译和重新打包的过程分析">
 <meta property="og:url" content="http://yifeng.studio/2016/12/05/android-apk-decompile-and-repackaging/index.html">
-<meta property="og:site_name" content="YiFeng's Zone">
+<meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="学习的方式有很多种，Read the fucking source code 绝对不失为最佳的方式。除了阅读 Android SDK 的源码，还能通过反编译 APK 的方式，阅读他人开发的应用源码。本文就来聊聊在 Mac 环境下如何借助第三方工具反编译 APK 压缩文件（通过爱加密、360加固等手段处理的 APK 文件除外），阅读源码、修改源码并重新打包成一个新的 APK 安装文件。">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1480926234.png">
 <meta property="og:updated_time" content="2016-12-05T13:32:17.000Z">
 <meta name="twitter:card" content="summary">
@@ -199,10 +201,10 @@ ga('send', 'pageview');
 <li><p>打开 <a href="https://bitbucket.org/iBotPeaches/apktool/downloads" target="_blank" rel="external">apktool.jar</a> 下载链接，下载最新版本，下载完成之后重命名为 apktool.jar；</p>
 </li>
 <li><p>打开命令行工具，使用 cp 命令将前面两步下载的 apktool 脚本文件和 apktool.jar 文件复制到 PC 的 /usr/local/bin 目录下 (复制前的文件至此可以删除)，如：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cp apktool apktool.jar /usr/<span class="built_in">local</span>/bin</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo cp apktool apktool.jar /usr/<span class="built_in">local</span>/bin</div></pre></td></tr></table></figure>
 </li>
 <li><p>使用 chmod 命令为上一步复制过去的两个文件添加可执行权限，如：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x apktool apktool.jar</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod +x apktool apktool.jar</div></pre></td></tr></table></figure>
 </li>
 <li><p>操作至此，便可以在任一路径下使用 apktool 命令了。现在，你就可以使用 apktool -version 命令检查以上过程是否配置正确。</p>
 </li>
@@ -213,7 +215,7 @@ ga('send', 'pageview');
 <li><p>你可以从 <a href="http://mac.softpedia.com/get/Developer-Tools/dex2jar.shtml" target="_blank" rel="external">softpedia</a> 或者 <a href="https://sourceforge.net/projects/dex2jar/" target="_blank" rel="external">sourceforge</a> 网站找到 dex2jar 的 Mac 版下载链接，并解压缩；</p>
 </li>
 <li><p>同样使用 chmod 命令修改 sh 文件的用户权限，如：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod a+x *.sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod a+x *.sh</div></pre></td></tr></table></figure>
 </li>
 </ol>
 <p><strong>jd-gui</strong></p>
@@ -221,18 +223,18 @@ ga('send', 'pageview');
 <h1 id="反编译-apk-资源文件"><a href="#反编译-apk-资源文件" class="headerlink" title="反编译 apk 资源文件"></a>反编译 apk 资源文件</h1><hr>
 <p>apk 文件就是一个压缩文件，通过解压缩工具便可以打开并解压缩。但是里面的资源文件，除了 drawable 图片资源，其他都是经过编译处理的二进制文件，什么也看不出来。</p>
 <p>而使用 apktool 工具可以直接从 apk 文件中反编译出诸如 AndroidManifest.xml 、layout、strings 等资源文件，可以直接修改，供再次打包。如：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apktool d example.apk</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apktool d example.apk</div></pre></td></tr></table></figure>
 <h1 id="反编译-java-源码文件"><a href="#反编译-java-源码文件" class="headerlink" title="反编译 java 源码文件"></a>反编译 java 源码文件</h1><hr>
 <p>解压缩 apk 文件，可以看到 classes.dex 源码文件，可能不止一个。通过 dex2jar 工具可以将其转化为 jar 文件，并使用 jd-gui 工具打开并阅读应用源码。</p>
 <p>第一步，dex2jar 操作，得到 classes-dex2jar.jar 文件。注意 d2j-dex2jar.sh 和 classes.dex 文件的路径，按需修改：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh d2j-dex2jar.sh classes.dex</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sh d2j-dex2jar.sh classes.dex</div></pre></td></tr></table></figure>
 <p>第二步，使用 jd-gui 打开 classes-dex2jar.jar 文件，便可以看到目标应用所用到的第三方 library 和 开发源码，如：</p>
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/1480926234.png" alt=""></p>
 <blockquote>
 <p>如果对方开发人员在工程中开启了混淆功能，将会增加你的阅读难度，不过仔细分析，也能找到一些蛛丝马迹，给予你一些“灵感”。</p>
 </blockquote>
 <p>当然，也可以直接针对 apk 文件使用 dex2jar 命令获取 jar 文件，减少上述 apk 文件解压缩的这一步骤，如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh d2j-dex2jar.sh example.apk</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sh d2j-dex2jar.sh example.apk</div></pre></td></tr></table></figure>
 <h1 id="重新打包-apk-安装文件"><a href="#重新打包-apk-安装文件" class="headerlink" title="重新打包 apk 安装文件"></a>重新打包 apk 安装文件</h1><hr>
 <p>学会如何反编译 apk 文件后，我们还可以修改 apk 文件中的内容，比如应用名称、桌面图标，甚至是 Java 源码等，然后使用 apktool 工具重新打包，产生一个新的 apk 安装文件。</p>
 <p>这里以修改应用名称和桌面图标为例，看看如何重新打包 apk 文件并安装至手机上。(此处仅供学习参考，勿作恶！)</p>
@@ -243,9 +245,9 @@ ga('send', 'pageview');
 <p>注意：此时得到的 apk 文件是没有没有经过签名的，使用 adb install 命令安装时会得到一个失败提示：Failure [INSTALL_PARSE_FAILED_NO_CERTIFICATES]。</p>
 </blockquote>
 <p>第四步，生成自己的签名文件。你可以选择使用 Android Studio -&gt; Build -&gt; Next -&gt; Create New… 可视化操作界面生成一个新的签名文件，也可以直接使用 keytool 工具直接在终端工具上生成，如：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keytool -genkey -keystore example.keystore -keyalg RSA -validity 10000 -alias example</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">keytool -genkey -keystore example.keystore -keyalg RSA -validity 10000 -<span class="built_in">alias</span> example</div></pre></td></tr></table></figure>
 <p>第五步，使用 jarsigner 工具为 apk 文件签名，签名过后得到的 apk 文件便可以使用 adb install 命令安装至连接到 PC 的安卓设备上了。签名命令如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jarsigner -verbose -keystore example.keystore -signedjar example-signed.apk example.apk example</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jarsigner -verbose -keystore example.keystore -signedjar example-signed.apk example.apk example</div></pre></td></tr></table></figure>
 <blockquote>
 <p>注意：如果签名过后的 apk 文件依旧安装失败，可以试试在签名命令上加上 <code>-digestalg SHA1 -sigalg MD5withRSA -tsa</code> 参数。当然这里我在测试时没有添加该参数，但也能正常安装。</p>
 </blockquote>
@@ -590,11 +592,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
+                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -626,11 +628,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+                <a href="javascript:void(0)" class="js-tag color4">Mac</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Mac</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">

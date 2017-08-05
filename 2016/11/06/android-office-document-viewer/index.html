@@ -9,11 +9,13 @@
   <title>Android 阅读 Office 文档，所有你能想到的解决方案都在这啦 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="前几天看见 asce1885 总结的一篇有关 Android 平台上浏览 PDF 文件的文章，列出了多种实现方式以及它们的优缺点，较为详细。刚好，不久前，个人经手的一个项目中也涉及到了 Office 文档（常见如 PDF、EXCEL、WORD、PPT等）在线阅读的功能，并为之做了一番了解，故写下此文，在该文章的基础上，做一些个人的补充完善，供后续再次使用时能有所翻看。">
+<meta name="keywords" content="Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 阅读 Office 文档，所有你能想到的解决方案都在这啦">
 <meta property="og:url" content="http://yifeng.studio/2016/11/06/android-office-document-viewer/index.html">
-<meta property="og:site_name" content="YiFeng's Zone">
+<meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="前几天看见 asce1885 总结的一篇有关 Android 平台上浏览 PDF 文件的文章，列出了多种实现方式以及它们的优缺点，较为详细。刚好，不久前，个人经手的一个项目中也涉及到了 Office 文档（常见如 PDF、EXCEL、WORD、PPT等）在线阅读的功能，并为之做了一番了解，故写下此文，在该文章的基础上，做一些个人的补充完善，供后续再次使用时能有所翻看。">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2016-11-14T07:23:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 阅读 Office 文档，所有你能想到的解决方案都在这啦">
@@ -191,15 +193,15 @@ ga('send', 'pageview');
 <p>在 iOS 平台上，实现移动端 Office 文档的在线阅读非常简单，只需要使用 WebView 加载网络文件的 Url 地址即可显示。而在 Android 平台上，由于“高墙耸立”，Google 在国内的访问限制，导致这一简单的操作变得复杂起来，开发人员不得不寻求其他解决方案，这里列举一些。</p>
 <h1 id="WebView-网页显示"><a href="#WebView-网页显示" class="headerlink" title="WebView 网页显示"></a>WebView 网页显示</h1><p>借助 WebView 控件加载远程文档的 Url 地址即可，这里有 Google Doc 和 Office Web 365 两种解析方案。</p>
 <h2 id="Google-Doc"><a href="#Google-Doc" class="headerlink" title="Google Doc"></a>Google Doc</h2><p>类似 iOS ，Google 也提供了一种在线文档解析的功能，只需要按照固定的格式将远程文档的 Url 地址传给 Google 服务器，即可利用 WebView 控件加载新的 Url 地址，显示即可。WebView 加载的 Url 地址格式如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="comment">//docs.google.com/gview?embedded=true&amp;url=文档地址</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https:<span class="comment">//docs.google.com/gview?embedded=true&amp;url=文档地址</span></div></pre></td></tr></table></figure>
 <p>优点：使用简单，无需服务器和客户端的额外部署工作。<br>缺点：国内需要翻墙访问。</p>
 <h2 id="Office-Web-365"><a href="#Office-Web-365" class="headerlink" title="Office Web 365"></a>Office Web 365</h2><p>第三方公司提供的一种 Office 文档在线预览的功能，能够实现 Microsoft、Adobe、WPS 文档的移动端和PC端在线网页访问。使用简单，类似 Google Doc 访问方式，一个固定格式的链接，轻松实现：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//ow365.cn/?i=您的网站ID&amp;furl=文档地址</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http:<span class="comment">//ow365.cn/?i=您的网站ID&amp;furl=文档地址</span></div></pre></td></tr></table></figure>
 <p>地址：<a href="http://www.officeweb365.com/" target="_blank" rel="external">http://www.officeweb365.com/</a><br>优点：功能强大，使用简单。<br>缺点：付费使用（可免费受限使用，如访问次数、广告显示等）。</p>
 <h2 id="永中云转换"><a href="#永中云转换" class="headerlink" title="永中云转换"></a>永中云转换</h2><p>和上面的「 Office Web 365 」提供的服务一样，重点在于免费，并且没有弹窗遮盖等形式的广告，目前处于公测阶段，不过官方已经表态，将来也不会收费，只是对于超大访问量将采取适度收费。</p>
 <p>地址：<a href="http://www.yozodcs.com/index.html" target="_blank" rel="external">http://www.yozodcs.com/index.html</a><br>优点：免费使用。<br>缺点：稳定性有待验证。</p>
 <h1 id="打开本地应用"><a href="#打开本地应用" class="headerlink" title="打开本地应用"></a>打开本地应用</h1><p>如果移动设备中安装有能够打开 Office 文档的本地应用，也可以借助它们打开所要操作的文档，当然前提是必须先将远程文档下载到设备的本地存储空间中：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_VIEW);</span><br><span class="line">intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</span><br><span class="line"><span class="comment">//officeFile：本地文档；type：文档MIMEType类型，可以使用文件格式后缀</span></span><br><span class="line">intent.setDataAndType(Uri.fromFile(officeFile), type);</span><br><span class="line"><span class="keyword">if</span> (intent.resolveActivity(getPackageManager())!=<span class="keyword">null</span>)&#123;</span><br><span class="line">  startActivity(intent);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_VIEW);</div><div class="line">intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</div><div class="line"><span class="comment">//officeFile：本地文档；type：文档MIMEType类型，可以使用文件格式后缀</span></div><div class="line">intent.setDataAndType(Uri.fromFile(officeFile), type);</div><div class="line"><span class="keyword">if</span> (intent.resolveActivity(getPackageManager())!=<span class="keyword">null</span>)&#123;</div><div class="line">  startActivity(intent);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>优点：可读可写。<br>缺点：需要先行下载，同时设备中存在能够打开文档的本地应用，并且阅读时会离开当前应用。</p>
 <h1 id="第三方-SDK"><a href="#第三方-SDK" class="headerlink" title="第三方 SDK"></a>第三方 SDK</h1><p>网上有一些免费开源的解析源码和第三方公司提供的付费 SDK，将其嵌入自己的项目中，便能使用其中的功能操作 Office 文档。这种方式的缺点也显而易见，最直接的就是大大增加了 APK 安装文件的大小。免费的开源项目，存在一些局限性和不稳定性，操作繁琐；付费 SDK ，使用起来相对较为简单。</p>
 <h2 id="免费开源"><a href="#免费开源" class="headerlink" title="免费开源"></a>免费开源</h2><ul>
@@ -574,11 +576,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
+                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -610,11 +612,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+                <a href="javascript:void(0)" class="js-tag color4">Mac</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Mac</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">

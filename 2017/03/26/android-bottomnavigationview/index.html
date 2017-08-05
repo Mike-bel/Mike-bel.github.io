@@ -9,11 +9,13 @@
   <title>Android BottomNavigationView，底部导航栏的简单实现 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="关于 Material Design 相关的控件，之前整理了一个系列文章，并建立一个 MDSamples 工程，使用代码和文字解说配合的方式逐一说明。截止目前，大致写有八九篇文章。期间，由于一些工作变动和琐事，停了一些时间。现在，有点时间，准备续上。">
+<meta name="keywords" content="Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android BottomNavigationView，底部导航栏的简单实现">
 <meta property="og:url" content="http://yifeng.studio/2017/03/26/android-bottomnavigationview/index.html">
-<meta property="og:site_name" content="YiFeng's Zone">
+<meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="关于 Material Design 相关的控件，之前整理了一个系列文章，并建立一个 MDSamples 工程，使用代码和文字解说配合的方式逐一说明。截止目前，大致写有八九篇文章。期间，由于一些工作变动和琐事，停了一些时间。现在，有点时间，准备续上。">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1490533348.gif">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1490533362.gif">
 <meta property="og:updated_time" content="2017-04-22T05:12:32.000Z">
@@ -207,12 +209,12 @@ ga('send', 'pageview');
 <p><a href="https://material.io/guidelines/components/bottom-navigation.html" target="_blank" rel="external">Material Design Components 之 Bottom Navigation</a></p>
 <p>support.design 包中对应提供的控件是 BottomNavigationView，提供不多于 5 个菜单的底部导航栏实现。</p>
 <p>我们先来看一下基本使用：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">android.support.design.widget.BottomNavigationView</span></span><br><span class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/bnv_menu"</span></span><br><span class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">    <span class="attr">android:layout_alignParentBottom</span>=<span class="string">"true"</span></span><br><span class="line">    <span class="attr">app:itemIconTint</span>=<span class="string">"@color/selector_blue"</span></span><br><span class="line">    <span class="attr">app:itemTextColor</span>=<span class="string">"@color/selector_blue"</span></span><br><span class="line">    <span class="attr">app:menu</span>=<span class="string">"@menu/menu_bottom_navigation"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">android.support.design.widget.BottomNavigationView</span></span></div><div class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/bnv_menu"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_alignParentBottom</span>=<span class="string">"true"</span></span></div><div class="line"><span class="tag">    <span class="attr">app:itemIconTint</span>=<span class="string">"@color/selector_blue"</span></span></div><div class="line"><span class="tag">    <span class="attr">app:itemTextColor</span>=<span class="string">"@color/selector_blue"</span></span></div><div class="line"><span class="tag">    <span class="attr">app:menu</span>=<span class="string">"@menu/menu_bottom_navigation"</span>/&gt;</span></div></pre></td></tr></table></figure>
 <p>使用 menu 资源定义菜单内容，也就是这里的 res/menu/menu_bottom_navigation.xml 文件：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">menu</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span></span><br><span class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/action_home"</span></span><br><span class="line">        <span class="attr">android:title</span>=<span class="string">"Home"</span></span><br><span class="line">        <span class="attr">android:icon</span>=<span class="string">"@drawable/ic_action_home"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span></span><br><span class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/action_explore"</span></span><br><span class="line">        <span class="attr">android:title</span>=<span class="string">"Explore"</span></span><br><span class="line">        <span class="attr">android:icon</span>=<span class="string">"@drawable/ic_action_explore"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span></span><br><span class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/action_me"</span></span><br><span class="line">        <span class="attr">android:title</span>=<span class="string">"Me"</span></span><br><span class="line">        <span class="attr">android:icon</span>=<span class="string">"@drawable/ic_action_me"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">menu</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">menu</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">item</span></span></div><div class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/action_home"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:title</span>=<span class="string">"Home"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:icon</span>=<span class="string">"@drawable/ic_action_home"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">item</span></span></div><div class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/action_explore"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:title</span>=<span class="string">"Explore"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:icon</span>=<span class="string">"@drawable/ic_action_explore"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">item</span></span></div><div class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/action_me"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:title</span>=<span class="string">"Me"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:icon</span>=<span class="string">"@drawable/ic_action_me"</span>/&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">menu</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>除了 app:menu 属性定义菜单内容，BottomNavigationView 能够使用的定制属性并不多，有这几个：</p>
 <p><strong>app:itemIconTint</strong>：Icon 图标着色，值为一个 ColorStateList ，可以在 color 资源文件夹中定义。使用这个属性，奇妙利用 tint 着色器实现一个图标多种状态下使用。：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">selector</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:state_checked</span>=<span class="string">"true"</span> <span class="attr">android:color</span>=<span class="string">"@color/blue"</span>&gt;</span><span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:color</span>=<span class="string">"@color/gray"</span>&gt;</span><span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">selector</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">selector</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:state_checked</span>=<span class="string">"true"</span> <span class="attr">android:color</span>=<span class="string">"@color/blue"</span>&gt;</span><span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:color</span>=<span class="string">"@color/gray"</span>&gt;</span><span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">selector</span>&gt;</span></div></pre></td></tr></table></figure>
 <p><strong>app:itemTextColor</strong>：Label 文字颜色定义。</p>
 <p><strong>app:itemBackground</strong>：背景内容。</p>
 <p>效果如下：</p>
@@ -224,7 +226,7 @@ ga('send', 'pageview');
 <p>注意：根据 Material Design 对底部导航栏的设计要求，BottomNavigationView 只支持 3 到 5 个子菜单数量的导航栏。并且，考虑到用户体验，3 个及3个以下菜单数量的导航栏，与超过 3 个时，交互过程也有所区分。关于最多支持 5 个字菜单的内容，可以从 BottomNavigationView 源码中查看：<br>public static final int MAX_ITEM_COUNT = 5;<br>当超出这个数量时，产生非法参数异常。</p>
 </blockquote>
 <p>通过 setOnNavigationItemSelectedListener() 方法可以监听不同子菜单的选中切换事件。但是，竟然没有一个简便的方法直接设置选中某个子菜单，就像 check(id) 这样。不知是不是 BottomNavigationView 控件设计时的遗漏。目前能够想到的一个做法就是获取 menu item 对象，利用 performClick() 模拟点击事件，如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">BottomNavigationView view = (BottomNavigationView) findViewById(R.id.bnv_menu);</span><br><span class="line">view.findViewById(R.id.action_explore).performClick();</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">BottomNavigationView view = (BottomNavigationView) findViewById(R.id.bnv_menu);</div><div class="line">view.findViewById(R.id.action_explore).performClick();</div></pre></td></tr></table></figure>
 <p>以上便是 BottomNavigationView 的所有内容，按照 Android 上的 Bottom Navigation 设计规范定制而成。可以看出，使用起来还是很简单的。同时，可定制性也非常有限。比如，想在底部某个子菜单添加一个小红点提示的视图，就有些难以处理。如果使用 RadioGroup 实现导航栏的话，就灵活一些。</p>
 <p>附：GitHub 站有两个开源项目： <a href="https://github.com/RoyWallace/BottomNavigationBar" target="_blank" rel="external">BottomNavigationBar</a> 和<a href="https://github.com/ittianyu/BottomNavigationViewEx" target="_blank" rel="external">BottomNavigationViewEx</a>，专门针对 Material Design 风格的 Bottom Navigation 量身定制的，可供参考。</p>
 
@@ -383,11 +385,11 @@ ga('send', 'pageview');
   
 <nav id="article-nav">
   
-    <a href="/2017/03/30/android-tint/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          从使用到源码，细说 Android 中的 tint 着色器
+          从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处
         
       </div>
     </a>
@@ -567,11 +569,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
+                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -603,11 +605,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+                <a href="javascript:void(0)" class="js-tag color4">Mac</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Mac</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">

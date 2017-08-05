@@ -9,11 +9,13 @@
   <title>开启 Android WebView 的安全浏览模式 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Hybrid App（混合式开发）已经是每一个商业应用都会使用的开发手段。其最大的优势就是将一些可动态更新的内容页面使用 H5 开发，然后借用移动端原生系统提供的 WebView 控件加载进来。这种方式不仅能够节约安卓和 iOS 两个客户端的开发人力成本，还能在避免应用版本迭代的情况下动态更新页面内容。然而，WebView 有一个弊端，就是始终无法避免的安全问题。">
+<meta name="keywords" content="Android,WebView">
 <meta property="og:type" content="article">
 <meta property="og:title" content="开启 Android WebView 的安全浏览模式">
 <meta property="og:url" content="http://yifeng.studio/2017/07/16/android-webview-security-scan-mode/index.html">
-<meta property="og:site_name" content="YiFeng's Zone">
+<meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="Hybrid App（混合式开发）已经是每一个商业应用都会使用的开发手段。其最大的优势就是将一些可动态更新的内容页面使用 H5 开发，然后借用移动端原生系统提供的 WebView 控件加载进来。这种方式不仅能够节约安卓和 iOS 两个客户端的开发人力成本，还能在避免应用版本迭代的情况下动态更新页面内容。然而，WebView 有一个弊端，就是始终无法避免的安全问题。">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1500168860.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1500168866.png">
 <meta property="og:updated_time" content="2017-07-16T08:17:16.000Z">
@@ -204,7 +206,7 @@ ga('send', 'pageview');
 <p>安全浏览模式下的最新版 WebView 还集成了 Google 安全浏览机制，来保护和提醒用户可能存在风险的网站。启用安全浏览配置后，WebView 将参考安全浏览的恶意软件和钓鱼网站数据库检查访问的 URLs 地址，在用户打开之前给予危险提示，如：</p>
 <p><img src="http://ocq7gtgqu.bkt.clouddn.com/1500168866.png" alt=""></p>
 <p>讲到这里，你可能就要问了，如何启动 WebView 安全浏览呢？很简单，在我们应用的 Manifest 清单文件中按照下面的代码简单配置一下，便可以让当前 App 中使用到的所有 WebView 都能支持安全浏览：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">manifest</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta-data</span> <span class="attr">android:name</span>=<span class="string">"android.webkit.WebView.EnableSafeBrowsing"</span></span><br><span class="line">               <span class="attr">android:value</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="tag">&lt;<span class="name">application</span>&gt;</span> ... <span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">manifest</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta-data</span> <span class="attr">android:name</span>=<span class="string">"android.webkit.WebView.EnableSafeBrowsing"</span></span></div><div class="line"><span class="tag">               <span class="attr">android:value</span>=<span class="string">"true"</span> /&gt;</span></div><div class="line">    ...</div><div class="line">    <span class="tag">&lt;<span class="name">application</span>&gt;</span> ... <span class="tag">&lt;/<span class="name">application</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>由于 WebView 作为一个独立的 APK 被分发使用的，截至目前，Android 5.0 及以上系统的设备已经可以支持 WebView 安全浏览。而你只需要在清单文件中添加如上配置代码，便可以让你的混合式开发的应用更加安全。</p>
 <blockquote>
 <p>文章备注：本文中部分内容翻译自安卓开发者官方博客，参考链接（需要<a href="http://buytizi.com/?r=225bb619613ec09e" target="_blank" rel="external">翻墙</a>）：<a href="https://android-developers.googleblog.com/2017/06/whats-new-in-webview-security.html" target="_blank" rel="external">What’s new in WebView security</a>。</p>
@@ -560,11 +562,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
+                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -596,11 +598,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+                <a href="javascript:void(0)" class="js-tag color4">Mac</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Mac</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
