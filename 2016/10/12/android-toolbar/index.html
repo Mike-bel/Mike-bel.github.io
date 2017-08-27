@@ -26,7 +26,7 @@
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1498967978.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1498969334.png">
 <meta property="og:image" content="https://github.com/alexstyl/Material-SearchTransition/blob/art/transition-to-search.gif?raw=true">
-<meta property="og:updated_time" content="2017-07-02T05:04:15.000Z">
+<meta property="og:updated_time" content="2017-08-12T12:54:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Toolbar，你想知道的都在这里了">
 <meta name="twitter:description" content="Android 3.0之后，Google引入了ActionBar，想统一安卓应用的导航栏样式。但由于ActionBar难以定制，很大程度上限制了开发人员，比如标题文字大小、间距等不易实现个性化，很多开发者放弃了ActionBar的使用，而是使用普通的ViewGroup来封装自己的App Bar，或者使用 JakeWharton大神 的 ActionBarSherlock 库。">
@@ -313,6 +313,8 @@ ga('send', 'pageview');
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">((AppCompatActivity)getActivity()).setSupportActionBar((Toolbar) mContentView.findViewById(R.id.tb_toolbar));</div></pre></td></tr></table></figure>
 <p>添加Options Menu时，需要额外调用<code>setHasOptionsMenu(true);</code>方法，确保<code>onCreateOptionsMenu()</code>方法得以调用，并且<code>onCreateOptionsMenu()</code>方法多了一个<code>MenuInflater</code>参数：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreateOptionsMenu</span><span class="params">(Menu menu, MenuInflater inflater)</span> </span>&#123;</div><div class="line">	<span class="keyword">super</span>.onCreateOptionsMenu(menu, inflater);</div><div class="line">	inflater.inflate(R.menu.search, menu);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>注意：</strong> MenuItem 的点击事件会先执行宿主 Activity 中的 <code>onOptionsItemSelected</code> 方法，然后再将事件传递到 Fragment 中。所以，如果需要覆盖或者说屏蔽 Activity 的影响，需要在宿主 Activity 中修改该方法的返回值为 flase，如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onOptionsItemSelected</span><span class="params">(MenuItem item)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h1 id="相关知识"><a href="#相关知识" class="headerlink" title="相关知识"></a>相关知识</h1><hr>
 <p>关于Toolar的更多介绍可以从官网中学习借鉴，链接为：<a href="https://developer.android.com/training/appbar/index.html" target="_blank" rel="external">Adding the App Bar | Android Developers</a>。从其使用上可以看出，Toolbar是ActionBar的一种替代解决方案，所以很多用法均可参考ActionBar，大家可以从郭神的译文中掌握ActionBar的相关用法：</p>
 <ul>
@@ -665,11 +667,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+                <a href="javascript:void(0)" class="js-tag color5">Animation</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Animation</a>
+                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -697,10 +699,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Mac</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
@@ -710,6 +708,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">MD5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Mac</a>
               </li>
              
               <li class="article-tag-list-item">
