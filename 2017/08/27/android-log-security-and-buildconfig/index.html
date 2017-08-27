@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="自定义常量 开发阶段利用 Log 日志方便代码调试是再常见不过的事情。出于安全考虑，这种做法仅限于 Debug 模式，Release 模式下打包发布时一定要关掉。所以在我们的项目中，一定会有一个工具类或者方法来控制 Log 日志的使用，比如：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-27T07:34:43.000Z">
+<meta property="og:updated_time" content="2017-08-27T08:36:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 中能够作为 Log 开关的一些操作以及安全性浅谈">
 <meta name="twitter:description" content="自定义常量 开发阶段利用 Log 日志方便代码调试是再常见不过的事情。出于安全考虑，这种做法仅限于 Debug 模式，Release 模式下打包发布时一定要关掉。所以在我们的项目中，一定会有一个工具类或者方法来控制 Log 日志的使用，比如：">
@@ -197,7 +197,7 @@ ga('send', 'pageview');
 <h1 id="BuildConfig"><a href="#BuildConfig" class="headerlink" title="BuildConfig"></a>BuildConfig</h1><hr>
 <p>类似 R 资源文件，BuildConfig 也是在编译阶段，Gradle 插件自动生成的一个 class 文件。该文件包含一些帮助开发人员辨别当前 build 类型的常量信息。当然你也可以通过 Gradle 提供的定制功能向该文件里面添加其他辅助内容。这里我们看一下默认情况下，BuildConfig 文件都包含有哪些内容：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">BuildConfig</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> DEBUG = Boolean.parseBoolean(<span class="string">"true"</span>);</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String APPLICATION_ID = <span class="string">"com.yifeng.sample"</span>;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String BUILD_TYPE = <span class="string">"debug"</span>;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String FLAVOR = <span class="string">""</span>;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> VERSION_CODE = <span class="number">1</span>;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String VERSION_NAME = <span class="string">"1.0"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>能够看出，都是一些大家很熟悉的信息。其中包括一个 DEBUG 常量，其值便可用于判断当前 build 类型。debug 模式下为 false，release 模式下为 true。所以，使用 BuildConfig.DEBUG 可以替代前面我们自定义的常量，实现自动管理 Log 日志的打印：</p>
+<p>能够看出，都是一些大家很熟悉的信息。其中包括一个 DEBUG 常量，其值便可用于判断当前 build 类型。debug 模式下为 true，release 模式下为 false。所以，使用 BuildConfig.DEBUG 可以替代前面我们自定义的常量，实现自动管理 Log 日志的打印：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">d</span><span class="params">(String message)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (BuildConfig.DEBUG) &#123;</div><div class="line">        Log.d(<span class="string">"TAG"</span>, message);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>看上去貌似已经很完美了，但其实还是有瑕疵的。BuildConfig 类文件的生成依据于 Module，也就是说每一个 Module 编译时都会产生自己的这个文件。如果你的主 app module 使用其他依赖 module 中 BuildConfig 文件里面的 DEBUG 值，就需要多加注意。</p>
 <p>默认情况下，Library 的构建永远是以 Release 模式执行的，所以其 BuildConfig.DEBUG 值一定是 false！即使主 Module 使用 Debug 模式构建，也是如此。</p>
@@ -554,19 +554,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Animation</a>
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Animation</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -594,6 +594,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Mac</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
@@ -603,10 +607,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">MD5</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Mac</a>
               </li>
              
               <li class="article-tag-list-item">
