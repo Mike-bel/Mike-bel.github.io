@@ -17,7 +17,7 @@
 <meta property="og:description" content="利用 HTML5 提供的定位 API 可以帮助网页获取用户设备的当前位置信息。但如果是在 Android 系统下的应用中打开网页，我们使用 Hybrid 开发模式时用到的 WebView 包括应用本身都需要做一定的设置才能支持内嵌网页的定位功能。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1504354650.gif">
-<meta property="og:updated_time" content="2017-09-02T13:27:25.000Z">
+<meta property="og:updated_time" content="2017-09-02T13:32:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android WebView 中的 Html 网页定位操作">
 <meta name="twitter:description" content="利用 HTML5 提供的定位 API 可以帮助网页获取用户设备的当前位置信息。但如果是在 Android 系统下的应用中打开网页，我们使用 Hybrid 开发模式时用到的 WebView 包括应用本身都需要做一定的设置才能支持内嵌网页的定位功能。">
@@ -219,7 +219,7 @@ ga('send', 'pageview');
 <p>还有最后一步，别忘了在 Manifest 清单文件中添加定位相关的权限，当然也包括网络权限：（通过 GPS 精准定位和 WI-FI 的粗略定位）</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.ACCESS_COARSE_LOCATION"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.ACCESS_FINE_LOCATION"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.INTERNET"</span>/&gt;</span></div></pre></td></tr></table></figure>
 <p>这段示例网页代码调用时的效果如图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1504354650.gif" alt=""></p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1504354650.gif" height="320"></p>
 <p>整体看来，使用方式还挺简单的，那是不是这种方式就一定万无一失呢？</p>
 <p>前面提过，使用 HTML5 定位 API 获取用户位置的前提是浏览器或者说我们 Android 系统中的原生 WebView 环境支持定位操作。事实上，经测试，这种方式不完全稳定。尤其是在国内各种厂商各种 ROM 的复杂环境下，还是有相当多品牌的手机是不支持这种定位操作的。甚至，你还会遇见，即使是使用同一台手机，安装不同的浏览器 App 对于定位的支持也不尽相同。</p>
 <p>所以，HTML5 自身的定位操作只能作为一种辅助手段。更稳妥的做法是，开发人员通过百度、高德之类的第三方定位 SDK 在原生代码中获取用户位置信息，当打开 WebView 中的网页时通过拼接 URL 参数的形式传递给网页。网页自行判断，如果 URL 中不包含定位信息的话，再通过自身的 API 发起定位请求。 </p>
@@ -565,11 +565,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+                <a href="javascript:void(0)" class="js-tag color5">Animation</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Animation</a>
+                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -589,11 +589,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
+                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
+                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
               </li>
              
               <li class="article-tag-list-item">
