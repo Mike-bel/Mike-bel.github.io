@@ -168,19 +168,19 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-the-difference-between-getWidth-and-getMeasuredWidth" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-android-tint" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/">从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处</a>
+      <a class="article-title" href="/2017/03/30/android-tint/">从使用到源码，细说 Android 中的 tint 着色器</a>
     </h1>
   
 
         
-        <a href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/" class="archive-article-date">
+        <a href="/2017/03/30/android-tint/" class="archive-article-date">
   	<time datetime="2017-03-29T23:35:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-30</time>
 </a>
         
@@ -188,9 +188,9 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>之前不是写了篇名为 <a href="http://yifeng.studio/2017/03/21/android-obtain-view-width-and-heigth-not-zero/">Android 获取 View 宽高的常用正确方式，避免为零</a> 的总结性文章嘛，在结尾简单阐述 measuredWidth 与 width 的区别。考虑到文章的重点，简单几笔带过。没曾想，引发一些争论，大家对 View 的这两对宽高属性理解各有异议。于是便想追根溯源，通过解读源码的方式说明一下，消除许多人的误解。</p>
+        <p>自 API 21 （Android L）开始，Android SDK 引入 tint 着色器，可以随意改变安卓项目中图标或者 View 背景的颜色，一定程度上可以减少同一个样式不同颜色图标的数量，从而起到 Apk 瘦身的作用。不过使用 tint 存在一定的兼容性问题，且听本文慢慢说来。</p>
         
-          <a class="article-more-a" href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/#more">more >></a>
+          <a class="article-more-a" href="/2017/03/30/android-tint/#more">more >></a>
         
       
 
@@ -230,7 +230,7 @@ ga('send', 'pageview');
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/03/30/android-tint/">展开全文 >></a>
         </p>
       
 
@@ -1209,11 +1209,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
+                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1237,11 +1237,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
+                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
+                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
               </li>
              
               <li class="article-tag-list-item">
