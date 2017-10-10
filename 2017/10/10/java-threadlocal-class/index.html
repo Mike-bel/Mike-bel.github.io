@@ -6,25 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yifeng.studio">
-  <title>Android 使用CardView轻松实现卡片式设计 | YiFeng&#39;s Zone</title>
+  <title>Java ThreadLocal 类的知识点解读 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Material design中有一种很个性的设计概念：卡片式设计（Cards），这种设计与传统的List Item有所区别，Cards包含更多的内容元素和拥有自己的UI特征，关于Cards的设计规范可以参考官网介绍： https://material.google.com/components/cards.html# 为了更好地实现这种 Cards UI 的设计，Google在v7包中引进了一种">
-<meta name="keywords" content="Android">
+  <meta name="description" content="说起 Java 中的 ThreadLocal 类，可能很多安卓开发人员并不是很熟悉，毕竟很少有使用到的地方。但是如果你仔细分析过 Handler 源码的话，就一定见过这个类的出现。而 Handler 机制又是安卓知识体系中非常重要的一环，所以我们有必要了解一下 ThreadLocal 类的相关知识点。">
+<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android 使用CardView轻松实现卡片式设计">
-<meta property="og:url" content="http://yifeng.studio/2016/10/18/android-cardview/index.html">
+<meta property="og:title" content="Java ThreadLocal 类的知识点解读">
+<meta property="og:url" content="http://yifeng.studio/2017/10/10/java-threadlocal-class/index.html">
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
-<meta property="og:description" content="Material design中有一种很个性的设计概念：卡片式设计（Cards），这种设计与传统的List Item有所区别，Cards包含更多的内容元素和拥有自己的UI特征，关于Cards的设计规范可以参考官网介绍： https://material.google.com/components/cards.html# 为了更好地实现这种 Cards UI 的设计，Google在v7包中引进了一种">
+<meta property="og:description" content="说起 Java 中的 ThreadLocal 类，可能很多安卓开发人员并不是很熟悉，毕竟很少有使用到的地方。但是如果你仔细分析过 Handler 源码的话，就一定见过这个类的出现。而 Handler 机制又是安卓知识体系中非常重要的一环，所以我们有必要了解一下 ThreadLocal 类的相关知识点。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-01.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-02.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-03.gif">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-04.gif">
-<meta property="og:updated_time" content="2017-02-23T02:57:47.000Z">
+<meta property="og:updated_time" content="2017-10-10T06:53:02.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android 使用CardView轻松实现卡片式设计">
-<meta name="twitter:description" content="Material design中有一种很个性的设计概念：卡片式设计（Cards），这种设计与传统的List Item有所区别，Cards包含更多的内容元素和拥有自己的UI特征，关于Cards的设计规范可以参考官网介绍： https://material.google.com/components/cards.html# 为了更好地实现这种 Cards UI 的设计，Google在v7包中引进了一种">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-01.png">
+<meta name="twitter:title" content="Java ThreadLocal 类的知识点解读">
+<meta name="twitter:description" content="说起 Java 中的 ThreadLocal 类，可能很多安卓开发人员并不是很熟悉，毕竟很少有使用到的地方。但是如果你仔细分析过 Handler 源码的话，就一定见过这个类的出现。而 Handler 机制又是安卓知识体系中非常重要的一环，所以我们有必要了解一下 ThreadLocal 类的相关知识点。">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -173,65 +168,85 @@ ga('send', 'pageview');
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-android-cardview" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-java-threadlocal-class" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Android 使用CardView轻松实现卡片式设计
+      Java ThreadLocal 类的知识点解读
     </h1>
   
 
         
-        <a href="/2016/10/18/android-cardview/" class="archive-article-date">
-  	<time datetime="2016-10-18T08:18:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-18</time>
+        <a href="/2017/10/10/java-threadlocal-class/" class="archive-article-date">
+  	<time datetime="2017-10-10T02:22:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-10</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Material design中有一种很个性的设计概念：卡片式设计（Cards），这种设计与传统的List Item有所区别，Cards包含更多的内容元素和拥有自己的UI特征，关于Cards的设计规范可以参考官网介绍：</p>
-<p><a href="https://material.google.com/components/cards.html#" target="_blank" rel="external">https://material.google.com/components/cards.html#</a></p>
-<p>为了更好地实现这种 Cards UI 的设计，Google在v7包中引进了一种全新的控件：<a href="https://developer.android.com/reference/android/support/v7/widget/CardView.html#" target="_blank" rel="external">CardVew</a>，本文将从开发的角度介绍CardView的一些常见使用细节。</p>
+        <p>说起 Java 中的 ThreadLocal 类，可能很多安卓开发人员并不是很熟悉，毕竟很少有使用到的地方。但是如果你仔细分析过 Handler 源码的话，就一定见过这个类的出现。而 Handler 机制又是安卓知识体系中非常重要的一环，所以我们有必要了解一下 ThreadLocal 类的相关知识点。</p>
 <a id="more"></a>
-<p>Google用一句话介绍了CardView：一个带圆角和阴影背景的FrameLayout。CardView在Android Lollipop（API 21）及以上版本的系统中适配较好，本文我们以一个具体的例子来学习CardView的基本使用和注意事项，效果图如下：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-01.png" alt="CardView-samples-01.png"></p>
-<p>上图展示的是一个list列表，列表中的item使用了卡片式设计，主要利用CardView控件实现，为了精简文章内容，这里我们将item布局中的核心代码罗列出来，加以分析：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line"><span class="tag">    <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span></div><div class="line"><span class="tag">    <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</span></div><div class="line">    </div><div class="line">    <span class="tag">&lt;<span class="name">android.support.v7.widget.CardView</span></span></div><div class="line"><span class="tag">        <span class="attr">tools:targetApi</span>=<span class="string">"lollipop"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:stateListAnimator</span>=<span class="string">"@drawable/lift_on_touch"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_marginLeft</span>=<span class="string">"@dimen/dp_8"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_marginRight</span>=<span class="string">"@dimen/dp_8"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_marginBottom</span>=<span class="string">"@dimen/dp_8"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:clickable</span>=<span class="string">"true"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:foreground</span>=<span class="string">"?android:attr/selectableItemBackground"</span></span></div><div class="line"><span class="tag">        <span class="attr">app:cardCornerRadius</span>=<span class="string">"@dimen/dp_4"</span></span></div><div class="line"><span class="tag">        <span class="attr">app:cardUseCompatPadding</span>=<span class="string">"true"</span></span></div><div class="line"><span class="tag">        <span class="attr">app:cardPreventCornerOverlap</span>=<span class="string">"false"</span>&gt;</span></div><div class="line"></div><div class="line">        <span class="tag">&lt;<span class="name">RelativeLayout</span></span></div><div class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span>&gt;</span></div><div class="line"></div><div class="line">            <span class="comment">&lt;!-- image、text等其他内容 --&gt;</span></div><div class="line">            ......</div><div class="line"></div><div class="line">        <span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;/<span class="name">android.support.v7.widget.CardView</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>可以看出，核心部分在于CardView的属性使用，下面我们针对几个特殊的属性逐一分析，深化了解。</p>
-<h1 id="排版技巧"><a href="#排版技巧" class="headerlink" title="排版技巧"></a>排版技巧</h1><hr>
-<p>前面我们说过，CardView从本质上属于FrameLayout，而CardView通常包含了较多的内容元素，为了方便地排版布局中的各个元素，一般借助于其他基本布局容器，比如这里我们使用了一个<code>RelativeLayout</code>作为CardView的唯一Child。</p>
-<h1 id="阴影Padding"><a href="#阴影Padding" class="headerlink" title="阴影Padding"></a>阴影Padding</h1><hr>
-<p>在Android Lollipop之前的系统，CardView会自动添加一些额外的padding空间来绘制阴影部分，这也导致了以Lollipop为分界线的不同系统上CardView的尺寸大小不同。为了解决这个问题，有两种方法：第一种，使用不同API版本的dimension资源适配（也就是借助values和values-21文件夹中不同的dimens.xml文件）；第二种，就是使用<code>cardUseCompatPadding</code>属性，设置为true（默认值为false），让CardView在不同系统中使用相同的padding值。</p>
-<h1 id="圆角覆盖"><a href="#圆角覆盖" class="headerlink" title="圆角覆盖"></a>圆角覆盖</h1><hr>
-<p>这也是一个解决系统兼容的问题。在pre-Lollipop平台（API 21版本之前）上，CardView不会裁剪内容元素以满足圆角需求，而是使用添加padding的替代方案，从而使内容元素不会覆盖CardView的圆角。而控制这个行为的属性就是cardPreventCornerOverlap，默认值为true。在本例中我们设置了该属性为false。这里我们看一下，在pre-Lollipop平台中，不同cardPreventCornerOverlap值的效果对比图（左false，右true）：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-02.png" alt="CardView-samples-02.png"></p>
-<p>显然，默认值下自动添加padding的方式不可取，所以需要设置该属性值为false。需要注意的一点是，该属性的设置在Lollipop及以上版本的系统中没有任何影响，除非cardUseCompatPadding的值为true。</p>
-<h1 id="Ripple效果"><a href="#Ripple效果" class="headerlink" title="Ripple效果"></a>Ripple效果</h1><hr>
-<p>Cards一般都是可点击的，为此我们使用了foreground属性并使用系统的selectableItemBackground值，同时设置clickable为true（如果在java代码中使用了cardView.setOnClickListener，就可以不用写clickable属性了），从而达到在Lollipop及以上版本系统中实现点击时的涟漪效果（Ripple），如图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-03.gif" alt="CardView-samples-03.gif"></p>
-<p>在pre-Lollipop版本中，则是一个普通的点击变暗的效果，这里就不截图展示了，如果想改变老版本的点击效果，也可以通过版本兼容的方式另行修改。</p>
-<h1 id="lift-on-touch"><a href="#lift-on-touch" class="headerlink" title="lift-on-touch"></a>lift-on-touch</h1><hr>
-<p>根据官网<a href="https://material.google.com/motion/material-motion.html#" target="_blank" rel="external">Material motion</a>部分对交互动作规范的指导，Cards、Button等视图应该有一个触摸抬起（lift-on-touch）的交互效果，也就是在三维立体空间上的Z轴发生位移，从而产生一个阴影加深的效果，与Ripple效果共同使用，官网给了一个很好的示例图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-04.gif" alt="CardView-samples-04.gif"></p>
-<p>在实现这个效果也很简单，可以在<code>res/drawable</code>目录下建立一个<code>lift_on_touch.xml</code>文件，内容如下：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="comment">&lt;!-- animate the translationZ property of a view when pressed --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">selector</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span></span></div><div class="line"><span class="tag">        <span class="attr">android:state_enabled</span>=<span class="string">"true"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:state_pressed</span>=<span class="string">"true"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">set</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">objectAnimator</span></span></div><div class="line"><span class="tag">                <span class="attr">android:duration</span>=<span class="string">"@android:integer/config_shortAnimTime"</span></span></div><div class="line"><span class="tag">                <span class="attr">android:propertyName</span>=<span class="string">"translationZ"</span></span></div><div class="line"><span class="tag">                <span class="attr">android:valueTo</span>=<span class="string">"6dp"</span></span></div><div class="line"><span class="tag">                <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">set</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">set</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">objectAnimator</span></span></div><div class="line"><span class="tag">                <span class="attr">android:duration</span>=<span class="string">"@android:integer/config_shortAnimTime"</span></span></div><div class="line"><span class="tag">                <span class="attr">android:propertyName</span>=<span class="string">"translationZ"</span></span></div><div class="line"><span class="tag">                <span class="attr">android:valueTo</span>=<span class="string">"0"</span></span></div><div class="line"><span class="tag">                <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">set</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">selector</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>即通过属性动画动态改变translationZ值，沿着Z轴，从0dp到6dp变化。这里的6dp值也是有出处的，参考<a href="https://github.com/google/iosched/blob/master/android/src/main/res/values/dimens.xml#L122" target="_blank" rel="external">Google I/O 2014 app</a>和<a href="https://developer.android.com/training/material/shadows-clipping.html#Elevation" target="_blank" rel="external">Assign Elevation to Your Views</a>。然后将其赋值给<code>android:stateListAnimator</code>属性即可。由于<code>stateListAnimator</code>属性只适用于Lollipop及以上版本，为了隐藏xml中的版本警告，可以指定<code>tools:targetApi=&quot;lollipop&quot;</code>。</p>
-<p>关于这个功能，需要补充说明一点。这里的<code>lift_on_touch.xml</code>，严格意义上来讲，属于anim资源，同时适用于API 21及以上版本，所以按道理上来讲应该将其放置在<code>res/anim-v21</code>目录下，然后使用<code>@anim/lift_on_touch</code>赋值给<code>stateListAnimator</code>属性，而不是例子中的<code>@drawable/lift_on_touch</code>方法。但是放置在<code>res/anim-v21</code>目录下会产生一个“错误”提示：</p>
+<h1 id="ThreadLocal-使用简介"><a href="#ThreadLocal-使用简介" class="headerlink" title="ThreadLocal 使用简介"></a>ThreadLocal 使用简介</h1><hr>
+<p>顾名思义，ThreadLocal 一定与线程有关，而事实也是如此。ThreadLocal<t> 作为一个泛型类，解决的是线程内部对象访问的问题，一定程度上避免对象作为参数到处传递。一个线程通过 ThreadLocal 保存的泛型对象实例，其他线程无法访问，当然也无需访问。</t></p>
+<p>ThreadLocal 提供两个对外方法：get() 和 set() 方法，分别用于内部对象的读写操作。</p>
+<p>举个例子，在工作线程中创建 ThreadLocal 对象，并存储和读取其字符串内容：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        ThreadLocal&lt;String&gt; threadLocal = <span class="keyword">new</span> ThreadLocal&lt;&gt;();</div><div class="line">        threadLocal.set(<span class="string">"This is thread local variable"</span>);</div><div class="line">        System.out.print(threadLocal.get());</div><div class="line">    &#125;</div><div class="line">&#125;).start();</div></pre></td></tr></table></figure>
+<p>如果将上面例子中的创建语句提取到工作线程外面的其他线程中，编译器会自动报错，提示访问受限：</p>
 <blockquote>
-<p><selector> XML file should be in either “animator” or “drawable”,not “anim”</selector></p>
+<p>Variable “threadLocal” is accessed from within inner class,needs to be declared final</p>
 </blockquote>
-<p>虽然这个“错误”不影响编译运行，但是对于追求完美主义的程序员们来说还是碍眼，所以本例中我选择将其放在了<code>res/drawable</code>目录下，大家可以自行斟酌使用。</p>
-<p>关于对lift-on-touch效果的理解，YouToBe网站有个视频解说，感兴趣的话可以参看看，地址如下：</p>
-<p><a href="https://www.youtube.com/watch?v=YaG_ljfzeUw" target="_blank" rel="external">DesignBytes: Paper and Ink: The Materials that Matter</a></p>
-<h1 id="总结说明"><a href="#总结说明" class="headerlink" title="总结说明"></a>总结说明</h1><hr>
-<p>CardView还有一些其他属性可供使用，比如<code>cardElevation</code>设置阴影大小，<code>contentPadding</code>代替普通<code>android:padding</code>属性等，比较基础，本文就不一一介绍了，大家可以在官网上参考学习。从上面的介绍可以看出，在使用CardView时基本上都会用到一些标准配置的属性，我们可以借助style属性，将其封装到<code>styles.xml</code>文件中，统一管理，比如：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"AppCardView"</span> <span class="attr">parent</span>=<span class="string">"@style/CardView.Light"</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"cardPreventCornerOverlap"</span>&gt;</span>false<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></div><div class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"cardUseCompatPadding"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></div><div class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:foreground"</span>&gt;</span>?attr/selectableItemBackground<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></div><div class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:stateListAnimator"</span> <span class="attr">tools:targetApi</span>=<span class="string">"lollipop"</span>&gt;</span>@anim/lift_up<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></div><div class="line"><span class="undefined">        ......</span></div><div class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>最后，附上本文案例项目的GitHub地址：</p>
-<p><a href="https://github.com/Mike-bel/MDStudySamples" target="_blank" rel="external">https://github.com/Mike-bel/MDStudySamples</a></p>
+<h1 id="ThreadLocal-工作原理"><a href="#ThreadLocal-工作原理" class="headerlink" title="ThreadLocal 工作原理"></a>ThreadLocal 工作原理</h1><hr>
+<p>搞清楚 ThreadLocal 内部工作原理，可以从前面使用简介中提到的 get() 和 set() 两个方法的源码入手。</p>
+<p>get() 方法源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> T <span class="title">get</span><span class="params">()</span> </span>&#123;</div><div class="line">    Thread t = Thread.currentThread();</div><div class="line">    ThreadLocalMap map = getMap(t);</div><div class="line">    <span class="keyword">if</span> (map != <span class="keyword">null</span>) &#123;</div><div class="line">        ThreadLocalMap.Entry e = map.getEntry(<span class="keyword">this</span>);</div><div class="line">        <span class="keyword">if</span> (e != <span class="keyword">null</span>)</div><div class="line">            <span class="keyword">return</span> (T)e.value;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> setInitialValue();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>前面提到，ThreadLocal 与线程有关，从 get() 方法的源码中便有所体现。使用当前线程实例作为 getMap() 方法的参数，直接获取用于保存 ThreadLocal 值的 ThreadLocalMap 对象。</p>
+<p>getMap() 方法源码很简单，只有一行代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function">ThreadLocalMap <span class="title">getMap</span><span class="params">(Thread t)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> t.threadLocals;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>即直接读取 Thread 类中定义的 ThreadLocalMap 变量：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* ThreadLocal values pertaining to this thread. This map is maintained</span></div><div class="line"><span class="comment"> * by the ThreadLocal class. */</span></div><div class="line">ThreadLocal.ThreadLocalMap threadLocals = <span class="keyword">null</span>;</div></pre></td></tr></table></figure>
+<p>再回到 get() 方法源码中，如果当前线程 threadLocals 变量的值为 null，则调用 setInitialValue() 方法进行初始化：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> T <span class="title">setInitialValue</span><span class="params">()</span> </span>&#123;</div><div class="line">    T value = initialValue();</div><div class="line">    Thread t = Thread.currentThread();</div><div class="line">    ThreadLocalMap map = getMap(t);</div><div class="line">    <span class="keyword">if</span> (map != <span class="keyword">null</span>)</div><div class="line">        map.set(<span class="keyword">this</span>, value);</div><div class="line">    <span class="keyword">else</span></div><div class="line">        createMap(t, value);</div><div class="line">    <span class="keyword">return</span> value;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>也就是间接调用 createMap() 方法实现初始化操作：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">createMap</span><span class="params">(Thread t, T firstValue)</span> </span>&#123;</div><div class="line">    t.threadLocals = <span class="keyword">new</span> ThreadLocalMap(<span class="keyword">this</span>, firstValue);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>并且初始化时使用的默认值是由 initialValue() 方法提供的默认值 null：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> T <span class="title">initialValue</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>该方法为 protected 类型，这也为开发人员使用时修改系统默认值 null 提供了可能。我们只需要在创建 ThreadLocal 实例的时候或者在其子类中重写 initialValue() 方法即可，比如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ThreadLocal&lt;String&gt; threadLocal = <span class="keyword">new</span> ThreadLocal&lt;String&gt;() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> String <span class="title">initialValue</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"a new initial value"</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>看完 get() 方法源码，再来看看 set()  方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(T value)</span> </span>&#123;</div><div class="line">    Thread t = Thread.currentThread();</div><div class="line">    ThreadLocalMap map = getMap(t);</div><div class="line">    <span class="keyword">if</span> (map != <span class="keyword">null</span>)</div><div class="line">        map.set(<span class="keyword">this</span>, value);</div><div class="line">    <span class="keyword">else</span></div><div class="line">        createMap(t, value);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到，set() 方法同样获取的是当前线程中的 ThreadLocalMap 对象进行赋值操作。其中有一行代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">map.set(<span class="keyword">this</span>, value);</div></pre></td></tr></table></figure>
+<p>与 get() 方法中提到的初始化操作一样，表示 ThreadLocalMap 使用 ThreadLocal 实例作为 key、将要保存的对象作为 value 这种键值对的形式保存。而 get() 方法读取的时候也是如此。</p>
+<h1 id="Android-中的应用场景"><a href="#Android-中的应用场景" class="headerlink" title="Android 中的应用场景"></a>Android 中的应用场景</h1><hr>
+<p>作为安卓开发人员，使用 ThreadLocal 的场景并不是很多，然而我们平时经常接触的 Handler 机制中涉及到的 Looper 类，其内部便使用到 ThreadLocal 操作。</p>
+<p>大家知道，一个线程中只能有一个 Looper 实例不停循环运转访问 MessageQueue 消息队列。这个 Looper 对象实例便是借助 ThreadLocal 保存在对应线程当中，Looper 类源码定义如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">final</span> ThreadLocal&lt;Looper&gt; sThreadLocal = <span class="keyword">new</span> ThreadLocal&lt;Looper&gt;();</div></pre></td></tr></table></figure>
+<p>默认情况下，工作线程中使用 Looper 之前必须调用 prepare() 方法初始化（系统在主线程自动帮我们执行）。这个方法便是用来创建 Looper 对象并保存的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">prepare</span><span class="params">(<span class="keyword">boolean</span> quitAllowed)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (sThreadLocal.get() != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Only one Looper may be created per thread"</span>);</div><div class="line">    &#125;</div><div class="line">    sThreadLocal.set(<span class="keyword">new</span> Looper(quitAllowed));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>所以，知道一些 ThreadLocal 的知识有助于我们加深理解 Handler 原理。</p>
+<h1 id="ThreadLocal-答忧解惑"><a href="#ThreadLocal-答忧解惑" class="headerlink" title="ThreadLocal 答忧解惑"></a>ThreadLocal 答忧解惑</h1><hr>
+<p><strong>1，ThreadLocal 只能在线程内访问吗</strong></p>
+<p>其实不然。Java 还提供有一个继承自 ThreadLocal 的 InheritableThreadLocal 类，解决跨线程访问 ThreadLocal 变量的问题。</p>
+<p>在 Thread 类中也定义有一个 inheritableThreadLocals 变量：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ThreadLocal.ThreadLocalMap inheritableThreadLocals = <span class="keyword">null</span>;</div></pre></td></tr></table></figure>
+<p>当子线程创建的时候，自动使用父线程中 inheritableThreadLocals 变量保存的对象值初始化自己。（当然，该默认值也是可以由开发人员修改的。）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init2</span><span class="params">(Thread parent)</span> </span>&#123;</div><div class="line">    <span class="comment">// 省略不相关源码</span></div><div class="line">    <span class="keyword">if</span> (parent.inheritableThreadLocals != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">this</span>.inheritableThreadLocals = ThreadLocal.createInheritedMap(</div><div class="line">                parent.inheritableThreadLocals);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>有关 InheritableThreadLocal 的更多细节，感兴趣的朋友可以自行查阅相关源码。</p>
+<p><strong>2，ThreadLocal 会引发内存泄漏吗</strong></p>
+<p>答案是否定的。虽然从前面的源码中可以看出，ThreadLocal 保存的对象实例本质上归属于 Thread 所持有引用，当线程执行完毕，GC 自动回收其相关资源。</p>
+<p>看上去，默认情况下对象的生命周期与 Thread 生命周期一致，但是，ThreadLocalMap 在内部实现时对于 ThreadLocal 中对象的引用使用的是弱引用类型，从而规避内存泄漏的风险：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadLocalMap</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Entry</span> <span class="keyword">extends</span> <span class="title">WeakReference</span>&lt;<span class="title">ThreadLocal</span>&gt; </span>&#123;</div><div class="line">        <span class="comment">/** The value associated with this ThreadLocal. */</span></div><div class="line">        Object value;</div><div class="line"></div><div class="line">        Entry(ThreadLocal k, Object v) &#123;</div><div class="line">            <span class="keyword">super</span>(k);</div><div class="line">            value = v;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p><strong>备注：</strong>对于 JVM 来说，内存泄漏的罪魁祸首在于强引用导致对象所占用的内存无法得到释放，而 Java 四种引用类型中的弱引用方式刚好能够解决这种问题。弱引用不会影响 GC 的垃圾回收工作，避免内存泄漏风险。同时也应当注意，使用弱引用获取到的对象实例，在使用前，需要添加空值判断。</p>
+<p><strong>3，ThreadLocal 与多线程并发的关系？</strong></p>
+<p>没有关系！网上有些文章误传 ThreadLocal 是用来解决多线程并发的问题，这是错误的理解。通过前文一系列的使用和原理分析不难看出，ThreadLocal 用于线程读写各自内部对象，通常除自己之外的线程没有必要也无法访问这个对象。</p>
+<p>而多线程并发产生的临界资源访问问题，完全可以通过 synchronized 关键字实现的同步机制（也称互斥锁机制）解决。有关 Java 并发编程的知识点，可以参考：</p>
+<p><a href="http://wiki.jikexueyuan.com/project/java-concurrency/" target="_blank" rel="external">http://wiki.jikexueyuan.com/project/java-concurrency/</a></p>
+<p><strong>相关知识链</strong>：</p>
+<p><a href="https://dzone.com/articles/stack-vs-heap-understanding-java-memory-allocation" target="_blank" rel="external">https://dzone.com/articles/stack-vs-heap-understanding-java-memory-allocation</a></p>
 
       
 
@@ -243,9 +258,9 @@ ga('send', 'pageview');
  
 <p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
  
-<p>本文标题为: <b><a href="/2016/10/18/android-cardview/" target="_blank" title="Android 使用CardView轻松实现卡片式设计">Android 使用CardView轻松实现卡片式设计</a></b> </p>
+<p>本文标题为: <b><a href="/2017/10/10/java-threadlocal-class/" target="_blank" title="Java ThreadLocal 类的知识点解读">Java ThreadLocal 类的知识点解读</a></b> </p>
  
-<p>本文链接为：<b><a href="/2016/10/18/android-cardview/" target="_blank" title="Android 使用CardView轻松实现卡片式设计">http://yifeng.studio/2016/10/18/android-cardview/</a></b> </p>
+<p>本文链接为：<b><a href="/2017/10/10/java-threadlocal-class/" target="_blank" title="Java ThreadLocal 类的知识点解读">http://yifeng.studio/2017/10/10/java-threadlocal-class/</a></b> </p>
 
 <p><b>● 科学上网，翻墙推荐：</b><b><a href="http://buytizi.com/?r=225bb619613ec09e" target="_blank" title="http://buytizi.com/?r=225bb619613ec09e">http://buytizi.com/?r=225bb619613ec09e</a></b> </p>
 
@@ -295,7 +310,7 @@ ga('send', 'pageview');
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
         		</li>
       		
 		</ul>
@@ -307,7 +322,7 @@ ga('send', 'pageview');
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
+        			<a href="/categories/Java//" class="article-tag-list-link color5">Java</a>
         		</li>
       		
 		</ul>
@@ -374,7 +389,7 @@ ga('send', 'pageview');
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yifeng.studio/2016/10/18/android-cardview/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yifeng.studio/2017/10/10/java-threadlocal-class/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -388,18 +403,9 @@ ga('send', 'pageview');
   
 <nav id="article-nav">
   
-    <a href="/2016/10/20/android-renderscript-blur/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Android RenderScript 简单高效实现图片的高斯模糊效果
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/10/13/android-tools-attributes/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Android Tools Attributes，让布局设计所见即所得</div>
+    <a href="/2017/09/26/android-countdowntimer-using-attentions/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">聊聊 CountDownTimer 使用过程中的注意事项</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -426,7 +432,7 @@ ga('send', 'pageview');
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#排版技巧"><span class="toc-number">1.</span> <span class="toc-text">排版技巧</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#阴影Padding"><span class="toc-number">2.</span> <span class="toc-text">阴影Padding</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#圆角覆盖"><span class="toc-number">3.</span> <span class="toc-text">圆角覆盖</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Ripple效果"><span class="toc-number">4.</span> <span class="toc-text">Ripple效果</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#lift-on-touch"><span class="toc-number">5.</span> <span class="toc-text">lift-on-touch</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结说明"><span class="toc-number">6.</span> <span class="toc-text">总结说明</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ThreadLocal-使用简介"><span class="toc-number">1.</span> <span class="toc-text">ThreadLocal 使用简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ThreadLocal-工作原理"><span class="toc-number">2.</span> <span class="toc-text">ThreadLocal 工作原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Android-中的应用场景"><span class="toc-number">3.</span> <span class="toc-text">Android 中的应用场景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ThreadLocal-答忧解惑"><span class="toc-number">4.</span> <span class="toc-text">ThreadLocal 答忧解惑</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -440,7 +446,7 @@ ga('send', 'pageview');
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="android-cardview" data-title="Android 使用CardView轻松实现卡片式设计" data-url="http://yifeng.studio/2016/10/18/android-cardview/"></div>
+	<div class="ds-thread" data-thread-key="java-threadlocal-class" data-title="Java ThreadLocal 类的知识点解读" data-url="http://yifeng.studio/2017/10/10/java-threadlocal-class/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
