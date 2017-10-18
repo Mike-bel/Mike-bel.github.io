@@ -168,6 +168,128 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-mac-terminals-chmod-command" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/18/mac-terminals-chmod-command/">详细记录 mac 系统下使用 chmod 命令修改文件权限</a>
+    </h1>
+  
+
+        
+        <a href="/2017/10/18/mac-terminals-chmod-command/" class="archive-article-date">
+  	<time datetime="2017-10-18T15:57:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>PC 端修改文件访问权限算是比较常用的操作，在安装部分软件时经常需要使用到。在 Mac 系统的终端上修改文件权限使用的是 Linux 中的 <code>chmod</code> 命令。这里详细介绍一下该命令的相关使用。</p>
+<blockquote>
+<p>也可以直接通过 <code>man chmod</code> 在终端工具上查看该命令的帮助手册。</p>
+</blockquote>
+<h1 id="查看文件权限"><a href="#查看文件权限" class="headerlink" title="查看文件权限"></a>查看文件权限</h1><hr>
+<p><code>ls -l</code> 命令可以查看当前目录下所有文件的访问权限，也可以查看指定文件。比如，查看 Tomcat bin 目录中的 startup.sh 文件的访问权限时：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yifeng:bin yifeng$ ls -l startup.sh</div><div class="line">-rwxrwxrwx@ 1 yifeng  staff  1904  9 27 18:32 startup.sh</div></pre></td></tr></table></figure>
+<p>上面打印的文件信息中每一部分所代表的含义，分别对应如下解释：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">文件类型和访问权限 文件数量 所属用户 所在群组 文件大小 修改日期（月 日 时 分） 文件名称</div></pre></td></tr></table></figure>
+<p>第一部分详细说明一下，就以 “-rwxrwxrwx” 为例：第一个符号代表文件类型， “-” 符号表示该文件是非目录类型，“d” 符号表示目录类型；（ 末尾的 @ 符号表示文件拓展属性，属于文件系统的一个功能。）</p>
+<p>后面九个字母分为三组，从前到后每组分别对应所属用户（user）、所属用户所在组（group）和其他用户（other）对该文件的访问权限；</p>
+<p>每组中的三个字符 “rwx” 分别表示对应用户对该文件拥有的可读／可写／可执行权限，没有相应权限则使用 “-” 符号替代。</p>
+<h1 id="修改访问权限"><a href="#修改访问权限" class="headerlink" title="修改访问权限"></a>修改访问权限</h1><hr>
+<p>根据上面查看权限部分的介绍，修改权限也应包括访问用户、添加或取消操作、具体权限和访问文件，即：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod 用户+操作+权限 文件</div></pre></td></tr></table></figure>
+<p>用户部分：使用字母 u 表示文件拥有者（user），g 表示拥有者所在群组（group），o 表示其他用户（other），a 表示全部用户（all，包含前面三种用户范围）；</p>
+<p>操作部分：“+” 符号表示增加权限，“-” 符号表示取消权限，“=” 符号表示赋值权限；</p>
+<p>权限部分：“r” 符号表示可读（read），“w” 表示可写（write），“x” 表示可执行权限（execute）；</p>
+<p>文件部分：如不指定文件名，表示操作对象为当前目录下的所有文件。</p>
+<p>还以前面 startup.sh 文件为例，将拥有者所在群组和其他用户改为可读可写权限、取消可执行权限的使用方式为：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod go-x startup.sh</div></pre></td></tr></table></figure>
+<p>然后使用 ls 命令查看权限，</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yifeng:bin yifeng$ ls -l startup.sh</div><div class="line">-rwxrw-rw-@ 1 yifeng  staff  1904  9 27 18:32 startup.sh</div></pre></td></tr></table></figure>
+<p>可以看到，文件访问权限已经按照要求发生对应变化。</p>
+<p>如果是复杂一点操作的话，可以同时使用多种操作符添加和取消权限，并且可以使用 “,” 符号同时对不同用户范围修改权限，比如：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod g+x,o+x-w startup.sh</div></pre></td></tr></table></figure>
+<p>还有一种简单的写法，使用数字表示权限部分的读／写／可执行权限类型。数字和权限类型的对应关系，可以从这张图中直观地看出来：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1508342093.png" alt=""></p>
+<p>即，1 表示可执行，2 表示可写，4 表示可读。每种类型数字相加所得到的值表示交叉部分的公共类型。</p>
+<p>这样的话，使用三个数字便可以分别代表三种不同用户类型的权限修改结果。比如，修改所有用户的访问权限均为可读可写可执行（rwx）的话，这样使用即可：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod 777 startup.sh</div></pre></td></tr></table></figure>
+<p>三个数字从前到后分别表示 u、g、o 三种用户类型的访问权限，使用时按需修改。</p>
+<p>补充一点，有时候需要递归修改目录文件及其子目录中的文件类型，可以使用 <code>-R</code> 选项。</p>
+
+      
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Mac</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Mac//" class="article-tag-list-link color4">Mac</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/10/18/mac-terminals-chmod-command/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-java-threadlocal-class" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1012,104 +1134,6 @@ ga('send', 'pageview');
 
 
   
-    <article id="post-android-custom-views-water-ripple-effect" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/24/android-custom-views-water-ripple-effect/">Android 自定义 View 集锦｜实现水波纹扩散效果</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/24/android-custom-views-water-ripple-effect/" class="archive-article-date">
-  	<time datetime="2017-07-23T23:48:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>通过自定义 View 来满足 UI 中的特殊设计在工作中是很常见的事情，比如带图例的柱状图、带进度的进度条等。这些实现起来相对简单的自定义 View 往往也需要费点时间在实现方式上多多思考。</p>
-<p>自工作以来，也写过不少各式各样的自定义 View，但很少汇总起来，供日后参考。导致后续需要的时候都得重新设计、Coding，比较费时费力。于是打算将这些自定义 View 汇总到一个 Demo 工程中，并上传至 GitHub 网站，供自己备用的同时，也能给他人带来帮助。</p>
-<p><a href="https://github.com/Mike-bel/android-custom-views" target="_blank" rel="external">https://github.com/Mike-bel/android-custom-views</a></p>
-        
-          <a class="article-more-a" href="/2017/07/24/android-custom-views-water-ripple-effect/#more">more >></a>
-        
-      
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Custom View</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/24/android-custom-views-water-ripple-effect/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1251,19 +1275,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Mac</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">

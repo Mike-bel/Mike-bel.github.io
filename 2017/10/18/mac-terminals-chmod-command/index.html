@@ -6,18 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yifeng.studio">
-  <title>Archives: 2016 | YiFeng&#39;s Zone</title>
+  <title>详细记录 mac 系统下使用 chmod 命令修改文件权限 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="YiFeng&#39;s Zone">
-<meta property="og:url" content="http://yifeng.studio/archives/2016/index.html">
+  <meta name="description" content="PC 端修改文件访问权限算是比较常用的操作，在安装部分软件时经常需要使用到。在 Mac 系统的终端上修改文件权限使用的是 Linux 中的 chmod 命令。这里详细介绍一下该命令的相关使用。  也可以直接通过 man chmod 在终端工具上查看该命令的帮助手册。  查看文件权限 ls -l 命令可以查看当前目录下所有文件的访问权限，也可以查看指定文件。比如，查看 Tomcat bin 目录中的">
+<meta name="keywords" content="Mac">
+<meta property="og:type" content="article">
+<meta property="og:title" content="详细记录 mac 系统下使用 chmod 命令修改文件权限">
+<meta property="og:url" content="http://yifeng.studio/2017/10/18/mac-terminals-chmod-command/index.html">
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
-<meta property="og:description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
+<meta property="og:description" content="PC 端修改文件访问权限算是比较常用的操作，在安装部分软件时经常需要使用到。在 Mac 系统的终端上修改文件权限使用的是 Linux 中的 chmod 命令。这里详细介绍一下该命令的相关使用。  也可以直接通过 man chmod 在终端工具上查看该命令的帮助手册。  查看文件权限 ls -l 命令可以查看当前目录下所有文件的访问权限，也可以查看指定文件。比如，查看 Tomcat bin 目录中的">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1508342093.png">
+<meta property="og:updated_time" content="2017-10-18T16:08:21.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="YiFeng&#39;s Zone">
-<meta name="twitter:description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
+<meta name="twitter:title" content="详细记录 mac 系统下使用 chmod 命令修改文件权限">
+<meta name="twitter:description" content="PC 端修改文件访问权限算是比较常用的操作，在安装部分软件时经常需要使用到。在 Mac 系统的终端上修改文件权限使用的是 Linux 中的 chmod 命令。这里详细介绍一下该命令的相关使用。  也可以直接通过 man chmod 在终端工具上查看该命令的帮助手册。  查看文件权限 ls -l 命令可以查看当前目录下所有文件的访问权限，也可以查看指定文件。比如，查看 Tomcat bin 目录中的">
+<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1508342093.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -166,519 +170,283 @@ ga('send', 'pageview');
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-mac-terminals-chmod-command" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      详细记录 mac 系统下使用 chmod 命令修改文件权限
+    </h1>
+  
+
+        
+        <a href="/2017/10/18/mac-terminals-chmod-command/" class="archive-article-date">
+  	<time datetime="2017-10-18T15:57:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-18</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>PC 端修改文件访问权限算是比较常用的操作，在安装部分软件时经常需要使用到。在 Mac 系统的终端上修改文件权限使用的是 Linux 中的 <code>chmod</code> 命令。这里详细介绍一下该命令的相关使用。</p>
+<blockquote>
+<p>也可以直接通过 <code>man chmod</code> 在终端工具上查看该命令的帮助手册。</p>
+</blockquote>
+<h1 id="查看文件权限"><a href="#查看文件权限" class="headerlink" title="查看文件权限"></a>查看文件权限</h1><hr>
+<p><code>ls -l</code> 命令可以查看当前目录下所有文件的访问权限，也可以查看指定文件。比如，查看 Tomcat bin 目录中的 startup.sh 文件的访问权限时：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yifeng:bin yifeng$ ls -l startup.sh</div><div class="line">-rwxrwxrwx@ 1 yifeng  staff  1904  9 27 18:32 startup.sh</div></pre></td></tr></table></figure>
+<p>上面打印的文件信息中每一部分所代表的含义，分别对应如下解释：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">文件类型和访问权限 文件数量 所属用户 所在群组 文件大小 修改日期（月 日 时 分） 文件名称</div></pre></td></tr></table></figure>
+<p>第一部分详细说明一下，就以 “-rwxrwxrwx” 为例：第一个符号代表文件类型， “-” 符号表示该文件是非目录类型，“d” 符号表示目录类型；（ 末尾的 @ 符号表示文件拓展属性，属于文件系统的一个功能。）</p>
+<p>后面九个字母分为三组，从前到后每组分别对应所属用户（user）、所属用户所在组（group）和其他用户（other）对该文件的访问权限；</p>
+<p>每组中的三个字符 “rwx” 分别表示对应用户对该文件拥有的可读／可写／可执行权限，没有相应权限则使用 “-” 符号替代。</p>
+<h1 id="修改访问权限"><a href="#修改访问权限" class="headerlink" title="修改访问权限"></a>修改访问权限</h1><hr>
+<p>根据上面查看权限部分的介绍，修改权限也应包括访问用户、添加或取消操作、具体权限和访问文件，即：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod 用户+操作+权限 文件</div></pre></td></tr></table></figure>
+<p>用户部分：使用字母 u 表示文件拥有者（user），g 表示拥有者所在群组（group），o 表示其他用户（other），a 表示全部用户（all，包含前面三种用户范围）；</p>
+<p>操作部分：“+” 符号表示增加权限，“-” 符号表示取消权限，“=” 符号表示赋值权限；</p>
+<p>权限部分：“r” 符号表示可读（read），“w” 表示可写（write），“x” 表示可执行权限（execute）；</p>
+<p>文件部分：如不指定文件名，表示操作对象为当前目录下的所有文件。</p>
+<p>还以前面 startup.sh 文件为例，将拥有者所在群组和其他用户改为可读可写权限、取消可执行权限的使用方式为：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod go-x startup.sh</div></pre></td></tr></table></figure>
+<p>然后使用 ls 命令查看权限，</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yifeng:bin yifeng$ ls -l startup.sh</div><div class="line">-rwxrw-rw-@ 1 yifeng  staff  1904  9 27 18:32 startup.sh</div></pre></td></tr></table></figure>
+<p>可以看到，文件访问权限已经按照要求发生对应变化。</p>
+<p>如果是复杂一点操作的话，可以同时使用多种操作符添加和取消权限，并且可以使用 “,” 符号同时对不同用户范围修改权限，比如：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod g+x,o+x-w startup.sh</div></pre></td></tr></table></figure>
+<p>还有一种简单的写法，使用数字表示权限部分的读／写／可执行权限类型。数字和权限类型的对应关系，可以从这张图中直观地看出来：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1508342093.png" alt=""></p>
+<p>即，1 表示可执行，2 表示可写，4 表示可读。每种类型数字相加所得到的值表示交叉部分的公共类型。</p>
+<p>这样的话，使用三个数字便可以分别代表三种不同用户类型的权限修改结果。比如，修改所有用户的访问权限均为可读可写可执行（rwx）的话，这样使用即可：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod 777 startup.sh</div></pre></td></tr></table></figure>
+<p>三个数字从前到后分别表示 u、g、o 三种用户类型的访问权限，使用时按需修改。</p>
+<p>补充一点，有时候需要递归修改目录文件及其子目录中的文件类型，可以使用 <code>-R</code> 选项。</p>
+
+      
+
+      
+        <! -- 添加版权信息 -->
+<hr>
+<div class="article-footer-copyright">
+<p>本文由&nbsp;<b>亦枫</b>&nbsp;创作并首发于&nbsp;<b><a href="/index.html" target="_blank" title="亦枫">亦枫的个人博客</a></b>&nbsp;，同步推送微信公众号：安卓笔记侠（NiaoTech）。</a></p>
+ 
+<p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
+ 
+<p>本文标题为: <b><a href="/2017/10/18/mac-terminals-chmod-command/" target="_blank" title="详细记录 mac 系统下使用 chmod 命令修改文件权限">详细记录 mac 系统下使用 chmod 命令修改文件权限</a></b> </p>
+ 
+<p>本文链接为：<b><a href="/2017/10/18/mac-terminals-chmod-command/" target="_blank" title="详细记录 mac 系统下使用 chmod 命令修改文件权限">http://yifeng.studio/2017/10/18/mac-terminals-chmod-command/</a></b> </p>
+
+<p><b>● 科学上网，翻墙推荐：</b><b><a href="http://buytizi.com/?r=225bb619613ec09e" target="_blank" title="http://buytizi.com/?r=225bb619613ec09e">http://buytizi.com/?r=225bb619613ec09e</a></b> </p>
+
+<p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
+</div>
+<! -- 添加版权信息 -->
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>请我喝咖啡，资瓷资瓷~<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://ocq7gtgqu.bkt.clouddn.com/yifeng_pay_alipay.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://ocq7gtgqu.bkt.clouddn.com/yifeng_pay_wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/12/30/android-change-app-launcher-icon-dynamically/" class="archive-article-date">
-  	<time datetime="2016-12-30T06:26:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/12/30/android-change-app-launcher-icon-dynamically/">Android 利用 &lt;activity-alias&gt; 动态改变 App 桌面图标</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Mac</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
+        			<a href="/categories/Mac//" class="article-tag-list-link color4">Mac</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/12/23/android-fragment-and-viewpager-attentions/" class="archive-article-date">
-  	<time datetime="2016-12-23T07:31:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/12/23/android-fragment-and-viewpager-attentions/">Android Fragment＋ViewPager 组合，一些你不可不知的注意事项</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
+      
 	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
+		<i class="icon-clock icon"></i>
+	    <ul class="article-tag-list">
+		    <li class="article-tag-list-item">
+		    	<span id="busuanzi_container_page_pv">热度 <span id="busuanzi_value_page_pv"></span>℃</span>
+		    </li>
 		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
+    </div>
 
 
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yifeng.studio/2017/10/18/mac-terminals-chmod-command/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/12/19/android-fragment-state-saving-best-practices/" class="archive-article-date">
-  	<time datetime="2016-12-19T06:54:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-19</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/10/10/java-threadlocal-class/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Java ThreadLocal 类的知识点解读</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/12/19/android-fragment-state-saving-best-practices/">［译］Android Activity 和 Fragment 状态保存与恢复的最佳实践</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#查看文件权限"><span class="toc-number">1.</span> <span class="toc-text">查看文件权限</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#修改访问权限"><span class="toc-number">2.</span> <span class="toc-text">修改访问权限</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/12/16/genymotion-attentions/" class="archive-article-date">
-  	<time datetime="2016-12-16T12:03:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/12/16/genymotion-attentions/">记录安卓模拟器 Genymotion 使用过程中遇到的一些问题</a>
-    </h1>
-  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="mac-terminals-chmod-command" data-title="详细记录 mac 系统下使用 chmod 命令修改文件权限" data-url="http://yifeng.studio/2017/10/18/mac-terminals-chmod-command/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"yifengzone"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/12/15/android-fragment-attentions/" class="archive-article-date">
-  	<time datetime="2016-12-15T06:03:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/12/15/android-fragment-attentions/">Android Fragment 的使用，一些你不可不知的注意事项</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/12/05/android-apk-decompile-and-repackaging/" class="archive-article-date">
-  	<time datetime="2016-12-05T13:13:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/12/05/android-apk-decompile-and-repackaging/">Android Apk 文件反编译和重新打包的过程分析</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/12/01/android-webview-java-js-interaction/" class="archive-article-date">
-  	<time datetime="2016-12-01T06:26:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/12/01/android-webview-java-js-interaction/">Android WebView —— Java 与 JavaScript 交互总结</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">WebView</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/11/28/android-textinputlayout/" class="archive-article-date">
-  	<time datetime="2016-11-28T07:24:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/11/28/android-textinputlayout/">Android TextInputLayout，打造 Material Design 风格的文本输入框</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/11/15/android-optimize-for-cold-start/" class="archive-article-date">
-  	<time datetime="2016-11-15T14:44:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/11/15/android-optimize-for-cold-start/">Android 你应该知道的的应用冷启动过程分析和优化方案</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/11/11/weex-series-two-android-integration/" class="archive-article-date">
-  	<time datetime="2016-11-11T08:47:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/11/11/weex-series-two-android-integration/">Weex 探索系列（二）Android 集成</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Weex</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Weex//" class="article-tag-list-link color5">Weex</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2016/page/2/">2</a><a class="page-number" href="/archives/2016/page/3/">3</a><a class="extend next" rel="next" href="/archives/2016/page/2/">Next &raquo;</a>
-    </nav>
+  
+
+  
+
   
 
 
@@ -711,8 +479,8 @@ ga('send', 'pageview');
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
