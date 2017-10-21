@@ -18,7 +18,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1508584680.jpg">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1508590743.png">
-<meta property="og:updated_time" content="2017-10-21T13:06:37.000Z">
+<meta property="og:updated_time" content="2017-10-21T13:09:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于腾讯浏览服务 TBS 实现应用内打开并浏览 Office 文件">
 <meta name="twitter:description" content="众所周知，Android App 在国内环境下实现应用内打开本地或位于远程服务器上 word、excel、pdf 等 Office 文档的功能远远没有 iOS 系统方便得多。之前也写过一篇文章，罗列出现有解决方案间的优劣对比。直到最近，在网上又发现一种新的解决方案：腾讯浏览服务（简称：TBS）。">
@@ -227,7 +227,7 @@ ga('send', 'pageview');
 <p>回到 TBS 使用上，最后别忘了在 <code>onDestroy()</code> 生命周期函数中添加：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">super</span>.onDestroy();</div><div class="line">  mTbsReaderView.onStop();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>至此，使用 TBS 实现应用内打开预览本地 Office 文件的全部过程结束，我们来看一下效果图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1508590743.png" alt=""></p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1508590743.png" height="400"></p>
 <p>可以看到，第一次使用需要下载腾讯提供的 pdf 浏览插件，之后打开时则无需再次加载。</p>
 <p>更多时候，我们预览的文件都位于远程服务器上。所以，我们需要预先下载文件，下载完成之后再使用 TBS 打开本地文件。感兴趣的话，不妨继续来看。</p>
 <h1 id="远程文件下载"><a href="#远程文件下载" class="headerlink" title="远程文件下载"></a>远程文件下载</h1><hr>
@@ -609,11 +609,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
+                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
+                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
               </li>
              
               <li class="article-tag-list-item">
