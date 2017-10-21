@@ -6,25 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yifeng.studio">
-  <title>Android 使用CardView轻松实现卡片式设计 | YiFeng&#39;s Zone</title>
+  <title>基于腾讯浏览服务 TBS 实现应用内打开并浏览 Office 文件 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Material design中有一种很个性的设计概念：卡片式设计（Cards），这种设计与传统的List Item有所区别，Cards包含更多的内容元素和拥有自己的UI特征，关于Cards的设计规范可以参考官网介绍： https://material.google.com/components/cards.html# 为了更好地实现这种 Cards UI 的设计，Google在v7包中引进了一种">
+  <meta name="description" content="众所周知，Android App 在国内环境下实现应用内打开本地或位于远程服务器上 word、excel、pdf 等 Office 文档的功能远远没有 iOS 系统方便得多。之前也写过一篇文章，罗列出现有解决方案间的优劣对比。直到最近，在网上又发现一种新的解决方案：腾讯浏览服务（简称：TBS）。">
 <meta name="keywords" content="Android">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android 使用CardView轻松实现卡片式设计">
-<meta property="og:url" content="http://yifeng.studio/2016/10/18/android-cardview/index.html">
+<meta property="og:title" content="基于腾讯浏览服务 TBS 实现应用内打开并浏览 Office 文件">
+<meta property="og:url" content="http://yifeng.studio/2017/10/21/android-open-office-files-with-tbs-within-app/index.html">
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
-<meta property="og:description" content="Material design中有一种很个性的设计概念：卡片式设计（Cards），这种设计与传统的List Item有所区别，Cards包含更多的内容元素和拥有自己的UI特征，关于Cards的设计规范可以参考官网介绍： https://material.google.com/components/cards.html# 为了更好地实现这种 Cards UI 的设计，Google在v7包中引进了一种">
+<meta property="og:description" content="众所周知，Android App 在国内环境下实现应用内打开本地或位于远程服务器上 word、excel、pdf 等 Office 文档的功能远远没有 iOS 系统方便得多。之前也写过一篇文章，罗列出现有解决方案间的优劣对比。直到最近，在网上又发现一种新的解决方案：腾讯浏览服务（简称：TBS）。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-01.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-02.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-03.gif">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-04.gif">
-<meta property="og:updated_time" content="2017-02-23T02:57:47.000Z">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1508584680.jpg">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1508590743.png">
+<meta property="og:updated_time" content="2017-10-21T13:06:37.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android 使用CardView轻松实现卡片式设计">
-<meta name="twitter:description" content="Material design中有一种很个性的设计概念：卡片式设计（Cards），这种设计与传统的List Item有所区别，Cards包含更多的内容元素和拥有自己的UI特征，关于Cards的设计规范可以参考官网介绍： https://material.google.com/components/cards.html# 为了更好地实现这种 Cards UI 的设计，Google在v7包中引进了一种">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-01.png">
+<meta name="twitter:title" content="基于腾讯浏览服务 TBS 实现应用内打开并浏览 Office 文件">
+<meta name="twitter:description" content="众所周知，Android App 在国内环境下实现应用内打开本地或位于远程服务器上 word、excel、pdf 等 Office 文档的功能远远没有 iOS 系统方便得多。之前也写过一篇文章，罗列出现有解决方案间的优劣对比。直到最近，在网上又发现一种新的解决方案：腾讯浏览服务（简称：TBS）。">
+<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1508584680.jpg">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -173,65 +171,83 @@ ga('send', 'pageview');
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-android-cardview" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-android-open-office-files-with-tbs-within-app" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Android 使用CardView轻松实现卡片式设计
+      基于腾讯浏览服务 TBS 实现应用内打开并浏览 Office 文件
     </h1>
   
 
         
-        <a href="/2016/10/18/android-cardview/" class="archive-article-date">
-  	<time datetime="2016-10-18T08:18:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-18</time>
+        <a href="/2017/10/21/android-open-office-files-with-tbs-within-app/" class="archive-article-date">
+  	<time datetime="2017-10-21T13:05:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-21</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Material design中有一种很个性的设计概念：卡片式设计（Cards），这种设计与传统的List Item有所区别，Cards包含更多的内容元素和拥有自己的UI特征，关于Cards的设计规范可以参考官网介绍：</p>
-<p><a href="https://material.google.com/components/cards.html#" target="_blank" rel="external">https://material.google.com/components/cards.html#</a></p>
-<p>为了更好地实现这种 Cards UI 的设计，Google在v7包中引进了一种全新的控件：<a href="https://developer.android.com/reference/android/support/v7/widget/CardView.html#" target="_blank" rel="external">CardVew</a>，本文将从开发的角度介绍CardView的一些常见使用细节。</p>
+        <p>众所周知，Android App 在国内环境下实现应用内打开本地或位于远程服务器上 word、excel、pdf 等 Office 文档的功能远远没有 iOS 系统方便得多。之前也写过一篇文章，罗列出现有解决方案间的优劣对比。直到最近，在网上又发现一种新的解决方案：腾讯浏览服务（简称：TBS）。</p>
 <a id="more"></a>
-<p>Google用一句话介绍了CardView：一个带圆角和阴影背景的FrameLayout。CardView在Android Lollipop（API 21）及以上版本的系统中适配较好，本文我们以一个具体的例子来学习CardView的基本使用和注意事项，效果图如下：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-01.png" alt="CardView-samples-01.png"></p>
-<p>上图展示的是一个list列表，列表中的item使用了卡片式设计，主要利用CardView控件实现，为了精简文章内容，这里我们将item布局中的核心代码罗列出来，加以分析：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line"><span class="tag">    <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span></div><div class="line"><span class="tag">    <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</span></div><div class="line">    </div><div class="line">    <span class="tag">&lt;<span class="name">android.support.v7.widget.CardView</span></span></div><div class="line"><span class="tag">        <span class="attr">tools:targetApi</span>=<span class="string">"lollipop"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:stateListAnimator</span>=<span class="string">"@drawable/lift_on_touch"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_marginLeft</span>=<span class="string">"@dimen/dp_8"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_marginRight</span>=<span class="string">"@dimen/dp_8"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_marginBottom</span>=<span class="string">"@dimen/dp_8"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:clickable</span>=<span class="string">"true"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:foreground</span>=<span class="string">"?android:attr/selectableItemBackground"</span></span></div><div class="line"><span class="tag">        <span class="attr">app:cardCornerRadius</span>=<span class="string">"@dimen/dp_4"</span></span></div><div class="line"><span class="tag">        <span class="attr">app:cardUseCompatPadding</span>=<span class="string">"true"</span></span></div><div class="line"><span class="tag">        <span class="attr">app:cardPreventCornerOverlap</span>=<span class="string">"false"</span>&gt;</span></div><div class="line"></div><div class="line">        <span class="tag">&lt;<span class="name">RelativeLayout</span></span></div><div class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span>&gt;</span></div><div class="line"></div><div class="line">            <span class="comment">&lt;!-- image、text等其他内容 --&gt;</span></div><div class="line">            ......</div><div class="line"></div><div class="line">        <span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;/<span class="name">android.support.v7.widget.CardView</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>可以看出，核心部分在于CardView的属性使用，下面我们针对几个特殊的属性逐一分析，深化了解。</p>
-<h1 id="排版技巧"><a href="#排版技巧" class="headerlink" title="排版技巧"></a>排版技巧</h1><hr>
-<p>前面我们说过，CardView从本质上属于FrameLayout，而CardView通常包含了较多的内容元素，为了方便地排版布局中的各个元素，一般借助于其他基本布局容器，比如这里我们使用了一个<code>RelativeLayout</code>作为CardView的唯一Child。</p>
-<h1 id="阴影Padding"><a href="#阴影Padding" class="headerlink" title="阴影Padding"></a>阴影Padding</h1><hr>
-<p>在Android Lollipop之前的系统，CardView会自动添加一些额外的padding空间来绘制阴影部分，这也导致了以Lollipop为分界线的不同系统上CardView的尺寸大小不同。为了解决这个问题，有两种方法：第一种，使用不同API版本的dimension资源适配（也就是借助values和values-21文件夹中不同的dimens.xml文件）；第二种，就是使用<code>cardUseCompatPadding</code>属性，设置为true（默认值为false），让CardView在不同系统中使用相同的padding值。</p>
-<h1 id="圆角覆盖"><a href="#圆角覆盖" class="headerlink" title="圆角覆盖"></a>圆角覆盖</h1><hr>
-<p>这也是一个解决系统兼容的问题。在pre-Lollipop平台（API 21版本之前）上，CardView不会裁剪内容元素以满足圆角需求，而是使用添加padding的替代方案，从而使内容元素不会覆盖CardView的圆角。而控制这个行为的属性就是cardPreventCornerOverlap，默认值为true。在本例中我们设置了该属性为false。这里我们看一下，在pre-Lollipop平台中，不同cardPreventCornerOverlap值的效果对比图（左false，右true）：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-02.png" alt="CardView-samples-02.png"></p>
-<p>显然，默认值下自动添加padding的方式不可取，所以需要设置该属性值为false。需要注意的一点是，该属性的设置在Lollipop及以上版本的系统中没有任何影响，除非cardUseCompatPadding的值为true。</p>
-<h1 id="Ripple效果"><a href="#Ripple效果" class="headerlink" title="Ripple效果"></a>Ripple效果</h1><hr>
-<p>Cards一般都是可点击的，为此我们使用了foreground属性并使用系统的selectableItemBackground值，同时设置clickable为true（如果在java代码中使用了cardView.setOnClickListener，就可以不用写clickable属性了），从而达到在Lollipop及以上版本系统中实现点击时的涟漪效果（Ripple），如图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-03.gif" alt="CardView-samples-03.gif"></p>
-<p>在pre-Lollipop版本中，则是一个普通的点击变暗的效果，这里就不截图展示了，如果想改变老版本的点击效果，也可以通过版本兼容的方式另行修改。</p>
-<h1 id="lift-on-touch"><a href="#lift-on-touch" class="headerlink" title="lift-on-touch"></a>lift-on-touch</h1><hr>
-<p>根据官网<a href="https://material.google.com/motion/material-motion.html#" target="_blank" rel="external">Material motion</a>部分对交互动作规范的指导，Cards、Button等视图应该有一个触摸抬起（lift-on-touch）的交互效果，也就是在三维立体空间上的Z轴发生位移，从而产生一个阴影加深的效果，与Ripple效果共同使用，官网给了一个很好的示例图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/CardView-samples-04.gif" alt="CardView-samples-04.gif"></p>
-<p>在实现这个效果也很简单，可以在<code>res/drawable</code>目录下建立一个<code>lift_on_touch.xml</code>文件，内容如下：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="comment">&lt;!-- animate the translationZ property of a view when pressed --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">selector</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span></span></div><div class="line"><span class="tag">        <span class="attr">android:state_enabled</span>=<span class="string">"true"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:state_pressed</span>=<span class="string">"true"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">set</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">objectAnimator</span></span></div><div class="line"><span class="tag">                <span class="attr">android:duration</span>=<span class="string">"@android:integer/config_shortAnimTime"</span></span></div><div class="line"><span class="tag">                <span class="attr">android:propertyName</span>=<span class="string">"translationZ"</span></span></div><div class="line"><span class="tag">                <span class="attr">android:valueTo</span>=<span class="string">"6dp"</span></span></div><div class="line"><span class="tag">                <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">set</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">set</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">objectAnimator</span></span></div><div class="line"><span class="tag">                <span class="attr">android:duration</span>=<span class="string">"@android:integer/config_shortAnimTime"</span></span></div><div class="line"><span class="tag">                <span class="attr">android:propertyName</span>=<span class="string">"translationZ"</span></span></div><div class="line"><span class="tag">                <span class="attr">android:valueTo</span>=<span class="string">"0"</span></span></div><div class="line"><span class="tag">                <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">set</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">selector</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>即通过属性动画动态改变translationZ值，沿着Z轴，从0dp到6dp变化。这里的6dp值也是有出处的，参考<a href="https://github.com/google/iosched/blob/master/android/src/main/res/values/dimens.xml#L122" target="_blank" rel="external">Google I/O 2014 app</a>和<a href="https://developer.android.com/training/material/shadows-clipping.html#Elevation" target="_blank" rel="external">Assign Elevation to Your Views</a>。然后将其赋值给<code>android:stateListAnimator</code>属性即可。由于<code>stateListAnimator</code>属性只适用于Lollipop及以上版本，为了隐藏xml中的版本警告，可以指定<code>tools:targetApi=&quot;lollipop&quot;</code>。</p>
-<p>关于这个功能，需要补充说明一点。这里的<code>lift_on_touch.xml</code>，严格意义上来讲，属于anim资源，同时适用于API 21及以上版本，所以按道理上来讲应该将其放置在<code>res/anim-v21</code>目录下，然后使用<code>@anim/lift_on_touch</code>赋值给<code>stateListAnimator</code>属性，而不是例子中的<code>@drawable/lift_on_touch</code>方法。但是放置在<code>res/anim-v21</code>目录下会产生一个“错误”提示：</p>
-<blockquote>
-<p><selector> XML file should be in either “animator” or “drawable”,not “anim”</selector></p>
-</blockquote>
-<p>虽然这个“错误”不影响编译运行，但是对于追求完美主义的程序员们来说还是碍眼，所以本例中我选择将其放在了<code>res/drawable</code>目录下，大家可以自行斟酌使用。</p>
-<p>关于对lift-on-touch效果的理解，YouToBe网站有个视频解说，感兴趣的话可以参看看，地址如下：</p>
-<p><a href="https://www.youtube.com/watch?v=YaG_ljfzeUw" target="_blank" rel="external">DesignBytes: Paper and Ink: The Materials that Matter</a></p>
-<h1 id="总结说明"><a href="#总结说明" class="headerlink" title="总结说明"></a>总结说明</h1><hr>
-<p>CardView还有一些其他属性可供使用，比如<code>cardElevation</code>设置阴影大小，<code>contentPadding</code>代替普通<code>android:padding</code>属性等，比较基础，本文就不一一介绍了，大家可以在官网上参考学习。从上面的介绍可以看出，在使用CardView时基本上都会用到一些标准配置的属性，我们可以借助style属性，将其封装到<code>styles.xml</code>文件中，统一管理，比如：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"AppCardView"</span> <span class="attr">parent</span>=<span class="string">"@style/CardView.Light"</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"cardPreventCornerOverlap"</span>&gt;</span>false<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></div><div class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"cardUseCompatPadding"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></div><div class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:foreground"</span>&gt;</span>?attr/selectableItemBackground<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></div><div class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:stateListAnimator"</span> <span class="attr">tools:targetApi</span>=<span class="string">"lollipop"</span>&gt;</span>@anim/lift_up<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></div><div class="line"><span class="undefined">        ......</span></div><div class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>最后，附上本文案例项目的GitHub地址：</p>
-<p><a href="https://github.com/Mike-bel/MDStudySamples" target="_blank" rel="external">https://github.com/Mike-bel/MDStudySamples</a></p>
+<h1 id="TBS-简单介绍"><a href="#TBS-简单介绍" class="headerlink" title="TBS 简单介绍"></a>TBS 简单介绍</h1><hr>
+<p>正如官网所言，依托 X5 内核强大的能力，TBS 致力于提供优化移动端浏览体验的整套解决方案。TBS 虽然核心在于提供一套 SDK 解决传统 WebView 的诸多使用问题。但是，利用其增强浏览能力，我们还能够使用这套 SDK 实现应用内的文件浏览功能、视频播放功能等。更多详细功能，可以参考官网介绍：</p>
+<p><a href="https://x5.tencent.com/tbs/product/tbs.html" target="_blank" rel="external">https://x5.tencent.com/tbs/product/tbs.html</a></p>
+<p>然而，美中不足的是，在浏览文件方面，官方没有提供完善的使用文档和 Demo 案例。经过一番折腾，和借鉴<a href="http://www.jianshu.com/p/3f57d640b24d" target="_blank" rel="external">这篇文章</a> ，总算能够实现应用内打开 Office 文档的功能，于是整理于此。</p>
+<h1 id="本地文件浏览"><a href="#本地文件浏览" class="headerlink" title="本地文件浏览"></a>本地文件浏览</h1><hr>
+<p>注意：TBS 只能打开浏览本地文件，对于位于服务器的远程文件，无法实现在线预览，只能通过先下载再打开的方式进行浏览。这里我们先来看看如何使用 TBS 打开本地文件。</p>
+<p>首先还是添加 SDK 依赖。<a href="https://x5.tencent.com/tbs/sdk.html" target="_blank" rel="external">下载</a> TBS 提供的 jar 包和 so 文件，添加到工程中对应的 libs 和  jniLibs 目录下。如图：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1508584680.jpg" alt=""></p>
+<p>然后在 app/build.gradle 文件中对 libs 目录中 jar 文件的依赖可以是这样：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">dependencies</span> &#123;</div><div class="line">    <span class="keyword">compile</span> <span class="keyword">fileTree</span>(dir: <span class="string">'libs'</span>, <span class="keyword">include</span>: [<span class="string">'*.jar'</span>])</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>需要注意的是：</strong>TBS 目前只提供 armeabi 类型 CPU 架构的 so 库。当然，也可以将 so 文件放置于 libs 目录下，只不过需要在 app/build.gradle 中额外修改 so 文件依赖配置：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    <span class="keyword">sourceSets</span> &#123;</div><div class="line">        main &#123;</div><div class="line">            jniLibs.srcDirs = [<span class="string">'libs'</span>]</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>配置完成之后，再来看看如何使用。这里主要使用的是 <code>TbsReaderView</code> 类。在宿主 Activity 中实现 <code>ReaderCallback</code> 接口，并通过 Java 代码动态创建 TbsReaderView 对象，将其添加到 content view 当中。比如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mTbsReaderView = <span class="keyword">new</span> TbsReaderView(<span class="keyword">this</span>, <span class="keyword">this</span>);</div><div class="line">RelativeLayout rootRl = (RelativeLayout) findViewById(R.id.rl_root);</div><div class="line">rootRl.addView(mTbsReaderView, <span class="keyword">new</span> RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))</div></pre></td></tr></table></figure>
+<p><code>ReaderCallback</code> 接口提供的方法可以不予处理（目前不知道有什么用途，但是一定要实现这个接口类）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCallBackAction</span><span class="params">(Integer integer, Object o, Object o1)</span> </span>&#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可能你会有疑惑，为什么不将 <code>TbsReaderView</code> 放在 layout 布局文件中，而是在代码中手动 add 进去。经测试，这么做会报错，提示找不到这个类。然后我们查看 <code>TbsReaderView</code> 源码，发现只有这么一个构造函数：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">TbsReaderView</span><span class="params">(Context var1, TbsReaderView.ReaderCallback var2)</span> </span>&#123;</div><div class="line">  <span class="keyword">super</span>(var1.getApplicationContext());</div><div class="line">  <span class="keyword">if</span>(!(var1 <span class="keyword">instanceof</span> Activity)) &#123;</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"error: unexpect context(none Activity)"</span>);</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">this</span>.d = var2;</div><div class="line">    <span class="keyword">this</span>.a = var1;</div><div class="line">    <span class="keyword">this</span>.e = <span class="keyword">new</span> au(<span class="keyword">this</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>而没有提供含 <code>AttributeSet</code> 类型参数的构造函数，也就是说，这个版本的 TBS 只允许我们通过 new 的方式创建 <code>TbsReaderView</code> 实例并使用。</p>
+<p>说完这个，再接着看如何打开本地文件。代码也很简单：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">displayFile</span><span class="params">()</span> </span>&#123;</div><div class="line">  Bundle bundle = <span class="keyword">new</span> Bundle();</div><div class="line">  bundle.putString(<span class="string">"filePath"</span>, getLocalFile().getPath());</div><div class="line">  bundle.putString(<span class="string">"tempPath"</span>, Environment.getExternalStorageDirectory().getPath());</div><div class="line">  <span class="keyword">boolean</span> result = mTbsReaderView.preOpen(parseFormat(mFileName), <span class="keyword">false</span>);</div><div class="line">  <span class="keyword">if</span> (result) &#123;</div><div class="line">    mTbsReaderView.openFile(bundle);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到，通过 <code>Bundle</code> 类型参数的形式向 <code>TbsReaderView</code> 对象传递文件地址和另一个临时目录地址。这两个数据，缺一不可。</p>
+<p>这里可能大家又有疑问，没有文档介绍，我们是如何知道 <code>Bundle</code> 参数传递哪些数据的呢？还是查看 <code>TbsReaderView</code> 源码，在该类中存在这两个成员变量：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String KEY_FILE_PATH = <span class="string">"filePath"</span>;</div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String KEY_TEMP_PATH = <span class="string">"tempPath"</span>;</div></pre></td></tr></table></figure>
+<p>第一个参数很好理解，第二个参数不知道什么意思，根据名字需要的应该是一个临时目录地址，反正传上就对了。这里顺便教大家两个技巧，以后阅读 Jar 包源码时也许能够用得上：</p>
+<p><strong>1，如何搜索 jar 包中的指定类文件？</strong></p>
+<p>使用 <code>jar -tf</code> 命令能够列出 jar 包中的内容，如果再配上 <strong>grep</strong> 命令便能搜索指定类文件，如：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">yifeng:desktop yifeng $ jar -tf tbs_sdk_thirdapp.jar | grep -i TbsReaderView</div><div class="line">com/tencent/smtt/sdk/TbsReaderView<span class="variable">$ReaderCallback</span>.class</div><div class="line">com/tencent/smtt/sdk/TbsReaderView.class</div></pre></td></tr></table></figure>
+<p><strong>2，如何搜索 jar 包中的指定字符串？</strong></p>
+<p>使用 <strong>zipgrep</strong> 命令，如果搜索的关键字包含空格，则需要使用引号：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yifeng:desktop yifeng $ zipgrep filePath tbs_sdk_thirdapp.jar</div><div class="line">com/tencent/smtt/sdk/TbsReaderView.class:Binary file (standard input) matches</div></pre></td></tr></table></figure>
+<p>回到 TBS 使用上，最后别忘了在 <code>onDestroy()</code> 生命周期函数中添加：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">super</span>.onDestroy();</div><div class="line">  mTbsReaderView.onStop();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>至此，使用 TBS 实现应用内打开预览本地 Office 文件的全部过程结束，我们来看一下效果图：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1508590743.png" alt=""></p>
+<p>可以看到，第一次使用需要下载腾讯提供的 pdf 浏览插件，之后打开时则无需再次加载。</p>
+<p>更多时候，我们预览的文件都位于远程服务器上。所以，我们需要预先下载文件，下载完成之后再使用 TBS 打开本地文件。感兴趣的话，不妨继续来看。</p>
+<h1 id="远程文件下载"><a href="#远程文件下载" class="headerlink" title="远程文件下载"></a>远程文件下载</h1><hr>
+<p>Android App 下载文件的方式有很多，这里我们使用一种最简单的方式来做，利用系统提供的 <code>DownloadManager</code> 类来实现下载功能，并监听下载进度。</p>
+<p>先来看看如何利用 <code>DownloadManager</code> 下载文件。根据使用场景，这里我屏蔽默认的通知栏提示消息，并设置本地存放位置，相关代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">mDownloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);</div><div class="line">DownloadManager.Request request = <span class="keyword">new</span> DownloadManager.Request(Uri.parse(mFileUrl));</div><div class="line">request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, mFileName);</div><div class="line">request.allowScanningByMediaScanner();</div><div class="line">request.setNotificationVisibility(Request.VISIBILITY_HIDDEN);</div><div class="line">mRequestId = mDownloadManager.enqueue(request);</div></pre></td></tr></table></figure>
+<p>然后是监听下载进度，使用的是 <code>ContentObserver</code> 类。自定义一个继承自 <code>ContentObserver</code> 的监听类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">DownloadObserver</span> <span class="keyword">extends</span> <span class="title">ContentObserver</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="title">DownloadObserver</span><span class="params">(Handler handler)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>(handler);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onChange</span><span class="params">(<span class="keyword">boolean</span> selfChange, Uri uri)</span> </span>&#123;</div><div class="line">    queryDownloadStatus();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在 <code>onChange()</code> 回调方法中实时查询下载进度。当查询到下载完成时，使用 TBS 打开下载到本地对应目录的文件：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">queryDownloadStatus</span><span class="params">()</span> </span>&#123;</div><div class="line">  DownloadManager.Query query = <span class="keyword">new</span> DownloadManager.Query().setFilterById(mRequestId);</div><div class="line">  Cursor cursor = <span class="keyword">null</span>;</div><div class="line">  <span class="keyword">try</span> &#123;</div><div class="line">    cursor = mDownloadManager.query(query);</div><div class="line">    <span class="keyword">if</span> (cursor != <span class="keyword">null</span> &amp;&amp; cursor.moveToFirst()) &#123;</div><div class="line">      <span class="comment">//已经下载的字节数</span></div><div class="line">      <span class="keyword">int</span> currentBytes = cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));</div><div class="line">      <span class="comment">//总需下载的字节数</span></div><div class="line">      <span class="keyword">int</span> totalBytes = cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));</div><div class="line">      <span class="comment">//状态所在的列索引</span></div><div class="line">      <span class="keyword">int</span> status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS));</div><div class="line">      Log.i(<span class="string">"downloadUpdate: "</span>, currentBytes + <span class="string">" "</span> + totalBytes + <span class="string">" "</span> + status);</div><div class="line">      mDownloadBtn.setText(<span class="string">"正在下载："</span> + currentBytes + <span class="string">"/"</span> + totalBytes);</div><div class="line">      <span class="keyword">if</span> (DownloadManager.STATUS_SUCCESSFUL == status &amp;&amp; mDownloadBtn.getVisibility() == View.VISIBLE) &#123;</div><div class="line">        mDownloadBtn.setVisibility(View.GONE);</div><div class="line">        mDownloadBtn.performClick();</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125; <span class="keyword">finally</span> &#123;</div><div class="line">    <span class="keyword">if</span> (cursor != <span class="keyword">null</span>) &#123;</div><div class="line">      cursor.close();</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>做好这些准备后，在下载文件的时候注册监听：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mDownloadObserver = <span class="keyword">new</span> DownloadObserver(<span class="keyword">new</span> Handler());</div><div class="line">getContentResolver().registerContentObserver(Uri.parse(<span class="string">"content://downloads/my_downloads"</span>), <span class="keyword">true</span>, mDownloadObserver);</div></pre></td></tr></table></figure>
+<p>并在 <code>onDestroy()</code> 方法中取消监听：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">super</span>.onDestroy();</div><div class="line">  <span class="keyword">if</span> (mDownloadObserver != <span class="keyword">null</span>) &#123;</div><div class="line">    getContentResolver().unregisterContentObserver(mDownloadObserver);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最后，别忘记在 Manifest 清单文件中添加相应使用权限（权限含义，就不再一一介绍）：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.INTERNET"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.WRITE_EXTERNAL_STORAGE"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.DOWNLOAD_WITHOUT_NOTIFICATION"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.ACCESS_DOWNLOAD_MANAGER"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.WRITE_SETTINGS"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.READ_PHONE_STATE"</span>/&gt;</span></div></pre></td></tr></table></figure>
+<p>总体来看，TBS 提供的文件浏览功能还是很强大的。据官网介绍，目前能够支持 42 种不同格式的文件。除此之外，TBS 还有一些其他的用途也非常值得尝试。只是，期待官方能够提供更多的使用文档介绍，帮助我们更方便地使用起来。</p>
+<p><strong>备注：</strong></p>
+<p>本文相关代码已上传至 GitHub 网站，有需要的朋友可以访问地址：</p>
+<p><a href="https://github.com/Mike-bel/TbsFileSamples" target="_blank" rel="external">https://github.com/Mike-bel/TbsFileSamples</a></p>
 
       
 
@@ -243,9 +259,9 @@ ga('send', 'pageview');
  
 <p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
  
-<p>本文标题为: <b><a href="/2016/10/18/android-cardview/" target="_blank" title="Android 使用CardView轻松实现卡片式设计">Android 使用CardView轻松实现卡片式设计</a></b> </p>
+<p>本文标题为: <b><a href="/2017/10/21/android-open-office-files-with-tbs-within-app/" target="_blank" title="基于腾讯浏览服务 TBS 实现应用内打开并浏览 Office 文件">基于腾讯浏览服务 TBS 实现应用内打开并浏览 Office 文件</a></b> </p>
  
-<p>本文链接为：<b><a href="/2016/10/18/android-cardview/" target="_blank" title="Android 使用CardView轻松实现卡片式设计">http://yifeng.studio/2016/10/18/android-cardview/</a></b> </p>
+<p>本文链接为：<b><a href="/2017/10/21/android-open-office-files-with-tbs-within-app/" target="_blank" title="基于腾讯浏览服务 TBS 实现应用内打开并浏览 Office 文件">http://yifeng.studio/2017/10/21/android-open-office-files-with-tbs-within-app/</a></b> </p>
 
 <p><b>● 科学上网，翻墙推荐：</b><b><a href="http://buytizi.com/?r=225bb619613ec09e" target="_blank" title="http://buytizi.com/?r=225bb619613ec09e">http://buytizi.com/?r=225bb619613ec09e</a></b> </p>
 
@@ -374,7 +390,7 @@ ga('send', 'pageview');
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yifeng.studio/2016/10/18/android-cardview/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yifeng.studio/2017/10/21/android-open-office-files-with-tbs-within-app/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -388,18 +404,9 @@ ga('send', 'pageview');
   
 <nav id="article-nav">
   
-    <a href="/2016/10/20/android-renderscript-blur/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Android RenderScript 简单高效实现图片的高斯模糊效果
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/10/13/android-tools-attributes/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Android Tools Attributes，让布局设计所见即所得</div>
+    <a href="/2017/10/18/mac-terminals-chmod-command/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">详细记录 mac 系统下使用 chmod 命令修改文件权限</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -426,7 +433,7 @@ ga('send', 'pageview');
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#排版技巧"><span class="toc-number">1.</span> <span class="toc-text">排版技巧</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#阴影Padding"><span class="toc-number">2.</span> <span class="toc-text">阴影Padding</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#圆角覆盖"><span class="toc-number">3.</span> <span class="toc-text">圆角覆盖</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Ripple效果"><span class="toc-number">4.</span> <span class="toc-text">Ripple效果</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#lift-on-touch"><span class="toc-number">5.</span> <span class="toc-text">lift-on-touch</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结说明"><span class="toc-number">6.</span> <span class="toc-text">总结说明</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#TBS-简单介绍"><span class="toc-number">1.</span> <span class="toc-text">TBS 简单介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#本地文件浏览"><span class="toc-number">2.</span> <span class="toc-text">本地文件浏览</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#远程文件下载"><span class="toc-number">3.</span> <span class="toc-text">远程文件下载</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -440,7 +447,7 @@ ga('send', 'pageview');
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="android-cardview" data-title="Android 使用CardView轻松实现卡片式设计" data-url="http://yifeng.studio/2016/10/18/android-cardview/"></div>
+	<div class="ds-thread" data-thread-key="android-open-office-files-with-tbs-within-app" data-title="基于腾讯浏览服务 TBS 实现应用内打开并浏览 Office 文件" data-url="http://yifeng.studio/2017/10/21/android-open-office-files-with-tbs-within-app/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
