@@ -6,18 +6,31 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yifeng.studio">
-  <title>Archives: 2016 | YiFeng&#39;s Zone</title>
+  <title>Android Studio 3.0 新功能解析和旧项目适配 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="YiFeng&#39;s Zone">
-<meta property="og:url" content="http://yifeng.studio/archives/2016/page/3/index.html">
+  <meta name="description" content="上周四，Google 终于在经历大半年的打磨锤炼之后正式发布 Android Studio 3.0 版本，给广大安卓开发人员一份满意的答卷。如往常一样，每次新版开发工具的发布，很多谨慎点的朋友仍担心稳定性、是否存在坑等问题，选择隔岸观火，等一段时间再更新升级。">
+<meta name="keywords" content="Android Studio,Gradle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Studio 3.0 新功能解析和旧项目适配">
+<meta property="og:url" content="http://yifeng.studio/2017/10/31/android-studio-3-0-features-and-adapter/index.html">
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
-<meta property="og:description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
+<meta property="og:description" content="上周四，Google 终于在经历大半年的打磨锤炼之后正式发布 Android Studio 3.0 版本，给广大安卓开发人员一份满意的答卷。如往常一样，每次新版开发工具的发布，很多谨慎点的朋友仍担心稳定性、是否存在坑等问题，选择隔岸观火，等一段时间再更新升级。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509442480.gif">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509440854.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509440865.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509440870.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509440875.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509440880.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509440886.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509440891.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509440896.png">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509440900.png">
+<meta property="og:updated_time" content="2017-10-31T09:49:20.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="YiFeng&#39;s Zone">
-<meta name="twitter:description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
+<meta name="twitter:title" content="Android Studio 3.0 新功能解析和旧项目适配">
+<meta name="twitter:description" content="上周四，Google 终于在经历大半年的打磨锤炼之后正式发布 Android Studio 3.0 版本，给广大安卓开发人员一份满意的答卷。如往常一样，每次新版开发工具的发布，很多谨慎点的朋友仍担心稳定性、是否存在坑等问题，选择隔岸观火，等一段时间再更新升级。">
+<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509442480.gif">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -166,238 +179,154 @@ ga('send', 'pageview');
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-android-studio-3-0-features-and-adapter" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android Studio 3.0 新功能解析和旧项目适配
+    </h1>
+  
+
+        
+        <a href="/2017/10/31/android-studio-3-0-features-and-adapter/" class="archive-article-date">
+  	<time datetime="2017-10-31T09:40:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-31</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>上周四，Google 终于在经历大半年的打磨锤炼之后正式发布 Android Studio 3.0 版本，给广大安卓开发人员一份满意的答卷。如往常一样，每次新版开发工具的发布，很多谨慎点的朋友仍担心稳定性、是否存在坑等问题，选择隔岸观火，等一段时间再更新升级。</p>
+<a id="more"></a>
+<p>经过查看官网对新版开发工具的新功能介绍之后，当天我就选择了升级。事实上，我也的确折腾良久，但是截至目前，没有发现所谓的坑。只是需要对旧的工程做一些配置上的调整而已。各方面响应速度和新功能的使用，总体还是觉得值得升级。这篇文章，就来介绍新版开发工具给我们带来哪些实用的改变，并以实际操作经验告诉大家，旧工程的配置需要如何做兼容修改。</p>
+<h1 id="3-0-带来的改变"><a href="#3-0-带来的改变" class="headerlink" title="3.0 带来的改变"></a>3.0 带来的改变</h1><hr>
+<p><strong>Kotlin Support</strong></p>
+<p>在 Android Studio 3.0 之前，使用 Kotlin 语言开发安卓应用，需要额外配置 Kotlin 插件。而新版本内置默认支持 Kotlin 语言，来减少我们在配置上的工作。</p>
+<p>选择工具栏 Code -&gt; Convert Java File To Kotlin File，或者使用快捷键的形式，你可以一键实现 Java 文件到 Kotlin 文件的转换。</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1509442480.gif" alt=""></p>
+<p>备注：关于快捷键的使用，你可以使用 Command + Shift + A 这组快捷键打开 <a href="https://www.jetbrains.com/help/idea/navigating-to-action.html" target="_blank" rel="external">Find Action</a> 窗口，输入关键字寻找对应功能及其快捷键，效果就像上面 Gif 图展示的这样。</p>
+<p><strong>Java 8 Support</strong></p>
+<p>3.0 对 Java 8 语言特性的默认支持使你不用在 build.gradle 配置文件中添加 jackOptions 一项。如果你有使用到的话，记得删除：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    ...</div><div class="line">    defaultConfig &#123;</div><div class="line">        ...</div><div class="line">        <span class="comment">// Remove this block.</span></div><div class="line">        jackOptions &#123;</div><div class="line">            enabled <span class="keyword">true</span></div><div class="line">            ...</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>选择工具栏 File -&gt; Project Structure，修改 Source Compatibility 和 Target Compatibility 选项到 1.8 即可使我们的项目支持 Java 8 语言特性。</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1509440854.png" alt=""></p>
+<p><strong>Android Profiler</strong></p>
+<p>过去我们使用的 Android Monitor 工具从 3.0 版本开始被 Android Profiler 替代掉了。如图，run 按钮一栏多了一个 Android Profiler 按钮：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1509440865.png" alt=""></p>
+<p>Android Profiler 提供有 CPU、Memory 和 Network 三大调试分析利器，实时跟踪 Apk 的运行状态，可以帮助我们可视化地做一些性能调休工作。</p>
+<p>这三个工具在开发阶段非常实用，比如 CPU Profiler 能够分析应用中的线程使用情况，Memory Profiler 能够检测出内存泄漏，Network Profiler 能够拦截网络请求实现抓包功能等。这里列举一些使用图片，简单预览一些这三大工具的风采：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1509440870.png" width="600"></p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1509440875.png" width="600"></p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1509440880.png" width="600"></p>
+<p>有关详细使用细节，可参考官方介绍：</p>
+<ul>
+<li><p><a href="https://developer.android.google.cn/studio/profile/cpu-profiler.html" target="_blank" rel="external">CPU Profiler guide</a></p>
+</li>
+<li><p><a href="https://developer.android.google.cn/studio/profile/memeory-profiler.html" target="_blank" rel="external">Memory Profiler guide</a></p>
+</li>
+<li><p><a href="https://developer.android.google.cn/studio/profile/network-profiler.html" target="_blank" rel="external">Network Profiler guide</a></p>
+</li>
+</ul>
+<p><strong>Device File Explorer</strong></p>
+<p>这个功能厉害了。新版开发工具带来的资源管理器允许我们访问连接设备的文件系统，实现 PC 端到手机或模拟器端的便捷文件传输。有了这个工具，从此就可以告别之前使用的「文件传输助手」等第三方工具啦。</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1509440886.png" width="600"></p>
+<p><strong>Adaptive Icons wizard</strong></p>
+<p>选择 File -&gt; New -&gt; Image Asset，利用 Android Studio 提供的工具创建图片资源一直以来也是开发利器之一。现在，这个工具开始支持 <a href="https://developer.android.google.cn/guide/topics/graphics/vector-drawable-resources.html" target="_blank" rel="external">vector drawables</a> 格式，并且能够创建用于适配 Android 8.0 系统上各种形状的桌面图标。</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1509440891.png" width="600"></p>
+<p><strong>URL intent-filter validator</strong></p>
+<p>这个功能也蛮贴心的。Manifest 清单文件开始支持一个特殊的标签，用于测试指定的 Url 字符串是否符合 intent-filter 标签所定义的规则。举个例子：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1509440896.png" alt=""></p>
+<p>如图，使用 data 标签定义一个 Url 规则，并使用 tools:validation 标签验证一个错误的测试 Url 地址，检测器能够自动识别并给出错误提示。这个例子很简单，肉眼一眼就能看出错误。那如果是比较复杂的规则呢，可能就不那么容易看得出来了。这个时候，这个工具就可以派上用场啦。</p>
+<p><strong>APK Analyzer</strong></p>
+<p>3.0 版本对 APK Analyzer 的功能做了进一步强化。主要在于：对于使用 ProGuard 混淆过的 APK 文件，我们能够上传 mapping.txt 文件进行代码还原；Dex 文件提供显示各个包目录的大小；等等。</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1509440900.png" alt=""></p>
+<p><strong>其他功能</strong></p>
+<p>除了上面介绍的这些变化，还有一些其他大大小小的变更。比如 Layout Inspector 和 Layout Editor 工具在 UI 上有所调整，比如 App Links Assistant 和 Firebase App Indexing Assistant 的强化使用，这些留着大家自己去探索发现吧。也可以访问 <a href="https://developer.android.google.cn/studio/releases/index.html" target="_blank" rel="external">Android Studio Release Notes</a> 官网，了解 3.0 更多发布细节。</p>
+<h1 id="旧项目的适配"><a href="#旧项目的适配" class="headerlink" title="旧项目的适配"></a>旧项目的适配</h1><hr>
+<p>Android Studio 3.0 发布的同时，Android Plugin for Gradle 3.0.0 也同时发布。编译速度整体都得到了大幅提升。升级完 Android Studio 之后，旧的工程需要做出部分改变，才能通过 Gradle 的编译。这里根据我的一个实际项目，介绍一下需要改变的内容。当然，也许你的项目用不上这些，也可能不止这些。</p>
+<p><strong>distributionUrl</strong></p>
+<p>Plugin 3.0.0+ 需要配置 Gradle 的最小版本是 4.1，我们可以通过 File -&gt; Project Structure -&gt; Project 的方式设置 Android Plugin 的版本，或者修改 gradle.properties 文件的内容，添加 distributionUrl 属性：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">distributionUrl=https\://services.gradle.org/distributions/gradle-4.1-all.zip</div></pre></td></tr></table></figure>
+<p><strong>Google’s Maven repository</strong></p>
+<p>新版 Android Studio 工具默认使用 Google’s Maven Repository 用于下载依赖 Android Support Library，替代了 Android SDK Manager 的本地依赖方式。所以，需要在工程根目录下的 build.gradle 文件中添加 google() 一行代码：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">allprojects</span> &#123;</div><div class="line">    <span class="keyword">repositories</span> &#123;</div><div class="line">        google()</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>buildToolsVersion</strong></p>
+<p>Android Plugin For Gradle 3.0.0 默认自动添加插件所需要用到的最小版本的编译工具。所以，我们不需要再手动在 build.gradle 添加一行 buildToolsVersion 属性的代码。对于旧的项目，可以去掉这行配置，比如：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    compileSdkVersion <span class="number">26</span></div><div class="line">    <span class="comment">// remote buildToolsVersion</span></div><div class="line">    buildToolsVersion <span class="string">"25.0.2"</span></div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>each() 和 outputFile()</strong></p>
+<p>Plugin 3.0.0 版本移除了一些用于编译配置的 API，其中比较常见的就是 each() 和 outputFile()，两个常用于修改输出 Apk 文件名和路径的方法。 </p>
+<p>在之前的文章 <a href="http://yifeng.studio/2017/09/14/android-gradle-common-use-case/">Android Gradle 常用使用场景实现方式的总结</a> 中有提到，自定义输出 APK 文件名可以这样做：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    android.applicationVariants.all &#123; variant -&gt;</div><div class="line">        variant.outputs.<span class="keyword">each</span> &#123; output -&gt;</div><div class="line">            output.outputFile = <span class="keyword">new</span> <span class="keyword">File</span>(output.outputFile.parent, rootProject.getName()</div><div class="line">                    + <span class="string">"-"</span> + buildType.name</div><div class="line">                    + <span class="string">"-"</span> + releaseTime()</div><div class="line">                    + <span class="string">"-v"</span> + defaultConfig.versionName</div><div class="line">                    + <span class="string">"-"</span> + defaultConfig.versionCode</div><div class="line">                    + <span class="string">".apk"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>但是使用 Plugin 3.0.0 时就会出现编译报错，我们需要修改 each() 和 outputFile() 方法为 all() 和 outputFileName，比如：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    android.applicationVariants.all &#123; variant -&gt;</div><div class="line">        variant.outputs.all &#123; </div><div class="line">            outputFileName = rootProject.getName()</div><div class="line">                    + <span class="string">"-"</span> + buildType.name</div><div class="line">                    + <span class="string">"-"</span> + releaseTime()</div><div class="line">                    + <span class="string">"-v"</span> + defaultConfig.versionName</div><div class="line">                    + <span class="string">"-"</span> + defaultConfig.versionCode</div><div class="line">                    + <span class="string">".apk"</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对于旧的工程，基本上便是这些配置上的适配。如果你还遇到了别的问题，别紧张，按照编译错误提示一步步操作，也能成功通过编译。总体来说，这次 Android Studio 3.0 和 Plugin For Gradle 3.0.0 的发布还是非常值得升级尝试的，并没有网上说的那么多坑。何况，我们作为写代码的程序员，本来不就是为了解决问题而来嘛。</p>
+
+      
+
+      
+        <! -- 添加版权信息 -->
+<hr>
+<div class="article-footer-copyright">
+<p>本文由&nbsp;<b>亦枫</b>&nbsp;创作并首发于&nbsp;<b><a href="/index.html" target="_blank" title="亦枫">亦枫的个人博客</a></b>&nbsp;，同步推送微信公众号：安卓笔记侠（NiaoTech）。</a></p>
+ 
+<p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
+ 
+<p>本文标题为: <b><a href="/2017/10/31/android-studio-3-0-features-and-adapter/" target="_blank" title="Android Studio 3.0 新功能解析和旧项目适配">Android Studio 3.0 新功能解析和旧项目适配</a></b> </p>
+ 
+<p>本文链接为：<b><a href="/2017/10/31/android-studio-3-0-features-and-adapter/" target="_blank" title="Android Studio 3.0 新功能解析和旧项目适配">http://yifeng.studio/2017/10/31/android-studio-3-0-features-and-adapter/</a></b> </p>
+
+<p><b>● 科学上网，翻墙推荐：</b><b><a href="http://buytizi.com/?r=225bb619613ec09e" target="_blank" title="http://buytizi.com/?r=225bb619613ec09e">http://buytizi.com/?r=225bb619613ec09e</a></b> </p>
+
+<p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"> <img border="1" src="http://wx2.sinaimg.cn/mw690/bb010c55gy1fkrevmidofj20kk0m8mzh.jpg" height="450"></p>
+</div>
+<! -- 添加版权信息 -->
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>请我喝咖啡，资瓷资瓷~<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://ocq7gtgqu.bkt.clouddn.com/yifeng_pay_alipay.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://ocq7gtgqu.bkt.clouddn.com/yifeng_pay_wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/10/12/android-toolbar/" class="archive-article-date">
-  	<time datetime="2016-10-12T03:11:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/12/android-toolbar/">Android Toolbar，你想知道的都在这里了</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/10/08/android-include-merge-viewstub/" class="archive-article-date">
-  	<time datetime="2016-10-08T07:15:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/08/android-include-merge-viewstub/">Android include和merge标签、ViewStub控件的使用总结</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/09/23/behavior-analyzation/" class="archive-article-date">
-  	<time datetime="2016-09-23T14:06:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-09-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/09/23/behavior-analyzation/">Android 一步一步分析CoordinatorLayout.Behavior</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/09/10/Hexo-search-baidutongji-highlight/" class="archive-article-date">
-  	<time datetime="2016-09-10T00:14:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-09-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/09/10/Hexo-search-baidutongji-highlight/">Hexo 折腾记之站内搜索、百度统计、代码高亮</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Hexo//" class="article-tag-list-link color5">Hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/09/06/apk-environment-separate/" class="archive-article-date">
-  	<time datetime="2016-09-06T14:02:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-09-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/09/06/apk-environment-separate/">Android 利用Gradle实现app的环境分离</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Android Studio</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -407,7 +336,7 @@ ga('send', 'pageview');
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -420,118 +349,148 @@ ga('send', 'pageview');
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/05/13/java_object_clone/" class="archive-article-date">
-  	<time datetime="2016-05-13T08:37:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/05/13/java_object_clone/">详解Java中的对象克隆</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
+      
 	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
+		<i class="icon-clock icon"></i>
+	    <ul class="article-tag-list">
+		    <li class="article-tag-list-item">
+		    	<span id="busuanzi_container_page_pv">热度 <span id="busuanzi_value_page_pv"></span>℃</span>
+		    </li>
 		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Java//" class="article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
+    </div>
 
 
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yifeng.studio/2017/10/31/android-studio-3-0-features-and-adapter/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/04/12/hexo_references/" class="archive-article-date">
-  	<time datetime="2016-04-12T04:44:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-04-12</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/10/21/android-open-office-files-with-tbs-within-app/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">基于腾讯浏览服务 TBS 实现应用内打开并浏览 Office 文件</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/04/12/hexo_references/">走上Hexo搭建博客的不归之路</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Hexo//" class="article-tag-list-link color5">Hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#3-0-带来的改变"><span class="toc-number">1.</span> <span class="toc-text">3.0 带来的改变</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#旧项目的适配"><span class="toc-number">2.</span> <span class="toc-text">旧项目的适配</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="android-studio-3-0-features-and-adapter" data-title="Android Studio 3.0 新功能解析和旧项目适配" data-url="http://yifeng.studio/2017/10/31/android-studio-3-0-features-and-adapter/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"yifengzone"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/2016/page/2/">&laquo; Prev</a><a class="page-number" href="/archives/2016/">1</a><a class="page-number" href="/archives/2016/page/2/">2</a><span class="page-number current">3</span>
-    </nav>
+  
+
+  
+
   
 
 
@@ -564,8 +523,8 @@ ga('send', 'pageview');
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
