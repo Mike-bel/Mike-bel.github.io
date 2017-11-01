@@ -26,7 +26,7 @@
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509440891.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509440896.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509440900.png">
-<meta property="og:updated_time" content="2017-10-31T09:49:20.000Z">
+<meta property="og:updated_time" content="2017-10-31T14:46:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Studio 3.0 新功能解析和旧项目适配">
 <meta name="twitter:description" content="上周四，Google 终于在经历大半年的打磨锤炼之后正式发布 Android Studio 3.0 版本，给广大安卓开发人员一份满意的答卷。如往常一样，每次新版开发工具的发布，很多谨慎点的朋友仍担心稳定性、是否存在坑等问题，选择隔岸观火，等一段时间再更新升级。">
@@ -256,6 +256,15 @@ ga('send', 'pageview');
 <p><strong>buildToolsVersion</strong></p>
 <p>Android Plugin For Gradle 3.0.0 默认自动添加插件所需要用到的最小版本的编译工具。所以，我们不需要再手动在 build.gradle 添加一行 buildToolsVersion 属性的代码。对于旧的项目，可以去掉这行配置，比如：</p>
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    compileSdkVersion <span class="number">26</span></div><div class="line">    <span class="comment">// remote buildToolsVersion</span></div><div class="line">    buildToolsVersion <span class="string">"25.0.2"</span></div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>flavor dimensions</strong></p>
+<p>从 Plugin 3.0.0 开始，如果 build.gradle 文件自定义有 <code>productFlavors</code> 配置的话，需要添加定义 <code>flavorDimensions</code>（风味维度）。否则，编译会报错：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">error:All flavors must now belong to a named flavor dimension.</div><div class="line">The flavor <span class="string">'flavor_name'</span> is not assigned to a flavor dimension.</div></pre></td></tr></table></figure>
+<p><code>flavorDimensions</code> 的出现使得构建变种类型更加多样化：</p>
+<blockquote>
+<p>可构建的变种数量 = 风味维度的数量 * 构建类型的数量</p>
+</blockquote>
+<p>详细使用可参考 <a href="https://developer.android.google.cn/studio/build/build-variants.html#flavor-dimensions" target="_blank" rel="external">配置构建变体</a>。对于旧项目，简单的话，可以随意定义一个风味维度，保证编译通过，如（这里的“minApi”可自由定义）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">flavorDimensions &quot;minApi&quot;</div><div class="line"></div><div class="line">productFlavors &#123;</div><div class="line">    beta &#123;</div><div class="line">      dimension &quot;minApi&quot;</div><div class="line">      ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    production &#123;</div><div class="line">        dimension &quot;minApi&quot;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><strong>each() 和 outputFile()</strong></p>
 <p>Plugin 3.0.0 版本移除了一些用于编译配置的 API，其中比较常见的就是 each() 和 outputFile()，两个常用于修改输出 Apk 文件名和路径的方法。 </p>
 <p>在之前的文章 <a href="http://yifeng.studio/2017/09/14/android-gradle-common-use-case/">Android Gradle 常用使用场景实现方式的总结</a> 中有提到，自定义输出 APK 文件名可以这样做：</p>
@@ -624,19 +633,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Debug</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Mac</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -652,11 +661,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">License</a>
+                <a href="javascript:void(0)" class="js-tag color5">Weex</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Weex</a>
+                <a href="javascript:void(0)" class="js-tag color3">License</a>
               </li>
             
             <div class="clearfix"></div>
