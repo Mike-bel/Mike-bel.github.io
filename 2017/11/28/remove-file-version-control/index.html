@@ -6,18 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yifeng.studio">
-  <title>Archives: 2017/11 | YiFeng&#39;s Zone</title>
+  <title>Svn 或者 Git 移除文件的版本控制 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="YiFeng&#39;s Zone">
-<meta property="og:url" content="http://yifeng.studio/archives/2017/11/index.html">
+  <meta name="description" content="记录一些 Git 移除版本控制的操作方式。">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Svn 或者 Git 移除文件的版本控制">
+<meta property="og:url" content="http://yifeng.studio/2017/11/28/remove-file-version-control/index.html">
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
-<meta property="og:description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
+<meta property="og:description" content="记录一些 Git 移除版本控制的操作方式。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1511853839.jpg">
+<meta property="og:updated_time" content="2017-11-28T07:37:46.462Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="YiFeng&#39;s Zone">
-<meta name="twitter:description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
+<meta name="twitter:title" content="Svn 或者 Git 移除文件的版本控制">
+<meta name="twitter:description" content="记录一些 Git 移除版本控制的操作方式。">
+<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1511853839.jpg">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -166,36 +170,99 @@ ga('send', 'pageview');
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-remove-file-version-control" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/28/remove-file-version-control/" class="archive-article-date">
-  	<time datetime="2017-11-28T07:32:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-28</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/28/remove-file-version-control/">Svn 或者 Git 移除文件的版本控制</a>
+    <h1 class="article-title" itemprop="name">
+      Svn 或者 Git 移除文件的版本控制
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/11/28/remove-file-version-control/" class="archive-article-date">
+  	<time datetime="2017-11-28T07:32:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>记录一些 Git 移除版本控制的操作方式。</p>
+<a id="more"></a>
+<h1 id="移除已提交文件的版本控制"><a href="#移除已提交文件的版本控制" class="headerlink" title="移除已提交文件的版本控制"></a>移除已提交文件的版本控制</h1><p>对于那些由于误操作或者其他原因导致已经加入版本控制并且推送到远程仓库的文件，可以通过 <code>git rm</code> 命令可以移除版本控制。具体操作方式为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git rm -r --cached build</div></pre></td></tr></table></figure>
+<p>你也可以使用添加 <code>-n</code> 参数，在操作之前预览即将被删除的文件列表（这一行操作并不会执行删除行为）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git rm -r -n --cached build</div></pre></td></tr></table></figure>
+<p>删除文件之后，记得将对应的文件名添加至项目根目录下的 <code>.gitignore</code> 文件中，比如例子中的 <code>/build</code> 文件。然后通过 <code>add</code>、<code>commit</code> 和 <code>push</code> 指令更新远程仓库即可。</p>
+<h1 id="移除整个项目的版本控制信息"><a href="#移除整个项目的版本控制信息" class="headerlink" title="移除整个项目的版本控制信息"></a>移除整个项目的版本控制信息</h1><p>有时候想移除项目的版本控制，或者将现有的 Svn 版本控制替换成使用 Git 工具。这个时候，我们只需要删除项目中对应工具保存版本信息的所有元文件即可。如果是 Svn 工具的话，删除 <code>.svn</code> 文件；如果是 Git 工具的话，删除 <code>.git</code> 文件。</p>
+<p>这里以 Svn 工具为例，递归删除 <code>.svn</code> 文件的 Linux 完整命令为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find . -<span class="built_in">type</span> d -name <span class="string">".svn"</span>  | xargs rm -rf</div></pre></td></tr></table></figure>
+<p><strong>备注：</strong>有网友反映，像上面这行指令执行时，容易出错，甚至导致误删除文件，应该像下面这样操作。虽然没有实际遇到过，这里也记录一下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find . -<span class="built_in">type</span> d -name <span class="string">".svn"</span> | xargs -I &#123;&#125; <span class="built_in">echo</span> \<span class="string">"&#123;&#125;\" | xargs rm -rf</span></div></pre></td></tr></table></figure>
+<p>另外值得一提的是，切换版本控制工具时，针对特定的 IDE 可能需要做一点额外的操作。比如像 Android Studio 这样的 IntelliJ IDEA 工具，需要在设置中手动修改项目的版本控制工具：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1511853839.jpg" alt=""></p>
+<p>否则，项目列表的文件状态不会随着文件修改而发生变化，影响 IDE 提供的可视化操作。</p>
+
+      
+
+      
+        <! -- 添加版权信息 -->
+<hr>
+<div class="article-footer-copyright">
+<p>本文由&nbsp;<b>亦枫</b>&nbsp;创作并首发于&nbsp;<b><a href="/index.html" target="_blank" title="亦枫">亦枫的个人博客</a></b>&nbsp;，同步推送微信公众号：安卓笔记侠（NiaoTech）。</a></p>
+ 
+<p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
+ 
+<p>本文标题为: <b><a href="/2017/11/28/remove-file-version-control/" target="_blank" title="Svn 或者 Git 移除文件的版本控制">Svn 或者 Git 移除文件的版本控制</a></b> </p>
+ 
+<p>本文链接为：<b><a href="/2017/11/28/remove-file-version-control/" target="_blank" title="Svn 或者 Git 移除文件的版本控制">http://yifeng.studio/2017/11/28/remove-file-version-control/</a></b> </p>
+
+<p><b>● 科学上网，翻墙推荐：</b><b><a href="http://buytizi.com/?r=225bb619613ec09e" target="_blank" title="http://buytizi.com/?r=225bb619613ec09e">http://buytizi.com/?r=225bb619613ec09e</a></b> </p>
+
+<p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"> <img border="1" src="http://wx2.sinaimg.cn/mw690/bb010c55gy1fkrevmidofj20kk0m8mzh.jpg" height="450"></p>
+</div>
+<! -- 添加版权信息 -->
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>请我喝咖啡，资瓷资瓷~<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://ocq7gtgqu.bkt.clouddn.com/yifeng_pay_alipay.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://ocq7gtgqu.bkt.clouddn.com/yifeng_pay_wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -207,7 +274,7 @@ ga('send', 'pageview');
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -220,66 +287,149 @@ ga('send', 'pageview');
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/27/20-excellent-resources-for-learning-kotlin/" class="archive-article-date">
-  	<time datetime="2017-11-27T07:39:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/27/20-excellent-resources-for-learning-kotlin/">译文：20 个优秀的免费 Kotlin 学习资源</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
+      
 	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Kotlin</a>
-        		</li>
-      		
+		<i class="icon-clock icon"></i>
+	    <ul class="article-tag-list">
+		    <li class="article-tag-list-item">
+		    	<span id="busuanzi_container_page_pv">热度 <span id="busuanzi_value_page_pv"></span>℃</span>
+		    </li>
 		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Kotlin//" class="article-tag-list-link color2">Kotlin</a>
-        		</li>
-      		
-		</ul>
-	</div>
+    </div>
 
 
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yifeng.studio/2017/11/28/remove-file-version-control/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2017/11/27/20-excellent-resources-for-learning-kotlin/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">译文：20 个优秀的免费 Kotlin 学习资源</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#移除已提交文件的版本控制"><span class="toc-number">1.</span> <span class="toc-text">移除已提交文件的版本控制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#移除整个项目的版本控制信息"><span class="toc-number">2.</span> <span class="toc-text">移除整个项目的版本控制信息</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="remove-file-version-control" data-title="Svn 或者 Git 移除文件的版本控制" data-url="http://yifeng.studio/2017/11/28/remove-file-version-control/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"yifengzone"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -311,8 +461,8 @@ ga('send', 'pageview');
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
