@@ -6,18 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yifeng.studio">
-  <title>Archives: 2016/10 | YiFeng&#39;s Zone</title>
+  <title>Android 开发中，与屏幕有关的三个小众知识 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="YiFeng&#39;s Zone">
-<meta property="og:url" content="http://yifeng.studio/archives/2016/10/index.html">
+  <meta name="description" content="宽屏适配、禁止截屏和保持屏幕常亮，这三个与屏幕有关的 Android 开发小众知识，说不定什么时候就派上用场。">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 开发中，与屏幕有关的三个小众知识">
+<meta property="og:url" content="http://yifeng.studio/2017/12/01/some-android-functions-about-screen/index.html">
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
-<meta property="og:description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
+<meta property="og:description" content="宽屏适配、禁止截屏和保持屏幕常亮，这三个与屏幕有关的 Android 开发小众知识，说不定什么时候就派上用场。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1512116422.png">
+<meta property="og:updated_time" content="2017-12-01T13:25:39.964Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="YiFeng&#39;s Zone">
-<meta name="twitter:description" content="If you can&apos;t fly then run, can&apos;t run then walk, can&apos;t walk then crawl, keep moving forward.">
+<meta name="twitter:title" content="Android 开发中，与屏幕有关的三个小众知识">
+<meta name="twitter:description" content="宽屏适配、禁止截屏和保持屏幕常亮，这三个与屏幕有关的 Android 开发小众知识，说不定什么时候就派上用场。">
+<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1512116422.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -166,36 +170,105 @@ ga('send', 'pageview');
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-some-android-functions-about-screen" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android 开发中，与屏幕有关的三个小众知识
+    </h1>
+  
+
+        
+        <a href="/2017/12/01/some-android-functions-about-screen/" class="archive-article-date">
+  	<time datetime="2017-12-01T10:33:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-01</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>宽屏适配、禁止截屏和保持屏幕常亮，这三个与屏幕有关的 Android 开发小众知识，说不定什么时候就派上用场。</p>
+<a id="more"></a>
+<h1 id="宽屏适配"><a href="#宽屏适配" class="headerlink" title="宽屏适配"></a>宽屏适配</h1><p>越来越多的手机厂商趋向于全面屏设计，比如今年出厂的 18.5:9 屏幕比例的三星 Galaxy S8 手机，前两天刚发布 18:9 屏幕比例的 OnePlus 5T 手机， 屏幕比例均超过过去常见的 16:9 比例。超大屏幕比例的设计对于 Android App 来说，存在一个屏幕适配的问题。</p>
+<p>我们需要在 Manifest 清单文件中定义一个更大值的 <code>android.max_aspect</code> 属性，保证我们的 App 能够充分利用多余的屏幕空间。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta-data</span> </span></div><div class="line"><span class="tag">	<span class="attr">android:name</span>=<span class="string">"android.max_aspect"</span></span></div><div class="line"><span class="tag">	<span class="attr">android:value</span>=<span class="string">"2.1"</span>/&gt;</span></div></pre></td></tr></table></figure>
+<p>max_aspect 属性表示 App 能够支持的最大屏幕比例，官方建议我们将该值设置为 2.1 或者更高的值。</p>
+<p><strong>注意：</strong>如果你没有使用 <code>meta-data</code> 标签设置 max_aspect 属性，同时 <code>android:resizeableActivity</code> 属性值为 true 的话，App 默认使用的最大 aspect 默认值为 1.8（大约 16:9 的样子）。</p>
+<p><strong>备注：</strong> resizeableActivity 属性在 targetSDKVersion 小于 24 的应用中值为 false，其他为 true。</p>
+<p>下面这张图通过对比呈现出不同 aspect 值的 App 在高屏幕比例设备中的显示效果：</p>
+<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1512116422.png" height="400"></p>
+<p>左边为 16:9 的 aspect 设置，右边为 18.5:9 的设置，同样使用的是屏幕比例为 18.5:9 的大屏设备。明显可以看出，低比例值设置的 App 打开时屏幕上下均有留白，也就说不能充分利用屏幕空间。</p>
+<h1 id="禁止截屏"><a href="#禁止截屏" class="headerlink" title="禁止截屏"></a>禁止截屏</h1><p>像支付宝付款二维码这种对安全要求比较高的界面，应用一般会选择屏蔽设备截屏功能。当你同时按下截屏快捷键组合（常见为开机键 + 音量上键）时，系统会自动提示截屏失败等关联信息。</p>
+<p>禁止截屏的实现方式并不是很难，在需要设置禁止截屏的 Activity 的生命周期 <code>onCreate()</code> 方法中添加一行代码即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);</div></pre></td></tr></table></figure>
+<h1 id="屏幕常亮"><a href="#屏幕常亮" class="headerlink" title="屏幕常亮"></a>屏幕常亮</h1><p>通常我们都会设置手机自动调节屏幕亮度或者固定时间后自动锁屏。然而部分 App 或者部分页面需要保持屏幕常亮，如股票实时走势页面。</p>
+<p>实现起来也很简单，像禁止截屏一样，在需要的 Activity 的 <code>onCreate()</code> 生命周期方法中添加代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);</div></pre></td></tr></table></figure>
+<p><strong>补充小技巧：</strong></p>
+<p>类似设置禁止截屏和保持屏幕常亮这种依赖生命周期方法的代码，如果需要应用到多个 Activity 的话，可以将其放在 BaseActivity 基类中，避免编写重复性代码。或者还可以借助这个神奇的 Activity 生命周期接口：</p>
+<p><code>ActivityLifecycleCallbacks</code></p>
+<p>在自定义 Application 类 <code>onCreate()</code> 方法中添加：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">registerActivityLifecycleCallbacks(<span class="keyword">new</span> ActivityLifecycleCallbacks() &#123;</div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityCreated</span><span class="params">(Activity activity, Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">    activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);</div><div class="line">    activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// 这里省略其他相关 Activity 生命周期函数</span></div><div class="line">  ...</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+      
+
+      
+        <! -- 添加版权信息 -->
+<hr>
+<div class="article-footer-copyright">
+<p>本文由&nbsp;<b>亦枫</b>&nbsp;创作并首发于&nbsp;<b><a href="/index.html" target="_blank" title="亦枫">亦枫的个人博客</a></b>&nbsp;，同步推送微信公众号：安卓笔记侠（NiaoTech）。</a></p>
+ 
+<p>欢迎各种形式地交流与转载，注明作者及出处即可。</p>
+ 
+<p>本文标题为: <b><a href="/2017/12/01/some-android-functions-about-screen/" target="_blank" title="Android 开发中，与屏幕有关的三个小众知识">Android 开发中，与屏幕有关的三个小众知识</a></b> </p>
+ 
+<p>本文链接为：<b><a href="/2017/12/01/some-android-functions-about-screen/" target="_blank" title="Android 开发中，与屏幕有关的三个小众知识">http://yifeng.studio/2017/12/01/some-android-functions-about-screen/</a></b> </p>
+
+<p><b>● 科学上网，翻墙推荐：</b><b><a href="http://buytizi.com/?r=225bb619613ec09e" target="_blank" title="http://buytizi.com/?r=225bb619613ec09e">http://buytizi.com/?r=225bb619613ec09e</a></b> </p>
+
+<p><img border="1" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"> <img border="1" src="http://wx2.sinaimg.cn/mw690/bb010c55gy1fkrevmidofj20kk0m8mzh.jpg" height="450"></p>
+</div>
+<! -- 添加版权信息 -->
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>请我喝咖啡，资瓷资瓷~<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://ocq7gtgqu.bkt.clouddn.com/yifeng_pay_alipay.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://ocq7gtgqu.bkt.clouddn.com/yifeng_pay_wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/10/27/android-develop-30-things-that-experience-made-me-learn-the-hard-way/" class="archive-article-date">
-  	<time datetime="2016-10-27T13:01:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/27/android-develop-30-things-that-experience-made-me-learn-the-hard-way/">［译］开发安卓Apps，我所努力学习到的三十多条宝贵经验</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -207,7 +280,7 @@ ga('send', 'pageview');
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -220,311 +293,149 @@ ga('send', 'pageview');
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/10/26/android-64k-methods-count/" class="archive-article-date">
-  	<time datetime="2016-10-26T07:55:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-26</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/26/android-64k-methods-count/">Android 突破 DEX 文件的 64K 方法数限制</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
+      
 	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
+		<i class="icon-clock icon"></i>
+	    <ul class="article-tag-list">
+		    <li class="article-tag-list-item">
+		    	<span id="busuanzi_container_page_pv">热度 <span id="busuanzi_value_page_pv"></span>℃</span>
+		    </li>
 		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
+    </div>
 
 
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yifeng.studio/2017/12/01/some-android-functions-about-screen/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/10/20/android-renderscript-blur/" class="archive-article-date">
-  	<time datetime="2016-10-20T06:28:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-20</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/11/28/remove-file-version-control/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Svn 或者 Git 移除文件的版本控制</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/20/android-renderscript-blur/">Android RenderScript 简单高效实现图片的高斯模糊效果</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#宽屏适配"><span class="toc-number">1.</span> <span class="toc-text">宽屏适配</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#禁止截屏"><span class="toc-number">2.</span> <span class="toc-text">禁止截屏</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#屏幕常亮"><span class="toc-number">3.</span> <span class="toc-text">屏幕常亮</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/10/18/android-cardview/" class="archive-article-date">
-  	<time datetime="2016-10-18T08:18:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/18/android-cardview/">Android 使用CardView轻松实现卡片式设计</a>
-    </h1>
-  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="some-android-functions-about-screen" data-title="Android 开发中，与屏幕有关的三个小众知识" data-url="http://yifeng.studio/2017/12/01/some-android-functions-about-screen/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"yifengzone"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/10/13/android-tools-attributes/" class="archive-article-date">
-  	<time datetime="2016-10-13T10:49:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/13/android-tools-attributes/">Android Tools Attributes，让布局设计所见即所得</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/10/12/android-toolbar/" class="archive-article-date">
-  	<time datetime="2016-10-12T03:11:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/12/android-toolbar/">Android Toolbar，你想知道的都在这里了</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/10/08/android-include-merge-viewstub/" class="archive-article-date">
-  	<time datetime="2016-10-08T07:15:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/08/android-include-merge-viewstub/">Android include和merge标签、ViewStub控件的使用总结</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -556,8 +467,8 @@ ga('send', 'pageview');
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
