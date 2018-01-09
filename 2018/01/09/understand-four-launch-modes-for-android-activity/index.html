@@ -8,13 +8,13 @@
   <link rel="dns-prefetch" href="http://yifeng.studio">
   <title>深入理解 Activity 的四种启动模式 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="翻译：亦枫原文：Understand Android Activity’s launchMode: standard, singleTop, singleTask and singleInstance">
+  <meta name="description" content="翻译：亦枫原文：Understand Android Activity’s launchMode: standard, singleTop, singleTask and singleInstance  Activity 作为 Android 最具创意的概念之一，在内存管理方面拥有设计良好的架构，能够让多任务在这个最流行的手机操作系统中完美地工作。 然而，Activity 不仅仅是在屏幕上被启动">
 <meta name="keywords" content="Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入理解 Activity 的四种启动模式">
 <meta property="og:url" content="http://yifeng.studio/2018/01/09/understand-four-launch-modes-for-android-activity/index.html">
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
-<meta property="og:description" content="翻译：亦枫原文：Understand Android Activity’s launchMode: standard, singleTop, singleTask and singleInstance">
+<meta property="og:description" content="翻译：亦枫原文：Understand Android Activity’s launchMode: standard, singleTop, singleTask and singleInstance  Activity 作为 Android 最具创意的概念之一，在内存管理方面拥有设计良好的架构，能够让多任务在这个最流行的手机操作系统中完美地工作。 然而，Activity 不仅仅是在屏幕上被启动">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1515484435.jpg">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1515484422.jpg">
@@ -35,10 +35,10 @@
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1515484375.jpg">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1515484376.jpg">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1515484361.jpg">
-<meta property="og:updated_time" content="2018-01-09T08:10:49.819Z">
+<meta property="og:updated_time" content="2018-01-09T08:15:24.104Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解 Activity 的四种启动模式">
-<meta name="twitter:description" content="翻译：亦枫原文：Understand Android Activity’s launchMode: standard, singleTop, singleTask and singleInstance">
+<meta name="twitter:description" content="翻译：亦枫原文：Understand Android Activity’s launchMode: standard, singleTop, singleTask and singleInstance  Activity 作为 Android 最具创意的概念之一，在内存管理方面拥有设计良好的架构，能够让多任务在这个最流行的手机操作系统中完美地工作。 然而，Activity 不仅仅是在屏幕上被启动">
 <meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1515484435.jpg">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
@@ -211,9 +211,9 @@ ga('send', 'pageview');
         <blockquote>
 <p>翻译：<a href="http://yifeng.studio">亦枫</a><br>原文：<a href="https://inthecheesefactory.com/blog/understand-android-activity-launchmode/en" target="_blank" rel="external">Understand Android Activity’s launchMode: standard, singleTop, singleTask and singleInstance</a></p>
 </blockquote>
-<a id="more"></a>
 <p>Activity 作为 Android 最具创意的概念之一，在内存管理方面拥有设计良好的架构，能够让多任务在这个最流行的手机操作系统中完美地工作。</p>
 <p>然而，Activity 不仅仅是在屏幕上被启动这么简单，这与它的启动方式有关。这个话题里面有很多细节知识。其中，最重要的一个就是<strong>启动模式</strong>（launchMode），也是我们将要在这篇文章中讨论的内容。</p>
+<a id="more"></a>
 <p>每一个 Activity 都被用于不同的目的而被创建。一些被设计为通过单个 Intent 发送而启动、分开独立地工作，比如邮件客户端的邮件撰写页面；而一些被设计为一个单例式地工作，如收件箱页面。</p>
 <p>这就是为什么指定 Activity 被创建为一个新的实例还是使用已经存在的实例非常有必要的原因。它可能会导致一个很差的用户体验或功能性问题。感谢 Android 系统工程师，让我们能够在专用于解决这个问题的 <strong>launchMode</strong> 的帮助下简单实现这些功能。</p>
 <h1 id="指定启动模式"><a href="#指定启动模式" class="headerlink" title="指定启动模式"></a>指定启动模式</h1><p>通常我们能够直接在 <code>AndroidManifest.xml</code> 文件里面的 <code>&lt;activity&gt;</code> 标签中使用一个属性指定启动模式，如：</p>
@@ -622,19 +622,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Animation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -650,11 +650,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
+                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
+                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -666,7 +666,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">MD5</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -674,11 +678,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">MD5</a>
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
