@@ -26,7 +26,7 @@
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509440891.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509440896.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509440900.png">
-<meta property="og:updated_time" content="2017-10-31T14:46:30.000Z">
+<meta property="og:updated_time" content="2018-01-12T10:20:01.381Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Studio 3.0 新功能解析和旧项目适配">
 <meta name="twitter:description" content="上周四，Google 终于在经历大半年的打磨锤炼之后正式发布 Android Studio 3.0 版本，给广大安卓开发人员一份满意的答卷。如往常一样，每次新版开发工具的发布，很多谨慎点的朋友仍担心稳定性、是否存在坑等问题，选择隔岸观火，等一段时间再更新升级。">
@@ -271,6 +271,13 @@ ga('send', 'pageview');
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    android.applicationVariants.all &#123; variant -&gt;</div><div class="line">        variant.outputs.<span class="keyword">each</span> &#123; output -&gt;</div><div class="line">            output.outputFile = <span class="keyword">new</span> <span class="keyword">File</span>(output.outputFile.parent, rootProject.getName()</div><div class="line">                    + <span class="string">"-"</span> + buildType.name</div><div class="line">                    + <span class="string">"-"</span> + releaseTime()</div><div class="line">                    + <span class="string">"-v"</span> + defaultConfig.versionName</div><div class="line">                    + <span class="string">"-"</span> + defaultConfig.versionCode</div><div class="line">                    + <span class="string">".apk"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>但是使用 Plugin 3.0.0 时就会出现编译报错，我们需要修改 each() 和 outputFile() 方法为 all() 和 outputFileName，比如：</p>
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    android.applicationVariants.all &#123; variant -&gt;</div><div class="line">        variant.outputs.all &#123; </div><div class="line">            outputFileName = rootProject.getName()</div><div class="line">                    + <span class="string">"-"</span> + buildType.name</div><div class="line">                    + <span class="string">"-"</span> + releaseTime()</div><div class="line">                    + <span class="string">"-v"</span> + defaultConfig.versionName</div><div class="line">                    + <span class="string">"-"</span> + defaultConfig.versionCode</div><div class="line">                    + <span class="string">".apk"</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>使用新的依赖配置</strong></p>
+<p>Gradle Plugin 3.0.0 For Android 使用新的依赖配置，主要在于将现有的 <code>compile</code> 关键字废弃掉，使用 <code>api</code> 取而代之。比如，Module 过去依赖一个仓库，使用 <code>compile</code> 关键字：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">    compile &apos;com.android.support:appcompat-v7:25.3.1&apos;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在需要使用 <code>api</code> 代替。同时，新版 Gradle 插件还增加了 <code>implementation</code> 等其他关键字。关于 <code>api</code> 与 <code>implementation</code> 的区别，可以参考链接：</p>
+<p><a href="https://stackoverflow.com/questions/44413952/gradle-implementation-vs-api-configuration" target="_blank" rel="external">stackoverflow: Gradle Implementation vs API configuration</a></p>
+<p>和</p>
+<p><a href="https://developer.android.com/studio/build/gradle-plugin-3-0-0-migration.html#new_configurations" target="_blank" rel="external">Android Developer: Use the new dependency configurations</a></p>
 <p>对于旧的工程，基本上便是这些配置上的适配。如果你还遇到了别的问题，别紧张，按照编译错误提示一步步操作，也能成功通过编译。总体来说，这次 Android Studio 3.0 和 Plugin For Gradle 3.0.0 的发布还是非常值得升级尝试的，并没有网上说的那么多坑。何况，我们作为写代码的程序员，本来不就是为了解决问题而来嘛。</p>
 
       
@@ -612,14 +619,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
@@ -628,7 +627,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Animation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -644,11 +651,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
+                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
+                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -668,19 +675,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Git</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">License</a>
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Weex</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">License</a>
               </li>
             
             <div class="clearfix"></div>
