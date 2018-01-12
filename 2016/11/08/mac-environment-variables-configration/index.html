@@ -18,7 +18,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/mac-path-samples-01.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/mac-path-samples-02.png">
-<meta property="og:updated_time" content="2018-01-12T06:13:23.509Z">
+<meta property="og:updated_time" content="2018-01-12T06:16:14.054Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mac OS X 系统的环境变量配置">
 <meta name="twitter:description" content="在 Windows 系统下配置环境变量较为简单，全程都在图形化界面中完成，而在 Mac OS X 系统下相对来说就复杂很多，全程依赖于终端工具，需要使用到各种 Linux 命令。本文以 Android SDK 中的 adb 工具为例，详细描述一下如何在 Mac 系统中配置环境变量。">
@@ -229,7 +229,7 @@ ga('send', 'pageview');
 <p>配置完成，并使之见效后，便可以使用 <code>gradle</code> 命令啦，比如在当前项目根目录下使用：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gradle dependencies</div></pre></td></tr></table></figure>
 <p>即可查看项目中的依赖关系。</p>
-<p><strong>补充：</strong>使用 <code>echo</code> 命令也可以巧妙配置环境变量。举个例子，<a href="https://github.com/cesarferreira/dryrun" target="_blank" rel="external">]DryRun</a> 工具需要用到名为 <strong>ANDROID_HOME</strong> 的环境变量，添加方式为：</p>
+<p><strong>补充：</strong>使用 <code>echo</code> 命令也可以巧妙配置环境变量。举个例子，<a href="https://github.com/cesarferreira/dryrun" target="_blank" rel="external">DryRun</a> 工具需要用到名为 <strong>ANDROID_HOME</strong> 的环境变量，添加方式为：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">echo</span> <span class="built_in">export</span> <span class="string">"ANDROID_HOME=/Users/yourName/Library/Android/sdk"</span> &gt;&gt; ~/.bash_profile</div></pre></td></tr></table></figure>
 <p>注意修改实际 SDK 目录路径。配置完成后，重启终端工具，使用 <code>echo $ANDROID_HOME</code> 命令可以查看配置信息。</p>
 
@@ -568,15 +568,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -600,11 +600,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
+                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
+                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
               </li>
              
               <li class="article-tag-list-item">
