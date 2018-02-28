@@ -21,7 +21,7 @@
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/methodscount-samples-03.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/apk-method-count-samples.png">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/Android-Studio-APK-Analyzer-Samples.png">
-<meta property="og:updated_time" content="2017-05-07T14:59:15.000Z">
+<meta property="og:updated_time" content="2018-02-28T08:19:35.627Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 突破 DEX 文件的 64K 方法数限制">
 <meta name="twitter:description" content="随着安卓平台的不断发展与壮大，市场上大而全的应用比比皆是，产品需求的变更累积和UI交互的极致追求，除了 resources 文件的俱增，在 Android Project 中依赖的 Library 和 自己写的 Java 代码也会越来越多。这些变化，除了会导致打包出的 APK 文件越来越大之外，当项目中java代码包含的方法数（method count）超出一个峰值时，编译过程中就会出现如下错误：">
@@ -203,6 +203,7 @@ ga('send', 'pageview');
 <p>尽管在不同版本的编译系统中显示的错误内容不尽相同，但内容中都提到了一个具体的数字：65536，这个数字也是本文要讲到的核心内容：Android 64K Method Counts Limit 的峰值。详细信息，参考官网用户指南：<a href="https://developer.android.com/studio/build/multidex.html" target="_blank" rel="external">Configure Apps with Over 64K Methods</a>。</p>
 <h1 id="Android-64K-Method-Counts-Limit"><a href="#Android-64K-Method-Counts-Limit" class="headerlink" title="Android 64K Method Counts Limit"></a>Android 64K Method Counts Limit</h1><hr>
 <p>Android Project 经过编译打包，其中的Java代码（包括Library）转化为DEX格式的字节码文件，这是Android 5.0之前的 Dalvik 虚拟机决定的（5.0之后改为 ART 虚拟机），并且采用 short 类型引用 DEX 文件中的 method，这也为method数量的峰值大小埋下了隐患。short 类型能够表示的最大值是 65536，也就说单个 DEX 文件中最多只有 65536 个 method 能够得到引用，如果代码执行了超出部分的 method 引用，自然会报错，如 methodNotFound 等。1K 等于 1024，65536 刚好是 64K，为了便于称呼和使用，就将这个限制规则统称为 64K 方法数的引用限制。</p>
+<p>拓展文章：<a href="http://jayfeng.com/2016/03/10/%E7%94%B1Android-65K%E6%96%B9%E6%B3%95%E6%95%B0%E9%99%90%E5%88%B6%E5%BC%95%E5%8F%91%E7%9A%84%E6%80%9D%E8%80%83/" target="_blank" rel="external">由Android 65K方法数限制引发的思考</a></p>
 <p>为了解决 64K 方法数限制的问题，我们可以在项目中使用 multidex 配置，当项目中的方法数（包括：Android framework，library 和我们自己写的代码）超过 64K 时，编译系统会自动编译出多个 DEX 文件。</p>
 <h1 id="Multidex-Support"><a href="#Multidex-Support" class="headerlink" title="Multidex Support"></a>Multidex Support</h1><hr>
 <p>Android 5.0 之前，安卓系统采用的是 Dalvik 虚拟机，采用的是JIT技术（Just-in-time compilation，即时编译，运行时编译DEX字节码文件，这也是以前为什么安卓手机用户总是诟病Android系统比iOS系统运行卡顿的原因），限制每个APK文件只能包含一个 DEX 文件（即 <code>classes.dex</code>）。为了绕开这个限制，Google给我们提供了<a href="https://developer.android.com/tools/support-library/features.html#multidex" target="_blank" rel="external">multidex support library</a> 兼容包，帮助我们实现应用程序加载多个DEX文件，并且这个兼容包作为程序的主DEX文件，管理者其他DEX文件的访问。</p>
@@ -603,15 +604,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
