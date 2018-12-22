@@ -16,16 +16,16 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="写在前面 Android Studio 版本迭代更新比较频繁，如果每次都卸载重装，翻墙下载几百兆的新版安装包，体验一定很差。浪费翻墙流量不说，每次都要重新配置之前的个性化设置等相关内容。所以，采取差异补丁包的增量升级方式显然明智许多。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1488900440.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1488900456.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1488900475.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1488900486.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1488900500.jpeg">
-<meta property="og:updated_time" content="2017-03-08T00:35:57.000Z">
+<meta property="og:image" content="http://blog.ancard.top/1488900440.png">
+<meta property="og:image" content="http://blog.ancard.top/1488900456.png">
+<meta property="og:image" content="http://blog.ancard.top/1488900475.png">
+<meta property="og:image" content="http://blog.ancard.top/1488900486.png">
+<meta property="og:image" content="http://blog.ancard.top/1488900500.jpeg">
+<meta property="og:updated_time" content="2018-12-22T07:03:39.069Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Studio 版本升级，一些你可能不知道的东西">
 <meta name="twitter:description" content="写在前面 Android Studio 版本迭代更新比较频繁，如果每次都卸载重装，翻墙下载几百兆的新版安装包，体验一定很差。浪费翻墙流量不说，每次都要重新配置之前的个性化设置等相关内容。所以，采取差异补丁包的增量升级方式显然明智许多。">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1488900440.png">
+<meta name="twitter:image" content="http://blog.ancard.top/1488900440.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -204,9 +204,9 @@ ga('send', 'pageview');
 <p>另外补充一点：本文所描述的内容都是基于 Mac OS X 系统中 Android Studio 的版本升级，Windows 系统中的操作大同小异，不再赘述。</p>
 <h1 id="手动更新"><a href="#手动更新" class="headerlink" title="手动更新"></a>手动更新</h1><hr>
 <p>举个例子。首先，检查版本确认是否需要更新：[Android Studio] ＝＝》[Check for Updates…]， 如果不能翻墙，检查失败，会得到如下提示：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1488900440.png" alt="check error.png"></p>
+<p><img src="http://blog.ancard.top/1488900440.png" alt="check error.png"></p>
 <p>翻墙成功并且存在新版本时，显示如下：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1488900456.png" alt="check for updates.png"></p>
+<p><img src="http://blog.ancard.top/1488900456.png" alt="check for updates.png"></p>
 <p>可以看到 Android Studio 在特定渠道下的当前版本和最新版本信息。这里需要说明一下，如果当前版本与最新版本之间相差的版本比较少，上图中的第二个按钮将显示为“Update and Restart”，点击即可下载版本之间的 patch 包，完成自动更新。如果差距太大，下载按钮就会显示为上图中的 “Download”，点击将会进入最新版本的完整安装包下载页面。关于版本跨越太多无法使用 patch 包更新的问题后面再提，我们先来看下其它地方。</p>
 <p>点击图中 [ Updates ] 链接文字可以配置更新渠道等相关信息。一般来说，Android Studio 的版本发布会经历四个阶段，按时间顺序依次如下：</p>
 <ol>
@@ -231,9 +231,9 @@ ga('send', 'pageview');
 <p>下载完成之后，使用系统或者 Android Studio 提供的命令行工具进入到 Android Studio安装包目录下（ <code>Contents</code> 同级目录），输入如下命令并执行，经过短暂的等待便可完成手动更新的过程（注意 patch 包的路径，根据实际情况另行修改）：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java -classpath /Users/yifeng/Desktop/AI-141.2422023-141.2456560-patch-mac.jar com.intellij.updater.Runner install Contents/</div></pre></td></tr></table></figure>
 <p>注意：如果上述命令执行的目录位置错误，比如进入到了 Contents 目录里面，会出现如下错误：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1488900475.png" alt="IOException.png"></p>
+<p><img src="http://blog.ancard.top/1488900475.png" alt="IOException.png"></p>
 <p>更新完成之后，重启 Android Studio，再查看当前版本信息：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1488900486.png" alt="当前版本信息.png"></p>
+<p><img src="http://blog.ancard.top/1488900486.png" alt="当前版本信息.png"></p>
 <p>如图所示，当前版本已经为1.5.1，符合使用 Android Studio 自动更新功能升级至 最新版本2.1.1的最低版本要求。</p>
 <h1 id="自动更新"><a href="#自动更新" class="headerlink" title="自动更新"></a>自动更新</h1><hr>
 <p>执行 Android Studio ==&gt; Check for Updates…，此时弹出的版本信息对话框的下载更新按钮显示为：Update and Restart，点击即可完成自动升级。</p>
@@ -267,7 +267,7 @@ ga('send', 'pageview');
 <p>这个目录下存放着所有版本的 gradle 文件。将下载好的 gradle 文件复制至此，然后在项目中同步 gradle，这样也不失为一种不错的解决方案。</p>
 <h1 id="一点思考"><a href="#一点思考" class="headerlink" title="一点思考"></a>一点思考</h1><hr>
 <p>关于 Android Studio 的增量更新包的版本跨越限制的问题，我们通过反编译一个补丁包（patch）可以看看相关代码：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1488900500.jpeg" alt="patch version limit.jpeg"></p>
+<p><img src="http://blog.ancard.top/1488900500.jpeg" alt="patch version limit.jpeg"></p>
 <p>在制作生成 patch 包时，Google只允许接近最新版本的有限个版本，比如上图中的 patch 包，只支持最新版本前6个版本。关于这一点，我想 Google 也是为了避免由于版本跨越太多导致补丁太大而加大更新出错的概率，同时也可以避免为每个旧版本都制作最新版本的差异包从而导致补丁包数量剧增。</p>
 <p>之所介绍这个，就是想着我们在开发自己的 app 并实现版本增量更新的时候，不妨可以学习借鉴一下 Google 的做法。</p>
 

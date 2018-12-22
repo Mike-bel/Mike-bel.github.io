@@ -16,13 +16,13 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="众所周知，Android App 在国内环境下实现应用内打开本地或位于远程服务器上 word、excel、pdf 等 Office 文档的功能远远没有 iOS 系统方便得多。之前也写过一篇文章，罗列出现有解决方案间的优劣对比。直到最近，在网上又发现一种新的解决方案：腾讯浏览服务（简称：TBS）。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1508584680.jpg">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1508590743.png">
-<meta property="og:updated_time" content="2017-10-21T13:09:00.000Z">
+<meta property="og:image" content="http://blog.ancard.top/1508584680.jpg">
+<meta property="og:image" content="http://blog.ancard.top/1508590743.png">
+<meta property="og:updated_time" content="2018-12-22T07:06:28.980Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于腾讯浏览服务 TBS 实现应用内打开并浏览 Office 文件">
 <meta name="twitter:description" content="众所周知，Android App 在国内环境下实现应用内打开本地或位于远程服务器上 word、excel、pdf 等 Office 文档的功能远远没有 iOS 系统方便得多。之前也写过一篇文章，罗列出现有解决方案间的优劣对比。直到最近，在网上又发现一种新的解决方案：腾讯浏览服务（简称：TBS）。">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1508584680.jpg">
+<meta name="twitter:image" content="http://blog.ancard.top/1508584680.jpg">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -200,7 +200,7 @@ ga('send', 'pageview');
 <h1 id="本地文件浏览"><a href="#本地文件浏览" class="headerlink" title="本地文件浏览"></a>本地文件浏览</h1><hr>
 <p>注意：TBS 只能打开浏览本地文件，对于位于服务器的远程文件，无法实现在线预览，只能通过先下载再打开的方式进行浏览。这里我们先来看看如何使用 TBS 打开本地文件。</p>
 <p>首先还是添加 SDK 依赖。<a href="https://x5.tencent.com/tbs/sdk.html" target="_blank" rel="external">下载</a> TBS 提供的 jar 包和 so 文件，添加到工程中对应的 libs 和  jniLibs 目录下。如图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1508584680.jpg" alt=""></p>
+<p><img src="http://blog.ancard.top/1508584680.jpg" alt=""></p>
 <p>然后在 app/build.gradle 文件中对 libs 目录中 jar 文件的依赖可以是这样：</p>
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">dependencies</span> &#123;</div><div class="line">    <span class="keyword">compile</span> <span class="keyword">fileTree</span>(dir: <span class="string">'libs'</span>, <span class="keyword">include</span>: [<span class="string">'*.jar'</span>])</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><strong>需要注意的是：</strong>TBS 目前只提供 armeabi 类型 CPU 架构的 so 库。当然，也可以将 so 文件放置于 libs 目录下，只不过需要在 app/build.gradle 中额外修改 so 文件依赖配置：</p>
@@ -227,7 +227,7 @@ ga('send', 'pageview');
 <p>回到 TBS 使用上，最后别忘了在 <code>onDestroy()</code> 生命周期函数中添加：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">super</span>.onDestroy();</div><div class="line">  mTbsReaderView.onStop();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>至此，使用 TBS 实现应用内打开预览本地 Office 文件的全部过程结束，我们来看一下效果图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1508590743.png" height="400"></p>
+<p><img src="http://blog.ancard.top/1508590743.png" height="400"></p>
 <p>可以看到，第一次使用需要下载腾讯提供的 pdf 浏览插件，之后打开时则无需再次加载。</p>
 <p>更多时候，我们预览的文件都位于远程服务器上。所以，我们需要预先下载文件，下载完成之后再使用 TBS 打开本地文件。感兴趣的话，不妨继续来看。</p>
 <h1 id="远程文件下载"><a href="#远程文件下载" class="headerlink" title="远程文件下载"></a>远程文件下载</h1><hr>

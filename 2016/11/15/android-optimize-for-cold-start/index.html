@@ -16,20 +16,20 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="你有没有发现，点击安卓手机桌面上的App图标时，有时候应用马上进入主界面，有时候要经历好几秒甚至更久的白屏（也可能是黑屏）时间才能进入主界面呢？这其实是安卓应用常见的冷热启动问题。本文就和大家一起聊聊冷热启动方式和启动页的体验优化方案。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1479177555.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1479192170.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1479192983.gif">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1479196175.gif">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1479196819.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1479198443.gif">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1479219560.gif">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1479220526.gif">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1479220540.gif">
-<meta property="og:updated_time" content="2016-11-15T15:13:12.000Z">
+<meta property="og:image" content="http://blog.ancard.top/1479177555.png">
+<meta property="og:image" content="http://blog.ancard.top/1479192170.png">
+<meta property="og:image" content="http://blog.ancard.top/1479192983.gif">
+<meta property="og:image" content="http://blog.ancard.top/1479196175.gif">
+<meta property="og:image" content="http://blog.ancard.top/1479196819.png">
+<meta property="og:image" content="http://blog.ancard.top/1479198443.gif">
+<meta property="og:image" content="http://blog.ancard.top/1479219560.gif">
+<meta property="og:image" content="http://blog.ancard.top/1479220526.gif">
+<meta property="og:image" content="http://blog.ancard.top/1479220540.gif">
+<meta property="og:updated_time" content="2018-12-22T07:01:31.496Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 你应该知道的的应用冷启动过程分析和优化方案">
 <meta name="twitter:description" content="你有没有发现，点击安卓手机桌面上的App图标时，有时候应用马上进入主界面，有时候要经历好几秒甚至更久的白屏（也可能是黑屏）时间才能进入主界面呢？这其实是安卓应用常见的冷热启动问题。本文就和大家一起聊聊冷热启动方式和启动页的体验优化方案。">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1479177555.png">
+<meta name="twitter:image" content="http://blog.ancard.top/1479177555.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -228,7 +228,7 @@ ga('send', 'pageview');
 </li>
 </ol>
 <p>只有当应用完成第一次绘制，系统当前展示的空白背景才会消失，才会被 Activity 的内容视图替换掉。也就是这个时候，用户才能和我们的应用开始交互。下图展示了冷启动过程系统和应用的一个工作时间流：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1479177555.png" alt="Cold Launch"></p>
+<p><img src="http://blog.ancard.top/1479177555.png" alt="Cold Launch"></p>
 <p>这其中有两个 creation 工作，分别为 Application 和 Activity creation。从图中看出，他们均在 View 绘制展示之前。所以，在应用自定义的 Application 类和 第一个 Activity 类中，onCreate() 方法做的事情越多，冷启动消耗的时间越长。</p>
 <h2 id="暖启动-Warm-start"><a href="#暖启动-Warm-start" class="headerlink" title="暖启动 (Warm start)"></a>暖启动 (Warm start)</h2><p>当应用中的 Activities 被销毁，但在内存中常驻时，应用的启动方式就会变为暖启动。相比冷启动，暖启动过程减少了对象初始化、布局加载等工作，启动时间更短。但启动时，系统依然会展示一个空白背景，直到第一个 Activity 的内容呈现为止。</p>
 <h2 id="热启动-Lukewarm-start"><a href="#热启动-Lukewarm-start" class="headerlink" title="热启动 (Lukewarm start)"></a>热启动 (Lukewarm start)</h2><p>相比暖启动，热启动时应用做的工作更少，启动时间更短。热启动产生的场景很多，常见如：用户使用返回键退出应用，然后马上又重新启动应用。</p>
@@ -236,11 +236,11 @@ ga('send', 'pageview');
 <p>从 Android 4.4 (API 19) 开始，Logcat 自动帮我们打印出应用的启动时间。这个时间值从应用启动 (创建进程) 开始计算，到完成视图的第一次绘制 (即 Activity 内容对用户可见) 为止。如：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">11-15 14:06:25.710 1071-1130/? I/ActivityManager: Displayed com.yifeng.qqtemp/.MainActivity: +3s610ms</div></pre></td></tr></table></figure>
 <p>对应在 logcat 窗口上的显示如图 (记得修改过滤条件) ：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1479192170.png" alt="Displayed"></p>
+<p><img src="http://blog.ancard.top/1479192170.png" alt="Displayed"></p>
 <p>对于用户来讲，看不到具体的启动时间，而是应用启动时白屏展示的体验问题。举个例子来对比一下冷热启动的实际启动情况。新建一个工程，为了更好地模拟演示冷热启动效果，这里我在自定义 Application 类的 onCreate 方法中添加了如下代码来延长应用的冷启动时间：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span> <span class="keyword">extends</span> <span class="title">Application</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate();</div><div class="line"></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Thread.sleep(<span class="number">3000</span>);</div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>然后第一次编译运行，应用采取冷启动的方式打开 (使用菜单键关闭最近打开的应用，也能达到促使应用使用冷启动方式，延长启动时间的效果) ；接着使用返回键退出应用，再点击桌面应用图标，应用将采用热启动的方式打开。整个操作流程对应的效果如图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1479192983.gif" alt="App Launch "></p>
+<p><img src="http://blog.ancard.top/1479192983.gif" alt="App Launch "></p>
 <p>可以看到，冷启动方式下，应用要经历一个短暂的白屏时间 (这个时间的长短视具体情况而定)，用户体验极其不好。相比而言，热启动方式下，用户可以较快进入 Activity 主界面与应用发生交互行为。</p>
 <h1 id="优化方案"><a href="#优化方案" class="headerlink" title="优化方案"></a>优化方案</h1><hr>
 <p>应用的冷启动总是无法避免的，也就是说冷启动时用户总要经历一个启动等待时间。开发人员唯一能做的就是在 Application 和 第一个 Activity 中，减少 onCreate() 方法的工作量，从而缩短冷启动的时间。像应用中嵌入的一些第三方 SDK，都建议在 Application 中做一些初始化工作，开发人员不妨采取懒加载的形式移除这部分代码，而在真正需要用到第三方 SDK 时再进行初始化。</p>
@@ -256,25 +256,25 @@ ga('send', 'pageview');
 <p>再修改该 Activity 类的代码，在加载布局视图前，将主题修改回来：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">    setTheme(R.style.AppTheme);</div><div class="line"></div><div class="line">    setContentView(R.layout.activity_main);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这么设置之后，效果如图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1479196175.gif" alt="windowDisablePreview"></p>
+<p><img src="http://blog.ancard.top/1479196175.gif" alt="windowDisablePreview"></p>
 <p>可以看到，冷启动方式下，用户点击桌面图标，没有任何反应，过一段时间应用才打开。其实这里只是将白屏背景透明化或者隐藏起来而已。</p>
 <p>很显然，这种处理方式用户体验也极差。不过可喜的是，我们可以通过主题中的 windowBackground 属性，自定义应用启动时的窗口背景。至于这个背景如何设计，Google 已经在官网上给了建议和规范，可以参考：<a href="https://material.google.com/patterns/launch-screens.html#" target="_blank" rel="external">Launch screens</a>。其实就是两种样式，如图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1479196819.png" alt="Launch screens"></p>
+<p><img src="http://blog.ancard.top/1479196819.png" alt="Launch screens"></p>
 <p>左图采用应用的 Logo 和 Slogan (甚至为了简单，Slogan 都可以不要)，可以增强品牌推广效应；右图利用了 placeholder ，与主界面的 UI 框架保持一致，给用户产生一种应用启动非常快的视觉感受。这两种方案各自目的和应用场景有所不同，但设计理念确实不错。下面我们一一模仿实现，先看第一种。</p>
 <p>新建一个名为 shape_launch.xml 的 drawable 文件，内容如下：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">layer-list</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:opacity</span>=<span class="string">"opaque"</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:drawable</span>=<span class="string">"@color/colorPrimary"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> &gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">bitmap</span></span></div><div class="line"><span class="tag">            <span class="attr">android:src</span>=<span class="string">"@mipmap/ic_launcher"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:gravity</span>=<span class="string">"center"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">layer-list</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>然后修改 styles.xml 文件中的主题样式：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"LaunchStyle"</span> <span class="attr">parent</span>=<span class="string">"AppTheme"</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="xml">	<span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowBackground"</span>&gt;</span>@drawable/shape_launch<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></div><div class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>最后将这个主题设置给启动的 Activity，设置过程和上面隐藏启动窗口时的设置一样。效果如图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1479198443.gif" alt="Branded launch screen"></p>
+<p><img src="http://blog.ancard.top/1479198443.gif" alt="Branded launch screen"></p>
 <p>第二种，使用与主界面 UI 框架一致的 placeholder 内容，这种情况下需要计算诸如 Statusbar、Toolbar 控件的高度，shape_launch.xml 内容如下：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">layer-list</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:opacity</span>=<span class="string">"opaque"</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:drawable</span>=<span class="string">"@color/colorPrimaryDark"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span></span></div><div class="line"><span class="tag">        <span class="attr">android:drawable</span>=<span class="string">"@color/colorPrimary"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:top</span>=<span class="string">"25dp"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span></span></div><div class="line"><span class="tag">        <span class="attr">android:top</span>=<span class="string">"81dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:drawable</span>=<span class="string">"@android:color/white"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">layer-list</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>这里模拟了一个高度为25dp的状态栏和一个高度为56dp的标题栏，给用户一种错觉：点击桌面图标，应用立即启动并进入主界面。效果如图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1479219560.gif" alt="Placeholder UI"></p>
+<p><img src="http://blog.ancard.top/1479219560.gif" alt="Placeholder UI"></p>
 <p>以上两种方式是按照 Google 的建议实现的 UI 效果，当然你还可以有更好的设计方式，只要能够解决冷启动带来的白屏过渡问题，都能带来不错的用户体验。比如你还可以适度结合 Activity 内容视图使用动画过渡效果，比如：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1479220526.gif" alt="center-animation"></p>
+<p><img src="http://blog.ancard.top/1479220526.gif" alt="center-animation"></p>
 <p>或者这样</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1479220540.gif" alt="placeholder-animation"></p>
+<p><img src="http://blog.ancard.top/1479220540.gif" alt="placeholder-animation"></p>
 <p>以上两种效果来自 GitHub 上的开源项目 <a href="https://github.com/saulmm/onboarding-examples-android" target="_blank" rel="external">saulmm/onboarding-examples-android</a>，具体实现方式这里不再赘述，作者专门写有博客可供借鉴学习：<a href="http://saulmm.github.io/avoding-android-cold-starts" target="_blank" rel="external">Avoiding cold starts on Android</a>。</p>
 <h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><hr>
 <ul>

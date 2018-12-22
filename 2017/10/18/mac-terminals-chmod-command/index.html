@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="PC 端修改文件访问权限算是比较常用的操作，在安装部分软件时经常需要使用到。在 Mac 系统的终端上修改文件权限使用的是 Linux 中的 chmod 命令。这里详细介绍一下该命令的相关使用。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1508342093.png">
-<meta property="og:updated_time" content="2017-10-18T16:27:41.000Z">
+<meta property="og:image" content="http://blog.ancard.top/1508342093.png">
+<meta property="og:updated_time" content="2018-12-22T07:04:46.375Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="详细记录 mac 系统下使用 chmod 命令修改文件权限">
 <meta name="twitter:description" content="PC 端修改文件访问权限算是比较常用的操作，在安装部分软件时经常需要使用到。在 Mac 系统的终端上修改文件权限使用的是 Linux 中的 chmod 命令。这里详细介绍一下该命令的相关使用。">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1508342093.png">
+<meta name="twitter:image" content="http://blog.ancard.top/1508342093.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -218,7 +218,7 @@ ga('send', 'pageview');
 <p>如果是复杂一点操作的话，可以同时使用多种操作符添加和取消权限，并且可以使用 “,” 符号同时对不同用户范围修改权限，比如：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod g+x,o+x-w startup.sh</div></pre></td></tr></table></figure>
 <p>还有一种简单的写法，使用数字表示权限部分的读／写／可执行权限类型。数字和权限类型的对应关系，可以从这张图中直观地看出来：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1508342093.png" alt=""></p>
+<p><img src="http://blog.ancard.top/1508342093.png" alt=""></p>
 <p>即，1 表示可执行，2 表示可写，4 表示可读。每种类型数字相加所得到的值表示交叉部分的公共类型。</p>
 <p>这样的话，使用三个数字便可以分别代表三种不同用户类型的权限修改结果。比如，修改所有用户的访问权限均为可读可写可执行（rwx）的话，这样使用即可：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod 777 startup.sh</div></pre></td></tr></table></figure>

@@ -16,13 +16,13 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="之前不是写了篇名为 Android 获取 View 宽高的常用正确方式，避免为零 的总结性文章嘛，在结尾简单阐述 measuredWidth 与 width 的区别。考虑到文章的重点，简单几笔带过。没曾想，引发一些争论，大家对 View 的这两对宽高属性理解各有异议。于是便想追根溯源，通过解读源码的方式说明一下，消除许多人的误解。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1491304232.jpg">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1491304242.jpg">
-<meta property="og:updated_time" content="2017-04-04T12:45:13.000Z">
+<meta property="og:image" content="http://blog.ancard.top/1491304232.jpg">
+<meta property="og:image" content="http://blog.ancard.top/1491304242.jpg">
+<meta property="og:updated_time" content="2018-12-22T07:03:03.938Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处">
 <meta name="twitter:description" content="之前不是写了篇名为 Android 获取 View 宽高的常用正确方式，避免为零 的总结性文章嘛，在结尾简单阐述 measuredWidth 与 width 的区别。考虑到文章的重点，简单几笔带过。没曾想，引发一些争论，大家对 View 的这两对宽高属性理解各有异议。于是便想追根溯源，通过解读源码的方式说明一下，消除许多人的误解。">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1491304232.jpg">
+<meta name="twitter:image" content="http://blog.ancard.top/1491304232.jpg">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -205,13 +205,13 @@ ga('send', 'pageview');
 <p>包含一个宽高自适应的 TextView 控件，在 Activity 中通过下面的代码获取 width 和 measuredWidth 属性值：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onWindowFocusChanged</span><span class="params">(<span class="keyword">boolean</span> hasFocus)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onWindowFocusChanged(hasFocus);</div><div class="line">    Log.i(<span class="string">"size"</span>, <span class="string">"The width is "</span> + mSampleTv.getWidth());</div><div class="line">    Log.i(<span class="string">"size"</span>, <span class="string">"The measured width is "</span> + mSampleTv.getMeasuredWidth());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>运行结果如图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1491304232.jpg" alt=""></p>
+<p><img src="http://blog.ancard.top/1491304232.jpg" alt=""></p>
 <p>logcat 控制台打印如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">04-04 16:25:52.191 31669-31669/com.yifeng.samples I/size: The width is 314</div><div class="line">04-04 16:25:52.191 31669-31669/com.yifeng.samples I/size: The measured width is 314</div></pre></td></tr></table></figure>
 <p>这里所用设备的屏幕尺寸为 1080x1920，足以容纳这个 TextView 的宽度。Log 显示，width 和 measuredWidth 大小相同，均为 314 px。然后修改 android:layout_width 属性值，使其超出屏幕宽度，同时，将文本内容加长一些：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line"><span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/tv_sample"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"2000px"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:text</span>=<span class="string">"This is a long sample.This is a long sample.This is a long sample.This is a long sample."</span></span></div><div class="line"><span class="tag">    <span class="attr">android:background</span>=<span class="string">"@android:color/darker_gray"</span>/&gt;</span></div><div class="line">...</div></pre></td></tr></table></figure>
 <p>再次运行，效果如图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1491304242.jpg" alt=""></p>
+<p><img src="http://blog.ancard.top/1491304242.jpg" alt=""></p>
 <p>显然，文本内容已经超过屏幕宽度，显示到屏幕之外的区域。如果按照前面的言论的话，width 应该为屏幕上显示的宽度，即 1080 px，而 measuredWidth 肯定大于 width。事实真的如此吗，请看 log 日志：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">04-04 16:36:47.329 6974-6974/com.yifeng.samples I/size: The width is 2000</div><div class="line">04-04 16:36:47.330 6974-6974/com.yifeng.samples I/size: The measured width is 2000</div></pre></td></tr></table></figure>
 <p>width 等于 measuredWidth，都为 2000 px，事与愿违，与我们想象的不一样，前面的言论也就不攻自破。那到底 width 和 measuredWidth 有什么区别呢，我们从源码的角度跟进一下。</p>

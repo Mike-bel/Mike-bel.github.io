@@ -16,13 +16,13 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="Material Design 规范针对 UI 元素提出了“高度”这一概念，使过去流行于拟物化设计中的阴影效果，在扁平化设计中消失了很久之后，再次显现。不过，虽然视图高度更多的是以阴影的形式直观地表现在界面中，但更多地是强调一个元素相对重要性的问题。在三维空间中，拥有更高高度的 UI 元素，显然对于用户来讲，相比于其他元素，更加凸显其重要性，更加希望被用户注意到，甚至被频繁操作，这也是设计人员最想">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1488119646.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1488120191.png">
-<meta property="og:updated_time" content="2017-02-26T15:03:09.000Z">
+<meta property="og:image" content="http://blog.ancard.top/1488119646.png">
+<meta property="og:image" content="http://blog.ancard.top/1488120191.png">
+<meta property="og:updated_time" content="2018-12-22T07:02:28.132Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 视图高度和阴影的那点事儿">
 <meta name="twitter:description" content="Material Design 规范针对 UI 元素提出了“高度”这一概念，使过去流行于拟物化设计中的阴影效果，在扁平化设计中消失了很久之后，再次显现。不过，虽然视图高度更多的是以阴影的形式直观地表现在界面中，但更多地是强调一个元素相对重要性的问题。在三维空间中，拥有更高高度的 UI 元素，显然对于用户来讲，相比于其他元素，更加凸显其重要性，更加希望被用户注意到，甚至被频繁操作，这也是设计人员最想">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1488119646.png">
+<meta name="twitter:image" content="http://blog.ancard.top/1488119646.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -207,7 +207,7 @@ ga('send', 'pageview');
 <li><strong>translationZ</strong>：Z 值转换，动态组件，常用于操作 UI 元素时交互动画的属性。</li>
 </ul>
 <p>不同视图高度呈现出的阴影效果如图所示：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1488119646.png" alt="不同视图高度的阴影"></p>
+<p><img src="http://blog.ancard.top/1488119646.png" alt="不同视图高度的阴影"></p>
 <h1 id="elevation-属性"><a href="#elevation-属性" class="headerlink" title="elevation 属性"></a>elevation 属性</h1><hr>
 <p>UI 控件的 elevation 属性可以设置其高度，呈现在界面中的直观效果就是阴影效果，在 xml 布局文件中，通过 <code>android:elevation</code>  属性设置，在 java 代码中通过 View 类提供的 <code>setElevation()</code> 方法设置。但是这个属性存在版本兼容问题，是 Android 5.0 引进的 API。所以，当 <code>minSdkVersion</code> 值小于21时，系统会在 xml 的对应使用地方给出一个 lint 提示：</p>
 <blockquote>
@@ -228,7 +228,7 @@ ga('send', 'pageview');
 <p>那么还有没有其他方式实现呢，如果我想改变阴影颜色呢，或者只是局部投影呢？答案是肯定的，那就是使用带阴影的背景图，常见如 <code>.9</code> 图。比如，系统就给我们提供了一个带阴影效果的 <code>.9</code> 背景图，你可以这样使用：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">android:background="@android:drawable/dialog_holo_light_frame"</div></pre></td></tr></table></figure>
 <p>或者你也可以通过 <code>&lt;layer-list&gt;</code> 标签去一层一层定义形状和颜色，不过比较繁琐，不如直接使用 <code>.9</code> 背景图片。这里给大家推荐一个在线工具，通过 GUI 方式制作 <code>.9</code> 阴影背景图，<a href="http://inloop.github.io/shadow4android/" target="_blank" rel="external">Android 9-patch shadow generator</a>，如图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1488120191.png" alt="Android 9-patch shadow generator"></p>
+<p><img src="http://blog.ancard.top/1488120191.png" alt="Android 9-patch shadow generator"></p>
 <p>再或者，你可以尝试一下 GitHub 上的这个开源库，借鉴一下作者的思路，更灵活地实现 Android App 中的 UI 阴影效果：</p>
 <p><a href="https://github.com/dmytrodanylyk/shadow-layout" target="_blank" rel="external">https://github.com/dmytrodanylyk/shadow-layout</a></p>
 

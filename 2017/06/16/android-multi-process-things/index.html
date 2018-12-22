@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="引言 不知道大家在平时的开发中有没有遇到这样一个问题：自定义的 Application 类在应用启动的时候被多次创建，或者在使用到某个功能的时候 Application 再次被创建。换句话说，Application 的 onCreate() 方法被调用了两次或者更多次。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1497627202.jpg">
-<meta property="og:updated_time" content="2017-06-16T23:41:55.000Z">
+<meta property="og:image" content="http://blog.ancard.top/1497627202.jpg">
+<meta property="og:updated_time" content="2018-12-22T07:02:36.873Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 中的多进程，你值得了解的一些知识">
 <meta name="twitter:description" content="引言 不知道大家在平时的开发中有没有遇到这样一个问题：自定义的 Application 类在应用启动的时候被多次创建，或者在使用到某个功能的时候 Application 再次被创建。换句话说，Application 的 onCreate() 方法被调用了两次或者更多次。">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1497627202.jpg">
+<meta name="twitter:image" content="http://blog.ancard.top/1497627202.jpg">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -217,7 +217,7 @@ ga('send', 'pageview');
 <p>如果是以小写字母开头，该进程就是一个全局进程，可以和其他应用共享，减少资源占用。这里的进程名就是属性值定义的这个字符串。</p>
 <p><strong>注意：</strong>作为 android:process 属性值的字符串，在名称的定义上，必须符合 Android 包名的命名规范。你不能以数字开头，或者大写字母开头等。否则，编译时会报错。</p>
 <p>如果你在调试一个多进程的应用，并且多个进程处于运行状态，在 Android Studio 的 Android Monitor 调试界面，可以直接看到多个进程名同时存在：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1497627202.jpg" alt=""></p>
+<p><img src="http://blog.ancard.top/1497627202.jpg" alt=""></p>
 <h1 id="使用多进程的注意事项"><a href="#使用多进程的注意事项" class="headerlink" title="使用多进程的注意事项"></a>使用多进程的注意事项</h1><hr>
 <p>使用多进程，特别要注意的一点就是：Application 的重复创建。如果你注册四大组件中的任意一个组件时用到了多进程，运行该组件时，都会创建一个新的 Application 对象。关于这一点，在老罗的博客中有所介绍，可以访问文章末尾的参考链接了解相关知识。</p>
 <p>多数情况下，我们都会在工程中自定义一个 Application 类，并且将一些全局性的初始化工作放在这个类里面。当这个类多次创建时，如果不对进程加以区分的话，我们的这些初始化工作也会被执行多次。除了影响应用的启动时间，还有可能就会出现其他问题。比如，文章引言部分，我曾经遇到的案例。</p>

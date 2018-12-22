@@ -16,14 +16,14 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="随着 Android 8.0 的正式发布，相信有些朋友已经升级 SDK 开始使用新特性了。然而需要注意的是，这一次 Google 并没有及时发布与之对应的 Android-26 源码。这带来的问题是，当你按下 command 同时单击某个系统 API 想浏览源码文档时，会出现如下这个提示：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1503925991.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1503925999.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1503926004.png">
-<meta property="og:updated_time" content="2017-08-28T13:25:50.000Z">
+<meta property="og:image" content="http://blog.ancard.top/1503925991.png">
+<meta property="og:image" content="http://blog.ancard.top/1503925999.png">
+<meta property="og:image" content="http://blog.ancard.top/1503926004.png">
+<meta property="og:updated_time" content="2018-12-22T07:01:18.965Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="解决 Android 26 无法查看系统源码的问题">
 <meta name="twitter:description" content="随着 Android 8.0 的正式发布，相信有些朋友已经升级 SDK 开始使用新特性了。然而需要注意的是，这一次 Google 并没有及时发布与之对应的 Android-26 源码。这带来的问题是，当你按下 command 同时单击某个系统 API 想浏览源码文档时，会出现如下这个提示：">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1503925991.png">
+<meta name="twitter:image" content="http://blog.ancard.top/1503925991.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -194,16 +194,16 @@ ga('send', 'pageview');
       
         <p>随着 Android 8.0 的正式发布，相信有些朋友已经升级 SDK 开始使用新特性了。然而需要注意的是，这一次 Google 并没有及时发布与之对应的 Android-26 源码。这带来的问题是，当你按下 command 同时单击某个系统 API 想浏览源码文档时，会出现如下这个提示：</p>
 <a id="more"></a>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1503925991.png" alt=""></p>
+<p><img src="http://blog.ancard.top/1503925991.png" alt=""></p>
 <p>即：</p>
 <blockquote>
 <p>Sources for ‘Android API 26 Platform’ not found.</p>
 </blockquote>
 <p>本以为能通过点击 Download 按钮下载最新源码时，却又弹出 <strong>Package Unavailable</strong> 错误提示：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1503925999.png" alt=""></p>
+<p><img src="http://blog.ancard.top/1503925999.png" alt=""></p>
 <p>很显然，Google 还没来及提供源码包可供下载。怎么办呢？我们可以先使用旧的源码“偷天换日”一下。比如使用 android-25 或者其他旧版的源码顶替，以解决使用 android-26 开发时需要查看源码的燃眉之急。待到新版本源码开放下载时，记得再删除，重新下载替换回来。</p>
 <p>具体做法是，找到本地 SDK／Sources 目录，复制一份 android-25 源码文件，并改名为 android-26，如图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1503926004.png" alt=""></p>
+<p><img src="http://blog.ancard.top/1503926004.png" alt=""></p>
 <p>然后打开 android-26 文件夹，找到这两个文件：</p>
 <p><code>package.xml</code> 和 <code>source.properties</code></p>
 <p>替换二者内容中的 25 为 26，重启 AndroidStudio 即可。</p>

@@ -16,16 +16,16 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="随着安卓平台的不断发展与壮大，市场上大而全的应用比比皆是，产品需求的变更累积和UI交互的极致追求，除了 resources 文件的俱增，在 Android Project 中依赖的 Library 和 自己写的 Java 代码也会越来越多。这些变化，除了会导致打包出的 APK 文件越来越大之外，当项目中java代码包含的方法数（method count）超出一个峰值时，编译过程中就会出现如下错误：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/methodscount-samples-01.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/methodscount-samples-02.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/methodscount-samples-03.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/apk-method-count-samples.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/Android-Studio-APK-Analyzer-Samples.png">
-<meta property="og:updated_time" content="2018-02-28T08:19:35.627Z">
+<meta property="og:image" content="http://blog.ancard.top/methodscount-samples-01.png">
+<meta property="og:image" content="http://blog.ancard.top/methodscount-samples-02.png">
+<meta property="og:image" content="http://blog.ancard.top/methodscount-samples-03.png">
+<meta property="og:image" content="http://blog.ancard.top/apk-method-count-samples.png">
+<meta property="og:image" content="http://blog.ancard.top/Android-Studio-APK-Analyzer-Samples.png">
+<meta property="og:updated_time" content="2018-12-22T07:06:36.806Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 突破 DEX 文件的 64K 方法数限制">
 <meta name="twitter:description" content="随着安卓平台的不断发展与壮大，市场上大而全的应用比比皆是，产品需求的变更累积和UI交互的极致追求，除了 resources 文件的俱增，在 Android Project 中依赖的 Library 和 自己写的 Java 代码也会越来越多。这些变化，除了会导致打包出的 APK 文件越来越大之外，当项目中java代码包含的方法数（method count）超出一个峰值时，编译过程中就会出现如下错误：">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/methodscount-samples-01.png">
+<meta name="twitter:image" content="http://blog.ancard.top/methodscount-samples-01.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -241,12 +241,12 @@ ga('send', 'pageview');
 <h1 id="Methods-Count-Statistics"><a href="#Methods-Count-Statistics" class="headerlink" title="Methods Count Statistics"></a>Methods Count Statistics</h1><hr>
 <p>尽管安卓系统支持multidex，我们还是要学会分析我们的应用，查看各个部分的方法数，减少冗余方法。这里推荐几个工具，帮助我们分析。</p>
 <h2 id="Library-Methods-count"><a href="#Library-Methods-count" class="headerlink" title="Library Methods count"></a><a href="http://www.methodscount.com/" target="_blank" rel="external">Library Methods count</a></h2><p>一个在线统计 Android Library 方法数的网站，能够统计出 Android 领域常见 libraries 的方法数、JAR 文件和 DEX 文件大小，并且能够选择不同版本，以图表的形式展示出来。</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/methodscount-samples-01.png" alt="http://www.methodscount.com/"></p>
+<p><img src="http://blog.ancard.top/methodscount-samples-01.png" alt="http://www.methodscount.com/"></p>
 <p>该网站也提供了Android Studio的插件，帮助我们分析项目中所依赖的libraries的方法数，如图所示：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/methodscount-samples-02.png" alt="methodscount-samples-02.png"></p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/methodscount-samples-03.png" alt="methodscount-samples-03.png"></p>
+<p><img src="http://blog.ancard.top/methodscount-samples-02.png" alt="methodscount-samples-02.png"></p>
+<p><img src="http://blog.ancard.top/methodscount-samples-03.png" alt="methodscount-samples-03.png"></p>
 <h2 id="Apk-Method-Count"><a href="#Apk-Method-Count" class="headerlink" title="Apk Method Count"></a><a href="http://inloop.github.io/apk-method-count/" target="_blank" rel="external">Apk Method Count</a></h2><p>一个在线统计 APK 文件方法数的开源项目，只需要将需要分析的APK文件拖拽上传至此，即可得到分析结果，如图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/apk-method-count-samples.png" alt="apk-method-count-samples.png"></p>
+<p><img src="http://blog.ancard.top/apk-method-count-samples.png" alt="apk-method-count-samples.png"></p>
 <h2 id="Android-Studio-APK-Analyzer"><a href="#Android-Studio-APK-Analyzer" class="headerlink" title="Android Studio APK Analyzer"></a><a href="https://developer.android.com/studio/build/apk-analyzer.html" target="_blank" rel="external">Android Studio APK Analyzer</a></h2><p>最后，要重磅推荐Android Studio自带的APK Analyzer，功能齐全，使用方便，绝对是安卓开发人员分析应用的不二选择。使用 Android Studio APK Analyzer ，我们至少能够做到：</p>
 <ul>
 <li><p>查看APK压缩文件中各个子文件的大小（如DEX和resource文件）</p>
@@ -258,7 +258,7 @@ ga('send', 'pageview');
 <li><p>直观地比较两个APK文件内容</p>
 </li>
 </ul>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/Android-Studio-APK-Analyzer-Samples.png" alt="Android-Studio-APK-Analyzer-Samples.png"></p>
+<p><img src="http://blog.ancard.top/Android-Studio-APK-Analyzer-Samples.png" alt="Android-Studio-APK-Analyzer-Samples.png"></p>
 <p>开发阶段使用Android Studio打开一个项目时，有三种方式使用APK Analyzer工具：</p>
 <ul>
 <li><p>直接拖拽APK文件到Android Studio的编辑窗口</p>

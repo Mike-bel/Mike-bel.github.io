@@ -16,16 +16,16 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="之前写过一篇关于 Android Studio 断点调试技巧 的文章，但都是针对 Native 代码的调试，对于 Hybrid 开发模式下的 WebView 却无从下手。幸运的是，PC 中的 Chrome 浏览器提供的开发者工具能够帮助我们远程调试 Android 中的 WebView 加载的网页。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1493424045.jpg">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1493424281.jpg">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1493428572.jpg">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1493428598.jpg">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1493428622.jpg">
-<meta property="og:updated_time" content="2017-05-05T08:42:11.000Z">
+<meta property="og:image" content="http://blog.ancard.top/1493424045.jpg">
+<meta property="og:image" content="http://blog.ancard.top/1493424281.jpg">
+<meta property="og:image" content="http://blog.ancard.top/1493428572.jpg">
+<meta property="og:image" content="http://blog.ancard.top/1493428598.jpg">
+<meta property="og:image" content="http://blog.ancard.top/1493428622.jpg">
+<meta property="og:updated_time" content="2018-12-22T07:06:25.656Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用 Chrome 开发者工具远程调试 Android 中的原生 WebView">
 <meta name="twitter:description" content="之前写过一篇关于 Android Studio 断点调试技巧 的文章，但都是针对 Native 代码的调试，对于 Hybrid 开发模式下的 WebView 却无从下手。幸运的是，PC 中的 Chrome 浏览器提供的开发者工具能够帮助我们远程调试 Android 中的 WebView 加载的网页。">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1493424045.jpg">
+<meta name="twitter:image" content="http://blog.ancard.top/1493424045.jpg">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -203,17 +203,17 @@ ga('send', 'pageview');
 <p>第二步，确保 USB 连接的前提下，打开 PC 中的 Chrome 浏览器，输入网址，打开页面：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chrome://inspect</div></pre></td></tr></table></figure>
 <p>DevTools 页面的 Devices 菜单页自动显示当前连接的远程设备名和序列号，以及当前原生 App 打开的 WebView 的网页地址，如图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1493424045.jpg" alt=""></p>
+<p><img src="http://blog.ancard.top/1493424045.jpg" alt=""></p>
 <p>点击对应网页下方的 <strong>inspect</strong> 选项便可以进入开发者工具页：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1493424281.jpg" alt=""></p>
+<p><img src="http://blog.ancard.top/1493424281.jpg" alt=""></p>
 <p>如图所示，网页显示内容和源代码、控制台等都可以看到，供安卓开发人员自由调试。</p>
 <p>事实上，Chrome 开发者工具也是 H5 开发人员开发手机端网页的调试利器。</p>
 <p>打开 PC 中 Chrome 浏览器的开发者工具页面：<strong>设置</strong> -&gt; <strong>更多工具</strong> -&gt; <strong>开发者工具</strong>，或者直接在 Chrome 浏览器的任意网页上右键选择 <strong>检查</strong>。在开发者工具按照下图方式中打开 <strong>Remote devices</strong> ：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1493428572.jpg" alt=""></p>
+<p><img src="http://blog.ancard.top/1493428572.jpg" alt=""></p>
 <p>同样，确保 PC 通过 USB 连接手机设备的前提下，检查开启  <strong>Remote devices</strong> 页面左侧 <strong>Settings</strong> 菜单中的 <strong>Discover USB devices</strong> 选项：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1493428598.jpg" alt=""></p>
+<p><img src="http://blog.ancard.top/1493428598.jpg" alt=""></p>
 <p>打开手机的 Chrome 浏览器 App，在 <strong>Remote devices</strong> 中选择对应的手机设备，便可以看到当前 Chrome App 的版本信息，以及一个 URL 输入框：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1493428622.jpg" alt=""></p>
+<p><img src="http://blog.ancard.top/1493428622.jpg" alt=""></p>
 <p>在此，我们可以输入任意的 Url 地址，点击 <strong>Open</strong>，便可同步打开手机 Chrome 上的网页，同时在 <strong>Remote devices</strong> 出现对应的地址栏，点击即可进入前面介绍 WebView 时所看到的类似调试页。</p>
 <p>更多有关 Chrome DevTools 的细节，请参考链接：<a href="https://www.html5rocks.com/en/tutorials/developertools/mobile/" target="_blank" rel="external">Chrome DevTools for Mobile: Screencast and Emulation</a>。</p>
 

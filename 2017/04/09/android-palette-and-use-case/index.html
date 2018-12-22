@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="前不久，就 Android 系统中的 tint 着色器 写有一篇文章，从使用到源码，详细予以阐述。从色彩的角度上来讲，Palette（调色板）似乎与之遥相呼应，所以便有了这篇：关于 Android 中的 Palette 类。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1491716578.jpg">
-<meta property="og:updated_time" content="2017-04-09T10:10:54.000Z">
+<meta property="og:image" content="http://blog.ancard.top/1491716578.jpg">
+<meta property="og:updated_time" content="2018-12-22T07:01:36.103Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用 Android 中的 palette 调色板，动态改变 Toolbar 颜色">
 <meta name="twitter:description" content="前不久，就 Android 系统中的 tint 着色器 写有一篇文章，从使用到源码，详细予以阐述。从色彩的角度上来讲，Palette（调色板）似乎与之遥相呼应，所以便有了这篇：关于 Android 中的 Palette 类。">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1491716578.jpg">
+<meta name="twitter:image" content="http://blog.ancard.top/1491716578.jpg">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -216,7 +216,7 @@ ga('send', 'pageview');
 <h1 id="使用案例：色彩自适应的-Toolbar"><a href="#使用案例：色彩自适应的-Toolbar" class="headerlink" title="使用案例：色彩自适应的 Toolbar"></a>使用案例：色彩自适应的 Toolbar</h1><hr>
 <p>前面说过，Palette 的用法可以有很多，就看你怎么用。这里就来举个非常炫酷的例子。</p>
 <p>从图片列表页进入详情页，很常见的设计。在详情页，根据不同图片内容，提取主题色调，动态改变 Toolbar 背景色和内容色。这是静态图展示：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1491716578.jpg" alt=""></p>
+<p><img src="http://blog.ancard.top/1491716578.jpg" alt=""></p>
 <p>页面布局相关的代码这里就不再展示，可以参考我的博客前面有关 MaterialDesign 相关的系列文章，或者直接访问 GitHub 项目：<a href="https://github.com/Mike-bel/MDStudySamples" target="_blank" rel="external">MDStudySamples</a>。</p>
 <p>看下本文相关的内容，使用 Palette API 提取图片颜色的的操作代码：</p>
 <pre><code class="java">Palette.from(BitmapFactory.decodeResource(getResources(), res))

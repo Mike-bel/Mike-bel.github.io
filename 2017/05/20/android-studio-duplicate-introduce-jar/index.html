@@ -16,17 +16,17 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="随着产品功能需求的增加，我们开发的安卓项目不得不入引入越来越多的第三方库。这些三方库可能以 Jar 包的形式放置在 libs 目录下，可能以 Gradle 远程依赖的形式下载引入，也可能是以 Library Module 的形式放置在工程目录下，等等。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1495288914.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1495288901.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1495288920.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1495016140.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1495016130.jpg">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1495288591.png">
-<meta property="og:updated_time" content="2017-11-21T10:19:06.976Z">
+<meta property="og:image" content="http://blog.ancard.top/1495288914.png">
+<meta property="og:image" content="http://blog.ancard.top/1495288901.png">
+<meta property="og:image" content="http://blog.ancard.top/1495288920.png">
+<meta property="og:image" content="http://blog.ancard.top/1495016140.png">
+<meta property="og:image" content="http://blog.ancard.top/1495016130.jpg">
+<meta property="og:image" content="http://blog.ancard.top/1495288591.png">
+<meta property="og:updated_time" content="2018-12-22T07:04:38.182Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="有关 Android Studio 重复引入包的问题和解决方案">
 <meta name="twitter:description" content="随着产品功能需求的增加，我们开发的安卓项目不得不入引入越来越多的第三方库。这些三方库可能以 Jar 包的形式放置在 libs 目录下，可能以 Gradle 远程依赖的形式下载引入，也可能是以 Library Module 的形式放置在工程目录下，等等。">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1495288914.png">
+<meta name="twitter:image" content="http://blog.ancard.top/1495288914.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -213,10 +213,10 @@ ga('send', 'pageview');
 <p>更多细节，参考：<a href="https://docs.gradle.org/current/javadoc/org/gradle/api/artifacts/ModuleDependency.html#exclude(java.util.Map" target="_blank" rel="external">ModuleDependency</a>)。</p>
 <p>以上两种场景算是比较好处理的。还有一种特殊情况，就是不同第三方库内部出现相同包名相同文件名的 java 类。这种情况出现的概率很低，但是不幸的是我在工作中就遇见过。</p>
 <p>当时项目中引入的 <a href="http://dev.umeng.com/analytics/android-doc/integration" target="_blank" rel="external">友盟统计</a> 和 <a href="http://dev.10086.cn/wiki/?p5_01_01-&amp;from=homezd04" target="_blank" rel="external">移动统一认证</a> 的 SDK 出现重复引入问题，执行 Run 操作编译打包时出现 duplicate entry 错误，如图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1495288914.png" alt=""></p>
+<p><img src="http://blog.ancard.top/1495288914.png" alt=""></p>
 <p>通过错误提示，很容易就找到错误出处，我们看下两个 SDK 中的 jar 包源码：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1495288901.png" alt="友盟统计 SDK"></p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1495288920.png" alt="移动统一认证 SDK"></p>
+<p><img src="http://blog.ancard.top/1495288901.png" alt="友盟统计 SDK"></p>
+<p><img src="http://blog.ancard.top/1495288920.png" alt="移动统一认证 SDK"></p>
 <p>虽然相同包名相同类名的文件在不同 SDK 中出现的概率极低，但是一旦出现，处理起来就比较棘手。最好的解决方案就是联系提供 SDK 的技术人员反映问题，让其通过修改源码重新打包一个新的 Jar 包。</p>
 <p>还有一个解决办法就是，重新命名 Jar 包里的包名或者文件名。网上也有一个工具：<strong>jarjar.jar</strong>，可以帮助我们重命名包名和文件名，以及 Jar 包中的相关代码引用路径。参考地址如下：</p>
 <ul>
@@ -230,7 +230,7 @@ ga('send', 'pageview');
 <p>其中，rule.txt 是包含重命名规则的文件，内容如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rule p.rn.asm.** com.yifeng.example.@<span class="number">1</span></div></pre></td></tr></table></figure>
 <p>我们看一下重命名前后 Jar 包内容的代码对比图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1495016140.png" alt=""><br><img src="http://ocq7gtgqu.bkt.clouddn.com/1495016130.jpg" alt=""></p>
+<p><img src="http://blog.ancard.top/1495016140.png" alt=""><br><img src="http://blog.ancard.top/1495016130.jpg" alt=""></p>
 <p>可以看到，不仅包名改变，Jar 包中的相关类引用路径也自动改变。这种 Jar 包重命名的方式虽然能解决重复引入包的问题，但不是长久之计，需要后续持续关注 SDK 的升级替换。</p>
 <p>不同 Jar 包包含相同文件（路径也相同）的情况还有一种，就是 duplicate files 错误。多个 Jar 包包含重复的文件。这种情况在网上看到过，出自 <a href="http://stackoverflow.com/questions/31912459/duplicate-lib-file-copied-in-apk-meta-inf-license-txt-error-in-android-studio" target="_blank" rel="external">StackOverFlow</a>，错误提示类似：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Error:duplicate files during packaging of APK E:\Code\iDoc\app\build\outputs\apk\app-debug-unaligned.apk</div><div class="line">    Path in archive: META-INF/license.txt</div><div class="line">    Origin <span class="number">1</span>: E:\Code\iDoc\app\libs\spring-core-<span class="number">3.1</span>.0.RELEASE.jar</div><div class="line">    Origin <span class="number">2</span>: E:\Code\iDoc\app\libs\spring-web-<span class="number">3.1</span>.0.RELEASE.jar</div><div class="line">You can ignore those files in your build.gradle:</div><div class="line">    android &#123;</div><div class="line">      packagingOptions &#123;</div><div class="line">        exclude <span class="string">'META-INF/license.txt'</span></div><div class="line">      &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
@@ -238,7 +238,7 @@ ga('send', 'pageview');
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">packagingOptions &#123;</div><div class="line">        exclude 'META-INF/DEPENDENCIES'</div><div class="line">        exclude 'META-INF/NOTICE'</div><div class="line">        exclude 'META-INF/LICENSE'</div><div class="line">        exclude 'META-INF/LICENSE.txt'</div><div class="line">        exclude 'META-INF/NOTICE.txt'</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
 <p>最后再补充一点，关于 Gradle 依赖的 Scope 问题。通常依赖某个第三方库我们使用的都是 <strong>compile</strong> 关键字，实际上，还有一个 <strong>Provided</strong> 关键字偶尔也会用到。</p>
 <p>打开 Project Structure，查看 Modules 的 Dependencies 内容时，可以看到每一个依赖项的右边有个 Scope 选项：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1495288591.png" alt=""></p>
+<p><img src="http://blog.ancard.top/1495288591.png" alt=""></p>
 <p>compile 表示依赖的第三方库在工程编译阶段、测试阶段和 Apk 运行阶段都需要使用到；而 provided 表示该第三方库仅仅是在编译阶段和测试阶段使用到，不会出现在运行阶段，即表示不会打包到最终的 apk 文件中去，目标运行环境已经包含有该第三方库。（貌似 Dagger2 的使用可能会涉及到这个问题。）</p>
 <p>关于 Scope 的详细介绍，可以参考文章：<a href="https://sinking.in/blog/provided-scope-in-gradle/" target="_blank" rel="external">PROVIDED SCOPE IN GRADLE</a>。</p>
 <p>相关拓展阅读：</p>

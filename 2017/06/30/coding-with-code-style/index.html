@@ -16,18 +16,18 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="从事编程这个行业，你一定被别人说过或者说过别人这句话：代码要规范！求职面试时也能从 JD 上看到这个要求：要有良好的编程习惯。其实都是在讲代码规范（Code Style）这件事情。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1498777939.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1498777946.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1498777953.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1498777959.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1498777964.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1498777971.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1498777977.png">
-<meta property="og:updated_time" content="2017-06-30T14:25:04.000Z">
+<meta property="og:image" content="http://blog.ancard.top/1498777939.png">
+<meta property="og:image" content="http://blog.ancard.top/1498777946.png">
+<meta property="og:image" content="http://blog.ancard.top/1498777953.png">
+<meta property="og:image" content="http://blog.ancard.top/1498777959.png">
+<meta property="og:image" content="http://blog.ancard.top/1498777964.png">
+<meta property="og:image" content="http://blog.ancard.top/1498777971.png">
+<meta property="og:image" content="http://blog.ancard.top/1498777977.png">
+<meta property="og:updated_time" content="2018-12-22T07:06:05.458Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 代码规范，你应该知道的一些工具和用法">
 <meta name="twitter:description" content="从事编程这个行业，你一定被别人说过或者说过别人这句话：代码要规范！求职面试时也能从 JD 上看到这个要求：要有良好的编程习惯。其实都是在讲代码规范（Code Style）这件事情。">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1498777939.png">
+<meta name="twitter:image" content="http://blog.ancard.top/1498777939.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -216,7 +216,7 @@ ga('send', 'pageview');
 <p>该文件内容都是一些 xml 配置，这里不妨截取一部分看看：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">code_scheme</span> <span class="attr">name</span>=<span class="string">"GoogleStyle"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">name</span>=<span class="string">"OTHER_INDENT_OPTIONS"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">option</span> <span class="attr">name</span>=<span class="string">"INDENT_SIZE"</span> <span class="attr">value</span>=<span class="string">"2"</span> /&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">option</span> <span class="attr">name</span>=<span class="string">"CONTINUATION_INDENT_SIZE"</span> <span class="attr">value</span>=<span class="string">"4"</span> /&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">option</span> <span class="attr">name</span>=<span class="string">"TAB_SIZE"</span> <span class="attr">value</span>=<span class="string">"2"</span> /&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">option</span> <span class="attr">name</span>=<span class="string">"USE_TAB_CHARACTER"</span> <span class="attr">value</span>=<span class="string">"false"</span> /&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">option</span> <span class="attr">name</span>=<span class="string">"SMART_TABS"</span> <span class="attr">value</span>=<span class="string">"false"</span> /&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">option</span> <span class="attr">name</span>=<span class="string">"LABEL_INDENT_SIZE"</span> <span class="attr">value</span>=<span class="string">"0"</span> /&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">option</span> <span class="attr">name</span>=<span class="string">"LABEL_INDENT_ABSOLUTE"</span> <span class="attr">value</span>=<span class="string">"false"</span> /&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">option</span> <span class="attr">name</span>=<span class="string">"USE_RELATIVE_INDENTS"</span> <span class="attr">value</span>=<span class="string">"false"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">option</span>&gt;</span></div><div class="line">  </div><div class="line">  ......</div><div class="line">  </div><div class="line"><span class="tag">&lt;/<span class="name">code_scheme</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>打开 Android Studio，在 <strong>Preferences</strong> 界面中找到 <strong>Code Style</strong> 菜单，选择 <strong>Java</strong> 语言，点击 <strong>Manage</strong> 按钮，<strong>Import</strong> 前面下载好的 xml 配置文件。然后在 <strong>Scheme</strong> 下拉列表中便可以看到 GoogleStyle 选项，切换即可：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1498777939.png" alt=""></p>
+<p><img src="http://blog.ancard.top/1498777939.png" alt=""></p>
 <p>之后，在 Coding 过程中，使用一些快捷键操作，比如格式化、TAB 键等，就会自动按照这份代码规范执行。当然，你也可以修改这份代码规范，前提是你要知道该规范的内容意义。关于这个，Google 也提供有一份在线文档，可供参考：</p>
 <p><a href="https://google.github.io/styleguide/javaguide.html" target="_blank" rel="external">Google Java Style Guide</a></p>
 <h1 id="代码格式化"><a href="#代码格式化" class="headerlink" title="代码格式化"></a>代码格式化</h1><hr>
@@ -234,20 +234,20 @@ ga('send', 'pageview');
 <p>CheckStyle 的 GitHub 下载地址为：</p>
 <p><a href="https://github.com/checkstyle/checkstyle" target="_blank" rel="external">https://github.com/checkstyle/checkstyle</a></p>
 <p>也可以使用 Android Studio 在线安装的方式搜索安装：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1498777946.png" alt=""></p>
+<p><img src="http://blog.ancard.top/1498777946.png" alt=""></p>
 <p>CheckStyle 的使用需要配合着 xml 检查文件。Google 公司也提供有一份对应 Java 代码规范的检查规则文件和<a href="http://checkstyle.sourceforge.net/google_style.html" target="_blank" rel="external">文档说明</a>，检查文件的下载地址请点击：</p>
 <p><a href="https://github.com/checkstyle/checkstyle/blob/master/src/main/resources/google_checks.xml" target="_blank" rel="external">google_checks.xml</a></p>
 <p>同样的，你也可以按照自己的需要随意修改。不过最好和你前面使用的 Code Style 文件保持一致。</p>
 <p>然后你就可以将这份检查规则文件配置给 CheckStyle 工具，也是在 <strong>Preferences</strong> 窗口中配置（ IDE 中默认也有一套 CheckStyle 规则）：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1498777953.png" alt=""></p>
+<p><img src="http://blog.ancard.top/1498777953.png" alt=""></p>
 <p>重启 IDE，然后便可以在底部菜单栏中看到 CheckStyle 操作选项：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1498777959.png" alt=""></p>
+<p><img src="http://blog.ancard.top/1498777959.png" alt=""></p>
 <p>打开 CheckStyle 窗口，选择前面配置的 google-checkstyle 检查规则文件，点击左边的 Run 按钮，便可以对当前打开的 Java 文件检查规范：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1498777964.png" alt=""></p>
+<p><img src="http://blog.ancard.top/1498777964.png" alt=""></p>
 <p>可以看到，不符合规范的地方都有对应行数等提示信息，可以选择并逐一修改。修改完毕，再次执行 Run 操作检查时，如果完全符合 CheckStyle 的话，看到的就是 no problems 提示：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1498777971.png" alt=""></p>
+<p><img src="http://blog.ancard.top/1498777971.png" alt=""></p>
 <p>CheckStyle 插件工具的好处是，你能够直接在 IDE 中对项目中的某个 Java 文件检查规范，并且从错误信息处直接定位到相关代码位置，从而很方便地作出修改。还有一个好处是，你可以在编写代码时，实时得到 CheckStyle 的检测提示，如：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1498777977.png" alt=""></p>
+<p><img src="http://blog.ancard.top/1498777977.png" alt=""></p>
 <p>可以看到，在编辑区直接提示，方法中的左大括号前面需要使用空格与其他内容隔开。这样，我们在 Coding 的时候就能随时知道当前代码是否符合规范，非常方便。</p>
 <p>而 CheckStyle 插件工具不好的地方在于，其不能做到对多个文件批量检查。比如，我想知道某个项目或者某个目录下的 Java 文件是否符合规范，插件就做不到。这个时候，你就可以使用命令行工具了。</p>
 <p>下载 CheckStyle 提供的 Jar 包及 xml 规则文件，然后打开命令行工具，输入检查命令即可。如：</p>

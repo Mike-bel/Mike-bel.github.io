@@ -16,13 +16,13 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="Fragment，俗称碎片，自 Android 3.0 开始被引进并大量使用。然而就是这样耳熟能详的一个东西，在开发中我们还是会遇见各种各样的问题，层出不穷。所以，是时候总结一波了。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1481785884.jpg">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482921533.png">
-<meta property="og:updated_time" content="2017-03-09T06:31:55.000Z">
+<meta property="og:image" content="http://blog.ancard.top/1481785884.jpg">
+<meta property="og:image" content="http://blog.ancard.top/1482921533.png">
+<meta property="og:updated_time" content="2018-12-22T07:02:48.732Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Fragment 的使用，一些你不可不知的注意事项">
 <meta name="twitter:description" content="Fragment，俗称碎片，自 Android 3.0 开始被引进并大量使用。然而就是这样耳熟能详的一个东西，在开发中我们还是会遇见各种各样的问题，层出不穷。所以，是时候总结一波了。">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1481785884.jpg">
+<meta name="twitter:image" content="http://blog.ancard.top/1481785884.jpg">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -205,7 +205,7 @@ ga('send', 'pageview');
 <h1 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h1><hr>
 <p>作为宿主 Activity 的一部分，Activity 拥有的大部分生命周期函数在 Fragment 中同样存在，并与 Activity 保持同步。同时，作为一个特殊情况的存在，Fragment 也有一些自己的生命周期函数，如 onAttach()、onCreateView() 等。</p>
 <p>至于 Activity 与 Fragment 之间生命周期函数的对应同步关系，来自 GitHub 的 <a href="https://github.com/xxv/android-lifecycle" target="_blank" rel="external">xxv/android-lifecycle</a> 项目用了一幅图完美地予以展示：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1481785884.jpg" alt=""></p>
+<p><img src="http://blog.ancard.top/1481785884.jpg" alt=""></p>
 <p>关于 Fragment 各个生命周期函数的意义，这里就不一一叙述，可以参考官网介绍：<a href="https://developer.android.com/reference/android/app/Fragment.html" target="_blank" rel="external">Fragment Lifecycle</a>。</p>
 <h1 id="创建实例"><a href="#创建实例" class="headerlink" title="创建实例"></a>创建实例</h1><hr>
 <p>像普通的类一样，Fragment 拥有自己的构造函数，于是我们可以像下面这样在 Activity 中创建 Fragment 实例：</p>
@@ -317,7 +317,7 @@ ga('send', 'pageview');
 <p>注意：onHiddenChanged() 方法可以监听 hide() 和 show() 操作，与 setUserVisibleHint() 方法有所不同，后者常见的出现场景是在 ViewPager 和 Fragment 组合的 FragmentPagerAdapter 中使用。ViewPager 滑动时便是通过这个方法改变 Fragment 的状态，利用这个方法可以实现 Fragment 懒加载，后续文章中再详细描述实现方式。</p>
 </blockquote>
 <p>下面举个常见的例子，如图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1482921533.png" alt=""></p>
+<p><img src="http://blog.ancard.top/1482921533.png" alt=""></p>
 <p>这种 UI 结构想必大家都很熟悉，经常作为 App 的首页主界面布局，这里我们假设没有使用 ViewPager，而是普通操作 Fragment，通过 add()、show()、hide() 方法实现切换不同 Tab 控制 Activity 里面各个 Fragment 的显示和隐藏。并且这四个 Fragment 都需要通过加载网络数据显示内容，同时要求不同 Fragment 之间切换显示时都要重新请求服务器刷新当前界面的数据，这该怎么做呢？</p>
 <p>这里有好几种情况要考虑：</p>
 <p>第一种，在四个 Fragment 都已经显示过的情况下，不同 Tab 切换时，当前 Fragment 的 onResume() 方法不会被调用，需要在 onHiddenChanged() 方法中请求服务器；</p>

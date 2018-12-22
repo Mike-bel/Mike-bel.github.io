@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="宽屏适配、禁止截屏和保持屏幕常亮，这三个与屏幕有关的 Android 开发小众知识，说不定什么时候就派上用场。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1512116422.png">
-<meta property="og:updated_time" content="2017-12-01T13:25:39.964Z">
+<meta property="og:image" content="http://blog.ancard.top/1512116422.png">
+<meta property="og:updated_time" content="2018-12-22T07:06:18.971Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 开发中，与屏幕有关的三个小众知识">
 <meta name="twitter:description" content="宽屏适配、禁止截屏和保持屏幕常亮，这三个与屏幕有关的 Android 开发小众知识，说不定什么时候就派上用场。">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1512116422.png">
+<meta name="twitter:image" content="http://blog.ancard.top/1512116422.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -199,7 +199,7 @@ ga('send', 'pageview');
 <p><strong>注意：</strong>如果你没有使用 <code>meta-data</code> 标签设置 max_aspect 属性，同时 <code>android:resizeableActivity</code> 属性值为 true 的话，App 默认使用的最大 aspect 默认值为 1.8（大约 16:9 的样子）。</p>
 <p><strong>备注：</strong> resizeableActivity 属性在 targetSDKVersion 小于 24 的应用中值为 false，其他为 true。</p>
 <p>下面这张图通过对比呈现出不同 aspect 值的 App 在高屏幕比例设备中的显示效果：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1512116422.png" height="400"></p>
+<p><img src="http://blog.ancard.top/1512116422.png" height="400"></p>
 <p>左边为 16:9 的 aspect 设置，右边为 18.5:9 的设置，同样使用的是屏幕比例为 18.5:9 的大屏设备。明显可以看出，低比例值设置的 App 打开时屏幕上下均有留白，也就说不能充分利用屏幕空间。</p>
 <h1 id="禁止截屏"><a href="#禁止截屏" class="headerlink" title="禁止截屏"></a>禁止截屏</h1><p>像支付宝付款二维码这种对安全要求比较高的界面，应用一般会选择屏蔽设备截屏功能。当你同时按下截屏快捷键组合（常见为开机键 + 音量上键）时，系统会自动提示截屏失败等关联信息。</p>
 <p>禁止截屏的实现方式并不是很难，在需要设置禁止截屏的 Activity 的生命周期 <code>onCreate()</code> 方法中添加一行代码即可：</p>

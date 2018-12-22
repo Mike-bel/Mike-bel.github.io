@@ -16,13 +16,13 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="开发人员在设计Android Layout布局时，总会伴随着一些乱七八槽的困扰。比如，为了更加逼真的真实数据预览效果，我们在开发时会将TextView的text属性写上一些假数据，而当运行到模拟器或真机上时这些假数据就成了造成体验上甚至测试BUG的脏数据，又需要一一清除。再比如，我们想在XML的预览界面上就看到ListView的Item内容，而不是只有通过编译运行时才能查看。等等，诸如这些存在于开">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/tools-listitem.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/actionBarNavMode.png">
-<meta property="og:updated_time" content="2016-10-13T15:05:59.000Z">
+<meta property="og:image" content="http://blog.ancard.top/tools-listitem.png">
+<meta property="og:image" content="http://blog.ancard.top/actionBarNavMode.png">
+<meta property="og:updated_time" content="2018-12-22T07:04:26.758Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Tools Attributes，让布局设计所见即所得">
 <meta name="twitter:description" content="开发人员在设计Android Layout布局时，总会伴随着一些乱七八槽的困扰。比如，为了更加逼真的真实数据预览效果，我们在开发时会将TextView的text属性写上一些假数据，而当运行到模拟器或真机上时这些假数据就成了造成体验上甚至测试BUG的脏数据，又需要一一清除。再比如，我们想在XML的预览界面上就看到ListView的Item内容，而不是只有通过编译运行时才能查看。等等，诸如这些存在于开">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/tools-listitem.png">
+<meta name="twitter:image" content="http://blog.ancard.top/tools-listitem.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -221,7 +221,7 @@ ga('send', 'pageview');
 <p>顾名思义，这三个属性可用于诸如ListView、GridView、ExpandableListView等AdapterView的子类中，实现内容布局的预览。注意：经实践，在Android Studio中已经无法达到这些元素的内容预览效果，但<code>tools:listitem</code>属性可以用在<code>RecyclerView</code>中，比如：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">android.support.v7.widget.RecyclerView</span></span></div><div class="line"><span class="tag">	<span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">	<span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">	<span class="attr">tools:listitem</span>=<span class="string">"@android:layout/simple_list_item_checked"</span>/&gt;</span></div></pre></td></tr></table></figure>
 <p>RecyclerView使用tools:listitem的前后对比预览效果如下：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/tools-listitem.png" alt="tools-listitem"></p>
+<p><img src="http://blog.ancard.top/tools-listitem.png" alt="tools-listitem"></p>
 <p><strong>tools:showIn</strong></p>
 <p>这个属性用在<include>标签所包含的layout的根元素上，指定一个<include>所在的布局文件，这样在被嵌套的layout的design视图中便可以预览到外层的layout内容。比如在activity_main.xml中使用<code>&lt;include&gt;</code>标签嵌套一个include_content.xml文件，那么在include_content.xml文件的根元素中就可以使用<code>tools:showIn</code>属性指定Outer layout，达到在include_content.xml文件中预览activity_main.xml内容的效果：</include></include></p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">RelativeLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line"><span class="tag">    <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span></span></div><div class="line"><span class="tag">    <span class="attr">tools:showIn</span>=<span class="string">"@layout/activity_main"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></div></pre></td></tr></table></figure>
@@ -232,7 +232,7 @@ ga('send', 'pageview');
 <p>这个属性用在layout根元素中，指定layout预览时ActonBar的导航模式，值有standard、list和tabs三种，如：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">RelativeLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line"><span class="tag">    <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span></span></div><div class="line"><span class="tag">    <span class="attr">tools:actionBarNavMode</span>=<span class="string">"standard"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>ActionBar不同navigation mode下的预览效果如图所示，关于navigation mode的相关信息可参考<a href="http://developer.android.com/design/patterns/app-structure.html#top-level-switching" target="_blank" rel="external">Top Level Switching With View Controls</a>：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/actionBarNavMode.png" alt="navigation mode"></p>
+<p><img src="http://blog.ancard.top/actionBarNavMode.png" alt="navigation mode"></p>
 <p><strong>tools:shrinkMode／keep／discard</strong></p>
 <p>为了使APK文件尽可能地变小，一般在打包发布时会开启Shrink Code和Shrink Resources的功能，删除项目中无用的代码和资源，使用这三个属性可以指定某些resources的保留与删除，具体信息可以参考官网介绍：<a href="https://developer.android.com/studio/build/shrink-code.html" target="_blank" rel="external">Shrink Your Code and Resources</a>。</p>
 <h1 id="官方参考"><a href="#官方参考" class="headerlink" title="官方参考"></a>官方参考</h1><hr>

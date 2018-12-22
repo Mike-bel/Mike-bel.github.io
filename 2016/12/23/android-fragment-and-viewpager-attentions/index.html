@@ -16,13 +16,13 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="前面两篇文章中，对 Fragment 的基本使用、常见问题和状态恢复做了详细的分析总结。除了在 Activity 中单独使用 Fragment，Fragment + ViewPager 组合也是项目中使用非常频繁的方式，本文再来总结一下这种组合使用时的注意事项。在此之前，如果你对 Fragment 的认知和使用还有不清楚的地方，一定要先阅读前面两篇文章：  Android Fragment 的使用">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482393570.jpg">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482394347.jpg">
-<meta property="og:updated_time" content="2016-12-23T08:26:50.000Z">
+<meta property="og:image" content="http://blog.ancard.top/1482393570.jpg">
+<meta property="og:image" content="http://blog.ancard.top/1482394347.jpg">
+<meta property="og:updated_time" content="2018-12-22T07:06:38.970Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Fragment＋ViewPager 组合，一些你不可不知的注意事项">
 <meta name="twitter:description" content="前面两篇文章中，对 Fragment 的基本使用、常见问题和状态恢复做了详细的分析总结。除了在 Activity 中单独使用 Fragment，Fragment + ViewPager 组合也是项目中使用非常频繁的方式，本文再来总结一下这种组合使用时的注意事项。在此之前，如果你对 Fragment 的认知和使用还有不清楚的地方，一定要先阅读前面两篇文章：  Android Fragment 的使用">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1482393570.jpg">
+<meta name="twitter:image" content="http://blog.ancard.top/1482393570.jpg">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -222,9 +222,9 @@ ga('send', 'pageview');
 <p>新建一个名为 BaseFragment 的基类，继承自 Fragment，重写<br><code>setUserVisibleHint</code> 和 各个生命周期函数，添加日志打印。然后新建四个子类，分别命名为 OneFragment、TwoFragment、ThreeFragment 和 FourFragment，按照基本使用方法写好代码，运行并滑动页面，查看日志打印。</p>
 <p>由于代码较为简单，考虑内容长度，这里就不贴相关代码，主要描述思想。对应日志截图如下：</p>
 <p>使用 <code>FragmentPagerAdapter</code> 时：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1482393570.jpg" alt=""></p>
+<p><img src="http://blog.ancard.top/1482393570.jpg" alt=""></p>
 <p>使用 <code>FragmentStatePagerAdapter</code> 时：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1482394347.jpg" alt=""></p>
+<p><img src="http://blog.ancard.top/1482394347.jpg" alt=""></p>
 <p>图中做了相应标记说明，二者区别一目了然，无需过多解释。出现这样的区别，其实从源码中的 <code>instantiateItem</code> 和 <code>destroyItem</code> 也能读出一二，感兴趣的话可以翻看一下。</p>
 <h1 id="Fragment-懒加载"><a href="#Fragment-懒加载" class="headerlink" title="Fragment 懒加载"></a>Fragment 懒加载</h1><hr>
 <p>懒加载，顾名思义，是希望在展示相应 Fragment 页面时再动态加载页面数据，数据通常来自于网络或本地数据库。这种做法的合理性在于用户可能不会滑到一下页面，同时还能帮助减轻当前页面数据请求的带宽压力，如果是用户使用流量的话，还能避免无用的流量消耗。</p>

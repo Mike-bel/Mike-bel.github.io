@@ -16,15 +16,15 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="自 API 21 （Android L）开始，Android SDK 引入 tint 着色器，可以随意改变安卓项目中图标或者 View 背景的颜色，一定程度上可以减少同一个样式不同颜色图标的数量，从而起到 Apk 瘦身的作用。不过使用 tint 存在一定的兼容性问题，且听本文慢慢说来。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1490743313.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1490824929.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1490824937.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1490826805.gif">
-<meta property="og:updated_time" content="2017-04-03T14:18:58.000Z">
+<meta property="og:image" content="http://blog.ancard.top/1490743313.png">
+<meta property="og:image" content="http://blog.ancard.top/1490824929.png">
+<meta property="og:image" content="http://blog.ancard.top/1490824937.png">
+<meta property="og:image" content="http://blog.ancard.top/1490826805.gif">
+<meta property="og:updated_time" content="2018-12-22T07:03:48.971Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从使用到源码，细说 Android 中的 tint 着色器">
 <meta name="twitter:description" content="自 API 21 （Android L）开始，Android SDK 引入 tint 着色器，可以随意改变安卓项目中图标或者 View 背景的颜色，一定程度上可以减少同一个样式不同颜色图标的数量，从而起到 Apk 瘦身的作用。不过使用 tint 存在一定的兼容性问题，且听本文慢慢说来。">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1490743313.png">
+<meta name="twitter:image" content="http://blog.ancard.top/1490743313.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -204,7 +204,7 @@ ga('send', 'pageview');
 </ul>
 <p>对应于给图片着色的这两个属性，给 View 背景着色也有两个属性：<strong>backgroundTint</strong> 和 <strong>backgroundTintMode</strong>，用法相同，只是作用于 android:background 属性。需要注意的是，这两个属性也只是作用于 API 21 及更高版本。</p>
 <p>这里我们在使用默认 tintMode 的情况下，演示一下图标着色和背景着色的前后对比情况：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1490743313.png" alt=""></p>
+<p><img src="http://blog.ancard.top/1490743313.png" alt=""></p>
 <p>原图：不做任何处理的 ImageButton，代码如下：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ImageButton</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:src</span>=<span class="string">"@mipmap/ic_home"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:background</span>=<span class="string">"@android:color/transparent"</span>/&gt;</span></div></pre></td></tr></table></figure>
 <p>图标着色：使用 android:tint 属性对 src 属性指向的图标着色处理，代码如下：</p>
@@ -225,10 +225,10 @@ ga('send', 'pageview');
 <p>我们先来看一个有趣的现象：如果我们有两个 ImageView 使用相同一个图片资源作为 src 或者 background 的属性值，然后在 Java 代码中通过 DrawableCompat 类对其中一个做着色处理，就像上面所写的代码这样，运行后你会发现，只有当前被赋值的 ImageView 显示的是被着色处理后的图片；但是去掉 mutate() 方法时，再次运行，两个 ImageView 都显示的是被着色处理后的图片！事实上，不仅是两个，应用中所有使用到该图片资源的地方，都会显示成被着色处理过的样式。</p>
 <p>这就是 mutate() 存在的必要性。要说到这个方法，就大有讲头啦。在此之前，我们必须先了解一下 <strong>constant state</strong> 这个概念。</p>
 <p>Android 系统为了减少内存消耗，将应用中所用到的相同 drawable （可以理解为相同资源）共享同一个 state，并称之为 constant state。这里用图表演示一下，两个 View 加载同一个图片资源，创建两个 drawables 对象，但是共享同一个 constant state 的场景：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1490824929.png" alt=""></p>
+<p><img src="http://blog.ancard.top/1490824929.png" alt=""></p>
 <p>这种设计当然大大节省内存，但也存在一个弊端。就是，当 constant state 属性发生变化时，所有使用相同资源的关联 drawable 都会随之改变，比如前面所说的这种现象。</p>
 <p>而 mutate() 方法的出现就是为了解决这种问题的。你可以理解为 mutate() 方法就是复制一份 constant state，允许你随意改变属性，同时不对其他 drawable 有任何影响。如图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1490824937.png" alt=""></p>
+<p><img src="http://blog.ancard.top/1490824937.png" alt=""></p>
 <p>这种设计在早期的官方文档上也有介绍，参考 <a href="https://android-developers.googleblog.com/2009/05/drawable-mutations.html" target="_blank" rel="external">drawable-mutations</a>。</p>
 <p>再回到本文主题，可见，drawable 的着色处理必然要使用到 wrap() 和 mutate() 两个方法，也就顺理成章啦。</p>
 <blockquote>
@@ -242,7 +242,7 @@ ga('send', 'pageview');
 <p>当然你也可以直接在代码中手动创建一个 ColorStateList 对象：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span>[] colors = <span class="keyword">new</span> <span class="keyword">int</span>[] &#123; ContextCompat.getColor(<span class="keyword">this</span>, android.R.color.black), ContextCompat.getColor(<span class="keyword">this</span>, android.R.color.white)&#125;;</div><div class="line"><span class="keyword">int</span>[][] states = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>][];</div><div class="line">states[<span class="number">0</span>] = <span class="keyword">new</span> <span class="keyword">int</span>[] &#123; android.R.attr.state_pressed&#125;;</div><div class="line">states[<span class="number">1</span>] = <span class="keyword">new</span> <span class="keyword">int</span>[] &#123;&#125;;</div><div class="line">ColorStateList colorStateList = <span class="keyword">new</span> ColorStateList(states, colors);</div></pre></td></tr></table></figure>
 <p>效果都是一样的，如图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1490826805.gif" alt=""></p>
+<p><img src="http://blog.ancard.top/1490826805.gif" alt=""></p>
 <h1 id="Tint-着色器原理"><a href="#Tint-着色器原理" class="headerlink" title="Tint 着色器原理"></a>Tint 着色器原理</h1><hr>
 <p>前面讲到，使用 DrawableCompat 可以起到版本兼容效果。实际上，还有一种办法，就是使用 android.support.v7.widget 兼容包中的 AppCompatXXX 控件，比如 AppCompatImageView。这种控件提供有如下方法可用于着色处理：</p>
 <ul>

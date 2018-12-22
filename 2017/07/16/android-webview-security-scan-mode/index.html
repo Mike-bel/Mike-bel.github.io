@@ -16,13 +16,13 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="Hybrid App（混合式开发）已经是每一个商业应用都会使用的开发手段。其最大的优势就是将一些可动态更新的内容页面使用 H5 开发，然后借用移动端原生系统提供的 WebView 控件加载进来。这种方式不仅能够节约安卓和 iOS 两个客户端的开发人力成本，还能在避免应用版本迭代的情况下动态更新页面内容。然而，WebView 有一个弊端，就是始终无法避免的安全问题。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1500168860.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1500168866.png">
-<meta property="og:updated_time" content="2017-07-16T08:17:16.000Z">
+<meta property="og:image" content="http://blog.ancard.top/1500168860.png">
+<meta property="og:image" content="http://blog.ancard.top/1500168866.png">
+<meta property="og:updated_time" content="2018-12-22T06:59:58.961Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="开启 Android WebView 的安全浏览模式">
 <meta name="twitter:description" content="Hybrid App（混合式开发）已经是每一个商业应用都会使用的开发手段。其最大的优势就是将一些可动态更新的内容页面使用 H5 开发，然后借用移动端原生系统提供的 WebView 控件加载进来。这种方式不仅能够节约安卓和 iOS 两个客户端的开发人力成本，还能在避免应用版本迭代的情况下动态更新页面内容。然而，WebView 有一个弊端，就是始终无法避免的安全问题。">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1500168860.png">
+<meta name="twitter:image" content="http://blog.ancard.top/1500168860.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -195,7 +195,7 @@ ga('send', 'pageview');
 <a id="more"></a>
 <p>比如，你连接的 WI-FI 可能会被一些网络运营商恶意拦截 DNS 系统，当你打开应用的 WebView 时，会在页面底部或者其他地方看到莫名其妙的广告内容。更有甚者，直接重定向到其他网页，对应用或者设备随意操作，存在很大的安全隐患。</p>
 <p>Google 一直也在致力于处理这个问题。最近，就有了一些进展。根据 Android Developers 官方博客介绍，从 Android O 开始，WebView 将采用独立于托管应用之外的进程来进行渲染器，提供隔离空间。</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1500168860.png" alt=""></p>
+<p><img src="http://blog.ancard.top/1500168860.png" alt=""></p>
 <p>这种做法与 Chrome 浏览器类似，使得 WebView 拥有两级隔离：</p>
 <ol>
 <li><p>WebView 渲染引擎剥离出独立进程。这样，也就不会存在由于 WebView 的加载错误导致我们的主应用发生崩溃问题，而且第三方恶意网站也很难通过渲染器攻击托管应用。</p>
@@ -204,7 +204,7 @@ ga('send', 'pageview');
 </li>
 </ol>
 <p>安全浏览模式下的最新版 WebView 还集成了 Google 安全浏览机制，来保护和提醒用户可能存在风险的网站。启用安全浏览配置后，WebView 将参考安全浏览的恶意软件和钓鱼网站数据库检查访问的 URLs 地址，在用户打开之前给予危险提示，如：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1500168866.png" alt=""></p>
+<p><img src="http://blog.ancard.top/1500168866.png" alt=""></p>
 <p>讲到这里，你可能就要问了，如何启动 WebView 安全浏览呢？很简单，在我们应用的 Manifest 清单文件中按照下面的代码简单配置一下，便可以让当前 App 中使用到的所有 WebView 都能支持安全浏览：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">manifest</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta-data</span> <span class="attr">android:name</span>=<span class="string">"android.webkit.WebView.EnableSafeBrowsing"</span></span></div><div class="line"><span class="tag">               <span class="attr">android:value</span>=<span class="string">"true"</span> /&gt;</span></div><div class="line">    ...</div><div class="line">    <span class="tag">&lt;<span class="name">application</span>&gt;</span> ... <span class="tag">&lt;/<span class="name">application</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>由于 WebView 作为一个独立的 APK 被分发使用的，截至目前，Android 5.0 及以上系统的设备已经可以支持 WebView 安全浏览。而你只需要在清单文件中添加如上配置代码，便可以让你的混合式开发的应用更加安全。</p>

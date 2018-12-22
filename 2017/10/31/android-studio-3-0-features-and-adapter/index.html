@@ -16,21 +16,21 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="上周四，Google 终于在经历大半年的打磨锤炼之后正式发布 Android Studio 3.0 版本，给广大安卓开发人员一份满意的答卷。如往常一样，每次新版开发工具的发布，很多谨慎点的朋友仍担心稳定性、是否存在坑等问题，选择隔岸观火，等一段时间再更新升级。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509442480.gif">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509440854.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509440865.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509440870.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509440875.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509440880.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509440886.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509440891.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509440896.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509440900.png">
-<meta property="og:updated_time" content="2018-01-12T10:20:01.381Z">
+<meta property="og:image" content="http://blog.ancard.top/1509442480.gif">
+<meta property="og:image" content="http://blog.ancard.top/1509440854.png">
+<meta property="og:image" content="http://blog.ancard.top/1509440865.png">
+<meta property="og:image" content="http://blog.ancard.top/1509440870.png">
+<meta property="og:image" content="http://blog.ancard.top/1509440875.png">
+<meta property="og:image" content="http://blog.ancard.top/1509440880.png">
+<meta property="og:image" content="http://blog.ancard.top/1509440886.png">
+<meta property="og:image" content="http://blog.ancard.top/1509440891.png">
+<meta property="og:image" content="http://blog.ancard.top/1509440896.png">
+<meta property="og:image" content="http://blog.ancard.top/1509440900.png">
+<meta property="og:updated_time" content="2018-12-22T07:05:28.971Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Studio 3.0 新功能解析和旧项目适配">
 <meta name="twitter:description" content="上周四，Google 终于在经历大半年的打磨锤炼之后正式发布 Android Studio 3.0 版本，给广大安卓开发人员一份满意的答卷。如往常一样，每次新版开发工具的发布，很多谨慎点的朋友仍担心稳定性、是否存在坑等问题，选择隔岸观火，等一段时间再更新升级。">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1509442480.gif">
+<meta name="twitter:image" content="http://blog.ancard.top/1509442480.gif">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -206,21 +206,21 @@ ga('send', 'pageview');
 <p><strong>Kotlin Support</strong></p>
 <p>在 Android Studio 3.0 之前，使用 Kotlin 语言开发安卓应用，需要额外配置 Kotlin 插件。而新版本内置默认支持 Kotlin 语言，来减少我们在配置上的工作。</p>
 <p>选择工具栏 Code -&gt; Convert Java File To Kotlin File，或者使用快捷键的形式，你可以一键实现 Java 文件到 Kotlin 文件的转换。</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1509442480.gif" alt=""></p>
+<p><img src="http://blog.ancard.top/1509442480.gif" alt=""></p>
 <p>备注：关于快捷键的使用，你可以使用 Command + Shift + A 这组快捷键打开 <a href="https://www.jetbrains.com/help/idea/navigating-to-action.html" target="_blank" rel="external">Find Action</a> 窗口，输入关键字寻找对应功能及其快捷键，效果就像上面 Gif 图展示的这样。</p>
 <p><strong>Java 8 Support</strong></p>
 <p>3.0 对 Java 8 语言特性的默认支持使你不用在 build.gradle 配置文件中添加 jackOptions 一项。如果你有使用到的话，记得删除：</p>
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    ...</div><div class="line">    defaultConfig &#123;</div><div class="line">        ...</div><div class="line">        <span class="comment">// Remove this block.</span></div><div class="line">        jackOptions &#123;</div><div class="line">            enabled <span class="keyword">true</span></div><div class="line">            ...</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>选择工具栏 File -&gt; Project Structure，修改 Source Compatibility 和 Target Compatibility 选项到 1.8 即可使我们的项目支持 Java 8 语言特性。</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1509440854.png" alt=""></p>
+<p><img src="http://blog.ancard.top/1509440854.png" alt=""></p>
 <p><strong>Android Profiler</strong></p>
 <p>过去我们使用的 Android Monitor 工具从 3.0 版本开始被 Android Profiler 替代掉了。如图，run 按钮一栏多了一个 Android Profiler 按钮：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1509440865.png" alt=""></p>
+<p><img src="http://blog.ancard.top/1509440865.png" alt=""></p>
 <p>Android Profiler 提供有 CPU、Memory 和 Network 三大调试分析利器，实时跟踪 Apk 的运行状态，可以帮助我们可视化地做一些性能调休工作。</p>
 <p>这三个工具在开发阶段非常实用，比如 CPU Profiler 能够分析应用中的线程使用情况，Memory Profiler 能够检测出内存泄漏，Network Profiler 能够拦截网络请求实现抓包功能等。这里列举一些使用图片，简单预览一些这三大工具的风采：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1509440870.png" width="600"></p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1509440875.png" width="600"></p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1509440880.png" width="600"></p>
+<p><img src="http://blog.ancard.top/1509440870.png" width="600"></p>
+<p><img src="http://blog.ancard.top/1509440875.png" width="600"></p>
+<p><img src="http://blog.ancard.top/1509440880.png" width="600"></p>
 <p>有关详细使用细节，可参考官方介绍：</p>
 <ul>
 <li><p><a href="https://developer.android.google.cn/studio/profile/cpu-profiler.html" target="_blank" rel="external">CPU Profiler guide</a></p>
@@ -232,17 +232,17 @@ ga('send', 'pageview');
 </ul>
 <p><strong>Device File Explorer</strong></p>
 <p>这个功能厉害了。新版开发工具带来的资源管理器允许我们访问连接设备的文件系统，实现 PC 端到手机或模拟器端的便捷文件传输。有了这个工具，从此就可以告别之前使用的「文件传输助手」等第三方工具啦。</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1509440886.png" width="600"></p>
+<p><img src="http://blog.ancard.top/1509440886.png" width="600"></p>
 <p><strong>Adaptive Icons wizard</strong></p>
 <p>选择 File -&gt; New -&gt; Image Asset，利用 Android Studio 提供的工具创建图片资源一直以来也是开发利器之一。现在，这个工具开始支持 <a href="https://developer.android.google.cn/guide/topics/graphics/vector-drawable-resources.html" target="_blank" rel="external">vector drawables</a> 格式，并且能够创建用于适配 Android 8.0 系统上各种形状的桌面图标。</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1509440891.png" width="600"></p>
+<p><img src="http://blog.ancard.top/1509440891.png" width="600"></p>
 <p><strong>URL intent-filter validator</strong></p>
 <p>这个功能也蛮贴心的。Manifest 清单文件开始支持一个特殊的标签，用于测试指定的 Url 字符串是否符合 intent-filter 标签所定义的规则。举个例子：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1509440896.png" alt=""></p>
+<p><img src="http://blog.ancard.top/1509440896.png" alt=""></p>
 <p>如图，使用 data 标签定义一个 Url 规则，并使用 tools:validation 标签验证一个错误的测试 Url 地址，检测器能够自动识别并给出错误提示。这个例子很简单，肉眼一眼就能看出错误。那如果是比较复杂的规则呢，可能就不那么容易看得出来了。这个时候，这个工具就可以派上用场啦。</p>
 <p><strong>APK Analyzer</strong></p>
 <p>3.0 版本对 APK Analyzer 的功能做了进一步强化。主要在于：对于使用 ProGuard 混淆过的 APK 文件，我们能够上传 mapping.txt 文件进行代码还原；Dex 文件提供显示各个包目录的大小；等等。</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1509440900.png" alt=""></p>
+<p><img src="http://blog.ancard.top/1509440900.png" alt=""></p>
 <p><strong>其他功能</strong></p>
 <p>除了上面介绍的这些变化，还有一些其他大大小小的变更。比如 Layout Inspector 和 Layout Editor 工具在 UI 上有所调整，比如 App Links Assistant 和 Firebase App Indexing Assistant 的强化使用，这些留着大家自己去探索发现吧。也可以访问 <a href="https://developer.android.google.cn/studio/releases/index.html" target="_blank" rel="external">Android Studio Release Notes</a> 官网，了解 3.0 更多发布细节。</p>
 <h1 id="旧项目的适配"><a href="#旧项目的适配" class="headerlink" title="旧项目的适配"></a>旧项目的适配</h1><hr>

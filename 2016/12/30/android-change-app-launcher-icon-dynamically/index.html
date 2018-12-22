@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="最近看到「医生」写的一篇文章：上次发版我就改了一行代码！，真是脑洞大开，没想到安卓应用的桌面图标还能动态改变，涨知识了，接触安卓开发以来还是第一次知道这玩意儿，顿感无地自容。于是细细读来，着手实践，对其中涉及到的知识点对着官方文档了解一番，总结记录于此。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1483060262.gif">
-<meta property="og:updated_time" content="2017-01-14T10:24:33.000Z">
+<meta property="og:image" content="http://blog.ancard.top/1483060262.gif">
+<meta property="og:updated_time" content="2018-12-22T07:04:02.381Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 利用 &lt;activity-alias&gt; 动态改变 App 桌面图标">
 <meta name="twitter:description" content="最近看到「医生」写的一篇文章：上次发版我就改了一行代码！，真是脑洞大开，没想到安卓应用的桌面图标还能动态改变，涨知识了，接触安卓开发以来还是第一次知道这玩意儿，顿感无地自容。于是细细读来，着手实践，对其中涉及到的知识点对着官方文档了解一番，总结记录于此。">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1483060262.gif">
+<meta name="twitter:image" content="http://blog.ancard.top/1483060262.gif">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -227,7 +227,7 @@ ga('send', 'pageview');
 <p>然后在 Activity 中动态切换，通过 PackageManager 对象提供的 <code>setComponentEnabledSetting()</code> 方法关闭当前 Component 组件，并启动别名对应的  Component 组件即可，参考代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClickOne</span><span class="params">(View v)</span></span>&#123;</div><div class="line">    PackageManager pm = getPackageManager();</div><div class="line">    pm.setComponentEnabledSetting(getComponentName(),</div><div class="line">            PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);</div><div class="line">    pm.setComponentEnabledSetting(<span class="keyword">new</span> ComponentName(<span class="keyword">this</span>, <span class="string">"com.yifeng.samples.AliasName"</span>),</div><div class="line">            PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>效果如图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1483060262.gif" alt=""></p>
+<p><img src="http://blog.ancard.top/1483060262.gif" alt=""></p>
 <p>注意，修改之后，需要稍等片刻才能看到变化。如果想在修改完成之后立即看到变化，只能通过 Intent 重启 Launcher 应用。代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_MAIN);</div><div class="line">intent.addCategory(Intent.CATEGORY_HOME);</div><div class="line">intent.addCategory(Intent.CATEGORY_DEFAULT);</div><div class="line">List&lt;ResolveInfo&gt; resolves = pm.queryIntentActivities(intent, <span class="number">0</span>);</div><div class="line"><span class="keyword">for</span> (ResolveInfo res : resolves) &#123;</div><div class="line">    <span class="keyword">if</span> (res.activityInfo != <span class="keyword">null</span>) &#123;</div><div class="line">        ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);</div><div class="line">        am.killBackgroundProcesses(res.activityInfo.packageName);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>然后不要忘了在 Manifest 文件中添加权限：</p>

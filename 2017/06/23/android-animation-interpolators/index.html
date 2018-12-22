@@ -16,27 +16,27 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="我们在做动画的时候，总是避免不了会使用到 Interpolator（插值器）这个东西，比如 LinearInterpolator 等。这样做的好处是，能够让动画的变化速度符合现实世界中的物理规律，看上去更加逼真。比如汽车启动时，速度总是越来越快的。     Android SDK 提供有多种插值器供开发人员使用。但很多时候，由于我们的英语水平、数学水平等原因，总是无法直观地区分各种插值器之间的细">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/accelerate-300x225.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/linear_settings.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/accelerate_settings.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/decelerate_settings.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/accelerate_decelerate_settings.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/anticipate_settings.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/overshoot_settings.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/function_anticipate_overshoot_interpolator.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/anticipate_overshoot_settings.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/function_bounce_interpolator.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/bounce_settings.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/cycle_settings.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/hesitate_settings-150x150.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/7fIV4YhSLy8CvZtX7Fwo_one.gif">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/u8rydN7FSCWDAKImIdaw_two.gif">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/iDU8PJCRDihLBK0LJrGs_three.gif">
-<meta property="og:updated_time" content="2017-06-22T23:45:45.000Z">
+<meta property="og:image" content="http://blog.ancard.top/accelerate-300x225.png">
+<meta property="og:image" content="http://blog.ancard.top/linear_settings.png">
+<meta property="og:image" content="http://blog.ancard.top/accelerate_settings.png">
+<meta property="og:image" content="http://blog.ancard.top/decelerate_settings.png">
+<meta property="og:image" content="http://blog.ancard.top/accelerate_decelerate_settings.png">
+<meta property="og:image" content="http://blog.ancard.top/anticipate_settings.png">
+<meta property="og:image" content="http://blog.ancard.top/overshoot_settings.png">
+<meta property="og:image" content="http://blog.ancard.top/function_anticipate_overshoot_interpolator.png">
+<meta property="og:image" content="http://blog.ancard.top/anticipate_overshoot_settings.png">
+<meta property="og:image" content="http://blog.ancard.top/function_bounce_interpolator.png">
+<meta property="og:image" content="http://blog.ancard.top/bounce_settings.png">
+<meta property="og:image" content="http://blog.ancard.top/cycle_settings.png">
+<meta property="og:image" content="http://blog.ancard.top/hesitate_settings-150x150.png">
+<meta property="og:image" content="http://blog.ancard.top/7fIV4YhSLy8CvZtX7Fwo_one.gif">
+<meta property="og:image" content="http://blog.ancard.top/u8rydN7FSCWDAKImIdaw_two.gif">
+<meta property="og:image" content="http://blog.ancard.top/iDU8PJCRDihLBK0LJrGs_three.gif">
+<meta property="og:updated_time" content="2018-12-22T07:03:24.557Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【译】从数学公式入手，详细了解 Animation 的 Interpolators">
 <meta name="twitter:description" content="我们在做动画的时候，总是避免不了会使用到 Interpolator（插值器）这个东西，比如 LinearInterpolator 等。这样做的好处是，能够让动画的变化速度符合现实世界中的物理规律，看上去更加逼真。比如汽车启动时，速度总是越来越快的。     Android SDK 提供有多种插值器供开发人员使用。但很多时候，由于我们的英语水平、数学水平等原因，总是无法直观地区分各种插值器之间的细">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/accelerate-300x225.png">
+<meta name="twitter:image" content="http://blog.ancard.top/accelerate-300x225.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -216,7 +216,7 @@ ga('send', 'pageview');
 <p>想要知道如何实现一个插值器之前，我们必须理解一个插值器到底做了什么。动画在开始时间和结束时间之间执行，每一帧都在这期间的一个特定时间显示。这个特定时间就是一个时间指数，0.0 到 1.0 闭区间中的一个 float 类型的数字。0.0 表示动画开始，1.0 表示动画结束。最简单的场景是，这个值直接被用于计算动画执行对象的变化。这种情况下，0.0 对应着动画的起始位置，1.0 对应着结束位置，0.5 表示一半，即起始位置和中间位置的正中间。这就是 LinearInterpolator（线性插值器）所做的事情。时间变化 30%，View 对应移动 30% 的距离。</p>
 <p>一般来说，这个时间指数并不是直接用来计算动画的变化值。我们可以改变时间指数的值，使其以其他值的方式也能从 0.0 走到 1.0，而不是按照固定不变的方式运行。这就是插值器所做的事情。</p>
 <p>一个时间插值器基本上也是一个数学公式，从 0.0 到 1.0 之间取一个值，然后变化为另一个值。下图向我们展示了加速度插值器的变化规律。View 以零速度启动，然后朝着结束位置加速变化。</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/accelerate-300x225.png" alt=""></p>
+<p><img src="http://blog.ancard.top/accelerate-300x225.png" alt=""></p>
 <p>默认情况下，加速度插值器的数学公式使用的是：</p>
 <blockquote>
 <p>y = t<sup>2</sup></p>
@@ -237,24 +237,24 @@ ga('send', 'pageview');
 <h1 id="插值器一览"><a href="#插值器一览" class="headerlink" title="插值器一览"></a>插值器一览</h1><hr>
 <p><strong>Linear Interpolator</strong>（线性插值器）</p>
 <p><strong>类名：</strong><br>LinearInterpolator<br><strong>资源 id：</strong><br>@android:anim/linear_interpolator<br><strong>标签名：</strong><br>linearInterpolator<br><strong>数学公式：</strong><br>y = t<br><strong>类构造函数：</strong><br>public LinearInterpolator()<br><strong>属性：</strong><br>无</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/linear_settings.png" alt=""> </p>
+<p><img src="http://blog.ancard.top/linear_settings.png" alt=""> </p>
 <p><strong>Accelerate Interpolator</strong>（加速度插值器）</p>
 <p><strong>类名：</strong><br>AccelerateInterpolator<br><strong>资源 id：</strong><br>@android:anim/accelerate_interpolator<br><strong>标签名：</strong><br>accelerateInterpolator<br><strong>数学公式：</strong><br>y = t<sup>2f</sup><br><strong>类构造函数：</strong><br>public AccelerateInterpolator(float factor)<br><strong>参数：</strong><br>    名称：f<br>    属性：android:factor<br>    描述：加速度的变化速率<br>    值越大，动画初始移动速度越慢，然后以更快的速度运动至结束。</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/accelerate_settings.png" alt=""> </p>
+<p><img src="http://blog.ancard.top/accelerate_settings.png" alt=""> </p>
 <p><strong>Decelerate Interpolator</strong>（减速度插值器）</p>
 <p><strong>类名：</strong><br>DecelerateInterpolator<br><strong>资源 id：</strong><br>@android:anim/decelerate_interpolator<br><strong>标签名：</strong><br>decelerateInterpolator<br><strong>数学公式：</strong><br>y = 1 - (1 - t)<sup>2f</sup><br><strong>类构造函数：</strong><br>public DecelerateInterpolator(float factor)<br><strong>参数：</strong><br>    名称：f<br>    属性：android:factor<br>    描述：减速度的变化速率。<br>    值越大，动画初始移动速度越快，然后以更慢的速度运动至结束。</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/decelerate_settings.png" alt=""> </p>
+<p><img src="http://blog.ancard.top/decelerate_settings.png" alt=""> </p>
 <p><strong>Accelerate Decelerate Interpolator</strong>（先加速后减速插值器）</p>
 <p><strong>类名：</strong><br>AccelerateDecelerateInterpolator<br><strong>资源 id：</strong><br>@android:anim/accelerate_decelerate_interpolator<br><strong>标签名：</strong><br>accelerateDecelerateInterpolator<br><strong>数学公式：</strong><br>y = cos((t + 1)π)/2 + 0.5<br><strong>类构造函数：</strong><br>public AccelerateDecelerateInterpolator()<br><strong>参数：</strong><br>无</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/accelerate_decelerate_settings.png" alt=""> </p>
+<p><img src="http://blog.ancard.top/accelerate_decelerate_settings.png" alt=""> </p>
 <p><strong>Anticipate Interpolator</strong>（张力加速器）</p>
 <p><strong>类名：</strong><br>AnticipateInterpolator<br><strong>资源 id：</strong><br>@android:anim/anticipate_interpolator<br><strong>标签名：</strong><br>anticipateInterpolator<br><strong>数学公式：</strong><br>y = (T + 1) × t<sup>3</sup> – T × t<sup>2</sup><br><strong>类构造函数：</strong><br>public AnticipateInterpolator(float tension)<br><strong>参数：</strong><br>    名称：T<br>    属性：android:tension<br>    描述：反向张力值，默认值为 2。<br>    值越大，初始化反向张力越大，运动也越快</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/anticipate_settings.png" alt=""> </p>
+<p><img src="http://blog.ancard.top/anticipate_settings.png" alt=""> </p>
 <p><strong>Overshoot Interpolator</strong>（越界加速器）</p>
 <p><strong>类名：</strong><br>OvershootInterpolator<br><strong>资源 id：</strong><br>@android:anim/overshoot_interpolator<br><strong>标签名：</strong><br>overshootInterpolator<br><strong>数学公式：</strong><br>y = (T + 1) × (t - 1)<sup>3</sup> + T × (t - 1)<sup>2</sup> + 1<br><strong>类构造函数：</strong><br>public OvershootInterpolator(float tension)<br><strong>参数：</strong><br>    名称：T<br>    属性：android:tension<br>    描述：越界数量值，默认值为 2。<br>    值越大，越界越多，运动也越快</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/overshoot_settings.png" alt=""> </p>
+<p><img src="http://blog.ancard.top/overshoot_settings.png" alt=""> </p>
 <p><strong>Overshoot Interpolator</strong></p>
-<p><strong>类名：</strong><br>AnticipateOvershootInterpolator<br><strong>资源 id：</strong><br>@android:anim/anticipate_overshoot_interpolator<br><strong>标签名：</strong><br>anticipateOvershootInterpolator<br><strong>数学公式：</strong><br><img src="http://ocq7gtgqu.bkt.clouddn.com/function_anticipate_overshoot_interpolator.png" alt=""><br><strong>类构造函数：</strong></p>
+<p><strong>类名：</strong><br>AnticipateOvershootInterpolator<br><strong>资源 id：</strong><br>@android:anim/anticipate_overshoot_interpolator<br><strong>标签名：</strong><br>anticipateOvershootInterpolator<br><strong>数学公式：</strong><br><img src="http://blog.ancard.top/function_anticipate_overshoot_interpolator.png" alt=""><br><strong>类构造函数：</strong></p>
 <ul>
 <li>public AnticipateOvershootInterpolator(float tension)</li>
 <li><p>public AnticipateOvershootInterpolator(float tension, float extraTension)<br><strong>参数：</strong><br>  属性：android:tension<br>  描述：越界数量值，默认值为 2。<br>  值越大，越界越多，运动也越快</p>
@@ -262,18 +262,18 @@ ga('send', 'pageview');
 <p> T 值为：tension * extraTension</p>
 </li>
 </ul>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/anticipate_overshoot_settings.png" alt=""> </p>
+<p><img src="http://blog.ancard.top/anticipate_overshoot_settings.png" alt=""> </p>
 <p><strong>Bounce Interpolator</strong>（弹性插值器）</p>
-<p><strong>类名：</strong><br>BounceInterpolator<br><strong>资源 id：</strong><br>@android:anim/bounce_interpolator<br><strong>标签名：</strong><br>bounceInterpolator<br><strong>数学公式：</strong><br><img src="http://ocq7gtgqu.bkt.clouddn.com/function_bounce_interpolator.png" alt=""><br><strong>类构造函数：</strong><br>public BounceInterpolator()<br><strong>参数：</strong><br>无</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/bounce_settings.png" alt=""> </p>
+<p><strong>类名：</strong><br>BounceInterpolator<br><strong>资源 id：</strong><br>@android:anim/bounce_interpolator<br><strong>标签名：</strong><br>bounceInterpolator<br><strong>数学公式：</strong><br><img src="http://blog.ancard.top/function_bounce_interpolator.png" alt=""><br><strong>类构造函数：</strong><br>public BounceInterpolator()<br><strong>参数：</strong><br>无</p>
+<p><img src="http://blog.ancard.top/bounce_settings.png" alt=""> </p>
 <p><strong> Cycle Interpolator</strong>（弹性插值器）</p>
 <p><strong>类名：</strong><br>Cycle Interpolator<br><strong>资源 id：</strong><br>@android:anim/cycle_interpolator<br><strong>标签名：</strong><br>cycleInterpolator<br><strong>数学公式：</strong><br>y = sin(2π × C × t)<br><strong>类构造函数：</strong><br>public CycleInterpolator(float cycles)<br><strong>参数：</strong><br>    名称：C<br>    属性：android:cycles<br>    描述：循环次数，默认值为 1.</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/cycle_settings.png" alt=""> </p>
+<p><img src="http://blog.ancard.top/cycle_settings.png" alt=""> </p>
 <h1 id="创建新的插值器"><a href="#创建新的插值器" class="headerlink" title="创建新的插值器"></a>创建新的插值器</h1><hr>
 <p>正如上面所言，插值器本质上展示的是一个数学公式。要想创建一个属于你自己的插值器类，你必须实现 Interpolator 接口。这个接口只定义了一个方法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">float</span> <span class="title">getInterpolation</span><span class="params">(<span class="keyword">float</span> t)</span></span></div></pre></td></tr></table></figure>
 <p>用于公式中的计算。举个例子，我想创建一个名为 HesitateInterpolator 的插值器，动画以最快的速度启动，然后减速运动至一半，最后加速运动至结束。运动曲线如图所示：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/hesitate_settings-150x150.png" alt=""> </p>
+<p><img src="http://blog.ancard.top/hesitate_settings-150x150.png" alt=""> </p>
 <p>对应数学公式为：</p>
 <blockquote>
 <p>y=0.5 × ((2t − 1)<sup>3</sup>+1) </p>
@@ -289,15 +289,15 @@ ga('send', 'pageview');
 <ul>
 <li>Accelerate Decelerate, Accelerate, Anticipate &amp; Anticipate Overshoot:</li>
 </ul>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/7fIV4YhSLy8CvZtX7Fwo_one.gif" alt=""></p>
+<p><img src="http://blog.ancard.top/7fIV4YhSLy8CvZtX7Fwo_one.gif" alt=""></p>
 <ul>
 <li>Bounce, Decelerate, Fast Out Linear In &amp; Fast Out Slow In:</li>
 </ul>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/u8rydN7FSCWDAKImIdaw_two.gif" alt=""></p>
+<p><img src="http://blog.ancard.top/u8rydN7FSCWDAKImIdaw_two.gif" alt=""></p>
 <ul>
 <li>Fast Out Slow In, Linear, Linear Out Slow In &amp; Overshoot</li>
 </ul>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/iDU8PJCRDihLBK0LJrGs_three.gif" alt=""></p>
+<p><img src="http://blog.ancard.top/iDU8PJCRDihLBK0LJrGs_three.gif" alt=""></p>
 <h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><hr>
 <p>英文原文：<a href="http://cogitolearning.co.uk/?p=1078#CreateNewInterpolator" target="_blank" rel="external">Android Animations Tutorial 5: More on Interpolators</a></p>
 <p>Gif 图来源：<a href="https://robots.thoughtbot.com/android-interpolators-a-visual-guide" target="_blank" rel="external">Android Interpolators: A Visual Guide</a></p>

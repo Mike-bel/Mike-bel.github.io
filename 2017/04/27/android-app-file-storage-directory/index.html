@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="本文导读：在安卓手机上，安装或者卸载一个 App，会涉及到本地存储系统的哪些目录结构变化？作为开发人员，如何恰当地存储应用相关的信息？相关存储目录的生命周期、访问方式和访问权限又是怎样的呢？带着这些问题，希望读完这篇文章，你能够有所收获。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1493214455.jpg">
-<meta property="og:updated_time" content="2017-04-26T23:48:19.000Z">
+<meta property="og:image" content="http://blog.ancard.top/1493214455.jpg">
+<meta property="og:updated_time" content="2018-12-22T07:02:14.583Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="了解 Android 应用的文件存储目录，掌握持久化数据的正确姿势">
 <meta name="twitter:description" content="本文导读：在安卓手机上，安装或者卸载一个 App，会涉及到本地存储系统的哪些目录结构变化？作为开发人员，如何恰当地存储应用相关的信息？相关存储目录的生命周期、访问方式和访问权限又是怎样的呢？带着这些问题，希望读完这篇文章，你能够有所收获。">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1493214455.jpg">
+<meta name="twitter:image" content="http://blog.ancard.top/1493214455.jpg">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -195,7 +195,7 @@ ga('send', 'pageview');
 <h1 id="内部存储空间中的应用私有目录"><a href="#内部存储空间中的应用私有目录" class="headerlink" title="内部存储空间中的应用私有目录"></a>内部存储空间中的应用私有目录</h1><hr>
 <p>对于设备中每一个安装的 App，系统都会在内部存储空间的 data/data 目录下以应用包名为名字自动创建与之对应的文件夹。这个文件夹用于 App 中的 WebView 缓存页面信息，SharedPreferences 和 SQLiteDatabase 持久化应用相关数据等。</p>
 <p>对于没有 Root 过的手机，普通用户是无法查看 data/data 目录内容的。不过开发人员可以使用模拟器调试应用，并通过 <a href="https://developer.android.com/studio/profile/ddms.html" target="_blank" rel="external">DDMS</a>（Dalvik Debug Monitor Server）提供的 File Explorer 工具查看模拟器设备的存储空间。</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1493214455.jpg" alt=""></p>
+<p><img src="http://blog.ancard.top/1493214455.jpg" alt=""></p>
 <p>操作路径：</p>
 <p>第一步：Android Studio –&gt; Tools –&gt; Android –&gt; Android Device Monitor；</p>
 <p>第二步：Window –&gt; Show View –&gt; Android –&gt; File Explorer。</p>

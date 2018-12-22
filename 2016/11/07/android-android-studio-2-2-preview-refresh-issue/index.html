@@ -16,15 +16,15 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="Android Studio 2.2 版本的 Layout Editor 发生了很大变化，Design 和 Preview 窗口的结构和样式做了很多改进，功能区介绍可以参考官方网站：Build a UI with Layout Editor。本文记录一个有关 refresh 操作的问题。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/preview_samples_01.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/preview_samples_02.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/preview_samples_03.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/preview_samples_04.png">
-<meta property="og:updated_time" content="2016-11-07T07:34:37.000Z">
+<meta property="og:image" content="http://blog.ancard.top/preview_samples_01.png">
+<meta property="og:image" content="http://blog.ancard.top/preview_samples_02.png">
+<meta property="og:image" content="http://blog.ancard.top/preview_samples_03.png">
+<meta property="og:image" content="http://blog.ancard.top/preview_samples_04.png">
+<meta property="og:updated_time" content="2018-12-22T07:05:08.970Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 如何在 Android Studio 2.2 版本实现 refresh 操作？">
 <meta name="twitter:description" content="Android Studio 2.2 版本的 Layout Editor 发生了很大变化，Design 和 Preview 窗口的结构和样式做了很多改进，功能区介绍可以参考官方网站：Build a UI with Layout Editor。本文记录一个有关 refresh 操作的问题。">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/preview_samples_01.png">
+<meta name="twitter:image" content="http://blog.ancard.top/preview_samples_01.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -196,15 +196,15 @@ ga('send', 'pageview');
         <p>Android Studio 2.2 版本的 Layout Editor 发生了很大变化，Design 和 Preview 窗口的结构和样式做了很多改进，功能区介绍可以参考官方网站：<a href="https://developer.android.com/studio/write/layout-editor.html" target="_blank" rel="external">Build a UI with Layout Editor</a>。本文记录一个有关 refresh 操作的问题。</p>
 <a id="more"></a>
 <p>还记得在 Android Studio 2.2 版本之前的 refresh 按钮吗？有时候修改资源文件后，并不能在 preview 窗口中即时生效，使用这个刷新按钮即可解决这个问题。但在这次改版中，这个刷新按钮被 Google 去掉了：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/preview_samples_01.png" alt="preview_samples_01.png"></p>
+<p><img src="http://blog.ancard.top/preview_samples_01.png" alt="preview_samples_01.png"></p>
 <p>如图，左图是 Android Studio 2.2 版本的布局预览图，没有 refresh 按钮；右图是 Android Studio 2.1 版本的布局预览图，拥有 refresh 按钮。</p>
 <p>既然被去除掉了，那应该是新版 Android Studio 实现了自动刷新实时显示视图的功能了吧。然而事实不尽如此。举个开发中很常见的例子：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/preview_samples_02.png" alt="preview_samples_02.png"></p>
+<p><img src="http://blog.ancard.top/preview_samples_02.png" alt="preview_samples_02.png"></p>
 <p>如图，布局中用到了一个图片资源 <code>ic_lock.png</code>。现在需求改变了，这个图标要替换成另一个图片。正常做法就是拿到 UI 给到的图标，重命名为相同的名字，然后复制到对应的 <code>drawable</code> 或者 <code>mipmap</code> 文件下，覆盖即可。然而你会发现，在 Design 和 Preview 窗口中显示的还是之前的图标！这时，重新打开布局文件，或者使用 Rebuild Project 命令重新编译都不能解决这个问题，甚至有时候重启 Android Studio 也不起任何作用。这也许是新版 Android Studio 的一个 BUG 吧。</p>
 <p>经过一番搜索，在 <code>stack overflow</code> 上找到一种解决方案，欣喜若狂。做法很简单，在布局的 Text 窗口中将引用的资源名称故意写错，比如这里的 <code>@mipmap/ic_lock</code>，将其写成 <code>@mipmap/ic_lock1</code>，这样 <code>Desgin</code> 和 <code>Prefrew</code> 窗口就会报错，如图：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/preview_samples_03.png" alt="preview_samples_03.png"></p>
+<p><img src="http://blog.ancard.top/preview_samples_03.png" alt="preview_samples_03.png"></p>
 <p>注意在右下角的提示信息中有个 Tip 内容，点击 <code>refresh</code> 按钮（清理缓存），然后再将图片的引用名称修改回来，预览图中就会显示正确的新图标：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/preview_samples_04.png" alt="preview_samples_03.png"></p>
+<p><img src="http://blog.ancard.top/preview_samples_04.png" alt="preview_samples_03.png"></p>
 <p>当然，这只是一种临时解决方案，希望下个版本的 Android Studio 能够修复这个问题吧。感谢万能的 <code>stack overflow</code> 帮我解决了这个问题：</p>
 <p><a href="http://stackoverflow.com/questions/39786229/how-to-refresh-preview-on-android-studio-2-2" target="_blank" rel="external">How to refresh preview on Android Studio 2.2?</a></p>
 

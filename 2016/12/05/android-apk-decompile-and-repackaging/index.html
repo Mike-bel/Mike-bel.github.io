@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="学习的方式有很多种，Read the fucking source code 绝对不失为最佳的方式。除了阅读 Android SDK 的源码，还能通过反编译 APK 的方式，阅读他人开发的应用源码。本文就来聊聊在 Mac 环境下如何借助第三方工具反编译 APK 压缩文件（通过爱加密、360加固等手段处理的 APK 文件除外），阅读源码、修改源码并重新打包成一个新的 APK 安装文件。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1480926234.png">
-<meta property="og:updated_time" content="2016-12-05T13:32:17.000Z">
+<meta property="og:image" content="http://blog.ancard.top/1480926234.png">
+<meta property="og:updated_time" content="2018-12-22T07:03:54.573Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Apk 文件反编译和重新打包的过程分析">
 <meta name="twitter:description" content="学习的方式有很多种，Read the fucking source code 绝对不失为最佳的方式。除了阅读 Android SDK 的源码，还能通过反编译 APK 的方式，阅读他人开发的应用源码。本文就来聊聊在 Mac 环境下如何借助第三方工具反编译 APK 压缩文件（通过爱加密、360加固等手段处理的 APK 文件除外），阅读源码、修改源码并重新打包成一个新的 APK 安装文件。">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1480926234.png">
+<meta name="twitter:image" content="http://blog.ancard.top/1480926234.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -229,7 +229,7 @@ ga('send', 'pageview');
 <p>第一步，dex2jar 操作，得到 classes-dex2jar.jar 文件。注意 d2j-dex2jar.sh 和 classes.dex 文件的路径，按需修改：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sh d2j-dex2jar.sh classes.dex</div></pre></td></tr></table></figure>
 <p>第二步，使用 jd-gui 打开 classes-dex2jar.jar 文件，便可以看到目标应用所用到的第三方 library 和 开发源码，如：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1480926234.png" alt=""></p>
+<p><img src="http://blog.ancard.top/1480926234.png" alt=""></p>
 <blockquote>
 <p>如果对方开发人员在工程中开启了混淆功能，将会增加你的阅读难度，不过仔细分析，也能找到一些蛛丝马迹，给予你一些“灵感”。</p>
 </blockquote>

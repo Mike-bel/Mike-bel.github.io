@@ -16,13 +16,13 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="&amp;lt;inlcude&amp;gt;标签在开发Android布局时，常将一些通用的视图提取到一个单独的layout文件中，然后使用&amp;lt;include&amp;gt;标签在需要使用的其他layout布局文件中加载进来，比如App导航栏等。这样，便于对相同视图内容进行统一的控制管理，提高布局重用性。然而，使用&amp;lt;include&amp;gt;标签总有一些值得我们注意的地方。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/ViewStub-Samles-01.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/ViewStub-Samles-02.png">
-<meta property="og:updated_time" content="2017-03-23T13:51:36.000Z">
+<meta property="og:image" content="http://blog.ancard.top/ViewStub-Samles-01.png">
+<meta property="og:image" content="http://blog.ancard.top/ViewStub-Samles-02.png">
+<meta property="og:updated_time" content="2018-12-22T07:00:54.790Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android include和merge标签、ViewStub控件的使用总结">
 <meta name="twitter:description" content="&amp;lt;inlcude&amp;gt;标签在开发Android布局时，常将一些通用的视图提取到一个单独的layout文件中，然后使用&amp;lt;include&amp;gt;标签在需要使用的其他layout布局文件中加载进来，比如App导航栏等。这样，便于对相同视图内容进行统一的控制管理，提高布局重用性。然而，使用&amp;lt;include&amp;gt;标签总有一些值得我们注意的地方。">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/ViewStub-Samles-01.png">
+<meta name="twitter:image" content="http://blog.ancard.top/ViewStub-Samles-01.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -226,9 +226,9 @@ ga('send', 'pageview');
 <p>对应的java代码如下，点击按钮显示ViewStub的内容：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">    View view = ((ViewStub) findViewById(R.id.vs_viewStub)).inflate();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>点击按钮，即可显示ViewStub的内容。我们用<code>Hierarchy View</code>观察一下视图层次的情况，当Activity初始化时，视图结构如下：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/ViewStub-Samles-01.png" alt="ViewStub-Samles-01"></p>
+<p><img src="http://blog.ancard.top/ViewStub-Samles-01.png" alt="ViewStub-Samles-01"></p>
 <p>可以看到，当前view hierarchy中存在的是ViewStub而不是包含的layout布局。点击一下按钮，显示内容，再看一下：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/ViewStub-Samles-02.png" alt="ViewStub-Samles-01"></p>
+<p><img src="http://blog.ancard.top/ViewStub-Samles-02.png" alt="ViewStub-Samles-01"></p>
 <p>ViewStub已经remove掉了，而包含的layout布局加入到当前view hierarchy中，即无法使用<code>findViewById()</code>方法获取ViewStub的引用。</p>
 <p>所以，<code>&lt;include&gt;</code>标签与ViewStub完全不是同一个概念，ViewStub自带懒加载特性，可以理解为一个轻量级的View，自身占用资源较小，在UI初始化时所对应的layout布局视图不占用系统资源，从而可以加快当前界面的渲染过程，相比使用普通的<code>view.setVisible(int)</code>方法，性能体验提高不少，而<code>&lt;include&gt;</code>标签则只是用于提高布局的重用性，使用场景大有不同。</p>
 

@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="记录 Git 或者 Svn 移除文件版本控制的一些操作方式。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1511853839.jpg">
-<meta property="og:updated_time" content="2017-11-28T07:48:58.498Z">
+<meta property="og:image" content="http://blog.ancard.top/1511853839.jpg">
+<meta property="og:updated_time" content="2018-12-22T07:04:28.971Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Svn 或者 Git 移除文件的版本控制">
 <meta name="twitter:description" content="记录 Git 或者 Svn 移除文件版本控制的一些操作方式。">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1511853839.jpg">
+<meta name="twitter:image" content="http://blog.ancard.top/1511853839.jpg">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -203,7 +203,7 @@ ga('send', 'pageview');
 <p><strong>备注：</strong>有网友反映，像上面这行指令执行时，容易出错，甚至导致误删除文件，应该像下面这样操作。虽然没有实际遇到过，这里也记录一下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find . -<span class="built_in">type</span> d -name <span class="string">".svn"</span> | xargs -I &#123;&#125; <span class="built_in">echo</span> \<span class="string">"&#123;&#125;\" | xargs rm -rf</span></div></pre></td></tr></table></figure>
 <p>另外值得一提的是，切换版本控制工具时，针对特定的 IDE 可能需要做一点额外的操作。比如像 Android Studio 这样的 IntelliJ IDEA 工具，需要在设置中手动修改项目的版本控制工具：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1511853839.jpg" alt=""></p>
+<p><img src="http://blog.ancard.top/1511853839.jpg" alt=""></p>
 <p>否则，项目列表的文件状态不会随着文件修改而发生变化，影响 IDE 提供的可视化操作。</p>
 
       
