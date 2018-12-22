@@ -9,20 +9,20 @@
   <title>Android D8，下一代 dex 编译器 | YiFeng&#39;s Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Google 在刚刚发布的 Android Studio 3.1 新版本中，将 D8 作为新版本开发工具默认的 Dex 编译器。那么什么是 D8 呢，D8 与之前的 Dex 打包器有何区别呢？">
-<meta name="keywords" content="Android,Android Studio">
+<meta name="keywords" content="Android Studio,Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android D8，下一代 dex 编译器">
 <meta property="og:url" content="http://yifeng.studio/2018/04/07/android-studio-d8-dex-compiler/index.html">
 <meta property="og:site_name" content="YiFeng&#39;s Zone">
 <meta property="og:description" content="Google 在刚刚发布的 Android Studio 3.1 新版本中，将 D8 作为新版本开发工具默认的 Dex 编译器。那么什么是 D8 呢，D8 与之前的 Dex 打包器有何区别呢？">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1523098938.png">
-<meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1523098890.png">
-<meta property="og:updated_time" content="2018-04-07T13:55:12.070Z">
+<meta property="og:image" content="http://blog.ancard.top/1523098938.png">
+<meta property="og:image" content="http://blog.ancard.top/1523098890.png">
+<meta property="og:updated_time" content="2018-12-22T06:52:33.843Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android D8，下一代 dex 编译器">
 <meta name="twitter:description" content="Google 在刚刚发布的 Android Studio 3.1 新版本中，将 D8 作为新版本开发工具默认的 Dex 编译器。那么什么是 D8 呢，D8 与之前的 Dex 打包器有何区别呢？">
-<meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1523098938.png">
+<meta name="twitter:image" content="http://blog.ancard.top/1523098938.png">
   
     <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
   
@@ -198,8 +198,8 @@ ga('send', 'pageview');
 <p>根据官方介绍，新版 D8 Dex 编译器相比之前称之为 DX 的旧版编译器，在 dex 文件的编译和使用上，至少具备这么三个优势：</p>
 <p><strong>1，更快的编译速度；</strong><br><strong>2，更小的文件大小；</strong><br><strong>3，更优的运行性能。</strong></p>
 <p>这里有一份来自 Google 的官方测试数据，在 Dex 编译速度和文件大小上有所对比：</p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1523098938.png" height="300"></p>
-<p><img src="http://ocq7gtgqu.bkt.clouddn.com/1523098890.png" height="300"></p>
+<p><img src="http://blog.ancard.top/1523098938.png" height="300"></p>
+<p><img src="http://blog.ancard.top/1523098890.png" height="300"></p>
 <p>大家也可以亲自体验一下 D8 的效果。如果你使用的 Android Studio 还是 3.0 版本，可以在项目的 <code>gradle.properties</code> 文件手动开启 D8 编译器：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">android.enableD8=true</div></pre></td></tr></table></figure>
 <p>不止于此，Google 在代码压缩和优化上也在不断寻求进步。目前我们广泛使用的 <a href="https://stuff.mit.edu/afs/sipb/project/android/sdk/android-sdk-linux/tools/proguard/docs/index.html#manual/introduction.html" target="_blank" rel="external">ProGuard 工具</a>也将有新的替代者：<strong>R8</strong>。不过，R8 R8 还没有正式被融入使用，其所在的开源地址为：</p>
@@ -220,7 +220,7 @@ ga('send', 'pageview');
  
 <p>本文链接为：<b><a href="/2018/04/07/android-studio-d8-dex-compiler/" target="_blank" title="Android D8，下一代 dex 编译器">http://yifeng.studio/2018/04/07/android-studio-d8-dex-compiler/</a></b> </p>
 
-<p><img border="1" style="display:block; margin-left: auto; margin-right: auto;" src="http://ocq7gtgqu.bkt.clouddn.com/NiaoTechNiaoTech_QRcode.jpg"></p>
+<p><img border="1" style="display:block; margin-left: auto; margin-right: auto;" src="http://blog.ancard.top/NiaoTechNiaoTech_QRcode.jpg"></p>
 </div>
 <! -- 添加版权信息 -->
       
@@ -266,11 +266,11 @@ ga('send', 'pageview');
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Android Studio</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Android Studio</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
         		</li>
       		
 		</ul>
@@ -525,15 +525,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -541,7 +533,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Animation</a>
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -554,10 +546,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">WebView</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -581,10 +569,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Git</a>
               </li>
              
@@ -594,6 +578,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Weex</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Animation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
             
             <div class="clearfix"></div>
