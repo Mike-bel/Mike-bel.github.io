@@ -5,15 +5,15 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yifeng.studio">
-  <title>Android 调用系统功能实现图片选择器，你可能会遇到的问题汇总 | YiFeng&#39;s Zone</title>
+  <link rel="dns-prefetch" href="https://woyifeng.com">
+  <title>Android 调用系统功能实现图片选择器，你可能会遇到的问题汇总 | 亦枫的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="图片选择器在手机应用中屡见不鲜，设置头像、聊天传图等常见类似场景都需要使用。为了保持不同设备上体验的一致性和较好的兼容性，比较稳妥的做法是在应用内自实现相机拍照、相册选图和图片裁剪功能。但是，这个实现过程比较复杂，费时费力。更多时候，或者说在项目初期，我们都会选择直接调用系统提供的这些功能来完成一个图片选择器。然而，由于安卓设备的多样性，总会遇到各种各样的兼容问题。本文就来总结总结，调用系统相机、">
 <meta name="keywords" content="Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 调用系统功能实现图片选择器，你可能会遇到的问题汇总">
-<meta property="og:url" content="http://yifeng.studio/2017/03/19/android-image-picker-by-system-app/index.html">
-<meta property="og:site_name" content="YiFeng&#39;s Zone">
+<meta property="og:url" content="https://woyifeng.com/2017/03/19/android-image-picker-by-system-app/index.html">
+<meta property="og:site_name" content="亦枫的技术博客">
 <meta property="og:description" content="图片选择器在手机应用中屡见不鲜，设置头像、聊天传图等常见类似场景都需要使用。为了保持不同设备上体验的一致性和较好的兼容性，比较稳妥的做法是在应用内自实现相机拍照、相册选图和图片裁剪功能。但是，这个实现过程比较复杂，费时费力。更多时候，或者说在项目初期，我们都会选择直接调用系统提供的这些功能来完成一个图片选择器。然而，由于安卓设备的多样性，总会遇到各种各样的兼容问题。本文就来总结总结，调用系统相机、">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/3/21/664cf1bca18141010cf93589d5e6315a">
@@ -23,7 +23,7 @@
 <meta name="twitter:description" content="图片选择器在手机应用中屡见不鲜，设置头像、聊天传图等常见类似场景都需要使用。为了保持不同设备上体验的一致性和较好的兼容性，比较稳妥的做法是在应用内自实现相机拍照、相册选图和图片裁剪功能。但是，这个实现过程比较复杂，费时费力。更多时候，或者说在项目初期，我们都会选择直接调用系统提供的这些功能来完成一个图片选择器。然而，由于安卓设备的多样性，总会遇到各种各样的兼容问题。本文就来总结总结，调用系统相机、">
 <meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2017/3/21/664cf1bca18141010cf93589d5e6315a">
   
-    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="亦枫的技术博客" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -271,7 +271,7 @@ ga('send', 'pageview');
 <p>说了这么多，别忘了在 AndroidManifest.xml 文件中添加系统权限（前面示例代码中没有考虑到 Android 6.0 运行时权限的问题，实际使用时注意添加处理）：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.CAMERA"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.READ_EXTERNAL_STORAGE"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.WRITE_EXTERNAL_STORAGE"</span> /&gt;</span></div></pre></td></tr></table></figure>
 <p>拓展文章： Android 7.0  系统进一步限制应用的文件访问权限，更多细节请访问我的另一篇文章：</p>
-<p><a href="http://yifeng.studio/2017/05/03/android-7-0-compat-fileprovider/">关于 Android 7.0 适配中 FileProvider 部分的总结</a></p>
+<p><a href="http://yifeng.studio/2017/05/03/android-7-0-compat-fileprovider/" target="_blank" rel="external">关于 Android 7.0 适配中 FileProvider 部分的总结</a></p>
 <p>参考链接：关于调用系统相册的知识点，你还可以访问这篇文章：</p>
 <p><a href="http://dimitar.me/how-to-get-picasa-images-using-the-image-picker-on-android-devices-running-any-os-version/" target="_blank" rel="external">How to get Picasa images using the Image Picker on Android devices running any OS version</a></p>
 
@@ -287,7 +287,7 @@ ga('send', 'pageview');
  
 <p>本文标题为: <b><a href="/2017/03/19/android-image-picker-by-system-app/" target="_blank" title="Android 调用系统功能实现图片选择器，你可能会遇到的问题汇总">Android 调用系统功能实现图片选择器，你可能会遇到的问题汇总</a></b> </p>
  
-<p>本文链接为：<b><a href="/2017/03/19/android-image-picker-by-system-app/" target="_blank" title="Android 调用系统功能实现图片选择器，你可能会遇到的问题汇总">http://yifeng.studio/2017/03/19/android-image-picker-by-system-app/</a></b> </p>
+<p>本文链接为：<b><a href="/2017/03/19/android-image-picker-by-system-app/" target="_blank" title="Android 调用系统功能实现图片选择器，你可能会遇到的问题汇总">https://woyifeng.com/2017/03/19/android-image-picker-by-system-app/</a></b> </p>
 
 <p><img border="1" style="display:block; margin-left: auto; margin-right: auto;" src="http://blog.ancard.top/NiaoTechNiaoTech_QRcode.jpg"></p>
 </div>
@@ -414,7 +414,7 @@ ga('send', 'pageview');
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yifeng.studio/2017/03/19/android-image-picker-by-system-app/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://woyifeng.com/2017/03/19/android-image-picker-by-system-app/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -480,7 +480,7 @@ ga('send', 'pageview');
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="android-image-picker-by-system-app" data-title="Android 调用系统功能实现图片选择器，你可能会遇到的问题汇总" data-url="http://yifeng.studio/2017/03/19/android-image-picker-by-system-app/"></div>
+	<div class="ds-thread" data-thread-key="android-image-picker-by-system-app" data-title="Android 调用系统功能实现图片选择器，你可能会遇到的问题汇总" data-url="https://woyifeng.com/2017/03/19/android-image-picker-by-system-app/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -610,15 +610,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -686,11 +686,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
               </li>
             
             <div class="clearfix"></div>

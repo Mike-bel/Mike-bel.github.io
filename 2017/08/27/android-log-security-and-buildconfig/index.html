@@ -5,15 +5,15 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yifeng.studio">
-  <title>Android 中能够作为 Log 开关的一些操作以及安全性浅谈 | YiFeng&#39;s Zone</title>
+  <link rel="dns-prefetch" href="https://woyifeng.com">
+  <title>Android 中能够作为 Log 开关的一些操作以及安全性浅谈 | 亦枫的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="自定义常量 开发阶段利用 Log 日志方便代码调试是再常见不过的事情。出于安全考虑，这种做法仅限于 Debug 模式，Release 模式下打包发布时一定要关掉。所以在我们的项目中，一定会有一个工具类或者方法来控制 Log 日志的使用，比如：">
 <meta name="keywords" content="Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 中能够作为 Log 开关的一些操作以及安全性浅谈">
-<meta property="og:url" content="http://yifeng.studio/2017/08/27/android-log-security-and-buildconfig/index.html">
-<meta property="og:site_name" content="YiFeng&#39;s Zone">
+<meta property="og:url" content="https://woyifeng.com/2017/08/27/android-log-security-and-buildconfig/index.html">
+<meta property="og:site_name" content="亦枫的技术博客">
 <meta property="og:description" content="自定义常量 开发阶段利用 Log 日志方便代码调试是再常见不过的事情。出于安全考虑，这种做法仅限于 Debug 模式，Release 模式下打包发布时一定要关掉。所以在我们的项目中，一定会有一个工具类或者方法来控制 Log 日志的使用，比如：">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-08-27T08:36:39.000Z">
@@ -21,7 +21,7 @@
 <meta name="twitter:title" content="Android 中能够作为 Log 开关的一些操作以及安全性浅谈">
 <meta name="twitter:description" content="自定义常量 开发阶段利用 Log 日志方便代码调试是再常见不过的事情。出于安全考虑，这种做法仅限于 Debug 模式，Release 模式下打包发布时一定要关掉。所以在我们的项目中，一定会有一个工具类或者方法来控制 Log 日志的使用，比如：">
   
-    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="亦枫的技术博客" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -221,7 +221,7 @@ ga('send', 'pageview');
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (BuildConfig.DEBUG) &#123;</div><div class="line">    Log.d(<span class="string">"TAG"</span>, message);       </div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这样，打包时，开启 proguard 后，Release 包会自动删除上面的代码，彻底根绝 Log 引发的安全问题。关于这一部分的细节操作，可以参考这两篇文章：</p>
 <ul>
-<li><p><a href="http://yifeng.studio/2016/12/05/android-apk-decompile-and-repackaging/">Android Apk 文件反编译和重新打包的过程分析</a></p>
+<li><p><a href="http://yifeng.studio/2016/12/05/android-apk-decompile-and-repackaging/" target="_blank" rel="external">Android Apk 文件反编译和重新打包的过程分析</a></p>
 </li>
 <li><p><a href="http://weishu.me/2015/10/19/how-to-log-safely-in-android/" target="_blank" rel="external">如何安全地打印日志</a></p>
 </li>
@@ -240,7 +240,7 @@ ga('send', 'pageview');
  
 <p>本文标题为: <b><a href="/2017/08/27/android-log-security-and-buildconfig/" target="_blank" title="Android 中能够作为 Log 开关的一些操作以及安全性浅谈">Android 中能够作为 Log 开关的一些操作以及安全性浅谈</a></b> </p>
  
-<p>本文链接为：<b><a href="/2017/08/27/android-log-security-and-buildconfig/" target="_blank" title="Android 中能够作为 Log 开关的一些操作以及安全性浅谈">http://yifeng.studio/2017/08/27/android-log-security-and-buildconfig/</a></b> </p>
+<p>本文链接为：<b><a href="/2017/08/27/android-log-security-and-buildconfig/" target="_blank" title="Android 中能够作为 Log 开关的一些操作以及安全性浅谈">https://woyifeng.com/2017/08/27/android-log-security-and-buildconfig/</a></b> </p>
 
 <p><img border="1" style="display:block; margin-left: auto; margin-right: auto;" src="http://blog.ancard.top/NiaoTechNiaoTech_QRcode.jpg"></p>
 </div>
@@ -367,7 +367,7 @@ ga('send', 'pageview');
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yifeng.studio/2017/08/27/android-log-security-and-buildconfig/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://woyifeng.com/2017/08/27/android-log-security-and-buildconfig/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -433,7 +433,7 @@ ga('send', 'pageview');
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="android-log-security-and-buildconfig" data-title="Android 中能够作为 Log 开关的一些操作以及安全性浅谈" data-url="http://yifeng.studio/2017/08/27/android-log-security-and-buildconfig/"></div>
+	<div class="ds-thread" data-thread-key="android-log-security-and-buildconfig" data-title="Android 中能够作为 Log 开关的一些操作以及安全性浅谈" data-url="https://woyifeng.com/2017/08/27/android-log-security-and-buildconfig/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -563,15 +563,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -639,11 +639,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
               </li>
             
             <div class="clearfix"></div>

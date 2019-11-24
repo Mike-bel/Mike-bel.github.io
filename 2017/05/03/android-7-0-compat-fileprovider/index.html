@@ -5,15 +5,15 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yifeng.studio">
-  <title>关于 Android 7.0 适配中 FileProvider 部分的总结 | YiFeng&#39;s Zone</title>
+  <link rel="dns-prefetch" href="https://woyifeng.com">
+  <title>关于 Android 7.0 适配中 FileProvider 部分的总结 | 亦枫的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="由于 Android 7.0 或更高版本的系统在国内手机市场上的占比不是很高，很多 Android 开发人员并没有做 7.0 适配工作，同时测试人员也容易忽视这方面的兼容问题。这导致 7.0 及以上版本的手机用户在使用到应用部分功能时可能出现 App 崩溃闪退。其中，大部分原因都是由项目中使用到 file:// 类型的 URI 所引发的。本文我们便来一探究竟。">
 <meta name="keywords" content="Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于 Android 7.0 适配中 FileProvider 部分的总结">
-<meta property="og:url" content="http://yifeng.studio/2017/05/03/android-7-0-compat-fileprovider/index.html">
-<meta property="og:site_name" content="YiFeng&#39;s Zone">
+<meta property="og:url" content="https://woyifeng.com/2017/05/03/android-7-0-compat-fileprovider/index.html">
+<meta property="og:site_name" content="亦枫的技术博客">
 <meta property="og:description" content="由于 Android 7.0 或更高版本的系统在国内手机市场上的占比不是很高，很多 Android 开发人员并没有做 7.0 适配工作，同时测试人员也容易忽视这方面的兼容问题。这导致 7.0 及以上版本的手机用户在使用到应用部分功能时可能出现 App 崩溃闪退。其中，大部分原因都是由项目中使用到 file:// 类型的 URI 所引发的。本文我们便来一探究竟。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-06-11T04:21:30.000Z">
@@ -21,7 +21,7 @@
 <meta name="twitter:title" content="关于 Android 7.0 适配中 FileProvider 部分的总结">
 <meta name="twitter:description" content="由于 Android 7.0 或更高版本的系统在国内手机市场上的占比不是很高，很多 Android 开发人员并没有做 7.0 适配工作，同时测试人员也容易忽视这方面的兼容问题。这导致 7.0 及以上版本的手机用户在使用到应用部分功能时可能出现 App 崩溃闪退。其中，大部分原因都是由项目中使用到 file:// 类型的 URI 所引发的。本文我们便来一探究竟。">
   
-    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="亦枫的技术博客" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -192,7 +192,7 @@ ga('send', 'pageview');
 <a id="more"></a>
 <h1 id="Android-7-0-权限变更"><a href="#Android-7-0-权限变更" class="headerlink" title="Android 7.0 权限变更"></a>Android 7.0 权限变更</h1><hr>
 <p>为了提高私有目录的安全性，防止应用信息的泄漏，从 Android 7.0 开始，应用私有目录的访问权限被做限制。具体表现为，开发人员不能够再简单地通过 <strong>file://</strong> URI 访问其他应用的私有目录文件或者让其他应用访问自己的私有目录文件。</p>
-<p><strong>备注：</strong>如果你对应用私有目录不太清楚的话，可以阅读我的这篇文章：<a href="http://yifeng.studio/2017/04/27/android-app-file-storage-directory/">了解 Android 应用的文件存储目录，掌握持久化数据的正确姿势</a>。</p>
+<p><strong>备注：</strong>如果你对应用私有目录不太清楚的话，可以阅读我的这篇文章：<a href="http://yifeng.studio/2017/04/27/android-app-file-storage-directory/" target="_blank" rel="external">了解 Android 应用的文件存储目录，掌握持久化数据的正确姿势</a>。</p>
 <p>同时，也是从 7.0 开始，Android SDK 中的 <a href="https://developer.android.com/reference/android/os/StrictMode.html" target="_blank" rel="external">StrictMode</a> 策略禁止开发人员在应用外部公开 <strong>file://</strong> URI。具体表现为，当我们在应用中使用包含 <strong>file://</strong> URI 的 Intent 离开自己的应用时，程序会发生故障。</p>
 <p>开发中，如果我们在使用 <strong>file://</strong> URI 时忽视了这两条规定，将导致用户在 7.0 及更高版本系统的设备中使用到相关功能时，出现 <strong>FileUriExposedException</strong> 异常，导致应用出现崩溃闪退问题。而这两个过程的替代解决方案便是使用 <code>FileProvider</code>。</p>
 <h1 id="FileProvider"><a href="#FileProvider" class="headerlink" title="FileProvider"></a>FileProvider</h1><hr>
@@ -288,7 +288,7 @@ ga('send', 'pageview');
  
 <p>本文标题为: <b><a href="/2017/05/03/android-7-0-compat-fileprovider/" target="_blank" title="关于 Android 7.0 适配中 FileProvider 部分的总结">关于 Android 7.0 适配中 FileProvider 部分的总结</a></b> </p>
  
-<p>本文链接为：<b><a href="/2017/05/03/android-7-0-compat-fileprovider/" target="_blank" title="关于 Android 7.0 适配中 FileProvider 部分的总结">http://yifeng.studio/2017/05/03/android-7-0-compat-fileprovider/</a></b> </p>
+<p>本文链接为：<b><a href="/2017/05/03/android-7-0-compat-fileprovider/" target="_blank" title="关于 Android 7.0 适配中 FileProvider 部分的总结">https://woyifeng.com/2017/05/03/android-7-0-compat-fileprovider/</a></b> </p>
 
 <p><img border="1" style="display:block; margin-left: auto; margin-right: auto;" src="http://blog.ancard.top/NiaoTechNiaoTech_QRcode.jpg"></p>
 </div>
@@ -415,7 +415,7 @@ ga('send', 'pageview');
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yifeng.studio/2017/05/03/android-7-0-compat-fileprovider/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://woyifeng.com/2017/05/03/android-7-0-compat-fileprovider/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -481,7 +481,7 @@ ga('send', 'pageview');
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="android-7-0-compat-fileprovider" data-title="关于 Android 7.0 适配中 FileProvider 部分的总结" data-url="http://yifeng.studio/2017/05/03/android-7-0-compat-fileprovider/"></div>
+	<div class="ds-thread" data-thread-key="android-7-0-compat-fileprovider" data-title="关于 Android 7.0 适配中 FileProvider 部分的总结" data-url="https://woyifeng.com/2017/05/03/android-7-0-compat-fileprovider/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -611,15 +611,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -687,11 +687,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
               </li>
             
             <div class="clearfix"></div>

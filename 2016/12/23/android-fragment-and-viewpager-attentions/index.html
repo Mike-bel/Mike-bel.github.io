@@ -5,15 +5,15 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yifeng.studio">
-  <title>Android Fragment＋ViewPager 组合，一些你不可不知的注意事项 | YiFeng&#39;s Zone</title>
+  <link rel="dns-prefetch" href="https://woyifeng.com">
+  <title>Android Fragment＋ViewPager 组合，一些你不可不知的注意事项 | 亦枫的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="前面两篇文章中，对 Fragment 的基本使用、常见问题和状态恢复做了详细的分析总结。除了在 Activity 中单独使用 Fragment，Fragment + ViewPager 组合也是项目中使用非常频繁的方式，本文再来总结一下这种组合使用时的注意事项。在此之前，如果你对 Fragment 的认知和使用还有不清楚的地方，一定要先阅读前面两篇文章：  Android Fragment 的使用">
 <meta name="keywords" content="Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android Fragment＋ViewPager 组合，一些你不可不知的注意事项">
-<meta property="og:url" content="http://yifeng.studio/2016/12/23/android-fragment-and-viewpager-attentions/index.html">
-<meta property="og:site_name" content="YiFeng&#39;s Zone">
+<meta property="og:url" content="https://woyifeng.com/2016/12/23/android-fragment-and-viewpager-attentions/index.html">
+<meta property="og:site_name" content="亦枫的技术博客">
 <meta property="og:description" content="前面两篇文章中，对 Fragment 的基本使用、常见问题和状态恢复做了详细的分析总结。除了在 Activity 中单独使用 Fragment，Fragment + ViewPager 组合也是项目中使用非常频繁的方式，本文再来总结一下这种组合使用时的注意事项。在此之前，如果你对 Fragment 的认知和使用还有不清楚的地方，一定要先阅读前面两篇文章：  Android Fragment 的使用">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://blog.ancard.top/1482393570.jpg">
@@ -24,7 +24,7 @@
 <meta name="twitter:description" content="前面两篇文章中，对 Fragment 的基本使用、常见问题和状态恢复做了详细的分析总结。除了在 Activity 中单独使用 Fragment，Fragment + ViewPager 组合也是项目中使用非常频繁的方式，本文再来总结一下这种组合使用时的注意事项。在此之前，如果你对 Fragment 的认知和使用还有不清楚的地方，一定要先阅读前面两篇文章：  Android Fragment 的使用">
 <meta name="twitter:image" content="http://blog.ancard.top/1482393570.jpg">
   
-    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="亦枫的技术博客" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -193,9 +193,9 @@ ga('send', 'pageview');
       
         <p>前面两篇文章中，对 Fragment 的基本使用、常见问题和状态恢复做了详细的分析总结。除了在 Activity 中单独使用 Fragment，Fragment + ViewPager 组合也是项目中使用非常频繁的方式，本文再来总结一下这种组合使用时的注意事项。在此之前，如果你对 Fragment 的认知和使用还有不清楚的地方，一定要先阅读前面两篇文章：</p>
 <ul>
-<li><p><a href="http://yifeng.studio/2016/12/15/android-fragment-attentions/">Android Fragment 的使用，一些你不可不知的注意事项</a></p>
+<li><p><a href="http://yifeng.studio/2016/12/15/android-fragment-attentions/" target="_blank" rel="external">Android Fragment 的使用，一些你不可不知的注意事项</a></p>
 </li>
-<li><p><a href="http://yifeng.studio/2016/12/19/android-fragment-state-saving-best-practices/">Android Activity 和 Fragment 状态保存与恢复的最佳实践</a></p>
+<li><p><a href="http://yifeng.studio/2016/12/19/android-fragment-state-saving-best-practices/" target="_blank" rel="external">Android Activity 和 Fragment 状态保存与恢复的最佳实践</a></p>
 </li>
 </ul>
 <a id="more"></a>
@@ -234,7 +234,7 @@ ga('send', 'pageview');
 <p>然后在子类 Fragment 中实现 requestData 方法即可。这里添加了一个 isDataLoaded 变量，目的是避免重复加载数据。考虑到有时候需要刷新数据的问题，便提供了一个用于强制刷新的参数判断。这种思路来自于 <a href="http://www.jianshu.com/p/c5d29a0c3f4c#" target="_blank" rel="external">这篇文章</a>，在此基础上做了一些修改。实际上，在项目开发过程中，还需处理网络请求失败等特殊情况，我想，了解原理之后，这些问题都不再是问题。</p>
 <h1 id="Fragment-状态恢复问题"><a href="#Fragment-状态恢复问题" class="headerlink" title="Fragment 状态恢复问题"></a>Fragment 状态恢复问题</h1><hr>
 <p>前文描述<code>FragmentPagerAdapter</code> 与 <code>FragmentStatePagerAdapter</code> 的区别时有提到，这两种适配器类默认都会保存 Fragment 状态，包括 View 状态和成员变量数据状态。需要注意的是，View 状态包括的内容很多，比如用户在 EditText 中输入的内容、ScrollView 滑动的位置纪录等。</p>
-<p>有关 Fragment 的具体使用细节和注意事项可以参考这篇文章：<a href="http://yifeng.studio/2016/12/19/android-fragment-state-saving-best-practices/">Android Activity 和 Fragment 状态保存与恢复的最佳实践</a>。这里我说说另外两种简单粗暴的做法。</p>
+<p>有关 Fragment 的具体使用细节和注意事项可以参考这篇文章：<a href="http://yifeng.studio/2016/12/19/android-fragment-state-saving-best-practices/" target="_blank" rel="external">Android Activity 和 Fragment 状态保存与恢复的最佳实践</a>。这里我说说另外两种简单粗暴的做法。</p>
 <p>一种是通过 <code>setOffscreenPageLimit</code> 方法设置保留视图结构的 Fragment 数量，比较简单，比如保留所有 Fragment 视图结构： mContentVp.getAdapter().getCount()-1；另一种就是重写适配器的 Fragment 相关方法，比如：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//    private class ContentPagerAdapter extends FragmentStatePagerAdapter &#123;</span></div><div class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">ContentPagerAdapter</span> <span class="keyword">extends</span> <span class="title">FragmentPagerAdapter</span> </span>&#123;</div><div class="line">    </div><div class="line">        <span class="keyword">private</span> FragmentManager fragmentManager;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">ContentPagerAdapter</span><span class="params">(FragmentManager fm)</span> </span>&#123;</div><div class="line">            <span class="keyword">super</span>(fm);</div><div class="line">            <span class="keyword">this</span>.fragmentManager = fm;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> Fragment <span class="title">getItem</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> fragmentList.get(position);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> fragmentList.size();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> Object <span class="title">instantiateItem</span><span class="params">(ViewGroup container, <span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">            Fragment fragment = (Fragment) <span class="keyword">super</span>.instantiateItem(container, position);</div><div class="line">            <span class="keyword">this</span>.fragmentManager.beginTransaction().show(fragment).commit();</div><div class="line">            <span class="keyword">return</span> fragment;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroyItem</span><span class="params">(ViewGroup container, <span class="keyword">int</span> position, Object object)</span> </span>&#123; </div><div class="line">            Fragment fragment = fragmentList.get(position);</div><div class="line">            fragmentManager.beginTransaction().hide(fragment).commit();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div></pre></td></tr></table></figure>
 <p>这种处理下，也就不用区分使用的是哪种适配器类，通过重写 <code>instantiateItem</code> 和 <code>destroyItem</code> 方法，使用 show 和 hide 方法处理 Fragment 的展示与隐藏，这样，视图结构就不会销毁，换一种角度解决了 Fragment 状态保存与恢复的问题。</p>
@@ -252,7 +252,7 @@ ga('send', 'pageview');
  
 <p>本文标题为: <b><a href="/2016/12/23/android-fragment-and-viewpager-attentions/" target="_blank" title="Android Fragment＋ViewPager 组合，一些你不可不知的注意事项">Android Fragment＋ViewPager 组合，一些你不可不知的注意事项</a></b> </p>
  
-<p>本文链接为：<b><a href="/2016/12/23/android-fragment-and-viewpager-attentions/" target="_blank" title="Android Fragment＋ViewPager 组合，一些你不可不知的注意事项">http://yifeng.studio/2016/12/23/android-fragment-and-viewpager-attentions/</a></b> </p>
+<p>本文链接为：<b><a href="/2016/12/23/android-fragment-and-viewpager-attentions/" target="_blank" title="Android Fragment＋ViewPager 组合，一些你不可不知的注意事项">https://woyifeng.com/2016/12/23/android-fragment-and-viewpager-attentions/</a></b> </p>
 
 <p><img border="1" style="display:block; margin-left: auto; margin-right: auto;" src="http://blog.ancard.top/NiaoTechNiaoTech_QRcode.jpg"></p>
 </div>
@@ -379,7 +379,7 @@ ga('send', 'pageview');
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yifeng.studio/2016/12/23/android-fragment-and-viewpager-attentions/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://woyifeng.com/2016/12/23/android-fragment-and-viewpager-attentions/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -445,7 +445,7 @@ ga('send', 'pageview');
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="android-fragment-and-viewpager-attentions" data-title="Android Fragment＋ViewPager 组合，一些你不可不知的注意事项" data-url="http://yifeng.studio/2016/12/23/android-fragment-and-viewpager-attentions/"></div>
+	<div class="ds-thread" data-thread-key="android-fragment-and-viewpager-attentions" data-title="Android Fragment＋ViewPager 组合，一些你不可不知的注意事项" data-url="https://woyifeng.com/2016/12/23/android-fragment-and-viewpager-attentions/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -575,15 +575,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -651,11 +651,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
               </li>
             
             <div class="clearfix"></div>

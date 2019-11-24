@@ -5,15 +5,15 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yifeng.studio">
-  <title>Android WebView 中的 Html 网页定位操作 | YiFeng&#39;s Zone</title>
+  <link rel="dns-prefetch" href="https://woyifeng.com">
+  <title>Android WebView 中的 Html 网页定位操作 | 亦枫的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="利用 HTML5 提供的定位 API 可以帮助网页获取用户设备的当前位置信息。但如果是在 Android 系统下的应用中打开网页，我们使用 Hybrid 开发模式时用到的 WebView 包括应用本身都需要做一定的设置才能支持内嵌网页的定位功能。">
 <meta name="keywords" content="Android,WebView">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android WebView 中的 Html 网页定位操作">
-<meta property="og:url" content="http://yifeng.studio/2017/09/02/android-webview-html-geolocation/index.html">
-<meta property="og:site_name" content="YiFeng&#39;s Zone">
+<meta property="og:url" content="https://woyifeng.com/2017/09/02/android-webview-html-geolocation/index.html">
+<meta property="og:site_name" content="亦枫的技术博客">
 <meta property="og:description" content="利用 HTML5 提供的定位 API 可以帮助网页获取用户设备的当前位置信息。但如果是在 Android 系统下的应用中打开网页，我们使用 Hybrid 开发模式时用到的 WebView 包括应用本身都需要做一定的设置才能支持内嵌网页的定位功能。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ocq7gtgqu.bkt.clouddn.com/1504354650.gif">
@@ -23,7 +23,7 @@
 <meta name="twitter:description" content="利用 HTML5 提供的定位 API 可以帮助网页获取用户设备的当前位置信息。但如果是在 Android 系统下的应用中打开网页，我们使用 Hybrid 开发模式时用到的 WebView 包括应用本身都需要做一定的设置才能支持内嵌网页的定位功能。">
 <meta name="twitter:image" content="http://ocq7gtgqu.bkt.clouddn.com/1504354650.gif">
   
-    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="亦枫的技术博客" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -224,7 +224,7 @@ ga('send', 'pageview');
 <p>前面提过，使用 HTML5 定位 API 获取用户位置的前提是浏览器或者说我们 Android 系统中的原生 WebView 环境支持定位操作。事实上，经测试，这种方式不完全稳定。尤其是在国内各种厂商各种 ROM 的复杂环境下，还是有相当多品牌的手机是不支持这种定位操作的。甚至，你还会遇见，即使是使用同一台手机，安装不同的浏览器 App 对于定位的支持也不尽相同。</p>
 <p>所以，HTML5 自身的定位操作只能作为一种辅助手段。更稳妥的做法是，开发人员通过百度、高德之类的第三方定位 SDK 在原生代码中获取用户位置信息，当打开 WebView 中的网页时通过拼接 URL 参数的形式传递给网页。网页自行判断，如果 URL 中不包含定位信息的话，再通过自身的 API 发起定位请求。 </p>
 <p>或者通过HTML 网页的 JS代码 与 Java 原生代码交互的方式间接操作。关于  JS 与 Java 交互的相关知识，可以参考我的这篇文章：</p>
-<p><a href="http://yifeng.studio/2016/12/01/android-webview-java-js-interaction/">Android WebView —— Java 与 JavaScript 交互总结</a></p>
+<p><a href="http://yifeng.studio/2016/12/01/android-webview-java-js-interaction/" target="_blank" rel="external">Android WebView —— Java 与 JavaScript 交互总结</a></p>
 <p>（END）</p>
 
       
@@ -239,7 +239,7 @@ ga('send', 'pageview');
  
 <p>本文标题为: <b><a href="/2017/09/02/android-webview-html-geolocation/" target="_blank" title="Android WebView 中的 Html 网页定位操作">Android WebView 中的 Html 网页定位操作</a></b> </p>
  
-<p>本文链接为：<b><a href="/2017/09/02/android-webview-html-geolocation/" target="_blank" title="Android WebView 中的 Html 网页定位操作">http://yifeng.studio/2017/09/02/android-webview-html-geolocation/</a></b> </p>
+<p>本文链接为：<b><a href="/2017/09/02/android-webview-html-geolocation/" target="_blank" title="Android WebView 中的 Html 网页定位操作">https://woyifeng.com/2017/09/02/android-webview-html-geolocation/</a></b> </p>
 
 <p><img border="1" style="display:block; margin-left: auto; margin-right: auto;" src="http://blog.ancard.top/NiaoTechNiaoTech_QRcode.jpg"></p>
 </div>
@@ -370,7 +370,7 @@ ga('send', 'pageview');
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yifeng.studio/2017/09/02/android-webview-html-geolocation/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://woyifeng.com/2017/09/02/android-webview-html-geolocation/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -436,7 +436,7 @@ ga('send', 'pageview');
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="android-webview-html-geolocation" data-title="Android WebView 中的 Html 网页定位操作" data-url="http://yifeng.studio/2017/09/02/android-webview-html-geolocation/"></div>
+	<div class="ds-thread" data-thread-key="android-webview-html-geolocation" data-title="Android WebView 中的 Html 网页定位操作" data-url="https://woyifeng.com/2017/09/02/android-webview-html-geolocation/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -566,15 +566,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -642,11 +642,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
               </li>
             
             <div class="clearfix"></div>

@@ -5,15 +5,15 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yifeng.studio">
-  <title>Android 系统中，那些能大幅提高工作效率的 API 汇总（持续更新中...） | YiFeng&#39;s Zone</title>
+  <link rel="dns-prefetch" href="https://woyifeng.com">
+  <title>Android 系统中，那些能大幅提高工作效率的 API 汇总（持续更新中...） | 亦枫的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="前言 “条条大路通罗马。”工作中，实现某个需求的方式往往不是唯一的，这些不同实现方式不仅表现在代码质量上，还影响着我们的工作效率。就像，在 Android 系统中，总有那么一些鲜为人知的 API 能够减少我们很多零碎的工作量。于是，就想凭着一些经验，整理一些常用的，找个地方归纳总结，也供日后翻阅。">
 <meta name="keywords" content="Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 系统中，那些能大幅提高工作效率的 API 汇总（持续更新中...）">
-<meta property="og:url" content="http://yifeng.studio/2017/03/11/java-and-android-some-effective-apis/index.html">
-<meta property="og:site_name" content="YiFeng&#39;s Zone">
+<meta property="og:url" content="https://woyifeng.com/2017/03/11/java-and-android-some-effective-apis/index.html">
+<meta property="og:site_name" content="亦枫的技术博客">
 <meta property="og:description" content="前言 “条条大路通罗马。”工作中，实现某个需求的方式往往不是唯一的，这些不同实现方式不仅表现在代码质量上，还影响着我们的工作效率。就像，在 Android 系统中，总有那么一些鲜为人知的 API 能够减少我们很多零碎的工作量。于是，就想凭着一些经验，整理一些常用的，找个地方归纳总结，也供日后翻阅。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-03-14T13:32:33.000Z">
@@ -21,7 +21,7 @@
 <meta name="twitter:title" content="Android 系统中，那些能大幅提高工作效率的 API 汇总（持续更新中...）">
 <meta name="twitter:description" content="前言 “条条大路通罗马。”工作中，实现某个需求的方式往往不是唯一的，这些不同实现方式不仅表现在代码质量上，还影响着我们的工作效率。就像，在 Android 系统中，总有那么一些鲜为人知的 API 能够减少我们很多零碎的工作量。于是，就想凭着一些经验，整理一些常用的，找个地方归纳总结，也供日后翻阅。">
   
-    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="亦枫的技术博客" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -279,7 +279,7 @@ ga('send', 'pageview');
 <h1 id="android-duplicateParentState"><a href="#android-duplicateParentState" class="headerlink" title="android:duplicateParentState"></a>android:duplicateParentState</h1><hr>
 <p>是否将 View 自身的 drawable state 交给直接 parent ViewGroup 控制，值为 boolean 类型。比如有一个 item 布局，item 中有一个 button，如果点击 item layout 时，需要 button 呈现对应的点击效果，就可以在 button 中用到这个属性。不过，从设计的角度来讲，这种场景还是比较少见的。知道有这个属性就好，不推荐这种交互设计。</p>
 <h1 id="android-fillViewport"><a href="#android-fillViewport" class="headerlink" title="android:fillViewport"></a>android:fillViewport</h1><hr>
-<p>ScrollView 的一个属性，用于设置内容部分是否填满屏幕，主要针对内容不足以填满屏幕的情况。这里推荐一个使用技巧，参考我之前写的文章：<a href="http://yifeng.studio/2017/03/08/android-several-layout-skills/">Android 日常开发中，两个非常实用的布局技巧</a>。</p>
+<p>ScrollView 的一个属性，用于设置内容部分是否填满屏幕，主要针对内容不足以填满屏幕的情况。这里推荐一个使用技巧，参考我之前写的文章：<a href="http://yifeng.studio/2017/03/08/android-several-layout-skills/" target="_blank" rel="external">Android 日常开发中，两个非常实用的布局技巧</a>。</p>
 <h1 id="android-adjustViewBounds"><a href="#android-adjustViewBounds" class="headerlink" title="android:adjustViewBounds"></a>android:adjustViewBounds</h1><hr>
 <p>使用 ImageView 时，你可能会用 <code>android:scaleType</code> 属性设置图片缩放方式。殊不知，<code>android:adjustViewBounds</code> 属性也能起到类似的效果。但要注意的是，后者需要至少指定 ImageView 宽高中的一个属性，或者 maxHeight 之类的，然后另一个属性随之适配。这个属性用在列表中较为合适，比如 App 中的活动列表页面，图片宽度设置为 match_parent，然后高度设为 wrap_content 使其自适应，这样便能保证从服务获取的高分辨率图片在不同的屏幕中不被拉伸变形。（备注：最好在项目资源文件中放置一个与网络图片相同尺寸的默认图，起到 placeholder 作用，避免图片显示前高度为 0 的较差体验。）</p>
 <h1 id="持续更新中…"><a href="#持续更新中…" class="headerlink" title="持续更新中…"></a>持续更新中…</h1><hr>
@@ -297,7 +297,7 @@ ga('send', 'pageview');
  
 <p>本文标题为: <b><a href="/2017/03/11/java-and-android-some-effective-apis/" target="_blank" title="Android 系统中，那些能大幅提高工作效率的 API 汇总（持续更新中...）">Android 系统中，那些能大幅提高工作效率的 API 汇总（持续更新中...）</a></b> </p>
  
-<p>本文链接为：<b><a href="/2017/03/11/java-and-android-some-effective-apis/" target="_blank" title="Android 系统中，那些能大幅提高工作效率的 API 汇总（持续更新中...）">http://yifeng.studio/2017/03/11/java-and-android-some-effective-apis/</a></b> </p>
+<p>本文链接为：<b><a href="/2017/03/11/java-and-android-some-effective-apis/" target="_blank" title="Android 系统中，那些能大幅提高工作效率的 API 汇总（持续更新中...）">https://woyifeng.com/2017/03/11/java-and-android-some-effective-apis/</a></b> </p>
 
 <p><img border="1" style="display:block; margin-left: auto; margin-right: auto;" src="http://blog.ancard.top/NiaoTechNiaoTech_QRcode.jpg"></p>
 </div>
@@ -424,7 +424,7 @@ ga('send', 'pageview');
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yifeng.studio/2017/03/11/java-and-android-some-effective-apis/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://woyifeng.com/2017/03/11/java-and-android-some-effective-apis/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -490,7 +490,7 @@ ga('send', 'pageview');
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="java-and-android-some-effective-apis" data-title="Android 系统中，那些能大幅提高工作效率的 API 汇总（持续更新中...）" data-url="http://yifeng.studio/2017/03/11/java-and-android-some-effective-apis/"></div>
+	<div class="ds-thread" data-thread-key="java-and-android-some-effective-apis" data-title="Android 系统中，那些能大幅提高工作效率的 API 汇总（持续更新中...）" data-url="https://woyifeng.com/2017/03/11/java-and-android-some-effective-apis/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -620,15 +620,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -696,11 +696,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
               </li>
             
             <div class="clearfix"></div>

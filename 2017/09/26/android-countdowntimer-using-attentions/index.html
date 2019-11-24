@@ -5,15 +5,15 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yifeng.studio">
-  <title>聊聊 CountDownTimer 使用过程中的注意事项 | YiFeng&#39;s Zone</title>
+  <link rel="dns-prefetch" href="https://woyifeng.com">
+  <title>聊聊 CountDownTimer 使用过程中的注意事项 | 亦枫的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Android 实现倒计时的方式有多种，Handler 延时发送 Message，Timer 和 TimerTask 配合使用，使用 CountDownTimer 类等。相比而言，经过系统封装的 CountDownTimer 算是使用起来最为方便的方式之一。 然而，CountDownTimer 有两个使用上的问题我们不得不稍加注意：计时不准确、内存泄漏问题。我们来结合源码逐一分析一下。">
 <meta name="keywords" content="Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="聊聊 CountDownTimer 使用过程中的注意事项">
-<meta property="og:url" content="http://yifeng.studio/2017/09/26/android-countdowntimer-using-attentions/index.html">
-<meta property="og:site_name" content="YiFeng&#39;s Zone">
+<meta property="og:url" content="https://woyifeng.com/2017/09/26/android-countdowntimer-using-attentions/index.html">
+<meta property="og:site_name" content="亦枫的技术博客">
 <meta property="og:description" content="Android 实现倒计时的方式有多种，Handler 延时发送 Message，Timer 和 TimerTask 配合使用，使用 CountDownTimer 类等。相比而言，经过系统封装的 CountDownTimer 算是使用起来最为方便的方式之一。 然而，CountDownTimer 有两个使用上的问题我们不得不稍加注意：计时不准确、内存泄漏问题。我们来结合源码逐一分析一下。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-09-26T15:47:54.000Z">
@@ -21,7 +21,7 @@
 <meta name="twitter:title" content="聊聊 CountDownTimer 使用过程中的注意事项">
 <meta name="twitter:description" content="Android 实现倒计时的方式有多种，Handler 延时发送 Message，Timer 和 TimerTask 配合使用，使用 CountDownTimer 类等。相比而言，经过系统封装的 CountDownTimer 算是使用起来最为方便的方式之一。 然而，CountDownTimer 有两个使用上的问题我们不得不稍加注意：计时不准确、内存泄漏问题。我们来结合源码逐一分析一下。">
   
-    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="亦枫的技术博客" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -235,7 +235,7 @@ ga('send', 'pageview');
  
 <p>本文标题为: <b><a href="/2017/09/26/android-countdowntimer-using-attentions/" target="_blank" title="聊聊 CountDownTimer 使用过程中的注意事项">聊聊 CountDownTimer 使用过程中的注意事项</a></b> </p>
  
-<p>本文链接为：<b><a href="/2017/09/26/android-countdowntimer-using-attentions/" target="_blank" title="聊聊 CountDownTimer 使用过程中的注意事项">http://yifeng.studio/2017/09/26/android-countdowntimer-using-attentions/</a></b> </p>
+<p>本文链接为：<b><a href="/2017/09/26/android-countdowntimer-using-attentions/" target="_blank" title="聊聊 CountDownTimer 使用过程中的注意事项">https://woyifeng.com/2017/09/26/android-countdowntimer-using-attentions/</a></b> </p>
 
 <p><img border="1" style="display:block; margin-left: auto; margin-right: auto;" src="http://blog.ancard.top/NiaoTechNiaoTech_QRcode.jpg"></p>
 </div>
@@ -362,7 +362,7 @@ ga('send', 'pageview');
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yifeng.studio/2017/09/26/android-countdowntimer-using-attentions/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://woyifeng.com/2017/09/26/android-countdowntimer-using-attentions/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -428,7 +428,7 @@ ga('send', 'pageview');
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="android-countdowntimer-using-attentions" data-title="聊聊 CountDownTimer 使用过程中的注意事项" data-url="http://yifeng.studio/2017/09/26/android-countdowntimer-using-attentions/"></div>
+	<div class="ds-thread" data-thread-key="android-countdowntimer-using-attentions" data-title="聊聊 CountDownTimer 使用过程中的注意事项" data-url="https://woyifeng.com/2017/09/26/android-countdowntimer-using-attentions/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -558,15 +558,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -634,11 +634,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
               </li>
             
             <div class="clearfix"></div>

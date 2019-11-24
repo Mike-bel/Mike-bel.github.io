@@ -6,23 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://woyifeng.com">
-  <title>Android 自定义 View 集锦｜自定义圆形旋转进度条，仿微博头像加载效果 | 亦枫的技术博客</title>
+  <title>函数 getX 与 getY 引发的跟随手指移动 View 的抖动问题 | 亦枫的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="微博 App 的用户头像有一个圆形旋转进度条的加载效果，看上去效果非常不错，如图所示：">
-<meta name="keywords" content="Android,Custom View">
+  <meta name="description" content="比如有这样一个常见的 app 功能，一个跟随手指移动的按钮，常见如屏幕悬浮球、拖拽手柄等。">
+<meta name="keywords" content="Android">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android 自定义 View 集锦｜自定义圆形旋转进度条，仿微博头像加载效果">
-<meta property="og:url" content="https://woyifeng.com/2017/08/04/android-custom-views-circle-loading-view/index.html">
+<meta property="og:title" content="函数 getX 与 getY 引发的跟随手指移动 View 的抖动问题">
+<meta property="og:url" content="https://woyifeng.com/2019/11/24/android-moved-view-shake-issue/index.html">
 <meta property="og:site_name" content="亦枫的技术博客">
-<meta property="og:description" content="微博 App 的用户头像有一个圆形旋转进度条的加载效果，看上去效果非常不错，如图所示：">
+<meta property="og:description" content="比如有这样一个常见的 app 功能，一个跟随手指移动的按钮，常见如屏幕悬浮球、拖拽手柄等。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://github.com/Mike-bel/android-custom-views/blob/master/pictures/1501857872.gif?raw=true">
-<meta property="og:image" content="https://github.com/Mike-bel/android-custom-views/blob/master/pictures/1501857864.gif?raw=true">
-<meta property="og:updated_time" content="2017-08-04T14:56:35.000Z">
+<meta property="og:updated_time" content="2019-11-24T14:24:10.114Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android 自定义 View 集锦｜自定义圆形旋转进度条，仿微博头像加载效果">
-<meta name="twitter:description" content="微博 App 的用户头像有一个圆形旋转进度条的加载效果，看上去效果非常不错，如图所示：">
-<meta name="twitter:image" content="https://github.com/Mike-bel/android-custom-views/blob/master/pictures/1501857872.gif?raw=true">
+<meta name="twitter:title" content="函数 getX 与 getY 引发的跟随手指移动 View 的抖动问题">
+<meta name="twitter:description" content="比如有这样一个常见的 app 功能，一个跟随手指移动的按钮，常见如屏幕悬浮球、拖拽手柄等。">
   
     <link rel="alternative" href="/atom.xml" title="亦枫的技术博客" type="application/atom+xml">
   
@@ -171,57 +168,41 @@ ga('send', 'pageview');
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-android-custom-views-circle-loading-view" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-android-moved-view-shake-issue" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Android 自定义 View 集锦｜自定义圆形旋转进度条，仿微博头像加载效果
+      函数 getX 与 getY 引发的跟随手指移动 View 的抖动问题
     </h1>
   
 
         
-        <a href="/2017/08/04/android-custom-views-circle-loading-view/" class="archive-article-date">
-  	<time datetime="2017-08-04T14:49:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-04</time>
+        <a href="/2019/11/24/android-moved-view-shake-issue/" class="archive-article-date">
+  	<time datetime="2019-11-24T14:22:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-24</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>微博 App 的用户头像有一个圆形旋转进度条的加载效果，看上去效果非常不错，如图所示：</p>
-<a id="more"></a>
-<p><img src="https://github.com/Mike-bel/android-custom-views/blob/master/pictures/1501857872.gif?raw=true" alt=""></p>
-<p>据说 Instagram 也采用了这种效果。最近抽空研究了一下，最后实现的效果是这样：</p>
-<p><img src="https://github.com/Mike-bel/android-custom-views/blob/master/pictures/1501857864.gif?raw=true" alt=""></p>
-<p>基本上能模拟出个大概，代码量不大，来讲讲实现思路吧。</p>
-<p>模拟一种动画效果，首先需要仔细分析其运作过程，找到其中的物理规律，从而确定实现方案。像这种运动速度较快的动画，一般不是很容易看清。可以先通过录屏软件，录取动画运作的过程，然后借助一些辅助工具放慢放大，比如 PS，反复重复播放几遍，基本上就能看出动画的运作规律了。</p>
-<p>回到这里的加载效果，拆分开来，可以理解为画笔上的两层绘制和时间上的两段过程。时间上，很明显可以看出分为前 360 度和后 360 度，主要在画笔上：</p>
-<p>1，单一完整的圆弧绘制。前 360 度，从 360 度的圆弧到 0 度圆弧的递减过程；后 360 度，从 0 度圆弧到 360 度圆弧的递增过程。</p>
-<p>2，重复片段的圆弧绘制。前 360 度，从零开始，逐渐递增，直到多段填满圆周；后 360 度，反过来，逐渐递减，直到数量为零。</p>
-<p>其他的就是细节的处理，后面具体实现时再提及，我们先来看看如何实现这两个核心流程的绘制。</p>
-<p>由于这两个流程使用的画笔属性相同，所以使用一个 Paint 对象即可，这段代码没什么好讲的，就是一些初始化工作：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mPaint = <span class="keyword">new</span> Paint();</div><div class="line">mPaint.setAntiAlias(<span class="keyword">true</span>);</div><div class="line">mPaint.setStyle(Paint.Style.STROKE);</div><div class="line">mPaint.setStrokeWidth(mArcWidth);</div><div class="line">mPaint.setStrokeCap(Paint.Cap.ROUND);</div></pre></td></tr></table></figure>
-<p>注意，与微博原图效果不同的是，我的效果图中使用到了渐变色圆环，这样效果更好看一些。使用 setShader() 方法可以给画笔设置渐变色，实现方式是：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSizeChanged</span><span class="params">(<span class="keyword">int</span> w, <span class="keyword">int</span> h, <span class="keyword">int</span> oldw, <span class="keyword">int</span> oldh)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onSizeChanged(w, h, oldw, oldh);</div><div class="line"></div><div class="line">    ......</div><div class="line"></div><div class="line">    Shader shader = <span class="keyword">new</span> LinearGradient(<span class="number">0f</span>, <span class="number">0f</span>, mWidth, mHeight,</div><div class="line">            mStartColor, mEndColor, Shader.TileMode.CLAMP);</div><div class="line">    mPaint.setShader(shader);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Shader 子类有很多，这里使用的是线性渐变类 LinearGradient，由于需要使用 View 宽高，所以放在了 onSizeChanged() 函数里面。</p>
-<p>核心计算和绘制工作都在 onDraw() 方法里面，看下这里的代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (maxAngle &lt;= <span class="number">360</span>) &#123;</div><div class="line">        <span class="keyword">float</span> angle = <span class="number">0</span>;</div><div class="line">        canvas.rotate(mRatio * maxAngle / <span class="number">360</span>, mWidth / <span class="number">2</span>, mHeight / <span class="number">2</span>);</div><div class="line">        canvas.drawArc(mRectF, maxAngle, <span class="number">360</span> - maxAngle, <span class="keyword">false</span>, mPaint);</div><div class="line">        <span class="keyword">while</span> (angle &lt;= maxAngle) &#123;</div><div class="line">            <span class="keyword">float</span> length = mArcRadian * angle / maxAngle;</div><div class="line">            canvas.drawArc(mRectF, <span class="number">0</span>, length, <span class="keyword">false</span>, mPaint);</div><div class="line">            canvas.rotate(mArcSpacing, mWidth / <span class="number">2</span>, mHeight / <span class="number">2</span>);</div><div class="line">            angle += mArcSpacing;</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">float</span> angle = <span class="number">0</span>;</div><div class="line">        canvas.rotate(mRatio + mRatio * (maxAngle - <span class="number">360</span>) / <span class="number">360</span>, mWidth / <span class="number">2</span>, mHeight / <span class="number">2</span>);</div><div class="line">        canvas.drawArc(mRectF, <span class="number">0</span>, maxAngle - <span class="number">360</span>, <span class="keyword">false</span>, mPaint);</div><div class="line">        canvas.rotate(maxAngle - <span class="number">360</span>, mWidth / <span class="number">2</span>, mHeight / <span class="number">2</span>);</div><div class="line">        <span class="keyword">while</span> (angle &lt;= <span class="number">720</span> - maxAngle) &#123;</div><div class="line">            <span class="keyword">float</span> length = mArcRadian * angle / (<span class="number">720</span> - maxAngle);</div><div class="line">            canvas.drawArc(mRectF, <span class="number">0</span>, length, <span class="keyword">false</span>, mPaint);</div><div class="line">            canvas.rotate(mArcSpacing, mWidth / <span class="number">2</span>, mHeight / <span class="number">2</span>);</div><div class="line">            angle += mArcSpacing;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (maxAngle &lt;= <span class="number">720</span>) &#123;</div><div class="line">        maxAngle += mArcSpacing;</div><div class="line">        postInvalidateDelayed(<span class="number">30</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>前面提到，动画在时间上分前后 360 度的两段过程，所以这里定义了一个 maxAngle 变量来定义时间的变化。可以看到，前后 360 度的绘制代码看上去差不多，但还是有很大区别的。需要理解的地方有：</p>
-<p>1，多个小段圆弧可以利用画布旋转的方式轻松实现，也就是 canvas.rotate() 方法，上面代码中的 while 循环部分。这里有个细节处理，就是每段圆弧的弧度有个递增变化。</p>
-<p>2，整个 View 给人的感觉有一种旋转的效果，为了实现这个效果，在每次绘制前，都增加了旋转的步骤，也就是这行代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">canvas.rotate(mRatio * maxAngle / <span class="number">360</span>, mWidth / <span class="number">2</span>, mHeight / <span class="number">2</span>);</div></pre></td></tr></table></figure>
-<p>其中 mRatio 表示整个动画结束时，View 相比初始状态时整体旋转的角度。 这里我设置的默认值是 60，值越大，动画执行时呈现出越快的旋转效果。大家可以修改源码，自己尝试一下。</p>
-<p>3，还有一点就是，maxAngle 变量每次增量值的设置，一定要设置为相邻两段片段圆弧的间距弧度。这样做的目的是，保证每次绘制，片段圆弧都能有一个完整的递增或递减。否则，动画执行时，看上会发生视觉上的抖动效果。</p>
-<p>基本上就是这样，代码量虽然不多，但是各种细节的处理还是耗费了很多时间调整。本来想使用一些图例展示一下每行代码的作用，但是太费时间了。如果感兴趣的，完全可以自己下载一下源码，修改试试看。</p>
-<p>经过简单地封装，提取出一部分属性：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">"CircleLoadingView"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"circleStartColor"</span> <span class="attr">format</span>=<span class="string">"color|reference"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"circleEndColor"</span> <span class="attr">format</span>=<span class="string">"color|reference"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"circleArcWidth"</span> <span class="attr">format</span>=<span class="string">"integer|reference"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"circleArcRadian"</span> <span class="attr">format</span>=<span class="string">"integer|reference"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"circleArcSpacing"</span> <span class="attr">format</span>=<span class="string">"integer|reference"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>注意：中间的头像部分不是这里自定义 View 的内容，使用时可以自由填充内容。比如，看下我这里的使用方式，还是比较自由的：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">RelativeLayout</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"200dp"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"200dp"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_centerInParent</span>=<span class="string">"true"</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">com.yifeng.view.view.CircleLoadingView</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">        <span class="attr">app:circleStartColor</span>=<span class="string">"#ffff00"</span></span></div><div class="line"><span class="tag">        <span class="attr">app:circleEndColor</span>=<span class="string">"#ff0000"</span></span></div><div class="line"><span class="tag">        <span class="attr">app:circleArcRadian</span>=<span class="string">"5"</span></span></div><div class="line"><span class="tag">        <span class="attr">app:circleArcWidth</span>=<span class="string">"10"</span></span></div><div class="line"><span class="tag">        <span class="attr">app:circleArcSpacing</span>=<span class="string">"10"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_margin</span>=<span class="string">"10dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:src</span>=<span class="string">"@mipmap/ic_avatar_default"</span>/&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>源代码还是老样子，统一在 GitHub 上的自定义 View 集锦库里，地址如下。：</p>
-<p><a href="https://github.com/Mike-bel/android-custom-views" target="_blank" rel="external">https://github.com/Mike-bel/android-custom-views</a></p>
+        <p>比如有这样一个常见的 app 功能，一个跟随手指移动的按钮，常见如屏幕悬浮球、拖拽手柄等。<br><a id="more"></a><br>实现这样的需求，必然要处理 view 的 onTouch 事件，大概的一个代码模板就是这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">float</span> panelLastY;</div><div class="line"><span class="keyword">private</span> <span class="keyword">float</span> panelStartX;</div><div class="line"><span class="keyword">private</span> <span class="keyword">float</span> panelStartY;</div><div class="line"></div><div class="line"><span class="meta">@SuppressWarnings</span>(<span class="string">"ClickableViewAccessibility"</span>)</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initTouchEvent</span><span class="params">()</span> </span>&#123;</div><div class="line">    panelView.setOnTouchListener(<span class="keyword">new</span> View.OnTouchListener() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouch</span><span class="params">(View v, MotionEvent event)</span> </span>&#123;</div><div class="line">            <span class="keyword">switch</span> (event.getAction()) &#123;</div><div class="line">                <span class="keyword">case</span> MotionEvent.ACTION_DOWN:</div><div class="line">                    panelLastY = event.getRawY();</div><div class="line">                    panelStartX = event.getX();</div><div class="line">                    panelStartY = event.getRawY();</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line"></div><div class="line">                <span class="keyword">case</span> MotionEvent.ACTION_MOVE:</div><div class="line">                    Log.e(<span class="string">"yifeng"</span>, <span class="string">"onTouchY: "</span> + event.getY());</div><div class="line">                    Log.e(<span class="string">"yifeng"</span>, <span class="string">"onTouchRawY: "</span> + event.getRawY());</div><div class="line">                    <span class="keyword">int</span> deltaY = (<span class="keyword">int</span>) (event.getRawY() - panelLastY);</div><div class="line">                    panelLastY = event.getRawY();</div><div class="line">                    <span class="comment">//TODO 通过 margin 或者 translationY 控制 view 移动</span></div><div class="line">                    <span class="keyword">break</span>;</div><div class="line"></div><div class="line">                <span class="keyword">case</span> MotionEvent.ACTION_UP:</div><div class="line">                    <span class="keyword">float</span> panelEndX = event.getX();</div><div class="line">                    <span class="keyword">float</span> panelEndY = event.getRawY();</div><div class="line">                    <span class="keyword">if</span> (Math.abs(panelEndX - panelStartX) &lt; <span class="number">10</span> &amp;&amp; Math.abs(panelStartY - panelEndY) &lt; <span class="number">10</span>) &#123;</div><div class="line">                        <span class="comment">//TODO 处理 Click 事件</span></div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                    &#125;</div><div class="line">                    <span class="comment">//TODO 处理离开事件</span></div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">// 返回 true 拦截后续事件传递</span></div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>借助这个例子说明几点问题，这段代码主要是获取并处理 event 事件的 Y 值。其中有几点需要注意的是：</p>
+<p>第一，onTouch 方法返回值必须为 true，表示当前触摸事件已被消费，拦截后续事件传递；</p>
+<p>第二，click 事件。由于第一点中 onTouch 返回值为 true，view 的 click 事件自然也被拦截，那么就需要手动处理 click 事件。可以通过判断 event 偏移量来实现；</p>
+<p>第三，一个完善的跟随手指移动的功能，通常少不了快速滑动的功能，判定滑动速度，需要用到专业的 GestureDetector 类。当然这里没有写，因为使用这个类后，相关逻辑都要搬出 onTouch 事件，到 Gesture 中处理。桥接代码类似：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> GestureDetector.SimpleOnGestureListener gestureListener = <span class="keyword">new</span> GestureDetector.SimpleOnGestureListener() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onFling</span><span class="params">(MotionEvent e1, MotionEvent e2, <span class="keyword">float</span> velocityX, <span class="keyword">float</span> velocityY)</span> </span>&#123;</div><div class="line">            Log.e(<span class="string">"yifeng"</span>, <span class="string">"onFling: "</span> + velocityX + <span class="string">" "</span> + velocityY);</div><div class="line">            <span class="keyword">if</span> (Math.abs(velocityX) &gt; <span class="number">100</span> || Math.abs(velocityY) &gt; <span class="number">100</span>) &#123;</div><div class="line">                <span class="comment">//TODO 处理快速滑动事件，通常与 ACTION_UP 处理结果相同</span></div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">super</span>.onFling(e1, e2, velocityX, velocityY);</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">    <span class="keyword">private</span> GestureDetector gestureDetector = <span class="keyword">new</span> GestureDetector(gestureListener);</div><div class="line">    </div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouch</span><span class="params">(View v, MotionEvent event)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> gestureDetector.onTouchEvent(event);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>第四，使用 getRawX 与 getRawY 方法而不是 getX 与 getY 方法。这才是我想强调的最重要的一点。前者表示获取 touch event 事件产生的屏幕坐标值，对应于屏幕坐标系；后者表示相对于父容器 View 的坐标值，对应于 View 所处父容器的位置。看似这两种坐标系函数都可以使用，计算偏差而已，实际上后者的使用会有问题。</p>
+<p>还拿最开始那段代码示例，同一段手势向下的操作，这是 getY 的打印日志：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">E/yifeng: onTouchY: 34.89081</div><div class="line">E/yifeng: onTouchY: 88.31476</div><div class="line">E/yifeng: onTouchY: 60.086853</div><div class="line">E/yifeng: onTouchY: 67.28284</div><div class="line">E/yifeng: onTouchY: 64.049866</div><div class="line">E/yifeng: onTouchY: 69.03436</div><div class="line">E/yifeng: onTouchY: 75.53076</div><div class="line">E/yifeng: onTouchY: 73.07654</div><div class="line">E/yifeng: onTouchY: 67.24097</div><div class="line">E/yifeng: onTouchY: 66.67041</div><div class="line">E/yifeng: onTouchY: 60.636597</div><div class="line">E/yifeng: onTouchY: 63.618164</div><div class="line">E/yifeng: onTouchY: 60.124634</div><div class="line">E/yifeng: onTouchY: 58.584595</div><div class="line">E/yifeng: onTouchY: 55.103027</div></pre></td></tr></table></figure>
+<p>这是 getRawY 的打印日志：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">E/yifeng: onTouchRawY: 793.8908</div><div class="line">E/yifeng: onTouchRawY: 854.31476</div><div class="line">E/yifeng: onTouchRawY: 886.08685</div><div class="line">E/yifeng: onTouchRawY: 924.28284</div><div class="line">E/yifeng: onTouchRawY: 959.04987</div><div class="line">E/yifeng: onTouchRawY: 998.03436</div><div class="line">E/yifeng: onTouchRawY: 1042.5308</div><div class="line">E/yifeng: onTouchRawY: 1084.0765</div><div class="line">E/yifeng: onTouchRawY: 1119.241</div><div class="line">E/yifeng: onTouchRawY: 1153.6704</div><div class="line">E/yifeng: onTouchRawY: 1181.6366</div><div class="line">E/yifeng: onTouchRawY: 1211.6182</div><div class="line">E/yifeng: onTouchRawY: 1237.1246</div><div class="line">E/yifeng: onTouchRawY: 1260.5846</div><div class="line">E/yifeng: onTouchRawY: 1280.103</div><div class="line">E/yifeng: onTouchRawY: 1315.1056</div></pre></td></tr></table></figure>
+<p>发现区别了吗？getY 值不稳定，相邻值前后大小变来变去；getRawY 值则是线性的一个方向上的变化，符合实际手势的操作行为。</p>
+<p>具体反应在跟随手指移动的 View 上面，会发现使用 getY 函数产生 View 抖动特别明显，效果很差。而使用 getRawY 方法不会导致 View 抖动，比较顺畅。</p>
+<p>所以，理论上使用 motionEvent 获取 touch 事件的坐标值，不论使用什么方法都能计算正确，但是由于 getX 与 getY 函数结果的不稳定性，只能选择基于屏幕坐标系的 getRawX 与 getRawY 函数。这是实践中特别需要的一个细节问题。</p>
 
       
 
@@ -233,9 +214,9 @@ ga('send', 'pageview');
  
 <p>欢迎各种形式地交流与转载，注明作者、出处和微信公众号即可。</p>
  
-<p>本文标题为: <b><a href="/2017/08/04/android-custom-views-circle-loading-view/" target="_blank" title="Android 自定义 View 集锦｜自定义圆形旋转进度条，仿微博头像加载效果">Android 自定义 View 集锦｜自定义圆形旋转进度条，仿微博头像加载效果</a></b> </p>
+<p>本文标题为: <b><a href="/2019/11/24/android-moved-view-shake-issue/" target="_blank" title="函数 getX 与 getY 引发的跟随手指移动 View 的抖动问题">函数 getX 与 getY 引发的跟随手指移动 View 的抖动问题</a></b> </p>
  
-<p>本文链接为：<b><a href="/2017/08/04/android-custom-views-circle-loading-view/" target="_blank" title="Android 自定义 View 集锦｜自定义圆形旋转进度条，仿微博头像加载效果">https://woyifeng.com/2017/08/04/android-custom-views-circle-loading-view/</a></b> </p>
+<p>本文链接为：<b><a href="/2019/11/24/android-moved-view-shake-issue/" target="_blank" title="函数 getX 与 getY 引发的跟随手指移动 View 的抖动问题">https://woyifeng.com/2019/11/24/android-moved-view-shake-issue/</a></b> </p>
 
 <p><img border="1" style="display:block; margin-left: auto; margin-right: auto;" src="http://blog.ancard.top/NiaoTechNiaoTech_QRcode.jpg"></p>
 </div>
@@ -285,26 +266,11 @@ ga('send', 'pageview');
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
         		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Custom View</a>
-        		</li>
       		
 		</ul>
 	</div>
 
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
 	<div class="article-tag tagcloud">
@@ -366,7 +332,7 @@ ga('send', 'pageview');
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://woyifeng.com/2017/08/04/android-custom-views-circle-loading-view/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://woyifeng.com/2019/11/24/android-moved-view-shake-issue/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -380,18 +346,9 @@ ga('send', 'pageview');
   
 <nav id="article-nav">
   
-    <a href="/2017/08/27/android-log-security-and-buildconfig/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Android 中能够作为 Log 开关的一些操作以及安全性浅谈
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/07/24/android-custom-views-water-ripple-effect/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Android 自定义 View 集锦｜实现水波纹扩散效果</div>
+    <a href="/2019/11/13/fetch-java-stack-trace-info/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">获取 Java 函数调用栈</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -432,7 +389,7 @@ ga('send', 'pageview');
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="android-custom-views-circle-loading-view" data-title="Android 自定义 View 集锦｜自定义圆形旋转进度条，仿微博头像加载效果" data-url="https://woyifeng.com/2017/08/04/android-custom-views-circle-loading-view/"></div>
+	<div class="ds-thread" data-thread-key="android-moved-view-shake-issue" data-title="函数 getX 与 getY 引发的跟随手指移动 View 的抖动问题" data-url="https://woyifeng.com/2019/11/24/android-moved-view-shake-issue/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

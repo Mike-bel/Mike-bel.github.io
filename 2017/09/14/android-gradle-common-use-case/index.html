@@ -5,15 +5,15 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yifeng.studio">
-  <title>Android Gradle 常用使用场景实现方式的总结 | YiFeng&#39;s Zone</title>
+  <link rel="dns-prefetch" href="https://woyifeng.com">
+  <title>Android Gradle 常用使用场景实现方式的总结 | 亦枫的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Gradle 作为一款灵活多变的构建插件，与 Android Studio 的结合，能够解决过去使用 Eclipse 开发 App 时所遇到的诸多问题。同时，基于 Groove 这样一款 DSL 语言的脚本特性，记住各种语法显然又是一件比较困难的事情。 事实上，Gradle 插件的常用使用场景并不是很多，也不需要死记硬背，或者完全学会 Groove 的所有使用方式。这里将 Android 开发中较">
 <meta name="keywords" content="Android,Gradle">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android Gradle 常用使用场景实现方式的总结">
-<meta property="og:url" content="http://yifeng.studio/2017/09/14/android-gradle-common-use-case/index.html">
-<meta property="og:site_name" content="YiFeng&#39;s Zone">
+<meta property="og:url" content="https://woyifeng.com/2017/09/14/android-gradle-common-use-case/index.html">
+<meta property="og:site_name" content="亦枫的技术博客">
 <meta property="og:description" content="Gradle 作为一款灵活多变的构建插件，与 Android Studio 的结合，能够解决过去使用 Eclipse 开发 App 时所遇到的诸多问题。同时，基于 Groove 这样一款 DSL 语言的脚本特性，记住各种语法显然又是一件比较困难的事情。 事实上，Gradle 插件的常用使用场景并不是很多，也不需要死记硬背，或者完全学会 Groove 的所有使用方式。这里将 Android 开发中较">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-09-14T14:38:34.000Z">
@@ -21,7 +21,7 @@
 <meta name="twitter:title" content="Android Gradle 常用使用场景实现方式的总结">
 <meta name="twitter:description" content="Gradle 作为一款灵活多变的构建插件，与 Android Studio 的结合，能够解决过去使用 Eclipse 开发 App 时所遇到的诸多问题。同时，基于 Groove 这样一款 DSL 语言的脚本特性，记住各种语法显然又是一件比较困难的事情。 事实上，Gradle 插件的常用使用场景并不是很多，也不需要死记硬背，或者完全学会 Groove 的所有使用方式。这里将 Android 开发中较">
   
-    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="亦枫的技术博客" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -225,9 +225,9 @@ ga('send', 'pageview');
 <h1 id="日志开关"><a href="#日志开关" class="headerlink" title="日志开关"></a>日志开关</h1><p>在 app/build.gradle 文件中分别定义 debug 和 release 不同编译模式的控制变量，变量名可自由更改：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">buildTypes &#123;</div><div class="line">    debug &#123;</div><div class="line">        buildConfigField "boolean", "DEBUG_MODE", "true"</div><div class="line">    &#125;</div><div class="line">    release &#123;</div><div class="line">        buildConfigField "boolean", "DEBUG_MODE", "false"</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>重新编译后，自动生成的 BuildConfig 类中包含上面定义的 DEBUG_MODE 属性，即可使用。</p>
-<p>Log 日志开关更多解决方案，可参考：<a href="http://yifeng.studio/2017/08/27/android-log-security-and-buildconfig/">Android 中能够作为 Log 开关的一些操作以及安全性浅谈</a>。</p>
+<p>Log 日志开关更多解决方案，可参考：<a href="http://yifeng.studio/2017/08/27/android-log-security-and-buildconfig/" target="_blank" rel="external">Android 中能够作为 Log 开关的一些操作以及安全性浅谈</a>。</p>
 <h1 id="环境分离"><a href="#环境分离" class="headerlink" title="环境分离"></a>环境分离</h1><p>开发中测试服务器和生产服务器的同时使用也是很常见的场景之一，如何在一台设备中同时安装配置测试环境的 debug 包和生产环境的 release 包，也是需要面对的问题。不妨参考我的这篇文章：</p>
-<p><a href="http://yifeng.studio/2016/09/06/apk-environment-separate/">Android 利用 Gradle 实现 app 的环境分离</a></p>
+<p><a href="http://yifeng.studio/2016/09/06/apk-environment-separate/" target="_blank" rel="external">Android 利用 Gradle 实现 app 的环境分离</a></p>
 <h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p>学习有关 Android、Gradle 和 Groove 更多详细信息，除了访问 <a href="https://gradle.org/" target="_blank" rel="external">Gradle 官方网站</a>，推荐你阅读这些文章：</p>
 <ul>
 <li><p><a href="http://www.infoq.com/cn/articles/android-in-depth-gradle" target="_blank" rel="external">InfoQ —— 深入理解Android（一）：Gradle详解</a></p>
@@ -251,7 +251,7 @@ ga('send', 'pageview');
  
 <p>本文标题为: <b><a href="/2017/09/14/android-gradle-common-use-case/" target="_blank" title="Android Gradle 常用使用场景实现方式的总结">Android Gradle 常用使用场景实现方式的总结</a></b> </p>
  
-<p>本文链接为：<b><a href="/2017/09/14/android-gradle-common-use-case/" target="_blank" title="Android Gradle 常用使用场景实现方式的总结">http://yifeng.studio/2017/09/14/android-gradle-common-use-case/</a></b> </p>
+<p>本文链接为：<b><a href="/2017/09/14/android-gradle-common-use-case/" target="_blank" title="Android Gradle 常用使用场景实现方式的总结">https://woyifeng.com/2017/09/14/android-gradle-common-use-case/</a></b> </p>
 
 <p><img border="1" style="display:block; margin-left: auto; margin-right: auto;" src="http://blog.ancard.top/NiaoTechNiaoTech_QRcode.jpg"></p>
 </div>
@@ -382,7 +382,7 @@ ga('send', 'pageview');
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yifeng.studio/2017/09/14/android-gradle-common-use-case/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://woyifeng.com/2017/09/14/android-gradle-common-use-case/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -448,7 +448,7 @@ ga('send', 'pageview');
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="android-gradle-common-use-case" data-title="Android Gradle 常用使用场景实现方式的总结" data-url="http://yifeng.studio/2017/09/14/android-gradle-common-use-case/"></div>
+	<div class="ds-thread" data-thread-key="android-gradle-common-use-case" data-title="Android Gradle 常用使用场景实现方式的总结" data-url="https://woyifeng.com/2017/09/14/android-gradle-common-use-case/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -578,15 +578,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -654,11 +654,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
               </li>
             
             <div class="clearfix"></div>

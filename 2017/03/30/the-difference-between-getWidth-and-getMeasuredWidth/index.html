@@ -5,15 +5,15 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yifeng.studio">
-  <title>从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处 | YiFeng&#39;s Zone</title>
+  <link rel="dns-prefetch" href="https://woyifeng.com">
+  <title>从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处 | 亦枫的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="之前不是写了篇名为 Android 获取 View 宽高的常用正确方式，避免为零 的总结性文章嘛，在结尾简单阐述 measuredWidth 与 width 的区别。考虑到文章的重点，简单几笔带过。没曾想，引发一些争论，大家对 View 的这两对宽高属性理解各有异议。于是便想追根溯源，通过解读源码的方式说明一下，消除许多人的误解。">
 <meta name="keywords" content="Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处">
-<meta property="og:url" content="http://yifeng.studio/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/index.html">
-<meta property="og:site_name" content="YiFeng&#39;s Zone">
+<meta property="og:url" content="https://woyifeng.com/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/index.html">
+<meta property="og:site_name" content="亦枫的技术博客">
 <meta property="og:description" content="之前不是写了篇名为 Android 获取 View 宽高的常用正确方式，避免为零 的总结性文章嘛，在结尾简单阐述 measuredWidth 与 width 的区别。考虑到文章的重点，简单几笔带过。没曾想，引发一些争论，大家对 View 的这两对宽高属性理解各有异议。于是便想追根溯源，通过解读源码的方式说明一下，消除许多人的误解。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://blog.ancard.top/1491304232.jpg">
@@ -24,7 +24,7 @@
 <meta name="twitter:description" content="之前不是写了篇名为 Android 获取 View 宽高的常用正确方式，避免为零 的总结性文章嘛，在结尾简单阐述 measuredWidth 与 width 的区别。考虑到文章的重点，简单几笔带过。没曾想，引发一些争论，大家对 View 的这两对宽高属性理解各有异议。于是便想追根溯源，通过解读源码的方式说明一下，消除许多人的误解。">
 <meta name="twitter:image" content="http://blog.ancard.top/1491304232.jpg">
   
-    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="亦枫的技术博客" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -191,7 +191,7 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>之前不是写了篇名为 <a href="http://yifeng.studio/2017/03/21/android-obtain-view-width-and-heigth-not-zero/">Android 获取 View 宽高的常用正确方式，避免为零</a> 的总结性文章嘛，在结尾简单阐述 measuredWidth 与 width 的区别。考虑到文章的重点，简单几笔带过。没曾想，引发一些争论，大家对 View 的这两对宽高属性理解各有异议。于是便想追根溯源，通过解读源码的方式说明一下，消除许多人的误解。</p>
+        <p>之前不是写了篇名为 <a href="http://yifeng.studio/2017/03/21/android-obtain-view-width-and-heigth-not-zero/" target="_blank" rel="external">Android 获取 View 宽高的常用正确方式，避免为零</a> 的总结性文章嘛，在结尾简单阐述 measuredWidth 与 width 的区别。考虑到文章的重点，简单几笔带过。没曾想，引发一些争论，大家对 View 的这两对宽高属性理解各有异议。于是便想追根溯源，通过解读源码的方式说明一下，消除许多人的误解。</p>
 <a id="more"></a>
 <p>备注：由于 height 和 measuedHeight 原理也都一样，为了精简语言，就不再重复叙说。</p>
 <h1 id="width-和-measuredWidth-的误解"><a href="#width-和-measuredWidth-的误解" class="headerlink" title="width 和 measuredWidth 的误解"></a>width 和 measuredWidth 的误解</h1><hr>
@@ -254,7 +254,7 @@ ga('send', 'pageview');
  
 <p>本文标题为: <b><a href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/" target="_blank" title="从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处">从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处</a></b> </p>
  
-<p>本文链接为：<b><a href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/" target="_blank" title="从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处">http://yifeng.studio/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/</a></b> </p>
+<p>本文链接为：<b><a href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/" target="_blank" title="从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处">https://woyifeng.com/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/</a></b> </p>
 
 <p><img border="1" style="display:block; margin-left: auto; margin-right: auto;" src="http://blog.ancard.top/NiaoTechNiaoTech_QRcode.jpg"></p>
 </div>
@@ -381,7 +381,7 @@ ga('send', 'pageview');
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yifeng.studio/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://woyifeng.com/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -395,18 +395,18 @@ ga('send', 'pageview');
   
 <nav id="article-nav">
   
-    <a href="/2017/04/09/android-palette-and-use-case/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/03/30/android-tint/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          利用 Android 中的 palette 调色板，动态改变 Toolbar 颜色
+          从使用到源码，细说 Android 中的 tint 着色器
         
       </div>
     </a>
   
   
-    <a href="/2017/03/30/android-tint/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">从使用到源码，细说 Android 中的 tint 着色器</div>
+    <a href="/2017/03/26/android-bottomnavigationview/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android BottomNavigationView，底部导航栏的简单实现</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -447,7 +447,7 @@ ga('send', 'pageview');
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="the-difference-between-getWidth-and-getMeasuredWidth" data-title="从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处" data-url="http://yifeng.studio/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/"></div>
+	<div class="ds-thread" data-thread-key="the-difference-between-getWidth-and-getMeasuredWidth" data-title="从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处" data-url="https://woyifeng.com/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -577,15 +577,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -653,11 +653,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
               </li>
             
             <div class="clearfix"></div>

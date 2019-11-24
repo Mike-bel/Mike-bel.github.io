@@ -5,15 +5,15 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yifeng.studio">
-  <title>详解Java中的对象克隆 | YiFeng&#39;s Zone</title>
+  <link rel="dns-prefetch" href="https://woyifeng.com">
+  <title>详解Java中的对象克隆 | 亦枫的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="前言在 Java 语言中，我们说两个对象是否相等通常有两层含义：  对象的内容是否相等，通常使用到对象的 equals(Object o) 函数；  引用的地址是否相同，使用运算符 ＝＝ 比较即可。   当两个对象通过赋值符号 = 赋值时，表明这两个对象指向了内存中同一个地址，所以改变其中一个对象的内容，也就间接地改变了另一个对象的内容。有时候，我们需要从一个已经存在的对象重新拷贝一份出来，并且不">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="详解Java中的对象克隆">
-<meta property="og:url" content="http://yifeng.studio/2016/05/13/java_object_clone/index.html">
-<meta property="og:site_name" content="YiFeng&#39;s Zone">
+<meta property="og:url" content="https://woyifeng.com/2016/05/13/java_object_clone/index.html">
+<meta property="og:site_name" content="亦枫的技术博客">
 <meta property="og:description" content="前言在 Java 语言中，我们说两个对象是否相等通常有两层含义：  对象的内容是否相等，通常使用到对象的 equals(Object o) 函数；  引用的地址是否相同，使用运算符 ＝＝ 比较即可。   当两个对象通过赋值符号 = 赋值时，表明这两个对象指向了内存中同一个地址，所以改变其中一个对象的内容，也就间接地改变了另一个对象的内容。有时候，我们需要从一个已经存在的对象重新拷贝一份出来，并且不">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2016-09-10T00:13:37.000Z">
@@ -21,7 +21,7 @@
 <meta name="twitter:title" content="详解Java中的对象克隆">
 <meta name="twitter:description" content="前言在 Java 语言中，我们说两个对象是否相等通常有两层含义：  对象的内容是否相等，通常使用到对象的 equals(Object o) 函数；  引用的地址是否相同，使用运算符 ＝＝ 比较即可。   当两个对象通过赋值符号 = 赋值时，表明这两个对象指向了内存中同一个地址，所以改变其中一个对象的内容，也就间接地改变了另一个对象的内容。有时候，我们需要从一个已经存在的对象重新拷贝一份出来，并且不">
   
-    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="亦枫的技术博客" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -240,7 +240,7 @@ ga('send', 'pageview');
  
 <p>本文标题为: <b><a href="/2016/05/13/java_object_clone/" target="_blank" title="详解Java中的对象克隆">详解Java中的对象克隆</a></b> </p>
  
-<p>本文链接为：<b><a href="/2016/05/13/java_object_clone/" target="_blank" title="详解Java中的对象克隆">http://yifeng.studio/2016/05/13/java_object_clone/</a></b> </p>
+<p>本文链接为：<b><a href="/2016/05/13/java_object_clone/" target="_blank" title="详解Java中的对象克隆">https://woyifeng.com/2016/05/13/java_object_clone/</a></b> </p>
 
 <p><img border="1" style="display:block; margin-left: auto; margin-right: auto;" src="http://blog.ancard.top/NiaoTechNiaoTech_QRcode.jpg"></p>
 </div>
@@ -367,7 +367,7 @@ ga('send', 'pageview');
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yifeng.studio/2016/05/13/java_object_clone/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://woyifeng.com/2016/05/13/java_object_clone/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -433,7 +433,7 @@ ga('send', 'pageview');
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="java_object_clone" data-title="详解Java中的对象克隆" data-url="http://yifeng.studio/2016/05/13/java_object_clone/"></div>
+	<div class="ds-thread" data-thread-key="java_object_clone" data-title="详解Java中的对象克隆" data-url="https://woyifeng.com/2016/05/13/java_object_clone/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -563,15 +563,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -639,11 +639,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
               </li>
             
             <div class="clearfix"></div>

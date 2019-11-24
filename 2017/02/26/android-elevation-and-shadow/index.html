@@ -5,15 +5,15 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yifeng.studio">
-  <title>Android 视图高度和阴影的那点事儿 | YiFeng&#39;s Zone</title>
+  <link rel="dns-prefetch" href="https://woyifeng.com">
+  <title>Android 视图高度和阴影的那点事儿 | 亦枫的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Material Design 规范针对 UI 元素提出了“高度”这一概念，使过去流行于拟物化设计中的阴影效果，在扁平化设计中消失了很久之后，再次显现。不过，虽然视图高度更多的是以阴影的形式直观地表现在界面中，但更多地是强调一个元素相对重要性的问题。在三维空间中，拥有更高高度的 UI 元素，显然对于用户来讲，相比于其他元素，更加凸显其重要性，更加希望被用户注意到，甚至被频繁操作，这也是设计人员最想">
 <meta name="keywords" content="Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 视图高度和阴影的那点事儿">
-<meta property="og:url" content="http://yifeng.studio/2017/02/26/android-elevation-and-shadow/index.html">
-<meta property="og:site_name" content="YiFeng&#39;s Zone">
+<meta property="og:url" content="https://woyifeng.com/2017/02/26/android-elevation-and-shadow/index.html">
+<meta property="og:site_name" content="亦枫的技术博客">
 <meta property="og:description" content="Material Design 规范针对 UI 元素提出了“高度”这一概念，使过去流行于拟物化设计中的阴影效果，在扁平化设计中消失了很久之后，再次显现。不过，虽然视图高度更多的是以阴影的形式直观地表现在界面中，但更多地是强调一个元素相对重要性的问题。在三维空间中，拥有更高高度的 UI 元素，显然对于用户来讲，相比于其他元素，更加凸显其重要性，更加希望被用户注意到，甚至被频繁操作，这也是设计人员最想">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://blog.ancard.top/1488119646.png">
@@ -24,7 +24,7 @@
 <meta name="twitter:description" content="Material Design 规范针对 UI 元素提出了“高度”这一概念，使过去流行于拟物化设计中的阴影效果，在扁平化设计中消失了很久之后，再次显现。不过，虽然视图高度更多的是以阴影的形式直观地表现在界面中，但更多地是强调一个元素相对重要性的问题。在三维空间中，拥有更高高度的 UI 元素，显然对于用户来讲，相比于其他元素，更加凸显其重要性，更加希望被用户注意到，甚至被频繁操作，这也是设计人员最想">
 <meta name="twitter:image" content="http://blog.ancard.top/1488119646.png">
   
-    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="亦枫的技术博客" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -219,7 +219,7 @@ ga('send', 'pageview');
 <p>注意：尤其要注意，视图的阴影一定是由有轮廓的视图投射出来的。简单来说，就是需要设置控件的背景，即 <code>android:background</code> 属性。我们可以选择图片作为背景，也可以使用 <code>&lt;shape&gt;</code> 标签定义一个 drawable 形状，事实上，后者更为常用。</p>
 </blockquote>
 <h1 id="translationZ-属性"><a href="#translationZ-属性" class="headerlink" title="translationZ 属性"></a>translationZ 属性</h1><hr>
-<p>前面提到，elevation 偏向于一个高度上的静态提升属性，而 translationZ 偏向于一个高度上的动态转换属性，可用于设置动画，比如元素触摸状态的转换效果，如果你了解 CardView 的设计规范的话，一定了解这个概念，之前我也写过相关的文章，呈现效果不妨参考：<a href="http://yifeng.studio/2016/10/18/android-cardview/">Android 使用CardView轻松实现卡片式设计</a>。</p>
+<p>前面提到，elevation 偏向于一个高度上的静态提升属性，而 translationZ 偏向于一个高度上的动态转换属性，可用于设置动画，比如元素触摸状态的转换效果，如果你了解 CardView 的设计规范的话，一定了解这个概念，之前我也写过相关的文章，呈现效果不妨参考：<a href="http://yifeng.studio/2016/10/18/android-cardview/" target="_blank" rel="external">Android 使用CardView轻松实现卡片式设计</a>。</p>
 <p>我们可以通过属性动画动态改变 translationZ 属性值，为视图添加高度动画，也可以在 drawable 目录下定义一个资源文件，然后通过 <code>android:stateListAnimator＝&quot;@drawable/selector_elevation&quot;</code> 属性显式地设置给相应的 View 控件。其中，<code>selector_elevation</code> 文件可以这样定义（名字可以自由编写）：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">selector</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:state_enabled</span>=<span class="string">"true"</span> <span class="attr">android:state_pressed</span>=<span class="string">"true"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">objectAnimator</span></span></div><div class="line"><span class="tag">            <span class="attr">android:duration</span>=<span class="string">"@android:integer/config_shortAnimTime"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:propertyName</span>=<span class="string">"translationZ"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:valueTo</span>=<span class="string">"@dimen/dp_4"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:valueType</span>=<span class="string">"floatType"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">objectAnimator</span></span></div><div class="line"><span class="tag">            <span class="attr">android:duration</span>=<span class="string">"@android:integer/config_shortAnimTime"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:propertyName</span>=<span class="string">"translationZ"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:valueTo</span>=<span class="string">"0dp"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:valueType</span>=<span class="string">"floatType"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">selector</span>&gt;</span></div></pre></td></tr></table></figure>
 <h1 id="实现阴影的其他方式"><a href="#实现阴影的其他方式" class="headerlink" title="实现阴影的其他方式"></a>实现阴影的其他方式</h1><hr>
@@ -244,7 +244,7 @@ ga('send', 'pageview');
  
 <p>本文标题为: <b><a href="/2017/02/26/android-elevation-and-shadow/" target="_blank" title="Android 视图高度和阴影的那点事儿">Android 视图高度和阴影的那点事儿</a></b> </p>
  
-<p>本文链接为：<b><a href="/2017/02/26/android-elevation-and-shadow/" target="_blank" title="Android 视图高度和阴影的那点事儿">http://yifeng.studio/2017/02/26/android-elevation-and-shadow/</a></b> </p>
+<p>本文链接为：<b><a href="/2017/02/26/android-elevation-and-shadow/" target="_blank" title="Android 视图高度和阴影的那点事儿">https://woyifeng.com/2017/02/26/android-elevation-and-shadow/</a></b> </p>
 
 <p><img border="1" style="display:block; margin-left: auto; margin-right: auto;" src="http://blog.ancard.top/NiaoTechNiaoTech_QRcode.jpg"></p>
 </div>
@@ -371,7 +371,7 @@ ga('send', 'pageview');
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yifeng.studio/2017/02/26/android-elevation-and-shadow/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://woyifeng.com/2017/02/26/android-elevation-and-shadow/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -437,7 +437,7 @@ ga('send', 'pageview');
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="android-elevation-and-shadow" data-title="Android 视图高度和阴影的那点事儿" data-url="http://yifeng.studio/2017/02/26/android-elevation-and-shadow/"></div>
+	<div class="ds-thread" data-thread-key="android-elevation-and-shadow" data-title="Android 视图高度和阴影的那点事儿" data-url="https://woyifeng.com/2017/02/26/android-elevation-and-shadow/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -567,15 +567,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -643,11 +643,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
               </li>
             
             <div class="clearfix"></div>

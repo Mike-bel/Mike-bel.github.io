@@ -5,15 +5,15 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yifeng.studio">
-  <title>［译］Android Activity 和 Fragment 状态保存与恢复的最佳实践 | YiFeng&#39;s Zone</title>
+  <link rel="dns-prefetch" href="https://woyifeng.com">
+  <title>［译］Android Activity 和 Fragment 状态保存与恢复的最佳实践 | 亦枫的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="译者亦枫注：对于 Activity、Fragment 和 View 是如何保存与恢复状态的问题，相信很多开发人员都处于一知半解的状态。最近刚好在总结 Fragment 的使用注意事项，无意中从网上看到国外的一篇好文，对这个问题做了一个全面的解析。加之使用可视化的动画效果，使我们理解起来更加轻松。拜读过后，豁然开朗，同时不得不感慨，国外作者对于知识通透的理解能力和写作清晰的表达能力。然后，然后就一">
 <meta name="keywords" content="Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="［译］Android Activity 和 Fragment 状态保存与恢复的最佳实践">
-<meta property="og:url" content="http://yifeng.studio/2016/12/19/android-fragment-state-saving-best-practices/index.html">
-<meta property="og:site_name" content="YiFeng&#39;s Zone">
+<meta property="og:url" content="https://woyifeng.com/2016/12/19/android-fragment-state-saving-best-practices/index.html">
+<meta property="og:site_name" content="亦枫的技术博客">
 <meta property="og:description" content="译者亦枫注：对于 Activity、Fragment 和 View 是如何保存与恢复状态的问题，相信很多开发人员都处于一知半解的状态。最近刚好在总结 Fragment 的使用注意事项，无意中从网上看到国外的一篇好文，对这个问题做了一个全面的解析。加之使用可视化的动画效果，使我们理解起来更加轻松。拜读过后，豁然开朗，同时不得不感慨，国外作者对于知识通透的理解能力和写作清晰的表达能力。然后，然后就一">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://blog.ancard.top/1482116816.gif">
@@ -28,7 +28,7 @@
 <meta name="twitter:description" content="译者亦枫注：对于 Activity、Fragment 和 View 是如何保存与恢复状态的问题，相信很多开发人员都处于一知半解的状态。最近刚好在总结 Fragment 的使用注意事项，无意中从网上看到国外的一篇好文，对这个问题做了一个全面的解析。加之使用可视化的动画效果，使我们理解起来更加轻松。拜读过后，豁然开朗，同时不得不感慨，国外作者对于知识通透的理解能力和写作清晰的表达能力。然后，然后就一">
 <meta name="twitter:image" content="http://blog.ancard.top/1482116816.gif">
   
-    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="亦枫的技术博客" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -196,7 +196,7 @@ ga('send', 'pageview');
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p><strong>译者亦枫注：</strong>对于 Activity、Fragment 和 View 是如何保存与恢复状态的问题，相信很多开发人员都处于一知半解的状态。最近刚好在总结 <a href="http://yifeng.studio/2016/12/15/android-fragment-attentions/">Fragment 的使用注意事项</a>，无意中从网上看到国外的一篇好文，对这个问题做了一个全面的解析。加之使用可视化的动画效果，使我们理解起来更加轻松。拜读过后，豁然开朗，同时不得不感慨，国外作者对于知识通透的理解能力和写作清晰的表达能力。然后，然后就一定要翻译过来，加以学习并保存记录之。</p>
+<p><strong>译者亦枫注：</strong>对于 Activity、Fragment 和 View 是如何保存与恢复状态的问题，相信很多开发人员都处于一知半解的状态。最近刚好在总结 <a href="http://yifeng.studio/2016/12/15/android-fragment-attentions/" target="_blank" rel="external">Fragment 的使用注意事项</a>，无意中从网上看到国外的一篇好文，对这个问题做了一个全面的解析。加之使用可视化的动画效果，使我们理解起来更加轻松。拜读过后，豁然开朗，同时不得不感慨，国外作者对于知识通透的理解能力和写作清晰的表达能力。然后，然后就一定要翻译过来，加以学习并保存记录之。</p>
 <p><strong>原文：</strong><a href="https://inthecheesefactory.com/blog/fragment-state-saving-best-practices/en" target="_blank" rel="external">The Real Best Practices to Save/Restore Activity’s and Fragment’s state. (StatedFragment is now deprecated)</a></p>
 <p><strong>作者：</strong>「nuuneoi」，一名拥有六年安卓应用程序开发经验和超过十二年手机端应用开发行业经验的全栈工程师。</p>
 </blockquote>
@@ -263,7 +263,7 @@ ga('send', 'pageview');
  
 <p>本文标题为: <b><a href="/2016/12/19/android-fragment-state-saving-best-practices/" target="_blank" title="［译］Android Activity 和 Fragment 状态保存与恢复的最佳实践">［译］Android Activity 和 Fragment 状态保存与恢复的最佳实践</a></b> </p>
  
-<p>本文链接为：<b><a href="/2016/12/19/android-fragment-state-saving-best-practices/" target="_blank" title="［译］Android Activity 和 Fragment 状态保存与恢复的最佳实践">http://yifeng.studio/2016/12/19/android-fragment-state-saving-best-practices/</a></b> </p>
+<p>本文链接为：<b><a href="/2016/12/19/android-fragment-state-saving-best-practices/" target="_blank" title="［译］Android Activity 和 Fragment 状态保存与恢复的最佳实践">https://woyifeng.com/2016/12/19/android-fragment-state-saving-best-practices/</a></b> </p>
 
 <p><img border="1" style="display:block; margin-left: auto; margin-right: auto;" src="http://blog.ancard.top/NiaoTechNiaoTech_QRcode.jpg"></p>
 </div>
@@ -390,7 +390,7 @@ ga('send', 'pageview');
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yifeng.studio/2016/12/19/android-fragment-state-saving-best-practices/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://woyifeng.com/2016/12/19/android-fragment-state-saving-best-practices/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -456,7 +456,7 @@ ga('send', 'pageview');
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="android-fragment-state-saving-best-practices" data-title="［译］Android Activity 和 Fragment 状态保存与恢复的最佳实践" data-url="http://yifeng.studio/2016/12/19/android-fragment-state-saving-best-practices/"></div>
+	<div class="ds-thread" data-thread-key="android-fragment-state-saving-best-practices" data-title="［译］Android Activity 和 Fragment 状态保存与恢复的最佳实践" data-url="https://woyifeng.com/2016/12/19/android-fragment-state-saving-best-practices/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -586,15 +586,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -662,11 +662,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
               </li>
             
             <div class="clearfix"></div>

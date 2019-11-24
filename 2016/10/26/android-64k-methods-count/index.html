@@ -5,15 +5,15 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yifeng.studio">
-  <title>Android 突破 DEX 文件的 64K 方法数限制 | YiFeng&#39;s Zone</title>
+  <link rel="dns-prefetch" href="https://woyifeng.com">
+  <title>Android 突破 DEX 文件的 64K 方法数限制 | 亦枫的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="随着安卓平台的不断发展与壮大，市场上大而全的应用比比皆是，产品需求的变更累积和UI交互的极致追求，除了 resources 文件的俱增，在 Android Project 中依赖的 Library 和 自己写的 Java 代码也会越来越多。这些变化，除了会导致打包出的 APK 文件越来越大之外，当项目中java代码包含的方法数（method count）超出一个峰值时，编译过程中就会出现如下错误：">
 <meta name="keywords" content="Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 突破 DEX 文件的 64K 方法数限制">
-<meta property="og:url" content="http://yifeng.studio/2016/10/26/android-64k-methods-count/index.html">
-<meta property="og:site_name" content="YiFeng&#39;s Zone">
+<meta property="og:url" content="https://woyifeng.com/2016/10/26/android-64k-methods-count/index.html">
+<meta property="og:site_name" content="亦枫的技术博客">
 <meta property="og:description" content="随着安卓平台的不断发展与壮大，市场上大而全的应用比比皆是，产品需求的变更累积和UI交互的极致追求，除了 resources 文件的俱增，在 Android Project 中依赖的 Library 和 自己写的 Java 代码也会越来越多。这些变化，除了会导致打包出的 APK 文件越来越大之外，当项目中java代码包含的方法数（method count）超出一个峰值时，编译过程中就会出现如下错误：">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://blog.ancard.top/methodscount-samples-01.png">
@@ -27,7 +27,7 @@
 <meta name="twitter:description" content="随着安卓平台的不断发展与壮大，市场上大而全的应用比比皆是，产品需求的变更累积和UI交互的极致追求，除了 resources 文件的俱增，在 Android Project 中依赖的 Library 和 自己写的 Java 代码也会越来越多。这些变化，除了会导致打包出的 APK 文件越来越大之外，当项目中java代码包含的方法数（method count）超出一个峰值时，编译过程中就会出现如下错误：">
 <meta name="twitter:image" content="http://blog.ancard.top/methodscount-samples-01.png">
   
-    <link rel="alternative" href="/atom.xml" title="YiFeng&#39;s Zone" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="亦枫的技术博客" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -230,7 +230,7 @@ ga('send', 'pageview');
 <p>multidex 配置下的应用，编译系统需要经过复杂的 DEX 分割运算，导致增加项目的编译时间，从而影响开发人员的开发效率。我们可以使用 <a href="http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Product-flavors" target="_blank" rel="external">productFlavors</a> 构建开发环境和正式环境的不同 flavors 来优化 multidex 的长时间编译问题。</p>
 <p>对于development flavor，设置 <code>minSdkVersion</code> 值为21，运行在Android 5.0以上版本的设备中，使用 ART-supported 格式生成 multidex 的速度要快得多。对于 release flavor，<code>minSdkVersion</code> 值则设为应用实际支持的版本，编译系统耗费较长的时间来生成适配多设备的multidex APK文件。如：</p>
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    productFlavors &#123;</div><div class="line">        <span class="comment">// Define separate dev and prod product flavors.</span></div><div class="line">        dev &#123;</div><div class="line">            <span class="comment">// dev utilizes minSDKVersion = 21 to allow the Android gradle plugin</span></div><div class="line">            <span class="comment">// to pre-dex each module and produce an APK that can be tested on</span></div><div class="line">            <span class="comment">// Android Lollipop without time consuming dex merging processes.</span></div><div class="line">            minSdkVersion <span class="number">21</span></div><div class="line">        &#125;</div><div class="line">        prod &#123;</div><div class="line">            <span class="comment">// The actual minSdkVersion for the application.</span></div><div class="line">            minSdkVersion <span class="number">14</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">          ...</div><div class="line">    buildTypes &#123;</div><div class="line">        release &#123;</div><div class="line">            runProguard <span class="keyword">true</span></div><div class="line">            proguardFiles getDefaultProguardFile(<span class="string">'proguard-android.txt'</span>),</div><div class="line">                                                 <span class="string">'proguard-rules.pro'</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">dependencies</span> &#123;</div><div class="line">  <span class="keyword">compile</span> <span class="string">'com.android.support:multidex:1.0.0'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这样，在开发阶段，使用 devDebug 类型的变种 app，取消混淆，支持 multidex，并且运行在 5.0 及以上版本的设备中，能够加快编译过程。有关 flavors 的信息，以前写过一篇文章：<a href="http://yifeng.studio/2016/09/06/apk-environment-separate/">Android 利用Gradle实现app的环境分离</a>，更多信息可以参考英文手册：<a href="http://tools.android.com/tech-docs/new-build-system/user-guide" target="_blank" rel="external">Gradle Plugin User Guide</a>，对应中文版译文：<a href="http://avatarqing.github.io/Gradle-Plugin-User-Guide-Chinese-Verision/" target="_blank" rel="external">Gradle Android插件用户指南翻译</a>。</p>
+<p>这样，在开发阶段，使用 devDebug 类型的变种 app，取消混淆，支持 multidex，并且运行在 5.0 及以上版本的设备中，能够加快编译过程。有关 flavors 的信息，以前写过一篇文章：<a href="http://yifeng.studio/2016/09/06/apk-environment-separate/" target="_blank" rel="external">Android 利用Gradle实现app的环境分离</a>，更多信息可以参考英文手册：<a href="http://tools.android.com/tech-docs/new-build-system/user-guide" target="_blank" rel="external">Gradle Plugin User Guide</a>，对应中文版译文：<a href="http://avatarqing.github.io/Gradle-Plugin-User-Guide-Chinese-Verision/" target="_blank" rel="external">Gradle Android插件用户指南翻译</a>。</p>
 <h1 id="strings-count-limit"><a href="#strings-count-limit" class="headerlink" title="strings count limit"></a>strings count limit</h1><hr>
 <p>前面我们说完单一 dex 文件的方法数限制，事实上，还有一个字符串数量限制。如果项目没有使用 multidex 支持的话，当 strings 超出一定限制，编译过程也会出错：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Dex: Error converting bytecode to dex:</div><div class="line">Cause: com.android.dex.DexIndexOverflowException: Cannot merge new index 65868 into a non-jumbo instruction!</div></pre></td></tr></table></figure>
@@ -281,7 +281,7 @@ ga('send', 'pageview');
  
 <p>本文标题为: <b><a href="/2016/10/26/android-64k-methods-count/" target="_blank" title="Android 突破 DEX 文件的 64K 方法数限制">Android 突破 DEX 文件的 64K 方法数限制</a></b> </p>
  
-<p>本文链接为：<b><a href="/2016/10/26/android-64k-methods-count/" target="_blank" title="Android 突破 DEX 文件的 64K 方法数限制">http://yifeng.studio/2016/10/26/android-64k-methods-count/</a></b> </p>
+<p>本文链接为：<b><a href="/2016/10/26/android-64k-methods-count/" target="_blank" title="Android 突破 DEX 文件的 64K 方法数限制">https://woyifeng.com/2016/10/26/android-64k-methods-count/</a></b> </p>
 
 <p><img border="1" style="display:block; margin-left: auto; margin-right: auto;" src="http://blog.ancard.top/NiaoTechNiaoTech_QRcode.jpg"></p>
 </div>
@@ -408,7 +408,7 @@ ga('send', 'pageview');
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yifeng.studio/2016/10/26/android-64k-methods-count/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://woyifeng.com/2016/10/26/android-64k-methods-count/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -474,7 +474,7 @@ ga('send', 'pageview');
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="android-64k-methods-count" data-title="Android 突破 DEX 文件的 64K 方法数限制" data-url="http://yifeng.studio/2016/10/26/android-64k-methods-count/"></div>
+	<div class="ds-thread" data-thread-key="android-64k-methods-count" data-title="Android 突破 DEX 文件的 64K 方法数限制" data-url="https://woyifeng.com/2016/10/26/android-64k-methods-count/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -604,15 +604,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -680,11 +680,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+                <a href="javascript:void(0)" class="js-tag color1">Code Style</a>
               </li>
             
             <div class="clearfix"></div>
