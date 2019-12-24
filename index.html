@@ -188,26 +188,13 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="https://mmbiz.qpic.cn/mmbiz_png/GSIuO9kJrrVpQRKfCZBKcSibtdmoJFlJxL8QfqdtFKImQoCBGvwtzQNWABaKRP6oSv8Fia9U6otWTw65PKhlqpuw/0?wx_fmt=png" alt=""></p>
-<p>开发工具 Android Studio 使用 Gradle 构建工程的过程中，由于网络原因偶尔会出现 Sync 失败的情况，Build 窗口报错内容为：</p>
+        <p>开发工具 Android Studio 使用 Gradle 构建工程的过程中，由于网络原因偶尔会出现 Sync 失败的情况，Build 窗口报错内容为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ERROR: Connection reset</div></pre></td></tr></table></figure>
 <p>和</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Caused by: org.gradle.api.internal.artifacts.ivyservice.DefaultLenientConfiguration$ArtifactResolveException: Could not resolve all files for configuration &apos;:classpath&apos;.</div><div class="line">......</div></pre></td></tr></table></figure>
-<p>出现这种问题的原因是，项目工程中 Gradle 配置的 google() 或 jcenter() 等远程仓库，对于国内这种网络，访问不是很通畅，下载依赖内容很容易失败。</p>
-<p>这个时候，我们可以修改 Gradle 配置文件，借助各种第三方开源镜像网站替换 repositories 配置项的内容。可以直接修改工程根目录下的 build.gradle 文件，针对单一项目生效；也可以借助电脑用户目录下的 init.gradle 文件，所有项目统一修改。</p>
-<p>这里我们主要看下使用 init.gradle 文件的方式，电脑中 gradle 的本地缓存目录里面默认是没有这个文件的，我们可以手动添加，文件内容可以是这样的：</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">allprojects</span> &#123;</div><div class="line">    <span class="keyword">repositories</span> &#123;</div><div class="line">        maven &#123; url <span class="string">'https://maven.aliyun.com/repository/public/'</span> &#125;</div><div class="line">        maven &#123; url <span class="string">'https://maven.aliyun.com/nexus/content/repositories/google'</span> &#125;</div><div class="line">        maven &#123; url <span class="string">'https://maven.aliyun.com/nexus/content/groups/public/'</span> &#125;</div><div class="line">        maven &#123; url <span class="string">'https://maven.aliyun.com/nexus/content/repositories/jcenter'</span>&#125;</div><div class="line"></div><div class="line">        all &#123; ArtifactRepository repo -&gt;</div><div class="line">            <span class="keyword">if</span> (repo <span class="keyword">instanceof</span> MavenArtifactRepository) &#123;</div><div class="line">                <span class="keyword">def</span> url = repo.url.toString()</div><div class="line"></div><div class="line">                <span class="keyword">if</span> (url.startsWith(<span class="string">'https://repo.maven.apache.org/maven2/'</span>) || url.startsWith(<span class="string">'https://repo.maven.org/maven2'</span>) || url.startsWith(<span class="string">'https://repo1.maven.org/maven2'</span>) || url.startsWith(<span class="string">'https://jcenter.bintray.com/'</span>)) &#123;</div><div class="line">                    <span class="comment">//project.logger.lifecycle "Repository $&#123;repo.url&#125; replaced by $REPOSITORY_URL."</span></div><div class="line">                    remove repo</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">buildscript</span> &#123;</div><div class="line"></div><div class="line">        <span class="keyword">repositories</span> &#123;</div><div class="line"></div><div class="line">            maven &#123; url <span class="string">'https://maven.aliyun.com/repository/public/'</span>&#125;</div><div class="line">            maven &#123; url <span class="string">'https://maven.aliyun.com/nexus/content/repositories/google'</span> &#125;</div><div class="line">            maven &#123; url <span class="string">'https://maven.aliyun.com/nexus/content/groups/public/'</span> &#125;</div><div class="line">            maven &#123; url <span class="string">'https://maven.aliyun.com/nexus/content/repositories/jcenter'</span>&#125;</div><div class="line">            all &#123; ArtifactRepository repo -&gt;</div><div class="line">                <span class="keyword">if</span> (repo <span class="keyword">instanceof</span> MavenArtifactRepository) &#123;</div><div class="line">                    <span class="keyword">def</span> url = repo.url.toString()</div><div class="line">                    <span class="keyword">if</span> (url.startsWith(<span class="string">'https://repo1.maven.org/maven2'</span>) || url.startsWith(<span class="string">'https://jcenter.bintray.com/'</span>)) &#123;</div><div class="line">                        <span class="comment">//project.logger.lifecycle "Repository $&#123;repo.url&#125; replaced by $REPOSITORY_URL."</span></div><div class="line">                        remove repo</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这里是利用 <a href="https://developer.aliyun.com/mirror" target="_blank" rel="external">阿里云开源镜像站</a> 替换掉网络访问困难的 maven、jcenter 等仓库地址，可以参考一下，当然也可以按需求改。</p>
-<p>默认情况下，init.gradle 文件放置于 Gradle 缓存目录 /Users/{username}/.gradle 目录中。Gradle 缓存目录可以在 Android Studio 的设置项 Gradle 窗口查看和修改：</p>
-<p>Service directory path</p>
-<p>关于 init.gradle 配置文件的详细介绍可以参考链接：</p>
-<ul>
-<li><p><a href="https://juejin.im/post/5b000522f265da0b7f44d1c7" target="_blank" rel="external">https://juejin.im/post/5b000522f265da0b7f44d1c7</a></p>
-</li>
-<li><p><a href="https://www.cnblogs.com/langtianya/p/5220212.html" target="_blank" rel="external">https://www.cnblogs.com/langtianya/p/5220212.html</a></p>
-</li>
-</ul>
-
+        
+          <a class="article-more-a" href="/2019/12/24/init-gradle-file-fix-gradle-network-issue/#more">more >></a>
+        
       
 
       
@@ -1211,15 +1198,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1235,15 +1222,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Chrome</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Mac</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
               </li>
              
               <li class="article-tag-list-item">

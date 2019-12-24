@@ -8,20 +8,18 @@
   <link rel="dns-prefetch" href="https://woyifeng.com">
   <title>init.gradle 文件解决 Gradle 编译过程中网络访问失败的问题 | 亦枫的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="开发工具 Android Studio 使用 Gradle 构建工程的过程中，由于网络原因偶尔会出现 Sync 失败的情况，Build 窗口报错内容为： 1ERROR: Connection reset 和 12Caused by: org.gradle.api.internal.artifacts.ivyservice.DefaultLenientConfiguration$ArtifactR">
+  <meta name="description" content="开发工具 Android Studio 使用 Gradle 构建工程的过程中，由于网络原因偶尔会出现 Sync 失败的情况，Build 窗口报错内容为： 1ERROR: Connection reset 和 12Caused by: org.gradle.api.internal.artifacts.ivyservice.DefaultLenientConfiguration$ArtifactRe">
 <meta name="keywords" content="Gradle">
 <meta property="og:type" content="article">
 <meta property="og:title" content="init.gradle 文件解决 Gradle 编译过程中网络访问失败的问题">
 <meta property="og:url" content="https://woyifeng.com/2019/12/24/init-gradle-file-fix-gradle-network-issue/index.html">
 <meta property="og:site_name" content="亦枫的技术博客">
-<meta property="og:description" content="开发工具 Android Studio 使用 Gradle 构建工程的过程中，由于网络原因偶尔会出现 Sync 失败的情况，Build 窗口报错内容为： 1ERROR: Connection reset 和 12Caused by: org.gradle.api.internal.artifacts.ivyservice.DefaultLenientConfiguration$ArtifactR">
+<meta property="og:description" content="开发工具 Android Studio 使用 Gradle 构建工程的过程中，由于网络原因偶尔会出现 Sync 失败的情况，Build 窗口报错内容为： 1ERROR: Connection reset 和 12Caused by: org.gradle.api.internal.artifacts.ivyservice.DefaultLenientConfiguration$ArtifactRe">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/GSIuO9kJrrVpQRKfCZBKcSibtdmoJFlJxL8QfqdtFKImQoCBGvwtzQNWABaKRP6oSv8Fia9U6otWTw65PKhlqpuw/0?wx_fmt=png">
-<meta property="og:updated_time" content="2019-12-24T08:57:58.744Z">
+<meta property="og:updated_time" content="2019-12-24T09:02:18.355Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="init.gradle 文件解决 Gradle 编译过程中网络访问失败的问题">
-<meta name="twitter:description" content="开发工具 Android Studio 使用 Gradle 构建工程的过程中，由于网络原因偶尔会出现 Sync 失败的情况，Build 窗口报错内容为： 1ERROR: Connection reset 和 12Caused by: org.gradle.api.internal.artifacts.ivyservice.DefaultLenientConfiguration$ArtifactR">
-<meta name="twitter:image" content="https://mmbiz.qpic.cn/mmbiz_png/GSIuO9kJrrVpQRKfCZBKcSibtdmoJFlJxL8QfqdtFKImQoCBGvwtzQNWABaKRP6oSv8Fia9U6otWTw65PKhlqpuw/0?wx_fmt=png">
+<meta name="twitter:description" content="开发工具 Android Studio 使用 Gradle 构建工程的过程中，由于网络原因偶尔会出现 Sync 失败的情况，Build 窗口报错内容为： 1ERROR: Connection reset 和 12Caused by: org.gradle.api.internal.artifacts.ivyservice.DefaultLenientConfiguration$ArtifactRe">
   
     <link rel="alternative" href="/atom.xml" title="亦枫的技术博客" type="application/atom+xml">
   
@@ -190,11 +188,11 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="https://mmbiz.qpic.cn/mmbiz_png/GSIuO9kJrrVpQRKfCZBKcSibtdmoJFlJxL8QfqdtFKImQoCBGvwtzQNWABaKRP6oSv8Fia9U6otWTw65PKhlqpuw/0?wx_fmt=png" alt=""></p>
-<p>开发工具 Android Studio 使用 Gradle 构建工程的过程中，由于网络原因偶尔会出现 Sync 失败的情况，Build 窗口报错内容为：</p>
+        <p>开发工具 Android Studio 使用 Gradle 构建工程的过程中，由于网络原因偶尔会出现 Sync 失败的情况，Build 窗口报错内容为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ERROR: Connection reset</div></pre></td></tr></table></figure>
 <p>和</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Caused by: org.gradle.api.internal.artifacts.ivyservice.DefaultLenientConfiguration$ArtifactResolveException: Could not resolve all files for configuration &apos;:classpath&apos;.</div><div class="line">......</div></pre></td></tr></table></figure>
+<a id="more"></a>
 <p>出现这种问题的原因是，项目工程中 Gradle 配置的 google() 或 jcenter() 等远程仓库，对于国内这种网络，访问不是很通畅，下载依赖内容很容易失败。</p>
 <p>这个时候，我们可以修改 Gradle 配置文件，借助各种第三方开源镜像网站替换 repositories 配置项的内容。可以直接修改工程根目录下的 build.gradle 文件，针对单一项目生效；也可以借助电脑用户目录下的 init.gradle 文件，所有项目统一修改。</p>
 <p>这里我们主要看下使用 init.gradle 文件的方式，电脑中 gradle 的本地缓存目录里面默认是没有这个文件的，我们可以手动添加，文件内容可以是这样的：</p>
@@ -536,15 +534,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -560,15 +558,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Chrome</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Mac</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
               </li>
              
               <li class="article-tag-list-item">
