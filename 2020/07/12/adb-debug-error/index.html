@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://woyifeng.com">
   <title>解决 Adb debug error 的 N 种方式 | 亦枫的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="安卓开发过程中最痛苦的事莫过于，当你“吃着火锅唱着歌，写着代码改 Bug”，突然 ADB “崩溃”了： Warning: debug info can be unavailable.Please close other application using ADB: Monitor, DDMS, Eclipse">
+  <meta name="description" content="安卓开发过程中最痛苦的事莫过于，当你“吃着火锅唱着歌，写着代码改 Bug”，突然 ADB “崩溃”了：  Warning: debug info can be unavailable.Please close other application using ADB: Monitor, DDMS, Eclipse">
 <meta name="keywords" content="Android,Adb">
 <meta property="og:type" content="article">
 <meta property="og:title" content="解决 Adb debug error 的 N 种方式">
 <meta property="og:url" content="https://woyifeng.com/2020/07/12/adb-debug-error/index.html">
 <meta property="og:site_name" content="亦枫的技术博客">
-<meta property="og:description" content="安卓开发过程中最痛苦的事莫过于，当你“吃着火锅唱着歌，写着代码改 Bug”，突然 ADB “崩溃”了： Warning: debug info can be unavailable.Please close other application using ADB: Monitor, DDMS, Eclipse">
+<meta property="og:description" content="安卓开发过程中最痛苦的事莫过于，当你“吃着火锅唱着歌，写着代码改 Bug”，突然 ADB “崩溃”了：  Warning: debug info can be unavailable.Please close other application using ADB: Monitor, DDMS, Eclipse">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-12T14:21:08.030Z">
+<meta property="og:updated_time" content="2020-07-12T14:23:16.880Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="解决 Adb debug error 的 N 种方式">
-<meta name="twitter:description" content="安卓开发过程中最痛苦的事莫过于，当你“吃着火锅唱着歌，写着代码改 Bug”，突然 ADB “崩溃”了： Warning: debug info can be unavailable.Please close other application using ADB: Monitor, DDMS, Eclipse">
+<meta name="twitter:description" content="安卓开发过程中最痛苦的事莫过于，当你“吃着火锅唱着歌，写着代码改 Bug”，突然 ADB “崩溃”了：  Warning: debug info can be unavailable.Please close other application using ADB: Monitor, DDMS, Eclipse">
   
     <link rel="alternative" href="/atom.xml" title="亦枫的技术博客" type="application/atom+xml">
   
@@ -189,7 +189,9 @@ ga('send', 'pageview');
     <div class="article-entry" itemprop="articleBody">
       
         <p>安卓开发过程中最痛苦的事莫过于，当你“吃着火锅唱着歌，写着代码改 Bug”，突然 ADB “崩溃”了：</p>
+<blockquote>
 <p>Warning: debug info can be unavailable.Please close other application using ADB: Monitor, DDMS, Eclipse</p>
+</blockquote>
 <a id="more"></a>
 <p>如提示所言，可能在你打开 DDMS 等其他操作之后，再想使用 adb debugger 一些代码，就阻塞在这儿了。</p>
 <p>哪怕你手动关闭这些可能占用 adb 连接的程序，也还是解决不了问题，于是这些方案出现在脑海中：</p>
@@ -531,15 +533,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Adb</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
