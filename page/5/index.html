@@ -724,98 +724,6 @@ ga('send', 'pageview');
 
 
   
-    <article id="post-the-difference-between-getWidth-and-getMeasuredWidth" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/">从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处</a>
-    </h1>
-  
-
-        
-        <a href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/" class="archive-article-date">
-  	<time datetime="2017-03-29T23:35:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>之前不是写了篇名为 <a href="http://yifeng.studio/2017/03/21/android-obtain-view-width-and-heigth-not-zero/" target="_blank" rel="external">Android 获取 View 宽高的常用正确方式，避免为零</a> 的总结性文章嘛，在结尾简单阐述 measuredWidth 与 width 的区别。考虑到文章的重点，简单几笔带过。没曾想，引发一些争论，大家对 View 的这两对宽高属性理解各有异议。于是便想追根溯源，通过解读源码的方式说明一下，消除许多人的误解。</p>
-        
-          <a class="article-more-a" href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/#more">more >></a>
-        
-      
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-android-tint" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -879,6 +787,98 @@ ga('send', 'pageview');
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/03/30/android-tint/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-the-difference-between-getWidth-and-getMeasuredWidth" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/">从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/" class="archive-article-date">
+  	<time datetime="2017-03-29T23:35:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>之前不是写了篇名为 <a href="http://yifeng.studio/2017/03/21/android-obtain-view-width-and-heigth-not-zero/" target="_blank" rel="external">Android 获取 View 宽高的常用正确方式，避免为零</a> 的总结性文章嘛，在结尾简单阐述 measuredWidth 与 width 的区别。考虑到文章的重点，简单几笔带过。没曾想，引发一些争论，大家对 View 的这两对宽高属性理解各有异议。于是便想追根溯源，通过解读源码的方式说明一下，消除许多人的误解。</p>
+        
+          <a class="article-more-a" href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/#more">more >></a>
+        
+      
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/30/the-difference-between-getWidth-and-getMeasuredWidth/">展开全文 >></a>
         </p>
       
 
