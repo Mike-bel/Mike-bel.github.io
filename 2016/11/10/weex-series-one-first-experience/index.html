@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://blog.ancard.top/weex-samples-01.png">
 <meta property="og:image" content="http://blog.ancard.top/weex-samples-03.png">
 <meta property="og:image" content="http://blog.ancard.top/weex-samples-04.png">
-<meta property="og:updated_time" content="2018-12-22T07:02:58.199Z">
+<meta property="og:updated_time" content="2021-01-30T12:03:50.963Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Weex 探索系列（一）初识和环境搭建">
 <meta name="twitter:description" content="Weex 是阿里巴巴 于今年6月份开源的一种跨平台手机应用开发解决方案，只需要一次开发，即可部署在手机 HTML5、Android、iOS 三大平台上。可以采取部分或者全部集成的方式嵌入到原生 Android 和 iOS 应用当中，并且达到 Native App 的体验效果。">
@@ -199,7 +199,7 @@ ga('send', 'pageview');
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g weex-toolkit</div></pre></td></tr></table></figure>
 <p>安装结束后，可使用 <code>weex --verison</code> 检验安装结果并查看 weex 版本。也可以使用 <code>weex --help</code> 查看 weex 命令的所有用法。</p>
 <h1 id="初次体验"><a href="#初次体验" class="headerlink" title="初次体验"></a>初次体验</h1><p>新建一个文本文件（位置随意），命名为 hello.we （.we 是 weex 源代码的文件格式），并将如下内容复制到该文件中：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"cell"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">image</span> <span class="attr">class</span>=<span class="string">"thumb"</span> <span class="attr">src</span>=<span class="string">"http://t.cn/RGE3AJt"</span>&gt;</span><span class="tag">&lt;/<span class="name">image</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>Hello Weex<span class="tag">&lt;/<span class="name">text</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="css">  <span class="selector-class">.cell</span> &#123; <span class="attribute">margin-top</span>: <span class="number">10</span>; <span class="attribute">margin-left</span>: <span class="number">10</span>; <span class="attribute">flex-direction</span>: row; &#125;</span></div><div class="line"><span class="css">  <span class="selector-class">.thumb</span> &#123; <span class="attribute">width</span>: <span class="number">200</span>; <span class="attribute">height</span>: <span class="number">200</span>; &#125;</span></div><div class="line"><span class="css">  <span class="selector-class">.title</span> &#123; <span class="attribute">text-align</span>: center; <span class="attribute">flex</span>: <span class="number">1</span>; <span class="attribute">color</span>: grey; <span class="attribute">font-size</span>: <span class="number">50</span>; &#125;</span></div><div class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"cell"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">image</span> <span class="attr">class</span>=<span class="string">"thumb"</span> <span class="attr">src</span>=<span class="string">"http://t.cn/RGE3AJt"</span>&gt;</span><span class="tag">&lt;/<span class="name">image</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>Hello Weex<span class="tag">&lt;/<span class="name">text</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="undefined">  .cell &#123; margin-top: 10; margin-left: 10; flex-direction: row; &#125;</span></div><div class="line"><span class="undefined">  .thumb &#123; width: 200; height: 200; &#125;</span></div><div class="line"><span class="undefined">  .title &#123; text-align: center; flex: 1; color: grey; font-size: 50; &#125;</span></div><div class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>打开终端工具，cd 到 hello.we 所在的目录下，执行如下命令，进行源码编译：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">weex hello.we</div></pre></td></tr></table></figure>
 <p>编译结束后，电脑上的默认浏览器会打开一个窗口展示运行结果，如图：</p>
@@ -562,15 +562,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Adb</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">

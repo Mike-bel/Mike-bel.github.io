@@ -18,7 +18,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://blog.ancard.top/1491304232.jpg">
 <meta property="og:image" content="http://blog.ancard.top/1491304242.jpg">
-<meta property="og:updated_time" content="2018-12-22T07:03:03.938Z">
+<meta property="og:updated_time" content="2021-01-30T12:03:51.844Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从源码的角度分析，getWidth() 与 getMeasuredWidth() 的不同之处">
 <meta name="twitter:description" content="之前不是写了篇名为 Android 获取 View 宽高的常用正确方式，避免为零 的总结性文章嘛，在结尾简单阐述 measuredWidth 与 width 的区别。考虑到文章的重点，简单几笔带过。没曾想，引发一些争论，大家对 View 的这两对宽高属性理解各有异议。于是便想追根溯源，通过解读源码的方式说明一下，消除许多人的误解。">
@@ -395,18 +395,18 @@ ga('send', 'pageview');
   
 <nav id="article-nav">
   
-    <a href="/2017/04/09/android-palette-and-use-case/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/03/30/android-tint/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          利用 Android 中的 palette 调色板，动态改变 Toolbar 颜色
+          从使用到源码，细说 Android 中的 tint 着色器
         
       </div>
     </a>
   
   
-    <a href="/2017/03/30/android-tint/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">从使用到源码，细说 Android 中的 tint 着色器</div>
+    <a href="/2017/03/26/android-bottomnavigationview/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android BottomNavigationView，底部导航栏的简单实现</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -577,15 +577,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Adb</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
